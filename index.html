@@ -570,7 +570,7 @@ body.atlas-mode.atlas-tabs-collapsed .bottom-tabs{
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT V0.3F3F</span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례</button><div class="legend" id="atlasLegendList"><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT V0.3F3G</span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례</button><div class="legend" id="atlasLegendList"><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><span class="small-label" id="tileCoord">—</span></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -602,7 +602,9 @@ body.atlas-mode.atlas-tabs-collapsed .bottom-tabs{
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.3F3F';
+const VERSION = 'V0.3F3G';
+const F3G_FORT_HP=[0,100,180,260];
+const F3G_FORT_RUIN_DAYS=3*120;
 /** F3F: siege days are credited only when occupation remains uncontested. */
 const F3F_SIEGE_DAYS=5;
 const F3F_RALLY_MORALE=40;
@@ -1227,6 +1229,80 @@ function generalTileSlotLimit(w,nationId){return BUILDING_TILE_SLOTS+Math.min(2,
 function allStructures(w){return [...w.buildings,...(w.defenses||[])];}
 function getStructure(w,id){return w.buildings.find(b=>b.id===id)||(w.defenses||[]).find(b=>b.id===id);}
 function defenseTileSlotsUsed(w,tid){return (w.defenses||[]).filter(b=>b.tileId===tid).length;}
+/** F3G structural health is not regional resistance or regional firepower. */
+function fortMaxHP(d){return F3G_FORT_HP[d.level]||100;}
+function fortEffective(d){return d.typeId==='fort'&&d.status!=='CONSTRUCTING'&&d.hp>0;}
+function repairFortPrice(d){
+  const ratio=Math.max(0,Math.min(1,(fortMaxHP(d)-d.hp)/fortMaxHP(d)));
+  return {apUnits:10,gold:Math.max(1,Math.ceil(220*ratio)),knowledge:0,
+    resources:{wood:Math.max(1,Math.ceil(35*ratio)),stone:Math.max(1,Math.ceil(48*ratio))}};
+}
+function fortRepairLegal(w,nationId,id){
+  const d=(w.defenses||[]).find(d=>d.id===id),t=d&&w.tiles[d.tileId];
+  return Boolean(d&&t&&t.ownerId===nationId&&t.occupiedBy===null&&d.status==='ACTIVE'&&
+    d.hp>=0&&d.hp<fortMaxHP(d)&&!d.repair);
+}
+function damageFortAt(w,tileId,progress){
+  const t=w.tiles[tileId];if(!t||t.ownerId===null)return 0;
+  let total=0;
+  for(const d of w.defenses||[]){
+    if(d.tileId!==tileId||!fortEffective(d))continue;
+    const loss=Math.max(1,Math.ceil(progress*1.1)),before=d.hp;
+    d.hp=Math.max(0,before-loss);total+=before-d.hp;
+    if(d.hp===0){d.zeroHpSince=w.dayIndex;
+      recordActionEvent(w,`(${t.x}, ${t.y}) 요새가 파손되어 방어선이 단절되었습니다.`,'war');}
+  }
+  if(total)w.changeSeq++;
+  return total;
+}
+function nextFortProjectDay(w){
+  let next=Infinity;
+  for(const d of w.defenses||[]){
+    if(d.repair)next=Math.min(next,d.repair.completeDay);
+    if(d.hp===0&&d.zeroHpSince!==null)next=Math.min(next,d.zeroHpSince+F3G_FORT_RUIN_DAYS);
+  }
+  return next;
+}
+function processFortProjects(w){
+  let changed=false;
+  for(const d of w.defenses||[]){
+    if(d.repair&&w.dayIndex>=d.repair.completeDay){
+      if(w.tiles[d.tileId]?.ownerId===d.repair.ownerId&&w.tiles[d.tileId].occupiedBy===null){
+        d.hp=Math.min(fortMaxHP(d),d.hp+d.repair.restoreHp);
+        if(d.hp>0)d.zeroHpSince=null;
+      }
+      delete d.repair;
+      changed=true;
+    }
+  }
+  const expired=(w.defenses||[]).filter(d=>d.hp===0&&d.zeroHpSince!==null&&
+    w.dayIndex-d.zeroHpSince>=F3G_FORT_RUIN_DAYS);
+  if(expired.length){
+    const ids=new Set(expired.map(d=>d.id));
+    w.defenses=w.defenses.filter(d=>!ids.has(d.id));
+    for(const d of expired)recordActionEvent(w,`요새 (${w.tiles[d.tileId].x}, ${w.tiles[d.tileId].y})가 수리되지 않아 완전히 붕괴했습니다.`,'war');
+    changed=true;
+  }
+  if(changed)w.changeSeq++;
+}
+/** On peaceful annexation of a former civilian site, it is a preserved but dormant shell. */
+function detachCededTile(w,tileId,recipientId){
+  const t=w.tiles[tileId],oldId=t.settlementId;
+  if(oldId!==null){const s=w.settlements.find(s=>s.id===oldId);
+    if(!s||s.coreTileId===tileId)throw Error('정착지 중심은 부분 양도할 수 없습니다.');
+    s.tileIds=s.tileIds.filter(id=>id!==tileId);
+    for(const b of w.buildings)if(b.tileId===tileId){b.settlementId=null;b.disconnected=true;
+      if(b.status!=='ACTIVE')b.pausedRemainingDays=Math.max(1,b.completeDay-w.dayIndex);}
+  }
+  t.ownerId=recipientId;t.settlementId=null;t.occupiedBy=null;
+  for(const d of w.defenses||[])if(d.tileId===tileId){d.settlementId=null;delete d.repair;}
+}
+function reconnectAnnexedFacilities(w,tileId,settlementId){
+  for(const b of w.buildings)if(b.tileId===tileId&&b.disconnected){b.settlementId=settlementId;b.disconnected=false;
+    if(b.pausedRemainingDays){b.completeDay=w.dayIndex+b.pausedRemainingDays;delete b.pausedRemainingDays;}}
+  for(const d of w.defenses||[])if(d.tileId===tileId)d.settlementId=settlementId;
+}
+
 
 const relativeYield=(kind,terrain)=>{
   if(kind==='farm')return terrain==='plain'?1.2:terrain==='grass'?1:.65;
@@ -1236,7 +1312,7 @@ const relativeYield=(kind,terrain)=>{
   return 1;
 };
 function facilityOutput(building,terrain){
-  const type=BUILDINGS[building.typeId];if(!type||building.status==='CONSTRUCTING')return null;
+  const type=BUILDINGS[building.typeId];if(!type||building.status==='CONSTRUCTING'||building.disconnected||(building.typeId==='fort'&&building.hp<=0))return null;
   const level=building.level;
   const output={capacity:Math.floor((type.capacity||0)*level),defense:Math.floor((type.defense||0)*level),firepower:Math.floor((type.firepower||0)*level),knowledge:Math.floor((type.knowledge||0)*level),produced:{food:0,wood:0,stone:0,iron:0}};
   for(const [key,value] of Object.entries(type.produces||{}))output.produced[key]=Math.floor(value*level*relativeYield(building.typeId,terrain));
@@ -1260,8 +1336,8 @@ function buildingSiteLegal(world,nationId,action){
 function upgradeSiteLegal(world,nationId,action){
   const building=getStructure(world,action.buildingId),s=building&&world.settlements.find(s=>s.id===building.settlementId);
   const tile=building&&world.tiles[building.tileId];
-  return Boolean(building&&(building.typeId==='fort'&&building.settlementId===null||s?.ownerId===nationId)&&tile?.ownerId===nationId&&tile.occupiedBy===null&&
-    building.status==='ACTIVE'&&building.level<MAX_BUILDING_LEVEL);
+  return Boolean(building&&(!building.disconnected)&&(building.typeId==='fort'&&building.settlementId===null||s?.ownerId===nationId)&&tile?.ownerId===nationId&&tile.occupiedBy===null&&
+    building.status==='ACTIVE'&&building.level<MAX_BUILDING_LEVEL&&(building.typeId!=='fort'||building.hp>0&&!building.repair));
 }
 function buildPrice(typeId,level=1){
   const type=BUILDINGS[typeId];if(!type)return null;
@@ -1272,7 +1348,7 @@ function buildPrice(typeId,level=1){
 function completeBuildings(world){
   let changed=false;
   for(const b of allStructures(world)){
-    if(b.status==='ACTIVE'||b.completeDay>world.dayIndex)continue;
+    if(b.disconnected||b.status==='ACTIVE'||b.completeDay>world.dayIndex)continue;
     if(b.status==='UPGRADING'){b.level=b.targetLevel;delete b.targetLevel;}
     b.status='ACTIVE';changed=true;
     const s=world.settlements.find(s=>s.id===b.settlementId);
@@ -1311,7 +1387,7 @@ function regionalMilitaryStats(w,tid){
   return {resistance:Math.max(0,Math.round(resistance*100)/100),firepower:Math.max(0,Math.round(firepower*100)/100)};
 }
 function fortressWorldAverages(w){
-  const ids=new Set((w.defenses||[]).filter(d=>d.status==='ACTIVE'||d.status==='UPGRADING').map(d=>d.tileId));
+  const ids=new Set((w.defenses||[]).filter(fortEffective).map(d=>d.tileId));
   let resistance=0,firepower=0;
   for(const id of ids){const value=regionalMilitaryStats(w,id);resistance+=value.resistance;firepower+=value.firepower;}
   const count=ids.size;
@@ -1326,7 +1402,7 @@ function fortressThickness(value,average){
 /** V0.3F3F: concrete fort-to-fort barrier; nonpersistent deterministic projection.
  * Every effective same-owner fortress pair within two orthogonal land steps forms
  * a link over its shortest SAFE owned path. Occupation breaks it immediately.
- * No imaginary soldiers, stock, upkeep or durability are created.
+ * Lines use actual fortress HP. No extra units or invisible wall hitpoints.
  */
 const FORT_LINE_RANGE=2;
 const fortGraphCache=new WeakMap();
@@ -1336,7 +1412,7 @@ function fortificationNetwork(w){
   const signatures=[];
   for(const d of w.defenses||[]){
     const t=w.tiles[d.tileId];if(!t)continue;
-    signatures.push(`${d.tileId}:${d.status}:${t.ownerId}:${t.occupiedBy}`);
+    signatures.push(`${d.tileId}:${d.status}:${d.hp>0?1:0}:${t.ownerId}:${t.occupiedBy}`);
     for(const id of neighbors4(d.tileId,w.size,w.height)){
       const x=w.tiles[id];signatures.push(`${id}:${x.ownerId}:${x.occupiedBy}`);
     }
@@ -1346,7 +1422,7 @@ function fortificationNetwork(w){
   const forts=new Map(),blocked=new Map(),lines=[],links=[];
   for(const d of w.defenses||[]){
     const t=w.tiles[d.tileId];
-    if(!t||t.ownerId===null||t.occupiedBy!==null||d.status==='CONSTRUCTING'||!TERRAINS[t.terrain]?.passable)continue;
+    if(!t||t.ownerId===null||t.occupiedBy!==null||!fortEffective(d)||!TERRAINS[t.terrain]?.passable)continue;
     forts.set(t.id,t.ownerId);
   }
   const ids=[...forts.keys()].sort((a,b)=>a-b);
@@ -1646,6 +1722,7 @@ function getActionPrice(world,nationId,action,territory=null){
     case 'BUILD_ROAD':case 'UPGRADE_ROAD':return roadPrice(action);
     case 'BUILD_FACILITY':return technicalBuildingPrice(world,nationId,buildPrice(action.buildingType));
     case 'UPGRADE_FACILITY':{const b=getStructure(world,action.buildingId);return b?technicalBuildingPrice(world,nationId,buildPrice(b.typeId,b.level+1)):null;}
+    case 'REPAIR_FORT':{const d=(world.defenses||[]).find(d=>d.id===action.buildingId);return d?technicalBuildingPrice(world,nationId,repairFortPrice(d)):null;}
     case 'CLAIM_TILE':{const claim=getClaimCost(world,nationId,action.targetTileId,territory);return claim?make(1,claim.cost):null;}
     case 'FOUND_SETTLEMENT':return make(2,60,{wood:12,stone:5});
     case 'DEVELOP_SETTLEMENT':return make(1,25,{wood:6,stone:2});
@@ -1686,9 +1763,9 @@ function payCost(nation,price){
  * Only completed structures incur fees. All amounts are whole Gold. */
 function civilUpkeep(world,nationId){
   const pop=world.settlements.filter(s=>s.ownerId===nationId).reduce((sum,s)=>sum+s.population,0);
-  const buildings=world.buildings.filter(b=>world.tiles[b.tileId]?.ownerId===nationId&&b.status==='ACTIVE')
+  const buildings=world.buildings.filter(b=>world.tiles[b.tileId]?.ownerId===nationId&&b.status==='ACTIVE'&&!b.disconnected)
     .reduce((sum,b)=>sum+3+2*b.level,0);
-  const forts=(world.defenses||[]).filter(b=>world.tiles[b.tileId]?.ownerId===nationId&&b.status==='ACTIVE')
+  const forts=(world.defenses||[]).filter(b=>world.tiles[b.tileId]?.ownerId===nationId&&fortEffective(b))
     .reduce((sum,b)=>sum+5+3*b.level,0);
   const roads=world.tiles.filter(t=>t.ownerId===nationId)
     .reduce((sum,t)=>sum+(t.roadLevel===2?3:t.roadLevel===1?1:0),0);
@@ -2413,6 +2490,12 @@ function resolveEngagementRound(world,e){
       bFront:deployedManpower(b,'front'),bRear:deployedManpower(b,'rear'),bReserve:deployedManpower(b,'reserve')});
     if(!manpower(a)||!manpower(b))break;
   }
+  const fortOwner=world.tiles[e.tileId]?.ownerId;
+  if(fortOwner!==null){
+    const offensiveImpact=fortOwner===b.nationId&&a.nationId!==fortOwner?Math.max(1,lossB):
+      fortOwner===a.nationId&&b.nationId!==fortOwner?Math.max(1,lossA):0;
+    if(offensiveImpact)damageFortAt(world,e.tileId,offensiveImpact/8);
+  }
   const rec={round:e.round,dayIndex:world.dayIndex,phases:phaseRecords,lossA,lossB,manpowerA:manpower(a),manpowerB:manpower(b),
     moraleA:a.morale,moraleB:b.morale,frontBrokenA:e.frontBrokenA,frontBrokenB:e.frontBrokenB};
   e.history.push(rec);if(e.history.length>12)e.history.shift();
@@ -2640,6 +2723,7 @@ function processOccupationDay(w){
       o.participation[id]=(o.participation[id]||0)+contribution;
       war.occupationWork[id]=(war.occupationWork[id]||0)+contribution;
     }
+    if(!allyAccess(w,o.nationId,tile.ownerId))damageFortAt(w,o.tileId,progress);
     o.progress=Math.min(100,o.progress+progress);w.changeSeq++;
     if(o.progress>=100){
       const credited=Object.keys(o.participation).map(Number)
@@ -2984,7 +3068,7 @@ function buildGeopoliticalReports(w,force=false){
     const foodShortage=geoClamp(1-(n.foodPressure??1),0,1);
     const fiscal=geoClamp((q.goldIncome-militaryCost-civil)/Math.max(1,q.goldIncome),-2,1);
     const men=nationManpower(w,n.id),ready=w.armies.filter(a=>a.nationId===n.id&&a.status==='READY').reduce((x,a)=>x+manpower(a),0);
-    stats.set(n.id,{people,territory:territory.length,towns:towns.length,gold:n.gold,militaryCost,civil,quarterIncome:q.goldIncome||0,foodShortage,fiscal,men,ready,forts:(w.defenses||[]).filter(b=>w.tiles[b.tileId]?.ownerId===n.id&&b.status!=='CONSTRUCTING').length});
+    stats.set(n.id,{people,territory:territory.length,towns:towns.length,gold:n.gold,militaryCost,civil,quarterIncome:q.goldIncome||0,foodShortage,fiscal,men,ready,forts:(w.defenses||[]).filter(b=>w.tiles[b.tileId]?.ownerId===n.id&&fortEffective(b)).length});
   }
   // Edge-sharing only; each pair counted once even if both sides have many border cells.
   for(const t of w.tiles){
@@ -3411,7 +3495,7 @@ function transferCore(w,settlementId,newOwner){
   loser.settlementIds=loser.settlementIds.filter(id=>id!==s.id);winner.settlementIds.push(s.id);
   if(loser.capitalId===s.coreTileId)markCapitalHistory(s,loser.id);
   s.ownerId=newOwner; // The geographic name and historical capitals never change on conquest.
-  for(const id of s.tileIds){w.tiles[id].ownerId=newOwner;w.tiles[id].occupiedBy=null;}
+  for(const id of s.tileIds){w.tiles[id].ownerId=newOwner;w.tiles[id].occupiedBy=null;for(const d of w.defenses||[])if(d.tileId===id)delete d.repair;}
 }
 /** Select ONLY completed occupied land. Settlement footprints are atomic and
  * may join the existing border through ANY member, not just their core.
@@ -3429,13 +3513,17 @@ function planPeaceCessions(w,winnerId,loserId,tier){
     const parts=s.tileIds.filter(id=>occupationIds.has(id));
     if(!parts.length)continue;
     for(const id of parts)grouped.add(id);
-    if(parts.length!==s.tileIds.length){partialSettlementTiles+=parts.length;continue;}
+    if(parts.length!==s.tileIds.length){partialSettlementTiles+=parts.length;
+      if(parts.includes(s.coreTileId)&&parts.length/s.tileIds.length>=.60&&['CLEAR','DECISIVE'].includes(tier))
+        candidates.push({id:`s${s.id}`,settlementId:s.id,tileIds:s.tileIds.slice(),size:s.tileIds.length});
+      for(const tid of parts)if(tid!==s.coreTileId)candidates.push({id:`p${tid}`,settlementId:null,partialOf:s.id,tileIds:[tid],size:1});
+      continue;}
     candidates.push({id:`s${s.id}`,settlementId:s.id,tileIds:s.tileIds.slice(),size:s.tileIds.length});
   }
   for(const t of occ)if(!grouped.has(t.id)&&t.settlementId===null)
     candidates.push({id:`t${t.id}`,settlementId:null,tileIds:[t.id],size:1});
-  const accepted=[],included=new Set(w.tiles.filter(t=>t.ownerId===winnerId).map(t=>t.id));
-  const totalCandidateTiles=candidates.reduce((sum,c)=>sum+c.size,0);
+  const accepted=[],allocated=new Set(),included=new Set(w.tiles.filter(t=>t.ownerId===winnerId).map(t=>t.id));
+  const totalCandidateTiles=new Set(candidates.flatMap(c=>c.tileIds)).size;
   const adjacency=c=>c.tileIds.reduce((sum,id)=>sum+neighbors4(id,w.size,w.height).filter(nb=>included.has(nb)).length,0);
   // Theoretical eligibility without cap: expansion through fully occupied groups only.
   const possible=new Set(included);let change=true;
@@ -3447,13 +3535,13 @@ function planPeaceCessions(w,winnerId,loserId,tier){
       }
     }
   }
-  const connectedCandidateTiles=candidates.filter(c=>c.tileIds.every(id=>possible.has(id))).reduce((n,c)=>n+c.size,0);
+  const connectedCandidateTiles=new Set(candidates.filter(c=>c.tileIds.every(id=>possible.has(id))).flatMap(c=>c.tileIds)).size;
   const goalTile=w.wars.find(v=>[v.attackerId,v.defenderId].includes(winnerId)&&[v.attackerId,v.defenderId].includes(loserId))?.goal?.targetTileId;
   let acquired=0;
   while(acquired<max){
     let best=null,bestScore=-Infinity;
     for(const c of candidates){
-      if(c.selected||acquired+c.size>max)continue;
+      if(c.selected||acquired+c.size>max||c.tileIds.some(tid=>allocated.has(tid)))continue;
       const contact=adjacency(c);if(!contact)continue;
       // Reward nearby occupied clusters and fully taken towns, but do not favor map ID.
       // A bigger footprint is an atomic investment, so compare border efficiency per tile.
@@ -3464,7 +3552,7 @@ function planPeaceCessions(w,winnerId,loserId,tier){
     }
     if(!best)break;
     best.selected=true;accepted.push(best);acquired+=best.size;
-    for(const id of best.tileIds)included.add(id);
+    for(const id of best.tileIds){included.add(id);allocated.add(id);}
   }
   return {max,occupiedAtPeace:occ.length,partialSettlementTiles,connectedCandidateTiles,
     disconnectedTiles:totalCandidateTiles-connectedCandidateTiles,capOrPriorityRemainder:Math.max(0,connectedCandidateTiles-acquired),
@@ -3517,7 +3605,14 @@ function planCoalitionPeaceCessions(w,war,winnerId,loserId,tier,shares){
     const parts=settlement.tileIds.filter(id=>occupiedIds.has(id));
     if(!parts.length)continue;
     for(const id of parts)grouped.add(id);
-    if(parts.length!==settlement.tileIds.length){partialSettlementTiles+=parts.length;continue;}
+    if(parts.length!==settlement.tileIds.length){
+      partialSettlementTiles+=parts.length;
+      if(parts.includes(settlement.coreTileId)&&parts.length/settlement.tileIds.length>=.60&&['CLEAR','DECISIVE'].includes(tier))
+        candidates.push({id:`s${settlement.id}`,settlementId:settlement.id,tileIds:settlement.tileIds.slice(),size:settlement.tileIds.length});
+      for(const tid of parts)if(tid!==settlement.coreTileId)
+        candidates.push({id:`p${tid}`,settlementId:null,partialOf:settlement.id,tileIds:[tid],size:1});
+      continue;
+    }
     candidates.push({id:`s${settlement.id}`,settlementId:settlement.id,tileIds:settlement.tileIds.slice(),size:settlement.tileIds.length});
   }
   for(const tile of occupied)if(!grouped.has(tile.id)&&tile.settlementId===null)
@@ -3531,12 +3626,12 @@ function planCoalitionPeaceCessions(w,war,winnerId,loserId,tier,shares){
       }
     }
   }
-  const connectedCandidateTiles=candidates.filter(c=>c.tileIds.every(id=>reachable.has(id))).reduce((sum,c)=>sum+c.size,0);
-  const totalCandidateTiles=candidates.reduce((sum,c)=>sum+c.size,0);
-  const selected=[];let acquired=0;
+  const connectedCandidateTiles=new Set(candidates.filter(c=>c.tileIds.every(id=>reachable.has(id))).flatMap(c=>c.tileIds)).size;
+  const totalCandidateTiles=new Set(candidates.flatMap(c=>c.tileIds)).size;
+  const selected=[],allocated=new Set();let acquired=0;
   while(acquired<max){
     let choice=null,best=-Infinity;
-    for(const c of candidates){if(c.selected||acquired+c.size>max)continue;
+    for(const c of candidates){if(c.selected||acquired+c.size>max||c.tileIds.some(tid=>allocated.has(tid)))continue;
       for(const id of recipients){
         const contact=c.tileIds.reduce((sum,tileId)=>sum+neighbors4(tileId,w.size,w.height).filter(nb=>included[id].has(nb)).length,0);
         if(!contact)continue;
@@ -3551,7 +3646,7 @@ function planCoalitionPeaceCessions(w,war,winnerId,loserId,tier,shares){
     if(!choice)break;
     choice.group.selected=true;selected.push({...choice.group,recipientId:choice.recipientId});
     acquired+=choice.group.size;
-    for(const id of choice.group.tileIds)included[choice.recipientId].add(id);
+    for(const id of choice.group.tileIds){included[choice.recipientId].add(id);allocated.add(id);}
   }
   return {max,occupiedAtPeace:occupied.length,partialSettlementTiles,connectedCandidateTiles,
     disconnectedTiles:totalCandidateTiles-connectedCandidateTiles,capOrPriorityRemainder:Math.max(0,connectedCandidateTiles-acquired),
@@ -3637,7 +3732,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
     for(const group of cession.groups){
       const recipient=group.recipientId;
       if(group.settlementId!==null)transferCore(w,group.settlementId,recipient);
-      else for(const id of group.tileIds){w.tiles[id].ownerId=recipient;w.tiles[id].occupiedBy=null;}
+      else for(const id of group.tileIds)detachCededTile(w,id,recipient);
       count+=group.size;territoryAwards[recipient]+=group.size;
     }
   }
@@ -4015,7 +4110,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[]){
   // F3D: hostile active forts are legal assault objectives, including remote outposts.
   for(const d of w.defenses||[]){
     const t=w.tiles[d.tileId];
-    if(d.status==='CONSTRUCTING'||!t||!hostiles.has(t.ownerId)||friends.has(t.occupiedBy))continue;
+    if(!fortEffective(d)||!t||!hostiles.has(t.ownerId)||friends.has(t.occupiedBy))continue;
     propose(t.id,'FORT_ASSAULT',16+aggression*3);
   }
   // Enemy-owned frontier tiles make an advancing front instead of endlessly revisiting a core.
@@ -4259,7 +4354,7 @@ function assignPeacetimeGarrisons(w,execute){
   for(const nation of w.nations){
     if(!nation.active||nation.controller!=='AI'||militaryAtWar(w,nation.id))continue;
     const posts=peacetimeBorderPosts(w,nation.id);if(!posts.length)continue;
-    const armies=w.armies.filter(a=>a.nationId===nation.id&&manpower(a)>=12&&a.status==='READY'&&a.engagementId===null)
+    const armies=w.armies.filter(a=>a.nationId===nation.id&&manpower(a)>=12&&a.status==='READY'&&a.engagementId===null&&!a.f3fRout)
       .sort((a,b)=>a.id-b.id);
     const assigned=[];
     const keepReserve=armies.length>=4?Math.max(1,Math.floor(armies.length*.17)):0;
@@ -4300,6 +4395,22 @@ function assignPeacetimeGarrisons(w,execute){
     }
   }
 }
+
+function recallRoutedArmies(w,execute){
+  for(const a of w.armies){
+    if(!a.f3fRout||a.status!=='READY'||a.engagementId!==null||armyOffensiveReady(w,a))continue;
+    const own=w.nations[a.nationId];if(!own?.active||own.controller!=='AI')continue;
+    if(atSafeSettlement(w,a)){a.operation={type:'REARM',targetTileId:a.tileId,assignedDay:w.dayIndex};continue;}
+    // Never teleport; use legal owned-land route to closest safe settlement.
+    const candidate=w.settlements.filter(t=>t.ownerId===a.nationId)
+      .map(t=>({s:t,path:landRoute(w,a.tileId,t.coreTileId,x=>x.ownerId===a.nationId&&x.occupiedBy===null,a.nationId)}))
+      .filter(x=>x.path).sort((x,y)=>x.path.length-y.path.length||x.s.id-y.s.id)[0];
+    if(!candidate)continue;
+    if(a.order&&a.operation?.type==='REARM'&&a.order.targetTileId===candidate.s.coreTileId)continue;
+    if(execute(w,a.nationId,{type:'MOVE_ARMY',armyId:a.id,targetTileId:candidate.s.coreTileId}).ok)
+      a.operation={type:'REARM',targetTileId:candidate.s.coreTileId,assignedDay:w.dayIndex};
+  }
+}
 function runMilitaryQuarter(w,execute){
   const frontiers=quarterBorderPairs(w);
   updateRelationsQuarter(w,frontiers);
@@ -4307,7 +4418,10 @@ function runMilitaryQuarter(w,execute){
   for(const a of w.armies){
     a.roadSupplied=isRoadSupplied(w,a);
     if(a.roadSupplied&&a.status==='READY')a.morale=Math.min(100,a.morale+1);
-    if(a.f3fRout&&a.status==='READY'&&atSafeSettlement(w,a))a.morale=Math.min(100,a.morale+6);
+    if(a.f3fRout&&a.status==='READY'){
+      if(atSafeSettlement(w,a))a.morale=Math.min(100,a.morale+6);
+      else if(w.tiles[a.tileId]?.ownerId===a.nationId&&w.tiles[a.tileId].occupiedBy===null&&a.roadSupplied)a.morale=Math.min(100,a.morale+2);
+    }
     if(a.status==='READY')clearRoutIfRecovered(w,a);
   }
   for(const war of w.wars.slice()){
@@ -4381,6 +4495,7 @@ function runMilitaryQuarter(w,execute){
         if(town&&execute(w,n.id,{type:'MOVE_ARMY',armyId:a.id,targetTileId:town.s.coreTileId}).ok){a.operation={type:'REARM',targetTileId:town.s.coreTileId,assignedDay:w.dayIndex};break;}}
     }
   }
+  recallRoutedArmies(w,execute);
   assignWarOrders(w,execute,false);
   assignPeacetimeGarrisons(w,execute);
   for(const n of w.nations){
@@ -4425,7 +4540,7 @@ function ageCommanders(w){
 
 
 
-const costs=Object.freeze({CLAIM_TILE:18,FOUND_SETTLEMENT:40,DEVELOP_SETTLEMENT:22,EXPAND_SETTLEMENT:16,INVEST_KNOWLEDGE:28,MERGE_SETTLEMENTS:15,TRADE_BUY:0,TRADE_SELL:0,BUILD_FACILITY:1,UPGRADE_FACILITY:1,BUILD_ROAD:1,UPGRADE_ROAD:1,START_RESEARCH:1});
+const costs=Object.freeze({CLAIM_TILE:18,FOUND_SETTLEMENT:40,DEVELOP_SETTLEMENT:22,EXPAND_SETTLEMENT:16,INVEST_KNOWLEDGE:28,MERGE_SETTLEMENTS:15,TRADE_BUY:0,TRADE_SELL:0,BUILD_FACILITY:1,UPGRADE_FACILITY:1,REPAIR_FORT:1,BUILD_ROAD:1,UPGRADE_ROAD:1,START_RESEARCH:1});
 const limit=(v,a,b)=>Math.max(a,Math.min(b,v));
 const distance=(a,b,size)=>{const p=pointOf(a,size),q=pointOf(b,size);return Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
 const findSettlement=(world,id)=>world.settlements.find(s=>s.id===id);
@@ -4452,6 +4567,7 @@ function isNationActionLegal(world,nationId,action,metrics=null){
     case 'BUILD_ROAD':case 'UPGRADE_ROAD':return roadLegal(world,nationId,action);
     case 'BUILD_FACILITY':return buildingSiteLegal(world,nationId,action);
     case 'UPGRADE_FACILITY':return upgradeSiteLegal(world,nationId,action);
+    case 'REPAIR_FORT':return fortRepairLegal(world,nationId,action.buildingId);
     case 'CLAIM_TILE': return getClaimCost(world,nationId,action.targetTileId,metrics)!==null;
     case 'FOUND_SETTLEMENT':return Boolean(tile&&tile.ownerId===nationId&&tile.settlementId===null&&world.nations[nationId].settlementIds.length<settlementCapacity(world,nationId,metrics).limit&&world.settlements.every(s=>s.ownerId!==nationId||distance(s.coreTileId,tile.id,world.size)>=3));
     case 'DEVELOP_SETTLEMENT':return Boolean(s&&s.ownerId===nationId&&s.development<100);
@@ -4498,8 +4614,14 @@ function executeNationAction(world,nationId,action){
     case 'BUILD_ROAD':case 'UPGRADE_ROAD':{tile.roadLevel=type==='BUILD_ROAD'?1:2;delta.tileId=tile.id;break;}
     case 'BUILD_FACILITY':{
       const definition=BUILDINGS[action.buildingType],id=world.nextBuildingId++;
-      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,Math.ceil(definition.days*(1-(world.nations[nationId].technology?.unlocked.includes('architecture')?.10:0))))});
+      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,...(action.buildingType==='fort'?{hp:fortMaxHP({level:1}),zeroHpSince:null}:{}),status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,Math.ceil(definition.days*(1-(world.nations[nationId].technology?.unlocked.includes('architecture')?.10:0))))});
       delta.buildingId=id;break;
+    }
+    case 'REPAIR_FORT':{
+      const d=(world.defenses||[]).find(d=>d.id===action.buildingId);
+      const missing=fortMaxHP(d)-d.hp;
+      d.repair={ownerId:nationId,completeDay:world.dayIndex+Math.ceil(20+90*missing/fortMaxHP(d)),restoreHp:missing};
+      delta.buildingId=d.id;delta.completeDay=d.repair.completeDay;break;
     }
     case 'UPGRADE_FACILITY':{
       const b=getStructure(world,action.buildingId);b.status='UPGRADING';b.targetLevel=b.level+1;
@@ -4510,12 +4632,12 @@ function executeNationAction(world,nationId,action){
     case 'FOUND_SETTLEMENT':{
       const id=world.nextSettlementId++;
       const settlement={id,ownerId:nationId,coreTileId:tile.id,name:`${n.name} 제${n.actionStats.FOUND_SETTLEMENT+1} 정착지`,founderNationId:nationId,formerCapitalOf:[],foundedDay:world.dayIndex,tileIds:[tile.id],population:12+Math.floor(n.researchLevel/12),development:9,level:1};
-      world.settlements.push(settlement);n.settlementIds.push(id);tile.settlementId=id;for(const b of world.defenses||[])if(b.tileId===tile.id)b.settlementId=id;delta.settlementId=id;
+      world.settlements.push(settlement);n.settlementIds.push(id);tile.settlementId=id;reconnectAnnexedFacilities(world,tile.id,id);delta.settlementId=id;
       recordActionEvent(world,`${n.name}이(가) ${settlement.name}을(를) 설립했습니다.`,'settlement');break;
     }
     case 'DEVELOP_SETTLEMENT':{const oldLevel=s.level; s.development=limit(s.development+12+Math.floor(n.researchLevel/22)+(roadConnections(world,nationId).bonusByCore.get(s.coreTileId)>0?2:0),0,100);advanceLevel(s);delta.settlementId=s.id;
       if(oldLevel!==s.level)recordActionEvent(world,`${s.name}이(가) 발전 단계 ${s.level}에 도달했습니다.`,'settlement');break;}
-    case 'EXPAND_SETTLEMENT':{const oldLevel=s.level;s.tileIds.push(tile.id);tile.settlementId=s.id;for(const b of world.defenses||[])if(b.tileId===tile.id)b.settlementId=s.id;s.development=limit(s.development+2,0,100);advanceLevel(s);delta.settlementId=s.id;
+    case 'EXPAND_SETTLEMENT':{const oldLevel=s.level;s.tileIds.push(tile.id);tile.settlementId=s.id;reconnectAnnexedFacilities(world,tile.id,s.id);s.development=limit(s.development+2,0,100);advanceLevel(s);delta.settlementId=s.id;
       if(oldLevel!==s.level)recordActionEvent(world,`${s.name}이(가) 발전 단계 ${s.level}에 도달했습니다.`,'settlement');break;}
     case 'INVEST_KNOWLEDGE':{const before=n.researchLevel;n.researchLevel=limit(n.researchLevel+7,0,100);
       if(Math.floor(before/25)<Math.floor(n.researchLevel/25))recordActionEvent(world,`${n.name}의 발전 역량이 ${Math.floor(n.researchLevel/25)*25}단계에 도달했습니다.`,'knowledge');break;}
@@ -4771,7 +4893,7 @@ function strategicFortCandidates(w,n){
   const price=buildPrice('fort');
   if(n.gold<price.gold*.7||n.resources.stone<price.resources.stone*.7||n.resources.wood<price.resources.wood*.7)return [];
   const existing=(w.defenses||[]).filter(d=>w.tiles[d.tileId]?.ownerId===n.id);
-  const already=new Set(existing.map(d=>d.tileId)),active=existing.filter(d=>d.status!=='CONSTRUCTING'&&w.tiles[d.tileId]?.occupiedBy===null);
+  const already=new Set(existing.map(d=>d.tileId)),active=existing.filter(d=>fortEffective(d)&&w.tiles[d.tileId]?.occupiedBy===null);
   const towns=w.settlements.filter(s=>s.ownerId===n.id).sort((a,b)=>
     (b.coreTileId===n.capitalId?1:0)-(a.coreTileId===n.capitalId?1:0)||b.population-a.population||a.id-b.id);
   const frontier=[];
@@ -4924,6 +5046,11 @@ function buildingCandidates(world,n){
       candidates.push({action:{type:'UPGRADE_FACILITY',buildingId:b.id},utility,facility:b.typeId});
     }
   }
+  for(const d of world.defenses||[]){
+    if(!fortRepairLegal(world,n.id,d.id))continue;
+    const frac=(fortMaxHP(d)-d.hp)/fortMaxHP(d);
+    candidates.push({action:{type:'REPAIR_FORT',buildingId:d.id},utility:(militaryAtWar(world,n.id)?2.3:1.25)*(.45+frac),facility:'fort'});
+  }
   candidates.push(...strategicFortCandidates(world,n));
   // Independent forts are not in byTown; keep upgrading them under the same AP/cost law.
   for(const b of world.defenses||[]){
@@ -4934,7 +5061,7 @@ function buildingCandidates(world,n){
 }
 function actionWeight(type,p,c){
   if(type==='BUILD_ROAD'||type==='UPGRADE_ROAD')return p.weights.development*.65+p.weights.founding*.35;
-  if(type==='BUILD_FACILITY'||type==='UPGRADE_FACILITY'){
+  if(type==='BUILD_FACILITY'||type==='UPGRADE_FACILITY'||type==='REPAIR_FORT'){
     if(c.facility==='academy')return p.weights.knowledge;
     if(c.facility==='fort')return (p.weights.development*.35+p.military.defensivePreference*.65);
     return p.weights.development;
@@ -4988,7 +5115,7 @@ function actionScore(world,n,p,leader,c){
     // Shared actual Gold cost discourages narrow / remote tendrils for AI and PLAYER alike.
     score*=Math.sqrt(15/(c.shape?.gold||15));
   }
-  else if(a.type==='BUILD_FACILITY'||a.type==='UPGRADE_FACILITY'){
+  else if(a.type==='BUILD_FACILITY'||a.type==='UPGRADE_FACILITY'||a.type==='REPAIR_FORT'){
     score*=.82+leader.administration/370;
     if(c.facility==='fort'){const price=getNationActionCost(world,n.id,a);if(price)score*=Math.sqrt(150/Math.max(150,price.gold));}
   }
@@ -5092,9 +5219,12 @@ function advanceSimulation(world,days,entropySource=null){
   while(remaining>0){
     const until=DAYS_PER_QUARTER-world.dayIndex%DAYS_PER_QUARTER;
     const nextMilitaryEvent=nextMilitaryDay(world);
+    const nextFortEvent=nextFortProjectDay(world);
+    const fortIn=nextFortEvent-world.dayIndex;
     const militaryIn=nextMilitaryEvent-world.dayIndex;
-    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until);
+    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until);
     world.dayIndex+=jump;remaining-=jump;
+    processFortProjects(world);
     const quarterBoundary=world.dayIndex%DAYS_PER_QUARTER===0;
     if(quarterBoundary){
       reseedAtBoundary(world,entropySource);
@@ -5376,11 +5506,18 @@ function validateWorld(w){
     const tile=w.tiles[b.tileId],s=sMap.get(b.settlementId),def=BUILDINGS[b.typeId];
     const isDefense=b.typeId==='fort',inDefense=w.defenses.includes(b);
     if(isDefense!==inDefense)fail('일반 시설·방어시설 분류');
-    if(!Number.isInteger(b.id)||b.id<0||buildingIds.has(b.id)||!def||!tile||!(isDefense&&b.settlementId===null&&tile.settlementId===null||s&&s.tileIds.includes(tile.id)&&tile.ownerId===s.ownerId)||
+    if(!Number.isInteger(b.id)||b.id<0||buildingIds.has(b.id)||!def||!tile||!(isDefense&&b.settlementId===null&&tile.settlementId===null||!isDefense&&b.disconnected===true&&b.settlementId===null&&tile.settlementId===null||s&&s.tileIds.includes(tile.id)&&tile.ownerId===s.ownerId)||
       !def.terrains.includes(tile.terrain)||!Number.isInteger(b.level)||b.level<1||b.level>3||
       !['ACTIVE','CONSTRUCTING','UPGRADING'].includes(b.status)||!Number.isInteger(b.completeDay)||b.completeDay<0||
       (b.status==='UPGRADING'&&b.targetLevel!==b.level+1)||
       (b.status==='CONSTRUCTING'&&b.level!==1))fail('건물 상태');
+    if(b.pausedRemainingDays!==undefined&&(!Number.isInteger(b.pausedRemainingDays)||b.pausedRemainingDays<1))fail('시설 공사 중단');
+    if(isDefense){
+      if(!Number.isInteger(b.hp)||b.hp<0||b.hp>fortMaxHP(b)||
+        (b.hp===0&&(!Number.isInteger(b.zeroHpSince)||b.zeroHpSince<0||b.zeroHpSince>w.dayIndex))||
+        (b.hp>0&&b.zeroHpSince!==null)||
+        (b.repair&&(!Number.isInteger(b.repair.ownerId)||!Number.isInteger(b.repair.completeDay)||!Number.isInteger(b.repair.restoreHp)||b.repair.restoreHp<=0)))fail('요새 HP·수리');
+    }else if(b.disconnected!==undefined&&typeof b.disconnected!=='boolean')fail('시설 연결 상태');
     buildingIds.add(b.id);const key=(isDefense?'D:':'B:')+tile.id;
     occupiedSlots.set(key,(occupiedSlots.get(key)||0)+1);
     // Transferred foreign buildings are grandfathered, but 4 is an absolute physical ceiling.
@@ -5503,9 +5640,11 @@ function deserializeWorld(json){
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F'].includes(originalVersion);
-  if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E'].includes(parsed.version))parsed.version=VERSION;
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G'].includes(originalVersion);
+  if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
+    for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
+    for(const b of parsed.buildings||[])if(b.disconnected===undefined)b.disconnected=false;
     if(f3Migration){if(!parsed.trade||!validateTradeLegacyForMigration(parsed))throw Error('F3 이관: 교역 데이터가 손상되었습니다.');parsed.trade.dependency=initialTradeDependency();}
     for(const n of parsed.nations)ensureCivilFinance(n);
     for(const o of parsed.occupations){
@@ -6156,7 +6295,7 @@ class MapRenderer {
     const delta=(value,average)=>average>0?`${value>=average?'▲ +':'▼ −'}${Math.round(Math.abs(value/average-1)*100)}%`:'비교 불가';
     const set=(key,value)=>{const el=document.getElementById(key);if(el)el.textContent=String(value);};
     set('fortressDetailTitle',title);
-    set('fortressDetailMeta',`${tile.x}, ${tile.y} · ${fortresses.length===1?`요새 ${fortresses[0].level}단계`:`요새 ${fortresses.length}동`} · 방어선 거리 ${FORT_LINE_RANGE}`);
+    set('fortressDetailMeta',`${tile.x}, ${tile.y} · ${fortresses.length===1?`요새 ${fortresses[0].level}단계 · HP ${fortresses[0].hp}/${fortMaxHP(fortresses[0])}`:`요새 ${fortresses.length}동`} · 방어선 거리 ${FORT_LINE_RANGE}`);
     set('fortressResistanceValue',Math.round(stats.resistance).toLocaleString('ko-KR'));
     set('fortressFirepowerValue',Math.round(stats.firepower).toLocaleString('ko-KR'));
     set('fortressResistanceDelta',delta(stats.resistance,averages.resistance));
@@ -6228,7 +6367,7 @@ function bindTabs(onSwitch){
 const ACTIONS=[
  ['CLAIM_TILE','중립 타일 개척'],['FOUND_SETTLEMENT','정착지 설립'],['EXPAND_SETTLEMENT','정착지 확장'],
  ['DEVELOP_SETTLEMENT','정착지 개발'],['MERGE_SETTLEMENTS','정착지 병합'],['BUILD_FACILITY','시설 건설'],
- ['UPGRADE_FACILITY','시설 개량'],['BUILD_ROAD','도로 건설'],['UPGRADE_ROAD','도로 개량'],
+ ['UPGRADE_FACILITY','시설 개량'],['REPAIR_FORT','요새 수리'],['BUILD_ROAD','도로 건설'],['UPGRADE_ROAD','도로 개량'],
  ['INVEST_KNOWLEDGE','기초 연구 역량 투자'],['START_RESEARCH','기술 연구 시작'],
  ['TRAIN_RESERVES','예비병 훈련'],['RECRUIT_ARMY','부대 징병'],['REINFORCE_ARMY','부대 증원'],['MOVE_ARMY','부대 이동'],
  ['LAND_ARMY','해안 상륙 (해상 수송)'],['DISBAND_ARMY','부대 해산'],['TRADE_BUY','자원 수입'],['TRADE_SELL','자원 수출'],['DECLARE_WAR','선전포고'],['OFFER_PEACE','평화 제안'],
@@ -6314,6 +6453,7 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
      options('buildingType','시설 종류',Object.entries(BUILDINGS).map(([id,b])=>[id,b.label]));
      if(draft.buildingType==='fort'){draft.settlementId=undefined;tileChoice(t=>t.ownerId===n.id&&t.occupiedBy===null);}else{settlementChoice();tileChoice(t=>t.ownerId===n.id&&t.settlementId===draft.settlementId);}
    }
+   if(type==='REPAIR_FORT')options('buildingId','수리할 요새',(w.defenses||[]).filter(d=>fortRepairLegal(w,n.id,d.id)).map(d=>[d.id,`요새 ${d.level}단계 · HP ${d.hp}/${fortMaxHP(d)} · (${w.tiles[d.tileId].x},${w.tiles[d.tileId].y})`]));
    if(type==='UPGRADE_FACILITY')options('buildingId','개량 시설',allStructures(w).filter(b=>b.level<3&&b.status==='ACTIVE'&&w.tiles[b.tileId]?.ownerId===n.id&&(b.typeId==='fort'||settlements().some(s=>s.id===b.settlementId))).map(b=>[b.id,`${BUILDINGS[b.typeId].label} Lv.${b.level} · (${w.tiles[b.tileId].x},${w.tiles[b.tileId].y})`]));
    if(type==='BUILD_ROAD')tileChoice(t=>t.ownerId===n.id&&!t.roadLevel);
    if(type==='UPGRADE_ROAD')tileChoice(t=>t.ownerId===n.id&&t.roadLevel===1);
@@ -6491,7 +6631,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v03f3f-world';
+const SAVE_KEY='vilob-light-v03f3g-world';
+const PREVIOUS_F3F_SAVE_KEY='vilob-light-v03f3f-world';
 const PREVIOUS_F3E_SAVE_KEY='vilob-light-v03f3e-world';
 const PREVIOUS_F3D_SAVE_KEY='vilob-light-v03f3d-world';
 const PREVIOUS_F3_SAVE_KEY='vilob-light-v03f3-world';
@@ -6570,12 +6711,12 @@ function renderInspector(){
   const tileBuildings=app.world.buildings.filter(b=>b.tileId===t.id);
   if(tileBuildings.length)box.append(make('section',{class:'facility-mini'},[
     make('strong',{text:`일반 시설 ${tileBuildings.length} / ${t.ownerId===null?BUILDING_TILE_SLOTS:generalTileSlotLimit(app.world,t.ownerId)}`}),
-    ...tileBuildings.map(b=>make('div',{class:'muted-line',text:`${BUILDINGS[b.typeId]?.symbol||'▣'} ${BUILDINGS[b.typeId]?.label||b.typeId} ${b.level}단계 · ${b.status==='ACTIVE'?'가동':`${b.status==='UPGRADING'?'개량':'건설'} 중 (${Math.max(0,b.completeDay-app.world.dayIndex)}일)`}`}))
+    ...tileBuildings.map(b=>make('div',{class:'muted-line',text:`${BUILDINGS[b.typeId]?.symbol||'▣'} ${BUILDINGS[b.typeId]?.label||b.typeId} ${b.level}단계 · ${b.hp===0?'파손·수리 필요':b.disconnected?'정착지 미연결·비활성':b.status==='ACTIVE'?'가동':`${b.status==='UPGRADING'?'개량':'건설'} 중 (${Math.max(0,b.completeDay-app.world.dayIndex)}일)`}`}))
   ]));
   const tileDefenses=app.world.defenses.filter(b=>b.tileId===t.id);
   if(tileDefenses.length)box.append(make('section',{class:'facility-mini defensive-mini'},[
     make('strong',{text:`♜ 방어시설 ${tileDefenses.length} / ${DEFENSE_TILE_SLOTS}`}),
-    ...tileDefenses.map(b=>make('div',{class:'muted-line',text:`요새 ${b.level}단계 · 저항력 +${BUILDINGS.fort.defense*b.level} · 공격력 +${BUILDINGS.fort.firepower*b.level} · ${b.status==='ACTIVE'?'가동':`${b.status==='UPGRADING'?'개량':'건설'} 중 (${Math.max(0,b.completeDay-app.world.dayIndex)}일)`}`}))
+    ...tileDefenses.map(b=>make('div',{class:'muted-line',text:`요새 ${b.level}단계 · 저항력 +${b.hp>0?BUILDINGS.fort.defense*b.level:0} · 공격력 +${b.hp>0?BUILDINGS.fort.firepower*b.level:0} · ${b.hp===0?'파손·수리 필요':b.disconnected?'정착지 미연결·비활성':b.status==='ACTIVE'?'가동':`${b.status==='UPGRADING'?'개량':'건설'} 중 (${Math.max(0,b.completeDay-app.world.dayIndex)}일)`}`}))
   ]));
   if(tileDefenses.length){const stats=regionalMilitaryStats(app.world,t.id),mean=fortressWorldAverages(app.world);box.append(make('div',{class:'inspector-note',text:`세계 요새 지역 평균 R ${mean.resistance.toFixed(1)} · A ${mean.firepower.toFixed(1)} / 상대 표시 R ${(fortressThickness(stats.resistance,mean.resistance)*100).toFixed(0)}% · A ${(fortressThickness(stats.firepower,mean.firepower)*100).toFixed(0)}%`}));}
   if(occupation){
@@ -7372,7 +7513,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
