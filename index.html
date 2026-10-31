@@ -564,13 +564,29 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 .era-info-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}.era-info-head strong{color:#d7ece6;font-size:14px}.era-info-head small{color:#9dbac6;font-size:11px}.era-check{font-size:11px;color:#b2c7d0;padding:2px 0}.era-check.met{color:#9adabc}
 .era-world-card{margin-bottom:16px}.world-era-list{display:grid;gap:6px}.era-distribution{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.era-count{background:#192c3b;border:1px solid #345263;border-radius:9px;padding:9px 5px;display:grid;gap:3px;text-align:center}.era-count span{font-size:10px;color:#a8c0c9}.era-count strong{font-size:18px;color:#e6f4eb}.era-nation-row{width:100%;display:flex;align-items:center;gap:9px;text-align:left;color:#d6e8eb;background:#182b3b;border:1px solid #334c5e;border-radius:7px;padding:8px 10px}.era-nation-row strong{flex:1;font-size:12px}.era-nation-row span:last-child{font-size:11px;color:#a8c7bf}
 @media(max-width:420px){.era-distribution{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V0.4B — standalone world chronicle, six-tab responsive navigation. */
+.chronicle-panel{padding:22px}.chronicle-filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:13px 0}
+.chronicle-filter-grid label{display:grid;gap:5px;font-size:12px;color:#9db7c5}
+.chronicle-filter-grid select{width:100%;min-width:0;padding:9px 10px;background:#10283a;color:#e5f2f1;border:1px solid #426779;border-radius:8px;font:inherit}
+.chronicle-scope{color:#91abb9;font-size:11px;line-height:1.6;margin:8px 0 16px}
+.chronicle-timeline{display:grid;gap:8px;min-height:120px}.chronicle-entry{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;background:#162b3b;border:1px solid #324b5e;border-radius:10px;padding:13px 14px}
+.chronicle-symbol{width:30px;height:30px;display:grid;place-items:center;background:#254252;color:#bfe7d5;border-radius:8px;font-size:16px}
+.chronicle-entry-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:#9db5c4}
+.chronicle-entry-main{display:grid;gap:5px;min-width:0}.chronicle-entry-text{font-size:13px;font-weight:600;color:#e5efef;line-height:1.6;overflow-wrap:anywhere}
+.chronicle-entry-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.chronicle-entry-actions button{background:#244654;color:#ddf3e9;border:1px solid #49837f;border-radius:6px;font-size:11px;padding:4px 9px;cursor:pointer}
+.chronicle-recent{padding:16px 20px;margin-top:14px}.chronicle-recent>summary{font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.recent-activity-list{display:grid;gap:5px;max-height:420px;overflow-y:auto;margin-top:12px}.recent-activity-item{font-size:11px;color:#b3c7cf;padding:8px;border-top:1px solid #2c4252;line-height:1.55}
+@media(min-width:721px){body.atlas-mode .bottom-tabs .bottom-tab{min-width:72px;padding:6px 8px}}
+@media(max-width:720px){.chronicle-panel{padding:13px}.chronicle-entry{padding:11px;gap:8px}.chronicle-filter-grid{gap:7px}.chronicle-recent{padding:13px}body.atlas-mode .bottom-tabs{width:min(338px,calc(100vw - 107px));max-width:calc(100vw - 107px)}body.atlas-mode .bottom-tab{font-size:9px;padding:5px 1px}body.atlas-mode .bottom-tab span{font-size:15px}}
+@media(max-width:390px){body.atlas-mode .bottom-tabs{width:calc(100vw - 94px);max-width:calc(100vw - 94px)}body.atlas-mode #tab-map .atlas-legend-toggle{min-width:76px!important;font-size:10px!important}.chronicle-filter-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <div class="shell">
 <header class="topbar">
-<div class="identity"><button type="button" id="atlasFocusToggle" class="logo-icon" aria-label="전체 UI 숨기기" aria-pressed="false" title="지도 집중 모드">◈</button><div><div class="brand-name">VILOB <span>LIGHT</span></div><div class="brand-caption">Village Observer <b id="gameVersionLabel">V0.3G2</b> <span class="alpha">ALPHA</span></div></div></div>
+<div class="identity"><button type="button" id="atlasFocusToggle" class="logo-icon" aria-label="전체 UI 숨기기" aria-pressed="false" title="지도 집중 모드">◈</button><div><div class="brand-name">VILOB <span>LIGHT</span></div><div class="brand-caption">Village Observer <b id="gameVersionLabel">V0.4B</b> <span class="alpha">ALPHA</span></div></div></div>
 <div class="time-controls">
 <div class="time-wrap"><span class="time-hint">WORLD TIME</span><strong id="timeLabel">1년 · 1분기 · 1일</strong></div>
 <div aria-label="시뮬레이션 시간 조작" class="controls">
@@ -593,7 +609,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT V0.3G2</span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4B</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -604,10 +620,10 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 <details class="sidebar-card engagement-collapsible" id="engagementListCard"><summary class="occupation-summary"><span><span class="eyebrow">ACTIVE ENGAGEMENTS</span><strong>⚔ 진행 중인 교전</strong> <small id="engagementCount">0건</small></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-list occupation-scroll" id="engagementList"></div></details>
 <section class="sidebar-card war-audit-card" aria-label="E4 전쟁 통합 진단"><div class="card-heading"><div><div class="eyebrow">E4 WAR & DIPLOMACY AUDIT</div><h2>전쟁·외교 장기 진단</h2></div><span class="small-label" id="warAuditYearCount">0년 기록</span></div><div class="military-economy-summary" id="warAuditSummary"></div><div class="file-actions"><button class="text-button" type="button" id="warAuditJsonBtn">↓ 진단 JSON</button><button class="text-button" type="button" id="warAuditCsvBtn">↓ 연간 CSV</button></div><p class="scope-note">연 1회 기록 · 최근 180개 연도 · 과거 E3 세이브는 E4 적용 이후부터 수집. 군사비는 실제 납부액이 아닌 발생 비용(체납 포함)입니다.</p></section>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div id="warHistoryList" class="military-list"></div><nav id="warHistoryPager" class="war-history-pager" aria-label="종전 기록 페이지"></nav></section>
-</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 최근 세계사를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19" selected>19 × 19 · 기본 · 7개국</option><option value="39x21">39 × 21 · 와이드 · 12개국</option><option value="100x100">100 × 100 · 대형 시험 · 12개국</option></select></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener">↗ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19" selected>19 × 19 · 기본 · 7개국</option><option value="39x21">39 × 21 · 와이드 · 12개국</option><option value="100x100">100 × 100 · 대형 시험 · 12개국</option></select></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener">↗ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
-<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="history-card"><div><div class="eyebrow">CHRONICLE</div><h2>세계 연대기</h2></div><div class="chronicle" id="chronicle"></div></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.3G · 재개발·기술·상위 장비·산악 도로</h2></div><span class="small-label">0.3G</span></div>
+<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.3G · 재개발·기술·상위 장비·산악 도로</h2></div><span class="small-label">0.3G</span></div>
 <div class="milestone"><span class="tick">✓</span><span>19×19 / 39×21 시드 지도·7 / 12개국·SIM 계측</span></div>
 <div class="milestone"><span class="tick">✓</span><span>데이터 기반 AI·영토 응집도·개척 비용</span></div>
 <div class="milestone"><span class="tick">✓</span><span>집계 인구·정착지 행정 거점·지도자</span></div><div class="milestone"><span class="tick">✓</span><span>정착지 타일 밀집도·공간 수요·확장 비용·병합 보존</span></div>
@@ -618,16 +634,22 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 <div class="milestone"><span class="tick">✓</span><span>V0.3E1C · 동맹 10년·제3국 외교 긴장·외교 AI 비용 판단</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.3G · 합동 전투 편제 수 중립성 및 사기·피해 회계 개선</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3H1 · 동위치 다중 편제 합동 전투·개별 피해/후퇴·연합 회계</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G2 · 가시 타일 렌더링·정적 배경 캐시·모바일 메모리 제한</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G1 · 지도 프레임 병합·시설/군대 계산 캐시·요새 정보 캐시·방어선 HP 표시 수정</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G · 부분 점령 영토 양도·시설 재연결·패전군 회복·요새 HP/수리/파괴</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.3F3F · 공성 유효 시간 누적·패전군 재출동 준비도</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3E · 압도적 승리 시 패주 피해·전투 기록/회계 반영</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3D · 실질 요새 방어선·전략적 요새 AI·고비용 요새</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3 · 교역 의존도·차단 경제 압박·국가별 위험 지표</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F2 · 도로 연결망 규모·개선율 생산 보너스·장거리 도로 AI·성능 계측</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F1 · 정착지 노동 가동률·발전도·도로 생산성·지역 경제 통계</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E4 · 연간 전쟁 외교 통계·지원국 군사비 장부·JSON/CSV 진단</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E3 · 다자 평화협정·연합 보상·전체 참전국 전쟁사</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E2 · 공격 참전·진영별 통행·보급·공동 작전·연합 점령</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E1C1 · 황금빛 요새선·완화된 외교 국경선·UI 전용 보정</span></div>
-<div class="milestone"><span class="tick">✓</span><span>하단 5탭·지도에서 보기·국가별 비교 통계</span></div><div class="milestone"><span class="tick">✓</span><span>징집 보병·창병·궁병·무기·방어구</span></div><p class="scope-note">도로·군사 보급·정착지 연결·전쟁사 기록이 적용됩니다. 기존 정착지·시설·전투·점령 시스템과 SIM 계측은 유지합니다. 일반 주민과 병사는 수치로만 관리하며 AI와 플레이어는 동일한 행동 비용 규칙을 사용합니다.</p></section></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD COMPARISON</div><h1>통계</h1><p>현재 세계의 국가별 규모를 각 국가의 고유 색상으로 비교합니다.</p></div><section class="sidebar-card comparison-card"><div class="card-heading"><div><div class="eyebrow">NATION COMPARISON</div><h2>국가별 비교</h2></div><span class="small-label">실시간 현재 값</span></div><div aria-label="비교 지표" class="comparison-controls" id="comparisonControls" role="group"><button class="chip selected" data-metric="population" type="button">인구</button><button class="chip" data-metric="territory" type="button">영토</button><button class="chip" data-metric="gold" type="button">Gold</button><button class="chip" data-metric="military" type="button">군사력</button><button class="chip" data-metric="exports" type="button">수출액</button><button class="chip" data-metric="imports" type="button">수입액</button></div><label class="comparison-sort-control">정렬 <select id="comparisonSort" aria-label="국가 통계 정렬"><option value="default">기본 순서</option><option value="desc">내림차순 ↓</option></select></label><div class="comparison-rows" id="comparisonRows"></div><p class="scope-note">군사력은 살아 있는 부대의 기초 전투력 합계로, 지형·상대·전투 단계에 따른 보정은 포함하지 않습니다.</p></section></section></main>
-<footer class="footer"><span>VILOB LIGHT · 독립 시뮬레이션 프로젝트</span><span>Core V0.4A · 정적 웹 · PC / 모바일</span></footer>
-<nav aria-label="게임 주요 메뉴" class="bottom-tabs"><button id="atlasTabsToggle" class="atlas-tabs-toggle" type="button" aria-label="하단 탭 접기" aria-expanded="true" title="하단 탭 접기">›</button><button aria-current="page" class="bottom-tab active" data-tab="map" type="button"><span aria-hidden="true">▦</span>지도</button><button class="bottom-tab" data-tab="nation" type="button"><span aria-hidden="true">⚑</span>국가</button><button class="bottom-tab" data-tab="military" type="button"><span aria-hidden="true">⚔</span>군사</button><button class="bottom-tab" data-tab="world" type="button"><span aria-hidden="true">◎</span>세계</button><button class="bottom-tab" data-tab="statistics" type="button"><span aria-hidden="true">▥</span>통계</button></nav></div>
+<div class="milestone"><span class="tick">✓</span><span>하단 5탭·지도에서 보기·국가별 비교 통계</span></div><div class="milestone"><span class="tick">✓</span><span>징집 보병·창병·궁병·무기·방어구</span></div><p class="scope-note">도로·군사 보급·정착지 연결·전쟁사 기록이 적용됩니다. 기존 정착지·시설·전투·점령 시스템과 SIM 계측은 유지합니다. 일반 주민과 병사는 수치로만 관리하며 AI와 플레이어는 동일한 행동 비용 규칙을 사용합니다.</p></section></section><section class="tab-panel" id="tab-chronicle"><div class="section-title"><div class="eyebrow">HISTORICAL CHRONICLE</div><h1>연대기</h1><p>국가가 남긴 시대 전환·기술·개척·외교·전쟁의 역사를 추적합니다.</p></div>
+<section class="sidebar-card chronicle-panel" aria-label="세계 장기 역사 기록">
+  <div class="card-heading"><div><div class="eyebrow">WORLD HISTORY</div><h2>역사 기록</h2></div><span class="small-label" id="chronicleTotal">0건</span></div>
+  <div class="chronicle-filter-grid"><label>관련 국가<select id="chronicleNationFilter" aria-label="역사 국가 필터"><option value="all">모든 국가</option></select></label><label>사건 유형<select id="chronicleKindFilter" aria-label="역사 사건 유형 필터"><option value="all">전체 사건</option><option value="era">시대 전환</option><option value="war">전쟁 개시·참전</option><option value="peace">종전·평화협정</option><option value="diplomacy">외교·동맹</option><option value="technology">기술 연구</option><option value="settlement">개척·정착지</option><option value="leader">지도자 교체</option><option value="fall">국가 멸망</option></select></label></div>
+  <p class="chronicle-scope" id="chronicleScope"></p><div id="chronicleTimeline" class="chronicle-timeline" aria-live="polite"></div><nav id="chroniclePager" class="war-history-pager" aria-label="연대기 페이지"></nav>
+</section><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div id="recentActivityList" class="recent-activity-list"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD COMPARISON</div><h1>통계</h1><p>현재 세계의 국가별 규모를 각 국가의 고유 색상으로 비교합니다.</p></div><section class="sidebar-card comparison-card"><div class="card-heading"><div><div class="eyebrow">NATION COMPARISON</div><h2>국가별 비교</h2></div><span class="small-label">실시간 현재 값</span></div><div aria-label="비교 지표" class="comparison-controls" id="comparisonControls" role="group"><button class="chip selected" data-metric="population" type="button">인구</button><button class="chip" data-metric="territory" type="button">영토</button><button class="chip" data-metric="gold" type="button">Gold</button><button class="chip" data-metric="military" type="button">군사력</button><button class="chip" data-metric="exports" type="button">수출액</button><button class="chip" data-metric="imports" type="button">수입액</button></div><label class="comparison-sort-control">정렬 <select id="comparisonSort" aria-label="국가 통계 정렬"><option value="default">기본 순서</option><option value="desc">내림차순 ↓</option></select></label><div class="comparison-rows" id="comparisonRows"></div><p class="scope-note">군사력은 살아 있는 부대의 기초 전투력 합계로, 지형·상대·전투 단계에 따른 보정은 포함하지 않습니다.</p></section></section></main>
+<footer class="footer"><span>VILOB LIGHT · 독립 시뮬레이션 프로젝트</span><span>Core <span id="footerVersionLabel">V0.4B</span> · 정적 웹 · PC / 모바일</span></footer>
+<nav aria-label="게임 주요 메뉴" class="bottom-tabs"><button id="atlasTabsToggle" class="atlas-tabs-toggle" type="button" aria-label="하단 탭 접기" aria-expanded="true" title="하단 탭 접기">›</button><button aria-current="page" class="bottom-tab active" data-tab="map" type="button"><span aria-hidden="true">▦</span>지도</button><button class="bottom-tab" data-tab="nation" type="button"><span aria-hidden="true">⚑</span>국가</button><button class="bottom-tab" data-tab="military" type="button"><span aria-hidden="true">⚔</span>군사</button><button class="bottom-tab" data-tab="world" type="button"><span aria-hidden="true">◎</span>세계</button><button class="bottom-tab" data-tab="statistics" type="button"><span aria-hidden="true">▥</span>통계</button><button class="bottom-tab" data-tab="chronicle" type="button"><span aria-hidden="true">▤</span>연대기</button></nav></div>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script>
 
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.4A';
+const VERSION = 'V0.4B';
+// Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
 /** F3F: siege days are credited only when occupation remains uncontested. */
@@ -971,6 +993,7 @@ const tech=TECHNOLOGY_BY_ID[n.technology.currentResearch];
     if(n.technology.progress>=tech.cost){
       n.technology.unlocked.push(tech.id);n.technology.currentResearch=null;n.technology.progress=0;
       w.events.push({dayIndex:w.dayIndex,text:`${n.name}: ${tech.name} 연구 완료`,kind:'technology'});
+      recordHistoricalEvent(w,'technology',w.events[w.events.length-1].text,[n.id]);
       if(w.events.length>180)w.events.splice(0,w.events.length-180);
       refreshApCaps(w);
     }
@@ -1006,6 +1029,40 @@ function chooseAIResearch(w,nationId){
 
 
 
+// --- V0.4B / src/sim/historical-chronicle.js ---
+// The 180-event activity feed is deliberately distinct from this bounded, persistent history.
+const CHRONICLE_MAX=2000;
+const CHRONICLE_KINDS=Object.freeze(['era','technology','settlement','diplomacy','leader','fall','war','peace']);
+function initialHistoricalChronicle(){return {nextId:0,dropped:0,entries:[]};}
+function historicalNationIds(w,text){
+  // Match names present in the original event text, not current political state.
+  return w.nations.filter(n=>text.includes(n.name)).map(n=>n.id);
+}
+function recordHistoricalEvent(w,kind,text,nationIds=null,sourceKey=null){
+  if(!CHRONICLE_KINDS.includes(kind))return;
+  const h=w.historicalChronicle;
+  if(!h)return; // Legacy intermediary worlds before V0.4B migration.
+  const ids=[...new Set((nationIds??historicalNationIds(w,text)).filter(id=>Number.isInteger(id)&&w.nations[id]))];
+  h.entries.push({id:h.nextId++,dayIndex:w.dayIndex,kind,text,nationIds:ids,sourceKey});
+  if(h.entries.length>CHRONICLE_MAX){const excess=h.entries.length-CHRONICLE_MAX;h.entries.splice(0,excess);h.dropped+=excess;}
+}
+function validateHistoricalChronicle(w){
+  const h=w.historicalChronicle;
+  if(!h||!Number.isSafeInteger(h.nextId)||h.nextId<0||!Number.isSafeInteger(h.dropped)||h.dropped<0||
+    !Array.isArray(h.entries)||h.entries.length>CHRONICLE_MAX)return false;
+  let last=-1;
+  for(const e of h.entries){
+    if(!e||!Number.isSafeInteger(e.id)||e.id<=last||e.id>=h.nextId||
+      !Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||
+      !CHRONICLE_KINDS.includes(e.kind)||typeof e.text!=='string'||e.text.length>600||
+      !Array.isArray(e.nationIds)||e.nationIds.length>w.nations.length||
+      new Set(e.nationIds).size!==e.nationIds.length||e.nationIds.some(id=>!Number.isInteger(id)||!w.nations[id])||
+      !(e.sourceKey===null||typeof e.sourceKey==='string'&&e.sourceKey.length<=80))return false;
+    last=e.id;
+  }
+  return true;
+}
+
 // --- V0.4A / src/sim/civilization-eras.js ---
 // Historic technology tiers remain research difficulty, not civilization eras.
 const CIVILIZATION_ERAS=Object.freeze({
@@ -1035,6 +1092,7 @@ function processCivilizationEraQuarter(w){
     if(!n.active||n.civilization.era!=='ancient'||!medievalReadiness(w,n).ready)continue;
     n.civilization={era:'medieval',eraReachedDay:w.dayIndex};
     w.events.push({dayIndex:w.dayIndex,text:`${n.name}: 고대에서 중세로 진입했습니다.`,kind:'era'});
+    recordHistoricalEvent(w,'era',w.events[w.events.length-1].text,[n.id],`era:${n.id}:medieval`);
     if(w.events.length>180)w.events.splice(0,w.events.length-180);
     w.changeSeq++;
   }
@@ -3950,7 +4008,11 @@ function canPassMilitaryTile(w,id,t){
 }
 const nationManpower=(w,id)=>w.armies.filter(a=>a.nationId===id).reduce((s,a)=>s+manpower(a),0);
 const ownArmyCount=(w,id)=>w.armies.filter(a=>a.nationId===id).length;
-function event(w,text,kind='war'){w.events.push({dayIndex:w.dayIndex,text,kind});if(w.events.length>180)w.events.shift();w.changeSeq++;}
+function event(w,text,kind='war'){
+  w.events.push({dayIndex:w.dayIndex,text,kind});if(w.events.length>180)w.events.shift();
+  if(kind==='fall'||kind==='diplomacy'&&/상호 방위 동맹을 체결|동맹을 해제|동맹 기간 만료|동맹 갱신/.test(text)||kind==='war'&&/참전했습니다/.test(text))recordHistoricalEvent(w,kind,text);
+  w.changeSeq++;
+}
 function spawnCommander(w,nationId){
   const syll=['카르','렌','세','에르','다','미','델','로','아르','베','테','시'];
   const ending=['딘','안','온','릭','렌','미르','리아','아','드','스'];
@@ -4420,6 +4482,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   if(w.warHistory.length>200)w.warHistory.shift();
   const verdict=tier==='WHITE'?'백지 평화':`${winner.name} ${ {LIMITED:'제한적 승리',CLEAR:'명확한 승리',DECISIVE:'결정적 승리'}[tier]}`;
   event(w,`${participants.attackers.map(id=>participantNames[id]).join('·')} VS ${participants.defenders.map(id=>participantNames[id]).join('·')} 평화협정: ${verdict} · 승점 차 ${Math.abs(advantage).toFixed(2)} · 영토 ${count}타일 · 배상 ${reparations}G · 휴전 ${truce/DAYS_PER_YEAR}년.`,'peace');
+  recordHistoricalEvent(w,'peace',w.events[w.events.length-1].text,warMembers(war),`war:${war.id}:end`);
   return result;
 }
 
@@ -4490,7 +4553,7 @@ function executeMilitaryAction(w,nationId,act){
     const war={id:w.nextWarId++,attackerId:nationId,defenderId:act.targetNationId,startedDay:w.dayIndex,lastBattleDay:w.dayIndex,score:0,battleCount:0,casualties:{},battleCasualties:{},occupationCasualties:{},supplyCasualties:{},battleWins:{},occupationCount:0,
       goal:chooseWarGoal(w,nationId,act.targetNationId),defenderGoal:defenseGoal(),sides:{attackers:[nationId],defenders:[act.targetNationId]},fatigue:{[nationId]:0,[act.targetNationId]:0},
       lastCasualties:{[nationId]:0,[act.targetNationId]:0},pendingPeace:null,nextPeaceOfferDay:0};
-    w.wars.push(war);requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);adjustRelation(w,nationId,act.targetNationId,-30);event(w,`${n.name}이(가) ${w.nations[act.targetNationId].name}에 선전포고했습니다. (목표: ${war.goal.type==='SETTLEMENT'?'정착지':'국경 영토'} 확보)`,'war');return {ok:true,warId:war.id};
+    w.wars.push(war);requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);adjustRelation(w,nationId,act.targetNationId,-30);event(w,`${n.name}이(가) ${w.nations[act.targetNationId].name}에 선전포고했습니다. (목표: ${war.goal.type==='SETTLEMENT'?'정착지':'국경 영토'} 확보)`,'war');recordHistoricalEvent(w,'war',w.events[w.events.length-1].text,[nationId,act.targetNationId],`war:${war.id}:start`);return {ok:true,warId:war.id};
   }
   if(act.type==='OFFER_PEACE'){
     const war=atWar(w,nationId,act.targetNationId);
@@ -5235,6 +5298,7 @@ function canExecuteNationAction(world,nationId,action,metrics=null){
 }
 function recordActionEvent(world,text,kind='growth'){
   world.events.push({dayIndex:world.dayIndex,text,kind});
+  if(kind==='settlement'&&text.includes('설립했습니다'))recordHistoricalEvent(world,'settlement',text);
   if(world.events.length>180)world.events.splice(0,world.events.length-180);
 }
 function advanceLevel(s){
@@ -5426,7 +5490,7 @@ function reseedAtBoundary(world,entropySource){
   world.changeSeq++;
   return true;
 }
-function recordSimEvent(world,text,kind){world.events.push({dayIndex:world.dayIndex,text,kind});if(world.events.length>180)world.events.shift();}
+function recordSimEvent(world,text,kind){world.events.push({dayIndex:world.dayIndex,text,kind});if(world.events.length>180)world.events.shift();if(kind==='leader')recordHistoricalEvent(world,kind,text);}
 function makeLeader(world,nationId){
   const n=world.nations[nationId];
   const name=syllablesA[Math.floor(rand(world)*syllablesA.length)]+syllablesB[Math.floor(rand(world)*syllablesB.length)];
@@ -6196,7 +6260,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   const world={schema:'vilob-light-v03d',version:VERSION,seed:seedString,size,height,dayIndex:0,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,nations,settlements,trade:initialTrade(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
-    nextSettlementId:settlements.length,changeSeq:0,aiDecisions:[],strategyReports:{dayIndex:0,nations:{}},events:[{dayIndex:0,text:size===19?'일곱 국가가 세계에 정착했습니다.':'열두 국가가 세계에 정착했습니다.',kind:'world'}]};
+    nextSettlementId:settlements.length,changeSeq:0,aiDecisions:[],strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:size===19?'일곱 국가가 세계에 정착했습니다.':'열두 국가가 세계에 정착했습니다.',kind:'world'}]};
   for(const n of nations)makeLeader(world,n.id);
   refreshApCaps(world);
   return world;
@@ -6212,6 +6276,7 @@ function worldSummary(world){
 function validateWorld(w){
   const fail=what=>{throw Error('월드 검증 실패: '+what);};
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
+  if(!validateHistoricalChronicle(w))fail('장기 역사 기록');
   if(!validateTrade(w))fail('국제 교역 상태');
   if(!validateStrategicReports(w))fail('AI 전략 진단');
   if(!((w.size===19&&w.height===19)||(w.size===39&&w.height===21)||(w.size===100&&w.height===100)||(w.size===80&&w.height===120))||!Number.isSafeInteger(w.dayIndex)||w.dayIndex<0)fail('시간·크기');
@@ -6418,9 +6483,10 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&parsed.version==='V0.4A')parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
@@ -6440,6 +6506,7 @@ function deserializeWorld(json){
   }
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const n of parsed.nations)if(n.civilization===undefined)n.civilization=migratedCivilization(parsed,n);
+    parsed.historicalChronicle??=initialHistoricalChronicle(); // Past warHistory shown by UI; do not fabricate other events.
   }
   for(const e of parsed.engagements||[])h1EnsureMembers(parsed,e);
   refreshApCaps(parsed);
@@ -7670,7 +7737,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v04a-world';
+const SAVE_KEY='vilob-light-v04b-world';
+const PREVIOUS_04A_SAVE_KEY='vilob-light-v04a-world';
 const PREVIOUS_G2_SAVE_KEY='vilob-light-v03g2-world';
 const PREVIOUS_G_SAVE_KEY='vilob-light-v03g-world';
 const PREVIOUS_F3G_SAVE_KEY='vilob-light-v03f3g-world';
@@ -7689,7 +7757,8 @@ const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
 function persistProfiles(){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(persistentProfiles));return true;}catch{showToast('세계에는 반영됐지만 브라우저 라이브러리는 저장되지 않았습니다. JSON 내보내기를 이용하세요.');return false;}}
 try{const stored=localStorage.getItem(PROFILE_KEY);if(stored)persistentProfiles=validateCustomLibrary(JSON.parse(stored));}catch(error){console.warn('AI 프로필 라이브러리 읽기 실패:',error.message);}
-const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'default',activeTab:'map',nationSubtab:'overview',warHistoryPage:1,frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),lastNationPanelId:null,lastNationPanelSubtab:null};
+for(const id of ['gameVersionLabel','atlasVersionLabel','footerVersionLabel']){const el=document.getElementById(id);if(el)el.textContent=VERSION;}document.title=`VILOB Light · ${VERSION}`;
+const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'default',activeTab:'map',nationSubtab:'overview',warHistoryPage:1,chroniclePage:1,chronicleKind:'all',chronicleNation:'all',frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),lastNationPanelId:null,lastNationPanelSubtab:null};
 const map=new MapRenderer($('worldCanvas'),{
   onSelect:id=>selectTile(id),
   onHover:id=>{$('coordinateLabel').textContent=id===null?'X — · Y —':`X ${id%app.world.size} · Y ${Math.floor(id/app.world.size)}`;}
@@ -8439,15 +8508,89 @@ function renderWorldTrade(){
   ]));
   target.replaceChildren(...(rows.length?rows:[make('div',{class:'muted-line',text:'아직 국제 거래 기록이 없습니다.'})]));
 }
-function renderChronicle(){
-  const latest=app.world.events[app.world.events.length-1];
-  const time=timeAt(latest?.dayIndex??0);
-  $('chronicle').replaceChildren(make('span',{class:'event-tag',text:`${time.year}년 ${time.quarter}분기`}),make('span',{text:latest?.text||'기록이 없습니다.'}));
+const HISTORICAL_LABELS={era:'시대 전환',technology:'기술',settlement:'개척',diplomacy:'외교',leader:'지도자',fall:'멸망',war:'전쟁',peace:'종전'};
+const HISTORICAL_GLYPHS={era:'◆',technology:'✦',settlement:'⌂',diplomacy:'◇',leader:'♛',fall:'✝',war:'⚔',peace:'⚑'};
+function historicalWarIds(h){return [...new Set([...(h.participants?.attackers||[h.attackerId]),...(h.participants?.defenders||[h.defenderId])])];}
+function historicalRecords(w){
+  const saved=w.historicalChronicle?.entries||[],used=new Set(saved.map(e=>e.sourceKey).filter(Boolean));
+  const records=saved.map(e=>({...e,key:`saved:${e.id}`,warId:e.sourceKey?.startsWith('war:')?Number(e.sourceKey.split(':')[1]):null}));
+  const add=(war,kind,day,text)=>{
+    const key=`war:${war.id}:${kind==='war'?'start':'end'}`;
+    if(!used.has(key))records.push({key,dayIndex:day,kind,text,nationIds:historicalWarIds(war),warId:war.id});
+  };
+  // Era transition dates are canonical and survive bounded chronicle eviction.
+  for(const nation of w.nations){
+    const day=nation.civilization?.eraReachedDay,key=`era:${nation.id}:medieval`;
+    if(nation.civilization?.era==='medieval'&&day!==null&&day!==undefined&&!used.has(key))
+      records.push({key,dayIndex:day,kind:'era',text:`${nation.name}: 고대에서 중세로 진입했습니다.`,nationIds:[nation.id],warId:null});
+  }
+  for(const war of w.warHistory||[]){
+    const names=war.participantNames||{};
+    const a=war.attackerName||names[war.attackerId]||w.nations[war.attackerId]?.name||'공격국';
+    const b=war.defenderName||names[war.defenderId]||w.nations[war.defenderId]?.name||'방어국';
+    add(war,'war',war.startedDay,`${a} · ${b} 전쟁 발발`);
+    add(war,'peace',war.endedDay,`${a} · ${b} 전쟁 종결 · ${war.tier==='WHITE'?'백지 평화':war.winnerName||'승리국'} · 영토 ${war.acquiredTiles||0}타일 · 배상 ${war.reparations||0}G`);
+  }
+  for(const war of w.wars||[]){
+    const key=`war:${war.id}:start`;
+    if(!used.has(key))records.push({key,dayIndex:war.startedDay,kind:'war',text:`${w.nations[war.attackerId]?.name||'공격국'} · ${w.nations[war.defenderId]?.name||'방어국'} 전쟁 발발 (진행 중)`,nationIds:[...new Set([...(war.sides?.attackers||[war.attackerId]),...(war.sides?.defenders||[war.defenderId])])],warId:war.id});
+  }
+  records.sort((a,b)=>b.dayIndex-a.dayIndex||String(b.key).localeCompare(String(a.key)));
+  return records;
 }
+function resetChronicleFilterOptions(){
+  const filter=$('chronicleNationFilter');filter.replaceChildren(new Option('모든 국가','all'));
+  for(const n of app.world.nations)filter.append(new Option(n.name+(n.active?'':' · 멸망'),String(n.id)));
+  filter.value=app.chronicleNation; if(filter.value!==app.chronicleNation){app.chronicleNation='all';filter.value='all';}
+  $('chronicleKindFilter').value=app.chronicleKind;
+}
+function renderChronicle(){
+  if(!app.world)return;
+  // Only draw this relatively costly document view while it is visible.
+  if(app.activeTab!=='chronicle')return;
+  const w=app.world,h=w.historicalChronicle;
+  resetChronicleFilterOptions();
+  const allRecords=historicalRecords(w);
+  const records=allRecords.filter(e=>(app.chronicleKind==='all'||e.kind===app.chronicleKind)&&
+    (app.chronicleNation==='all'||e.nationIds.includes(Number(app.chronicleNation))));
+  const size=20,pages=Math.max(1,Math.ceil(records.length/size));
+  app.chroniclePage=Math.max(1,Math.min(pages,app.chroniclePage));
+  const visible=records.slice((app.chroniclePage-1)*size,app.chroniclePage*size);
+  $('chronicleTotal').textContent=`${records.length}건 / 총 ${allRecords.length}건`;
+  $('chronicleScope').textContent=`장기 기록 ${h.entries.length}/${CHRONICLE_MAX}건 · 오래된 기록 생략 ${h.dropped}건 · 종전 기록은 기존 전쟁사와 연결 · V0.4A 이전 비전쟁 사건은 복원하지 않습니다.`;
+  const items=visible.map(e=>{
+    const t=timeAt(e.dayIndex),body=make('div',{class:'chronicle-entry-main'});
+    body.append(make('div',{class:'chronicle-entry-head'},[
+      make('span',{text:`${t.year}년 · ${t.quarter}분기 · ${t.day}일`}),
+      make('span',{text:HISTORICAL_LABELS[e.kind]||e.kind})]),make('div',{class:'chronicle-entry-text',text:e.text}));
+    const linked=(w.warHistory||[]).some(h=>h.id===e.warId);
+    if(linked&&['peace','war'].includes(e.kind)){
+      const btn=make('button',{type:'button',text:'전쟁사 상세 보기'});
+      btn.addEventListener('click',()=>{
+        const order=w.warHistory.slice().reverse().findIndex(h=>h.id===e.warId);
+        app.warHistoryPage=Math.floor(order/5)+1;
+        $('warHistoryList').dataset.historyKey='';navigation.activate('military');
+        requestAnimationFrame(()=>{const item=$('warHistoryList').querySelector(`[data-war-id="${e.warId}"]`);if(item){item.open=true;item.scrollIntoView({behavior:'smooth',block:'center'});}});
+      });
+      body.append(make('div',{class:'chronicle-entry-actions'},[btn]));
+    }
+    return make('article',{class:'chronicle-entry'},[make('div',{class:'chronicle-symbol',text:HISTORICAL_GLYPHS[e.kind]||'•'}),body]);
+  });
+  $('chronicleTimeline').replaceChildren(...(items.length?items:[make('div',{class:'muted-line',text:'선택한 조건에 해당하는 역사 기록이 없습니다.'})]));
+  const prev=make('button',{type:'button',class:'war-page-button',text:'← 이전'}),next=make('button',{type:'button',class:'war-page-button',text:'다음 →'});
+  prev.disabled=app.chroniclePage===1;next.disabled=app.chroniclePage===pages;
+  prev.addEventListener('click',()=>{app.chroniclePage--;renderChronicle();});
+  next.addEventListener('click',()=>{app.chroniclePage++;renderChronicle();});
+  $('chroniclePager').replaceChildren(prev,make('span',{class:'war-page-status',text:`${app.chroniclePage} / ${pages} 페이지`}),next);
+  const recent=w.events.slice(-30).reverse();
+  $('recentActivityCount').textContent=`${w.events.length}건`;
+  $('recentActivityList').replaceChildren(...recent.map(e=>{const t=timeAt(e.dayIndex);return make('div',{class:'recent-activity-item',text:`${t.year}년 ${t.quarter}분기 ${t.day}일 · ${e.text}`});}));
+}
+
 function setWorld(world){
   app.lastNationPanelId=null;app.lastNationPanelSubtab=null;
   app.running=false;app.accumulator=0;app.lastFrame=null;app.world=world;app.simMeter=createSimMeter();
-  app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;
+  app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;app.chroniclePage=1;app.chronicleKind='all';app.chronicleNation='all';
   // Default wide worlds to whole-map framing instead of clipping the east/west coasts.
   atlasMapCover=world.size===19;
   map.setWorld(world);syncAtlasLayout();
@@ -8497,6 +8640,7 @@ function step(days){
     if(app.activeTab==='military'){renderWarfare();renderMilitaryRoster();renderWarHistory();}
     if(app.activeTab==='statistics')renderComparisons();
     if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();}
+    if(app.activeTab==='chronicle')renderChronicle();
   }
 }
 function animate(now){
@@ -8531,7 +8675,10 @@ navigation=bindTabs(tab=>{
   else if(tab==='military'){renderMilitaryRoster();renderWarfare();renderWarHistory();}
   else if(tab==='statistics')renderComparisons();
   else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();}
+  else if(tab==='chronicle'){renderChronicle();window.scrollTo(0,0);}
 });
+$('chronicleNationFilter').addEventListener('change',e=>{app.chronicleNation=e.target.value;app.chroniclePage=1;renderChronicle();});
+$('chronicleKindFilter').addEventListener('change',e=>{app.chronicleKind=e.target.value;app.chroniclePage=1;renderChronicle();});
 $('comparisonSort').addEventListener('change',e=>{app.comparisonSort=e.target.value;renderComparisons();});
 for(const control of document.querySelectorAll('[data-metric]'))control.addEventListener('click',()=>{
   app.comparisonMetric=control.dataset.metric;
@@ -8623,7 +8770,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
