@@ -679,7 +679,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.4E5';
+const VERSION = 'V0.4E5A';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3690,9 +3690,25 @@ const E5_BETRAY_GRACE=5*E5_YEAR;
 const E5_SCAR_DURATION=10*E5_YEAR;
 function e5Memory(w,a,b){return w.diplomacy?.memory?.[pairKey(a,b)]||null;}
 function e5TreatyAge(w,a,b){const t=allianceBetween(w,a,b);return t?Math.max(0,w.dayIndex-t.formedDay):0;}
-function e5TrustBonus(w,a,b){
- const age=e5TreatyAge(w,a,b);
+function e5TrustForAge(age){
  return Math.min(24,Math.max(0,Math.floor((age-2*E5_YEAR)/E5_YEAR))*3);
+}
+function e5TrustBonus(w,a,b){return e5TrustForAge(e5TreatyAge(w,a,b));}
+/** E5A: evaluate renewal at the *last active treaty day*, rather than after
+ * allianceBetween() has already stopped recognizing the expiring agreement.
+ * No temporary world mutation or persisted cache changes are needed. */
+function e5aRenewalDecision(w,t){
+ const lastActiveDay=t.endsDay-1;
+ const trust=e5TrustForAge(Math.max(0,lastActiveDay-t.formedDay));
+ const parts=e5RelationComponents(w,t.a,t.b);
+ // Remove the post-expiration trust (normally zero) before adding the final
+ // valid day's trust. Decompose before clamping to preserve +/-100 semantics.
+ const relation=bound(parts.base+parts.capital+parts.border+parts.betrayal+parts.tension+trust,-100,100);
+ const p=w.aiProfiles[w.nations[t.a].aiProfileId],q=w.aiProfiles[w.nations[t.b].aiProfileId];
+ const cooperation=(p?.diplomacy?.cooperation??50)+(q?.diplomacy?.cooperation??50);
+ const reason=w.nations[t.a].controller!=='AI'||w.nations[t.b].controller!=='AI'?'PLAYER_CONTROLLED':
+   relation<25?'LOW_RELATION':cooperation<95?'LOW_COOPERATION':'RENEW';
+ return {relation,cooperation,trust,reason,ok:reason==='RENEW'};
 }
 function e5BorderPenalty(w,a,b){return a===b?0:quarterBorderPairs(w).has(pairKey(a,b))?-8:0;}
 function e5BetrayalScar(w,a,b){
@@ -4016,11 +4032,23 @@ function runAllianceQuarter(w,execute,frontiers=quarterBorderPairs(w)){
  d.calls=d.calls.filter(x=>w.dayIndex-x.dayIndex<10*DAYS_PER_YEAR);
  for(const t of d.alliances.slice()){
    if(!w.nations[t.a]?.active||!w.nations[t.b]?.active){e5EndAlliance(w,t,'NATION_FALL');continue;}
-   if(t.endsDay<=w.dayIndex){
-     const p=w.aiProfiles[w.nations[t.a].aiProfileId],q=w.aiProfiles[w.nations[t.b].aiProfileId];
-     if(w.nations[t.a].controller==='AI'&&w.nations[t.b].controller==='AI'&&relationOf(w,t.a,t.b)>=25&&
-       ((p?.diplomacy?.cooperation??50)+(q?.diplomacy?.cooperation??50))>=95){t.endsDay=w.dayIndex+ALLIANCE_TERM;e5InvalidateRelations(w);e5AppendHistory(w,'ALLIANCE_RENEW',t.a,t.b,{formedDay:t.formedDay});event(w,`${w.nations[t.a].name}·${w.nations[t.b].name} 동맹 갱신`,'diplomacy');}
-     else {e5EndAlliance(w,t,'EXPIRED');repatriateAfterAllianceEnds(w,t.a,t.b);event(w,`${w.nations[t.a].name}·${w.nations[t.b].name} 동맹 기간 만료`,'diplomacy');}
+   if(t.endsDay<=w.dayIndex+DAYS_PER_QUARTER){
+     const decision=e5aRenewalDecision(w,t);
+     if(decision.ok){
+       // A renewal extends the scheduled end; the first signing date remains
+       // unchanged for continuous trust and betrayal eligibility.
+       t.endsDay=Math.max(t.endsDay,w.dayIndex)+ALLIANCE_TERM;
+       e5InvalidateRelations(w);
+       e5AppendHistory(w,'ALLIANCE_RENEW',t.a,t.b,{formedDay:t.formedDay,renewalRelation:decision.relation,renewalCooperation:decision.cooperation});
+       event(w,`${w.nations[t.a].name}·${w.nations[t.b].name} 동맹 갱신`,'diplomacy');
+     }else if(t.endsDay<=w.dayIndex){
+       e5EndAlliance(w,t,'EXPIRED');
+       // Attach bounded diagnostic fields to the existing END event; no new
+       // log array or per-day scans. This explains non-renewals in long runs.
+       Object.assign(d.history[d.history.length-1],{renewalBlocker:decision.reason,renewalRelation:decision.relation,renewalCooperation:decision.cooperation});
+       repatriateAfterAllianceEnds(w,t.a,t.b);
+       event(w,`${w.nations[t.a].name}·${w.nations[t.b].name} 동맹 기간 만료`,'diplomacy');
+     }
    }
  }
  for(const call of d.calls.filter(c=>c.status==='PENDING')){
@@ -7126,10 +7154,10 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
@@ -7156,7 +7184,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -8401,7 +8429,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v04e5-world';
+const SAVE_KEY='vilob-light-v04e5a-world';
+const PREVIOUS_04E5_SAVE_KEY='vilob-light-v04e5-world';
 const PREVIOUS_04E4_SAVE_KEY='vilob-light-v04e4-world';
 const PREVIOUS_04E3_SAVE_KEY='vilob-light-v04e3-world';
 const PREVIOUS_04E2_SAVE_KEY='vilob-light-v04e2-world';
@@ -8962,7 +8991,7 @@ function renderNationOverview(){
   if(memoryEvents.length){
     diplomacy.append(make('h3',{text:'외교 관계 기억 · 최근 8건'}));
     for(const e of memoryEvents){const other=w.nations[e.a===n.id?e.b:e.a],year=Math.floor(e.dayIndex/DAYS_PER_YEAR)+1;
-      const description=e.kind==='BETRAYAL'?`${w.nations[e.betrayerId]?.name} → ${w.nations[e.victimId]?.name} 동맹 배신`:e.kind==='ALLIANCE_END'?`${other?.name} 동맹 종료 (${(e.durationDays/DAYS_PER_YEAR).toFixed(1)}년 · ${e.reason})`:e.kind==='ALLIANCE_START'?`${other?.name} 동맹 체결`:e.kind==='ALLIANCE_RENEW'?`${other?.name} 동맹 갱신`:e.kind;
+      const description=e.kind==='BETRAYAL'?`${w.nations[e.betrayerId]?.name} → ${w.nations[e.victimId]?.name} 동맹 배신`:e.kind==='ALLIANCE_END'?`${other?.name} 동맹 종료 (${(e.durationDays/DAYS_PER_YEAR).toFixed(1)}년 · ${e.reason}${e.renewalBlocker?' · 갱신: '+({LOW_RELATION:'우호도 부족',LOW_COOPERATION:'협력 성향 부족',PLAYER_CONTROLLED:'직접 조종'}[e.renewalBlocker]||e.renewalBlocker)+' · 우호도 '+e.renewalRelation+'/25 · 협력 '+e.renewalCooperation+'/95':''})`:e.kind==='ALLIANCE_START'?`${other?.name} 동맹 체결`:e.kind==='ALLIANCE_RENEW'?`${other?.name} 동맹 갱신`:e.kind;
       diplomacy.append(make('div',{class:'muted-line',text:`${year}년 · ${description}`}));
     }
   }
@@ -9633,7 +9662,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
