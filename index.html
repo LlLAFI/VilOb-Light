@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.4E3</title>
+<title>VILOB Light · V0.4E4</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -612,7 +612,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 
 <div class="shell">
 <header class="topbar">
-<div class="identity"><button type="button" id="atlasFocusToggle" class="logo-icon" aria-label="전체 UI 숨기기" aria-pressed="false" title="지도 집중 모드">◈</button><div><div class="brand-name">VILOB <span>LIGHT</span></div><div class="brand-caption">Village Observer <b id="gameVersionLabel">V0.4E3</b> <span class="alpha">ALPHA</span></div></div></div>
+<div class="identity"><button type="button" id="atlasFocusToggle" class="logo-icon" aria-label="전체 UI 숨기기" aria-pressed="false" title="지도 집중 모드">◈</button><div><div class="brand-name">VILOB <span>LIGHT</span></div><div class="brand-caption">Village Observer <b id="gameVersionLabel">V0.4E4</b> <span class="alpha">ALPHA</span></div></div></div>
 <div class="time-controls">
 <div class="time-wrap"><span class="time-hint">WORLD TIME</span><strong id="timeLabel">1년 · 1분기 · 1일</strong></div>
 <div aria-label="시뮬레이션 시간 조작" class="controls">
@@ -635,7 +635,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E3</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E4</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연빨강: 전쟁 · 회백색: 휴전</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -667,11 +667,11 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
   <div class="card-heading"><div><div class="eyebrow">WORLD HISTORY</div><h2>역사 기록</h2></div><span class="small-label" id="chronicleTotal">0건</span></div>
   <div class="chronicle-filter-grid"><label>관련 국가<select id="chronicleNationFilter" aria-label="역사 국가 필터"><option value="all">모든 국가</option></select></label><label>사건 유형<select id="chronicleKindFilter" aria-label="역사 사건 유형 필터"><option value="all">전체 사건</option><option value="era">시대 전환</option><option value="war">전쟁 개시·참전</option><option value="peace">종전·평화협정</option><option value="diplomacy">외교·동맹</option><option value="technology">기술 연구</option><option value="settlement">개척·정착지</option><option value="leader">지도자 교체</option><option value="fall">국가 멸망</option></select></label></div>
   <p class="chronicle-scope" id="chronicleScope"></p><div id="chronicleTimeline" class="chronicle-timeline" aria-live="polite"></div><nav id="chroniclePager" class="war-history-pager" aria-label="연대기 페이지"></nav>
-</section><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div id="recentActivityList" class="recent-activity-list"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD ANALYTICS · V0.4E3</div><h1>통계</h1><p>세계 전체의 규모와 문명 분포를 관찰하고, 국가별 규모·효율·발전 수준을 비교합니다.</p></div>
+</section><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div id="recentActivityList" class="recent-activity-list"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD ANALYTICS · V0.4E4</div><h1>통계</h1><p>세계 전체의 규모와 문명 분포를 관찰하고, 국가별 규모·효율·발전 수준을 비교합니다.</p></div>
 <section class="sidebar-card v04c-summary-card" aria-label="세계 통계 요약"><div class="card-heading"><div><div class="eyebrow">WORLD SNAPSHOT</div><h2>세계 전체 현황</h2></div><span class="small-label" id="v04cStatsDate">현재 시점</span></div><div class="v04c-world-summary" id="v04cWorldSummary"></div><p class="scope-note">생존 국가 기준 · Gold·군사력은 현재 보유량 · 시계열 통계가 아닙니다.</p></section>
 <section class="sidebar-card v04c-era-stats-card" aria-label="시대별 통계"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION DISTRIBUTION</div><h2>시대별 세계 분포</h2></div><span class="small-label">현재 상태</span></div><div class="v04c-era-selector" id="v04cEraMetricControls" role="group" aria-label="문명 분포 단위"><button type="button" class="selected" data-era-metric="countries">국가 수</button><button type="button" data-era-metric="population">인구</button><button type="button" data-era-metric="territory">영토</button></div><div id="v04cEraSummary" class="v04c-era-summary"></div><p class="scope-note">멸망 국가는 제외 · 근대/미래 시대는 아직 진입 불가 · 인구는 현재 정착지 인구 기준입니다.</p></section>
 <section class="sidebar-card comparison-card"><div class="card-heading"><div><div class="eyebrow">NATION COMPARISON</div><h2>국가별 상세 비교</h2></div><span class="small-label">현재 시점</span></div><div class="v04c-stat-categories" id="v04cStatCategories" role="group" aria-label="통계 분야"></div><div class="v04c-stat-toolbar"><label>비교 지표<select id="v04cMetricSelect" aria-label="통계 비교 지표"></select></label><label>정렬<select id="comparisonSort" aria-label="국가 통계 정렬"><option value="default">기본 순서</option><option value="desc">내림차순 ↓</option><option value="asc">오름차순 ↑</option></select></label><label>표시 국가<select id="v04cNationFilter" aria-label="통계 국가 선택"><option value="all">전체 국가</option><option value="active">생존 국가만</option></select></label><label>값 표시<select id="v04cValueMode" aria-label="통계 수치 표시 방식"><option value="absolute">실제 값</option><option value="share">전체 대비 비중</option></select></label></div><div id="v04cMetricInfo" class="v04c-metric-info"></div><div id="comparisonRows" class="comparison-rows" aria-live="polite"></div><p class="scope-note" id="v04cStatsScope">현재 세계 상태로 집계합니다.</p></section></section></main>
-<footer class="footer"><span>VILOB LIGHT · 독립 시뮬레이션 프로젝트</span><span>Core <span id="footerVersionLabel">V0.4E3</span> · 정적 웹 · PC / 모바일</span></footer>
+<footer class="footer"><span>VILOB LIGHT · 독립 시뮬레이션 프로젝트</span><span>Core <span id="footerVersionLabel">V0.4E4</span> · 정적 웹 · PC / 모바일</span></footer>
 <nav aria-label="게임 주요 메뉴" class="bottom-tabs"><button id="atlasTabsToggle" class="atlas-tabs-toggle" type="button" aria-label="하단 탭 접기" aria-expanded="true" title="하단 탭 접기">›</button><button aria-current="page" class="bottom-tab active" data-tab="map" type="button"><span aria-hidden="true">▦</span>지도</button><button class="bottom-tab" data-tab="nation" type="button"><span aria-hidden="true">⚑</span>국가</button><button class="bottom-tab" data-tab="military" type="button"><span aria-hidden="true">⚔</span>군사</button><button class="bottom-tab" data-tab="world" type="button"><span aria-hidden="true">◎</span>세계</button><button class="bottom-tab" data-tab="statistics" type="button"><span aria-hidden="true">▥</span>통계</button><button class="bottom-tab" data-tab="chronicle" type="button"><span aria-hidden="true">▤</span>연대기</button></nav></div>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script>
@@ -679,7 +679,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.4E3';
+const VERSION = 'V0.4E4';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1428,7 +1428,7 @@ function reinforcementPrice(army,amount,unitId=null){
 // --- src/sim/military-policy.js ---
 /** V0.2B1: country-level military demography. No individual soldier objects. */
 const militaryClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const newMilitaryState=()=>({barracksAiDiagnostics:[],mobilizationDiagnostics:[],reserveReady:0,training:[],lastTrainingDay:-30,unpaidQuarters:0,desertedLastQuarter:0,upkeepPaidLastQuarter:0,operationArrears:0,operationPaidThisQuarter:0,operationBilledThisQuarter:0,operationPaidLastQuarter:0,operationBilledLastQuarter:0,totalOperationPaid:0,barracksFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0}});
+const newMilitaryState=()=>({barracksAiDiagnostics:[],mobilizationDiagnostics:[],e4RecoveryLastOrderDay:-120,reserveReady:0,training:[],lastTrainingDay:-30,unpaidQuarters:0,desertedLastQuarter:0,upkeepPaidLastQuarter:0,operationArrears:0,operationPaidThisQuarter:0,operationBilledThisQuarter:0,operationPaidLastQuarter:0,operationBilledLastQuarter:0,totalOperationPaid:0,barracksFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0}});
 const militaryPopulation=(w,id)=>{
  const civilians=w.settlements.reduce((sum,s)=>sum+(s.ownerId===id?s.population:0),0);
  const n=w.nations[id];
@@ -2268,9 +2268,20 @@ function canAfford(nation,price){
   return Boolean(nation?.active&&price&&nation.apUnits>=price.apUnits&&nation.gold>=price.gold&&nation.knowledge>=price.knowledge&&
     RESOURCE_KEYS.every(k=>(nation.resources[k]||0)>=(price.resources[k]||0)));
 }
-// V0.4E3: forward-only AP budget ledger; figures are in tenths, not floating AP.
+// V0.4E4: forward-only AP budget ledger; figures are in tenths, not floating AP.
 const V04E3_AP_WINDOW=12;
-const V04E3_AUX_TYPES=new Set(['BUILD_ROAD','UPGRADE_ROAD','DEVELOP_SETTLEMENT','EXPAND_SETTLEMENT','MERGE_SETTLEMENTS','REPAIR_FORT']);
+const V04E3_AUX_TYPES=new Set(['BUILD_ROAD','UPGRADE_ROAD','DEVELOP_SETTLEMENT','EXPAND_SETTLEMENT','MERGE_SETTLEMENTS','REPAIR_FORT','INVEST_KNOWLEDGE']);
+function v04e4AuxEligible(c,n,q){
+  if(V04E3_AUX_TYPES.has(c.action.type))return true;
+  if(c.action.type!=='UPGRADE_FACILITY'||!['farm','lumber','quarry','mine','house'].includes(c.facility))return false;
+  // Only modest economic recovery projects, never high-level or military construction.
+  if(c.fromLevel!==1)return false;
+  if(c.facility==='farm')return n.resources.food<Math.max(30,(q.foodConsumed||0)*2)||n.foodPressure<.95||(q.produced?.food||0)<(q.foodConsumed||0);
+  if(c.facility==='house')return false; // housing urgency remains a major decision.
+  if(c.facility==='lumber')return n.resources.wood<Math.max(30,(q.produced?.wood||0)*12);
+  if(c.facility==='quarry')return n.resources.stone<Math.max(30,(q.produced?.stone||0)*12);
+  return n.resources.iron<Math.max(20,(q.produced?.iron||0)*12);
+}
 function v04e3ApCategory(type){
  if(['START_RESEARCH','INVEST_KNOWLEDGE'].includes(type))return 'research';
  if(['TRAIN_RESERVES','RECRUIT_ARMY','REINFORCE_ARMY','REARM_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE'].includes(type))return 'military';
@@ -2281,7 +2292,7 @@ function v04e3OpenQuarter(n,dayIndex,offered){
  n.apLedger??={history:[]};
  const before=n.apUnits,received=Math.min(offered,Math.max(0,n.apMaxUnits-before));
  const rec={dayIndex,opening:before,cap:n.apMaxUnits,offered,received,wasted:offered-received,
-   spent:{civil:0,military:0,research:0},blockedAP:0,main:0,auxiliary:0,mainDeferred:0,mainMissed:0,reserved:0};
+   spent:{civil:0,military:0,research:0},blockedAP:0,main:0,auxiliary:0,mainDeferred:0,mainMissed:0,reserved:0,bestBlockedReason:'NONE',bestBlockedAction:'',auxCandidates:0,auxExecutable:0,auxBlocked:0,mainCandidates:0,mainExecutable:0};
  n.apLedger.history.push(rec);
  if(n.apLedger.history.length>V04E3_AP_WINDOW)n.apLedger.history.shift();
 }
@@ -2300,10 +2311,10 @@ function v04e3MilitaryReserve(w,n){
  return urgent?10:short>=Math.max(120,target*.20)?5:0;
 }
 function v04e3ApCsv(w){
- const fields=['nationId','nation','dayIndex','year','quarter','opening','cap','offered','received','wasted','spentCivil','spentMilitary','spentResearch','blockedAP','reserved','main','mainDeferred','mainMissed','auxiliary'];
+ const fields=['nationId','nation','dayIndex','year','quarter','opening','cap','offered','received','wasted','spentCivil','spentMilitary','spentResearch','blockedAP','reserved','main','mainDeferred','mainMissed','auxiliary','auxCandidates','auxExecutable','auxBlocked','mainCandidates','mainExecutable','bestBlockedReason','bestBlockedAction'];
  const lines=[fields];
  for(const n of w.nations)for(const r of n.apLedger?.history||[])lines.push([n.id,n.name,r.dayIndex,Math.floor(r.dayIndex/120)+1,Math.floor((r.dayIndex%120)/30)+1,
-   ...['opening','cap','offered','received','wasted'].map(k=>r[k]/10),r.spent.civil/10,r.spent.military/10,r.spent.research/10,r.blockedAP,r.reserved/10,r.main,r.mainDeferred,r.mainMissed,r.auxiliary]);
+   ...['opening','cap','offered','received','wasted'].map(k=>r[k]/10),r.spent.civil/10,r.spent.military/10,r.spent.research/10,r.blockedAP,r.reserved/10,r.main,r.mainDeferred,r.mainMissed,r.auxiliary,r.auxCandidates||0,r.auxExecutable||0,r.auxBlocked||0,r.mainCandidates||0,r.mainExecutable||0,r.bestBlockedReason||'NONE',r.bestBlockedAction||'']);
  return lines.map(row=>row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');
 }
 function payCost(nation,price,category='civil'){
@@ -5195,6 +5206,46 @@ function freeRecruitmentSettlements(w,nationId){
   return w.settlements.filter(s=>safeSettlement(w,s,nationId)&&s.population>=30)
     .sort((a,b)=>b.population-a.population||a.id-b.id);
 }
+// E4A: recovery is a logistics decision, never a teleport or free resupply.
+// A bounded shortlist keeps the extra A* work independent of world army count.
+function v04e4RecoveryCandidates(w,n,settlements,ready,deficit){
+  if(ready<1||deficit<=0||militaryAtWar(w,n.id))return [];
+  const current=w.armies.filter(a=>a.nationId===n.id&&a.status==='READY'&&a.engagementId===null&&
+    !isOccupying(w,a)&&manpower(a)<150&&manpower(a)>0&&w.tiles[a.tileId]?.ownerId===n.id);
+  const activeTowns=new Set(settlements.map(s=>s.coreTileId));
+  return current.filter(a=>{
+    if(activeTowns.has(a.tileId))return false;
+    if(a.order)return false; // do not overwrite a march, occupation or existing recovery.
+    if(a.operation?.type==='REARM'&&w.dayIndex-(a.operation.assignedDay||0)<120)return false;
+    return true;
+  }).sort((a,b)=>manpower(a)-manpower(b)||a.id-b.id);
+}
+function v04e4OrderRecovery(w,n,settlements,field,execute,diag){
+  if(!field.length||!settlements.length)return;
+  // Single bounded replacement per nation per YEAR; keep peacetime garrison
+  // routing dominant rather than launching numerous extra paths each quarter.
+  if(w.dayIndex-(n.military.e4RecoveryLastOrderDay??-120)<120)return;
+  if(w.armies.some(a=>a.nationId===n.id&&a.operation?.type==='REARM'&&w.dayIndex-(a.operation.assignedDay||0)<120))return;
+  let issued=0;
+  for(const army of field.slice(0,2)){
+    if(issued>=1)break;
+    // Choose only 4 nearby reachable-looking towns; the actual MOVE_ARMY
+    // legality performs full pathfinding only for those few finalists.
+    const reachable=garrisonDistances(w,army.tileId,n.id);
+    const towns=settlements.filter(s=>reachable[s.coreTileId]>=0).map(s=>
+      ({s,d:reachable[s.coreTileId]})).sort((a,b)=>a.d-b.d||b.s.population-a.s.population||a.s.id-b.s.id).slice(0,2);
+    let ok=false;
+    const previousAPFailures=diag.failReasons.AP_SHORTAGE||0;
+    for(const {s} of towns){
+      if(execute(w,n.id,{type:'MOVE_ARMY',armyId:army.id,targetTileId:s.coreTileId}).ok){
+        army.operation={type:'REARM',targetTileId:s.coreTileId,assignedDay:w.dayIndex};
+        issued++;n.military.e4RecoveryLastOrderDay=w.dayIndex;diag.recoveryOrders++;ok=true;break;
+      }
+    }
+    // An unaffordable MOVE order is not a pathfinding failure.
+    if(!ok&&(diag.failReasons.AP_SHORTAGE||0)===previousAPFailures)diag.recoveryNoRoute++;
+  }
+}
 function levyReinforcement(army,amount){
   const levies=army.units.filter(u=>u.typeId==='levy');
   if(!levies.length)return null;
@@ -5203,7 +5254,6 @@ function levyReinforcement(army,amount){
 }
 function provisionArmy(w,n,army,settlement,deficit,execute){
   const amount=Math.min(deficit,150-manpower(army),100,n.military.reserveReady);
-  if(amount<4)return false;
   if(amount<=0)return false;
   const proposed={type:'REINFORCE_ARMY',armyId:army.id,settlementId:settlement.id,amount};
   if(execute(w,n.id,proposed).ok)return true;
@@ -5236,14 +5286,14 @@ function militaryReadiness(w,nationId){
 }
 // V0.4E2: observation only. No random calls and no changes to action legality.
 const V04E2_DIAG_WINDOW=12;
-const V04E2_DIAG_REASONS=new Set(['TARGET_MET','NO_SAFE_SETTLEMENT','NO_READY_RESERVES','TRAINING_LIMIT','ARMY_LIMIT','EQUIPMENT_SHORTAGE','GOLD_SHORTAGE','AP_SHORTAGE','REINFORCEMENT_BLOCKED','NO_RECOVERY_ROUTE','FISCAL_PRESSURE','TRAINING_PENDING','POPULATION_LIMIT','ACTION_REJECTED','RECRUITED','REINFORCED','TRAINING_STARTED','RECOVERY_ORDERED','DEMOBILIZED','NO_ACTION']);
+const V04E2_DIAG_REASONS=new Set(['TARGET_MET','NO_SAFE_SETTLEMENT','NO_READY_RESERVES','TRAINING_LIMIT','ARMY_LIMIT','EQUIPMENT_SHORTAGE','GOLD_SHORTAGE','AP_SHORTAGE','REINFORCEMENT_BLOCKED','NO_RECOVERY_ROUTE','FISCAL_PRESSURE','TRAINING_PENDING','POPULATION_LIMIT','FORMATION_LIMIT','RECOVERY_NEEDED','RECOVERY_IN_PROGRESS','REINFORCEMENT_AVAILABLE','ACTION_REJECTED','RECRUITED','REINFORCED','TRAINING_STARTED','RECOVERY_ORDERED','DEMOBILIZED','NO_ACTION']);
 const V04E2_DIAG_ACTIONS=['TRAIN_RESERVES','RECRUIT_ARMY','REINFORCE_ARMY','MOVE_ARMY','DISBAND_ARMY'];
 function v04e2NewMobilizationReport(w,n){
  const men=activeManpower(w,n.id),target=militaryStrengthTarget(w,n.id);
  return {dayIndex:w.dayIndex,target,men,deficit:Math.max(0,target-men),capacity:militaryCapacity(w,n.id),
   ready:n.military.reserveReady,pending:pendingManpower(n),trainingLimit:trainingRate(w,n.id),
   armyCount:ownArmyCount(w,n.id),armyLimit:armyLimit(w,n.id),gold:n.gold,
-  militaryUpkeep:militaryUpkeep(w,n.id),safeSettlements:0,
+  militaryUpkeep:militaryUpkeep(w,n.id),safeSettlements:0,recoveryEligible:0,recoveryOrders:0,recoveryInProgress:0,recoveryNoRoute:0,understrengthFormations:0,
   attempts:{},success:{},failed:{},failReasons:{},reason:'NO_ACTION'};
 }
 function v04e2FailureReason(w,n,action){
@@ -5273,7 +5323,7 @@ function v04e2FinishMobilization(w,n,r){
   n.military.mobilizationDiagnostics.splice(0,n.military.mobilizationDiagnostics.length-V04E2_DIAG_WINDOW);
 }
 function v04e2MobilizationCsv(w){
- const fields=['nationId','nation','dayIndex','year','quarter','reason','failReasons','barracksAiReason','barracksAiGenerated','barracksAiLegal','barracksAiAffordable','barracksAiSelected','target','men','deficit','finalMen','capacity','ready','pending','trainingLimit','armyCount','armyLimit','gold','finalGold','militaryUpkeep','safeSettlements'];
+ const fields=['nationId','nation','dayIndex','year','quarter','reason','failReasons','barracksAiReason','barracksAiGenerated','barracksAiLegal','barracksAiAffordable','barracksAiSelected','target','men','deficit','finalMen','capacity','ready','pending','trainingLimit','armyCount','armyLimit','gold','finalGold','militaryUpkeep','safeSettlements','recoveryEligible','recoveryOrders','recoveryInProgress','recoveryNoRoute','understrengthFormations'];
  const rows=[fields.concat(V04E2_DIAG_ACTIONS.flatMap(t=>['attempts_'+t,'success_'+t,'failed_'+t]))];
  for(const n of w.nations)for(const r of n.military.mobilizationDiagnostics||[]){
   const b=n.military.barracksAiDiagnostics?.find(x=>x.dayIndex===r.dayIndex);
@@ -5360,6 +5410,10 @@ function peacetimeBorderPosts(w,nationId){
   return posts.sort((a,b)=>b.score-a.score||a.tileId-b.tileId);
 }
 function assignPeacetimeGarrisons(w,execute){
+  // E4 performance: garrison routes are identical for armies starting at the
+  // same tile within one quarter; ownership and fort positions cannot change
+  // during this assignment pass. Cache only for this call, never in saves.
+  const distancesMemo=new Map(),routeMemo=new Map();
   for(const nation of w.nations){
     if(!nation.active||nation.controller!=='AI'||militaryAtWar(w,nation.id))continue;
     const posts=peacetimeBorderPosts(w,nation.id);if(!posts.length)continue;
@@ -5370,11 +5424,14 @@ function assignPeacetimeGarrisons(w,execute){
     const deployable=armies.slice(0,Math.max(0,armies.length-keepReserve));
     for(const army of deployable){
       // Never interrupt other orders, replenishment trips, or a recent re-positioning.
+      if(army.operation?.type==='REARM'&&manpower(army)<150&&w.dayIndex-(army.operation.assignedDay||0)<120)continue;
       if(army.order&&army.operation?.type!=='BORDER_GARRISON')continue;
       if(army.order&&army.operation?.type==='BORDER_GARRISON'){
         assigned.push(army.order.targetTileId);continue;
       }
-      const distances=garrisonDistances(w,army.tileId,nation.id);
+      const distKey=nation.id+':'+army.tileId;
+      let distances=distancesMemo.get(distKey);
+      if(!distances){distances=garrisonDistances(w,army.tileId,nation.id);distancesMemo.set(distKey,distances);}
       // Cheap shortest-step ranking first, followed by actual road-weighted
       // route checks for the best candidates only. No hidden teleporting.
       const shortlist=[];
@@ -5386,7 +5443,12 @@ function assignPeacetimeGarrisons(w,execute){
       shortlist.sort((a,b)=>b.value-a.value||a.tileId-b.tileId);
       const scored=[];
       for(const post of shortlist.slice(0,8)){
-        const path=landRoute(w,army.tileId,post.tileId,t=>t.ownerId===nation.id&&t.occupiedBy===null,nation.id);
+        const pathKey=distKey+':'+post.tileId;
+        let path=routeMemo.get(pathKey);
+        if(path===undefined){
+          path=landRoute(w,army.tileId,post.tileId,t=>t.ownerId===nation.id&&t.occupiedBy===null,nation.id)||null;
+          routeMemo.set(pathKey,path);
+        }
         if(path)scored.push({...post,value:post.score-.28*(path.length-1)});
       }
       scored.sort((a,b)=>b.value-a.value||a.tileId-b.tileId);
@@ -5504,22 +5566,34 @@ function runMilitaryQuarter(w,execute){
         if(size>=12&&preferredRecruitment(w,n,source,size,w.aiProfiles[n.aiProfileId],recordExec)){diag.reason='RECRUITED';continue;}
       }
     }
+    // E4A: a full formation roster must not hide replenishable field units.
+    // This is a bounded subset of national armies, computed once per quarter.
+    const ownFormations=w.armies.filter(a=>a.nationId===n.id);
+    diag.understrengthFormations=ownFormations.filter(a=>manpower(a)<150).length;
+    const activeTowns=new Set(settlements.map(s=>s.coreTileId));
+    diag.recoveryInProgress=ownFormations.filter(a=>a.operation?.type==='REARM'&&a.order).length;
+    const recoveryCandidates=v04e4RecoveryCandidates(w,n,settlements,ready,deficit);
+    diag.recoveryEligible=recoveryCandidates.length;
+    // Do not break military orders during war. A simple peacetime relocation
+    // costs the standard MOVE_ARMY 0.2 AP and still respects all path rules.
+    // E4A performance budget: at most ~2 nations are eligible to issue
+    // recovery orders per quarter on the 12-nation default map. Rotate fairly.
+    const recoverySlot=((Math.floor(w.dayIndex/30)+n.id)%6===0);
+    if(recoverySlot&&ready>0&&home.length===0&&ownFormations.length>=armyLimit(w,n.id)&&recoveryCandidates.length){
+      v04e4OrderRecovery(w,n,settlements,recoveryCandidates,recordExec,diag);
+      if(diag.recoveryOrders)diag.reason='RECOVERY_ORDERED';
+    }
     // Train only what population, reserve cap, and a reasonable treasury buffer can sustain.
     const need=Math.max(0,target-men-ready-pending);
     const affordable=Math.floor((n.gold-Math.max(40,forecast))/.85);
     const amount=Math.min(need,trainingRate(w,n.id),source.population-12,affordable);
     if(amount>=12){const trained=recordExec(w,n.id,{type:'TRAIN_RESERVES',settlementId:source.id,amount});if(trained.ok)diag.reason='TRAINING_STARTED';}
-    // When every slot is occupied, recall a wounded field unit to a real town for replenishment.
-    if(ready>=4&&home.length===0&&ownArmyCount(w,n.id)>=armyLimit(w,n.id)){
-      const field=w.armies.filter(a=>a.nationId===n.id&&a.status==='READY'&&a.engagementId===null&&!isOccupying(w,a)&&manpower(a)<100&&(!a.order||a.operation?.type==='REARM'));
-      for(const a of field){const town=settlements.map(s=>({s,path:landRoute(w,a.tileId,s.coreTileId,t=>t.ownerId===n.id&&t.occupiedBy===null||t.occupiedBy===n.id,n.id)}))
-        .filter(v=>v.path).sort((x,y)=>x.path.length-y.path.length||x.s.id-y.s.id)[0];
-        if(town&&recordExec(w,n.id,{type:'MOVE_ARMY',armyId:a.id,targetTileId:town.s.coreTileId}).ok){diag.reason='RECOVERY_ORDERED';a.operation={type:'REARM',targetTileId:town.s.coreTileId,assignedDay:w.dayIndex};break;}}
-    }
     if(diag.reason==='NO_ACTION'){
       if(diag.failed.REINFORCE_ARMY)diag.reason='REINFORCEMENT_BLOCKED';
       else if(diag.failed.RECRUIT_ARMY)diag.reason=Object.keys(diag.failReasons)[0]||'ACTION_REJECTED';
-      else if(diag.armyCount>=diag.armyLimit)diag.reason='ARMY_LIMIT';
+      else if(diag.recoveryInProgress)diag.reason='RECOVERY_IN_PROGRESS';
+      else if(diag.recoveryNoRoute)diag.reason='NO_RECOVERY_ROUTE';
+      else if(diag.armyCount>=diag.armyLimit)diag.reason=diag.understrengthFormations?'RECOVERY_NEEDED':'FORMATION_LIMIT';
       else if(n.military.lastTrainingDay===v04eQuarterDay(w))diag.reason='TRAINING_LIMIT';
       else if(pending>0)diag.reason='TRAINING_PENDING';
       else if(ready<12)diag.reason='NO_READY_RESERVES';
@@ -6126,7 +6200,7 @@ function buildingCandidates(world,n){
       if(kind==='house'&&poorFood>0&&foodCover<1&&occupancy<.98)utility*=.08;
       if(utility<=.02)continue;
       admitted.set(kind,used+1);
-      candidates.push({action:{type:'UPGRADE_FACILITY',buildingId:b.id},utility,facility:kind});
+      candidates.push({action:{type:'UPGRADE_FACILITY',buildingId:b.id},utility,facility:kind,fromLevel:b.level});
     }
   }
 
@@ -6301,6 +6375,9 @@ function runQuarter(world){
     if(research)executeNationAction(world,n.id,{type:'START_RESEARCH',technologyId:research});
     let best=null,bestScore=-Infinity,remoteFounding=null,remoteFoundingScore=-Infinity;
     const diagnosticCandidates=[],auxOptions=[];
+    let strongestBlockedScore=-Infinity;
+    const apRecordAtSelection=v04e3ApReport(n),auxQuarter=n.lastQuarter||projectedQuarter(world,n);
+    if(apRecordAtSelection){apRecordAtSelection.auxCandidates=0;apRecordAtSelection.auxExecutable=0;apRecordAtSelection.auxBlocked=0;apRecordAtSelection.mainCandidates=0;apRecordAtSelection.mainExecutable=0;apRecordAtSelection.bestBlockedReason='NONE';apRecordAtSelection.bestBlockedAction='';}
     const barracksDiag={dayIndex:world.dayIndex,generated:0,legal:0,affordable:0,unaffordable:0,chosen:false,reason:'NO_CANDIDATE'};
     for(const c of candidatesForNation(world,n,territory)){
       const barracksCandidate=c.facility==='barracks';
@@ -6308,17 +6385,28 @@ function runQuarter(world){
       const legal=isNationActionLegal(world,n.id,c.action,territory);
       if(barracksCandidate&&legal)barracksDiag.legal++;
       if(!legal)continue;
+      if(apRecordAtSelection)apRecordAtSelection.mainCandidates++;
       const score=actionScore(world,n,profile,leader,c);
       const executable=canExecuteNationAction(world,n.id,c.action,territory);
       if(barracksCandidate){if(executable)barracksDiag.affordable++;else barracksDiag.unaffordable++;}
+      if(!executable&&apRecordAtSelection&&score>strongestBlockedScore){
+        strongestBlockedScore=score;
+        const price=getNationActionCost(world,n.id,c.action,territory);
+        apRecordAtSelection.bestBlockedReason=!price?'NO_PRICE':n.apUnits<price.apUnits?'AP_SHORTAGE':
+          n.gold<price.gold?'GOLD_SHORTAGE':n.knowledge<price.knowledge?'KNOWLEDGE_SHORTAGE':
+          RESOURCE_KEYS.some(k=>(n.resources[k]||0)<(price.resources[k]||0))?'RESOURCE_SHORTAGE':'OTHER_CONSTRAINT';
+        apRecordAtSelection.bestBlockedAction=c.action.type+(c.facility?':'+c.facility:'');
+      }
       if(executable){
+        if(apRecordAtSelection)apRecordAtSelection.mainExecutable++;
         const insert=diagnosticCandidates.findIndex(v=>score>v.score);
         if(insert>=0)diagnosticCandidates.splice(insert,0,{action:c.action.type,score});
         else if(diagnosticCandidates.length<3)diagnosticCandidates.push({action:c.action.type,score});
         if(diagnosticCandidates.length>3)diagnosticCandidates.length=3;
         // Inexpensive civilian actions compete for ONE secondary slot after military.
         const cost=getNationActionCost(world,n.id,c.action,territory);
-        if(V04E3_AUX_TYPES.has(c.action.type)&&cost?.apUnits<=10){
+        if(v04e4AuxEligible(c,n,auxQuarter)&&cost?.apUnits<=16){
+          if(apRecordAtSelection)apRecordAtSelection.auxCandidates++;
           auxOptions.push({action:c.action,score});
           auxOptions.sort((a,b)=>b.score-a.score);
           if(auxOptions.length>6)auxOptions.length=6;
@@ -6330,6 +6418,7 @@ function runQuarter(world){
         remoteFounding=c.action;remoteFoundingScore=score;
       }
     }
+    if(apRecordAtSelection&&apRecordAtSelection.mainCandidates===0)apRecordAtSelection.bestBlockedReason='NO_LEGAL_CANDIDATE';
     const chosen=remoteFounding&&remoteFoundingScore>bestScore*1.05?remoteFounding:best;
     barracksDiag.chosen=Boolean(chosen&&['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY'].includes(chosen.type)&&
       (chosen.buildingType==='barracks'||world.buildings.some(b=>b.id===chosen.buildingId&&b.typeId==='barracks')));
@@ -6368,20 +6457,25 @@ function runQuarter(world){
         if(world.aiDecisions.length>240)world.aiDecisions.splice(0,world.aiDecisions.length-240);
       }else if(apRecord){apRecord.mainMissed++;if(entry.barracksDiag.chosen)entry.barracksDiag.reason='SELECTED_FAILED';}
     }
-    if(!apRecord||apRecord.main<1)continue;
+    if(!apRecord)continue; // E4B: a valid minor action may proceed without a primary.
     const base=entry.original;
+    const baseTownId=base?.settlementId??(base?.buildingId!==undefined?world.buildings.find(b=>b.id===base.buildingId)?.settlementId:undefined);
     for(const item of entry.auxOptions){
       const a=item.action;
       // Never repeat the main action or apply two simultaneous improvements to one location.
       if(base&&a.type===base.type&&a.targetTileId===base.targetTileId&&a.settlementId===base.settlementId&&a.buildingId===base.buildingId)continue;
       if(base&&a.settlementId!==undefined&&a.settlementId===base.settlementId&&['DEVELOP_SETTLEMENT','EXPAND_SETTLEMENT','MERGE_SETTLEMENTS'].includes(base.type))continue;
-      if(!canExecuteNationAction(world,n.id,a))continue;
+      // No duplicate civil improvements to one facility or town in the same quarter.
+      const auxTownId=a.settlementId??(a.buildingId!==undefined?world.buildings.find(b=>b.id===a.buildingId)?.settlementId:undefined);
+      if(base&&baseTownId!==undefined&&auxTownId===baseTownId&&
+        ['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY','DEVELOP_SETTLEMENT','EXPAND_SETTLEMENT'].includes(base.type))continue;
+      if(!canExecuteNationAction(world,n.id,a)){apRecord.auxBlocked++;continue;}
       const price=getNationActionCost(world,n.id,a);
       // A voluntary secondary development must not strand next quarter's
       // necessary 1.0-AP recruitment order, even when current funds are abundant.
-      if(!price||n.apUnits-price.apUnits<15)continue;
+      if(!price||n.apUnits-price.apUnits<15){apRecord.auxBlocked++;continue;}
       const result=executeNationAction(world,n.id,a);
-      if(result.ok){apRecord.auxiliary++;break;}
+      if(result.ok){apRecord.auxiliary++;apRecord.auxExecutable++;break;}
     }
   }
   refreshApCaps(world);
@@ -6906,17 +7000,17 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
     for(const b of parsed.buildings||[])if(b.disconnected===undefined)b.disconnected=false;
     if(f3Migration){if(!parsed.trade||!validateTradeLegacyForMigration(parsed))throw Error('F3 이관: 교역 데이터가 손상되었습니다.');parsed.trade.dependency=initialTradeDependency();}
     parsed.barracksEvents??=[]; // Past ownership changes cannot be reconstructed.
-    for(const n of parsed.nations){ensureCivilFinance(n);n.military.barracksFinance??={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};n.military.mobilizationDiagnostics??=[];n.military.barracksAiDiagnostics??=[];n.apLedger??={history:[]};}
+    for(const n of parsed.nations){ensureCivilFinance(n);n.military.barracksFinance??={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};n.military.mobilizationDiagnostics??=[];n.military.barracksAiDiagnostics??=[];n.military.e4RecoveryLastOrderDay??=-120;n.apLedger??={history:[]};}
     for(const o of parsed.occupations){
       if(o.siegeClockDay===undefined){
         o.siegeClockDay=parsed.dayIndex;o.siegeCreditDays=0;o.siegeEligible=false;
@@ -6934,7 +7028,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -8179,7 +8273,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v04e3-world';
+const SAVE_KEY='vilob-light-v04e4-world';
+const PREVIOUS_04E3_SAVE_KEY='vilob-light-v04e3-world';
 const PREVIOUS_04E2_SAVE_KEY='vilob-light-v04e2-world';
 const PREVIOUS_04E1_SAVE_KEY='vilob-light-v04e1-world';
 const PREVIOUS_04E_SAVE_KEY='vilob-light-v04e-world';
@@ -8411,7 +8506,7 @@ function renderWarfare(){
   const diagTarget=$('militaryMobilizationDiagnostics');
   if(diagTarget){const n=w.nations[app.selectedNationId]||w.nations[0],d=n.military.mobilizationDiagnostics.at(-1);
     const recent=n.military.mobilizationDiagnostics;
-    const summary=d?[['최근 평가일',`${Math.floor(d.dayIndex/120)+1}년 ${Math.floor((d.dayIndex%120)/30)+1}분기`],['대표 판정',d.reason],['현역 / 목표 / 부족',`${d.men} / ${d.target} / ${d.deficit}명`],['훈련완료 / 훈련중',`${d.ready} / ${d.pending}명`],['안전 거점 / 부대 편제',`${d.safeSettlements}곳 / ${d.armyCount}/${d.armyLimit}개`],['실제 시도 / 성공 / 실패',`${Object.values(d.attempts).reduce((a,b)=>a+b,0)} / ${Object.values(d.success).reduce((a,b)=>a+b,0)} / ${Object.values(d.failed).reduce((a,b)=>a+b,0)}회`],['거절 원인별 횟수',Object.entries(d.failReasons).map(([k,v])=>`${k} ${v}`).join(' · ')||'실패 없음'],['병영 AI 후보 진단',(()=>{const b=n.military.barracksAiDiagnostics.at(-1);return b?`${b.reason} · 후보 ${b.generated} / 적법 ${b.legal} / 실행가능 ${b.affordable}`:'계측 시작 전';})()]]:[['진단 시작 전', '이전 저장의 과거 행동은 추정하지 않습니다. 다음 분기부터 기록됩니다.']];
+    const summary=d?[['최근 평가일',`${Math.floor(d.dayIndex/120)+1}년 ${Math.floor((d.dayIndex%120)/30)+1}분기`],['대표 판정',d.reason],['현역 / 목표 / 부족',`${d.men} / ${d.target} / ${d.deficit}명`],['훈련완료 / 훈련중',`${d.ready} / ${d.pending}명`],['안전 거점 / 부대 편제',`${d.safeSettlements}곳 / ${d.armyCount}/${d.armyLimit}개`],['정원 미달 부대 / 복귀 후보',`${d.understrengthFormations||0} / ${d.recoveryEligible||0}개`],['복귀 명령 / 진행 중 / 경로 실패',`${d.recoveryOrders||0} / ${d.recoveryInProgress||0} / ${d.recoveryNoRoute||0}개`],['실제 시도 / 성공 / 실패',`${Object.values(d.attempts).reduce((a,b)=>a+b,0)} / ${Object.values(d.success).reduce((a,b)=>a+b,0)} / ${Object.values(d.failed).reduce((a,b)=>a+b,0)}회`],['거절 원인별 횟수',Object.entries(d.failReasons).map(([k,v])=>`${k} ${v}`).join(' · ')||'실패 없음'],['병영 AI 후보 진단',(()=>{const b=n.military.barracksAiDiagnostics.at(-1);return b?`${b.reason} · 후보 ${b.generated} / 적법 ${b.legal} / 실행가능 ${b.affordable}`:'계측 시작 전';})()]]:[['진단 시작 전', '이전 저장의 과거 행동은 추정하지 않습니다. 다음 분기부터 기록됩니다.']];
     diagTarget.replaceChildren(...summary.map(([label,value])=>make('div',{class:'economy-item'},[make('small',{text:label}),make('strong',{text:value})])));
     const failures=recent.filter(r=>r.deficit>0&&r.reason!=='TARGET_MET').length;
     diagTarget.append(make('div',{class:'scope-note',text:`보존 ${recent.length}/${V04E2_DIAG_WINDOW}분기 · 목표 미달 평가 ${failures}분기 · 군사 AI 행동만 계측` }));
@@ -8422,7 +8517,7 @@ function renderWarfare(){
       ['회복 요청 / 실제 회복',`${apDisplay(r.offered)} / ${apDisplay(r.received)} AP`],['상한 낭비',`${apDisplay(r.wasted)} AP`],
       ['내정 / 군사 / 연구 지출',`${apDisplay(r.spent.civil)} / ${apDisplay(r.spent.military)} / ${apDisplay(r.spent.research)} AP`],
       ['군사 우선 확보 계획',`${apDisplay(r.reserved)} AP (미사용분 반환)`],['주요 / 보조 내정',`${r.main} / ${r.auxiliary}회`],
-      ['주요 내정 연기 / 미실행',`${r.mainDeferred} / ${r.mainMissed}회`],['군사 AP 부족 거절',`${r.blockedAP}회`]]:
+      ['주요 내정 연기 / 미실행',`${r.mainDeferred} / ${r.mainMissed}회`],['내정 후보 적법 / 실행 가능',`${r.mainCandidates||0} / ${r.mainExecutable||0}건`],['보조 내정 후보 / 거절',`${r.auxCandidates||0} / ${r.auxBlocked||0}건`],['최상위 미실행 후보',`${r.bestBlockedReason||'NONE'} · ${r.bestBlockedAction||'-'}`],['군사 AP 부족 거절',`${r.blockedAP}회`]]:
       [['진단 시작 전','새 세계 또는 다음 분기부터 계측합니다.']];
     apTarget.replaceChildren(...items.map(([label,value])=>make('div',{class:'economy-item'},[make('small',{text:label}),make('strong',{text:value})])));
   }
@@ -9347,7 +9442,7 @@ $('newWorldBtn').addEventListener('click',()=>{
 });
 $('worldSizeSelect').addEventListener('change',()=>renderAIEditor());
 $('seedInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('newWorldBtn').click();});
-$('apBudgetCsvBtn').addEventListener('click',()=>{try{download(`vilob-e3-ap-budget-y${timeAt(app.world.dayIndex).year}.csv`,v04e3ApCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('AP CSV 실패: '+e.message);}});
+$('apBudgetCsvBtn').addEventListener('click',()=>{try{download(`vilob-e4-ap-budget-y${timeAt(app.world.dayIndex).year}.csv`,v04e3ApCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('AP CSV 실패: '+e.message);}});
 $('mobilizationCsvBtn').addEventListener('click',()=>{try{download(`vilob-e2-mobilization-y${timeAt(app.world.dayIndex).year}.csv`,v04e2MobilizationCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('동원 진단 CSV 실패: '+e.message);}});
 $('barracksEventsCsvBtn').addEventListener('click',()=>{try{download(`vilob-e2-barracks-events-y${timeAt(app.world.dayIndex).year}.csv`,v04e2BarracksEventsCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('병영 진단 CSV 실패: '+e.message);}});
 $('warAuditJsonBtn').addEventListener('click',()=>{try{download(`vilob-e4-war-audit-y${timeAt(app.world.dayIndex).year}.json`,JSON.stringify(warAuditReport(app.world),null,2),'application/json');}catch(e){showToast('진단 JSON 실패: '+e.message);}});
@@ -9392,7 +9487,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
