@@ -606,6 +606,13 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 @media(max-width:900px){.v04c-world-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.v04c-stat-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.v04c-era-summary{grid-template-columns:1fr}.v04c-stat-toolbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.v04c-stat-toolbar select{font-size:11px}.v04c-summary-item{padding:9px}.v04c-summary-item strong{font-size:17px}.comparison-card .compare-row{grid-template-columns:minmax(67px,88px) 28px minmax(0,1fr) minmax(57px,81px);gap:5px;padding:5px 2px}.comparison-card .compare-name,.comparison-card .compare-value{font-size:10px}.comparison-card .compare-rank{font-size:10px;white-space:nowrap}.v04c-stat-categories button{padding:7px 9px;font-size:11px}}
 .v04c-era-key[hidden]{display:none!important}
+/* V0.5B1: AUTO lives beside manual speed controls, never in the world engine. */
+.auto-speed-button{height:38px;padding:0 9px;min-width:57px;font-size:11px;font-weight:800;letter-spacing:.35px;border:1px solid #416074;background:#172b3c;color:#b8d1df;border-radius:8px;white-space:nowrap}
+.auto-speed-button.active{background:#286d63;border-color:#60aa96;color:#f0fff7}
+.auto-speed-button.auto-safe{background:#65502c;border-color:#ae8a4b;color:#fff0ce}
+body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:48px;font-size:10px}
+@media(max-width:540px){.auto-speed-button{height:34px;padding:0 5px;min-width:49px;font-size:10px;letter-spacing:0}.controls{gap:3px}.speed-group .speed{padding:4px 6px}}
+@media(max-width:410px){body.atlas-mode .topbar .auto-speed-button{min-width:40px;font-size:9px;padding:0 3px}}
 </style>
 </head>
 <body>
@@ -618,6 +625,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 <div aria-label="시뮬레이션 시간 조작" class="controls">
 <button aria-label="재생" class="action-button play" id="playBtn" title="재생">▶ <span>재생</span></button>
 <div aria-label="진행 속도" class="speed-group" role="group"><button aria-pressed="true" class="speed active" data-speed="1">×1</button><button aria-pressed="false" class="speed" data-speed="3">×3</button><button aria-pressed="false" class="speed" data-speed="10">×10</button></div>
+<button type="button" id="autoSpeedBtn" class="auto-speed-button" title="AUTO: 최대 속도 ↔ ×10 보호 제한" aria-label="자동 최대 속도 켜기" aria-pressed="false">AUTO</button>
 <button class="action-button step" id="stepBtn" title="1일 진행">+1일</button>
 <button class="action-button step" id="monthBtn" title="30일 진행">+30일</button>
 </div>
@@ -688,7 +696,7 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.5B';
+const VERSION = 'V0.5B1';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -7425,10 +7433,10 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
@@ -7455,7 +7463,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -7567,6 +7575,28 @@ function createWorldFromMap(input){
 // --- src/core/performance.js ---
 /** VILOB Light SIM/BATCH: no rendering or idle time; perf data is runtime-only. */
 const SIM_BATCH_INTERVAL_MS = 550;
+// V0.5B1: runtime-only adaptive scheduler. The simulation and RNG remain unchanged.
+const AUTO_SPEED_HIGH_MS=1500,AUTO_SPEED_LOW_MS=1000;
+const AUTO_SPEED_CONFIRM=3,AUTO_SPEED_COOLDOWN_MS=2000;
+const AUTO_SPEED_FRAME_BUDGET_MS=12,AUTO_SPEED_MAX_BATCHES=16,AUTO_SPEED_UI_INTERVAL_MS=200;
+function createAutoSpeedState(){return {enabled:false,mode:'MAX',highCount:0,lowCount:0,lastSwitchAt:-Infinity};}
+function updateAutoSpeedMode(auto,simMs,now){
+  if(!auto.enabled||!Number.isFinite(simMs))return false;
+  if(auto.mode==='MAX'){
+    auto.highCount=simMs>AUTO_SPEED_HIGH_MS?auto.highCount+1:0;
+    auto.lowCount=0;
+    if(auto.highCount>=AUTO_SPEED_CONFIRM&&now-auto.lastSwitchAt>=AUTO_SPEED_COOLDOWN_MS){
+      auto.mode='SAFE';auto.highCount=0;auto.lastSwitchAt=now;return true;
+    }
+  }else{
+    auto.lowCount=simMs<AUTO_SPEED_LOW_MS?auto.lowCount+1:0;
+    auto.highCount=0;
+    if(auto.lowCount>=AUTO_SPEED_CONFIRM&&now-auto.lastSwitchAt>=AUTO_SPEED_COOLDOWN_MS){
+      auto.mode='MAX';auto.lowCount=0;auto.lastSwitchAt=now;return true;
+    }
+  }
+  return false;
+}
 function createSimMeter(){
   return {samples:0,simMs:null,msPerDay:null,lastBatchDays:0,lastRawMs:null};
 }
@@ -8732,7 +8762,7 @@ let persistentProfiles=Object.create(null);
 function persistProfiles(){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(persistentProfiles));return true;}catch{showToast('세계에는 반영됐지만 브라우저 라이브러리는 저장되지 않았습니다. JSON 내보내기를 이용하세요.');return false;}}
 try{const stored=localStorage.getItem(PROFILE_KEY);if(stored)persistentProfiles=validateCustomLibrary(JSON.parse(stored));}catch(error){console.warn('AI 프로필 라이브러리 읽기 실패:',error.message);}
 for(const id of ['gameVersionLabel','atlasVersionLabel','footerVersionLabel']){const el=document.getElementById(id);if(el)el.textContent=VERSION;}document.title=`VILOB Light · ${VERSION}`;
-const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'default',v04cStatsGroup:'population',v04cNationFilter:'all',v04cEraMetric:'countries',v04cValueMode:'absolute',v04cStatsCache:null,activeTab:'map',nationSubtab:'overview',warHistoryPage:1,chroniclePage:1,chronicleKind:'all',chronicleNation:'all',frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),lastNationPanelId:null,lastNationPanelSubtab:null};
+const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'default',v04cStatsGroup:'population',v04cNationFilter:'all',v04cEraMetric:'countries',v04cValueMode:'absolute',v04cStatsCache:null,activeTab:'map',nationSubtab:'overview',warHistoryPage:1,chroniclePage:1,chronicleKind:'all',chronicleNation:'all',frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),autoSpeed:createAutoSpeedState(),autoUiDirty:false,autoLastUiAt:0,lastNationPanelId:null,lastNationPanelSubtab:null};
 const map=new MapRenderer($('worldCanvas'),{
   onSelect:id=>selectTile(id),
   onHover:id=>{$('coordinateLabel').textContent=id===null?'X — · Y —':`X ${id%app.world.size} · Y ${Math.floor(id/app.world.size)}`;}
@@ -9782,6 +9812,8 @@ function renderChronicle(){
 function setWorld(world){
   app.lastNationPanelId=null;app.lastNationPanelSubtab=null;app.v04cStatsCache=null;
   app.running=false;app.accumulator=0;app.lastFrame=null;app.world=world;app.simMeter=createSimMeter();
+  app.autoSpeed.mode='MAX';app.autoSpeed.highCount=0;app.autoSpeed.lowCount=0;app.autoSpeed.lastSwitchAt=-Infinity;
+  app.autoUiDirty=false;app.autoLastUiAt=0;updateAutoSpeedButton();
   app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;app.chroniclePage=1;app.chronicleKind='all';app.chronicleNation='all';
   // Default wide worlds to whole-map framing instead of clipping the east/west coasts.
   atlasMapCover=world.size===19;
@@ -9807,10 +9839,19 @@ function externalRandomUint32(){
   else values[0]=Math.floor(Math.random()*4294967296);
   return values[0];
 }
+function updateAutoSpeedButton(){
+  const button=$('autoSpeedBtn'),auto=app.autoSpeed;
+  button.classList.toggle('active',auto.enabled);
+  button.classList.toggle('auto-safe',auto.enabled&&auto.mode==='SAFE');
+  button.textContent=auto.enabled?(auto.mode==='MAX'?'AUTO MAX':'AUTO ×10'):'AUTO';
+  button.setAttribute('aria-pressed',String(auto.enabled));
+  button.setAttribute('aria-label',auto.enabled?'자동 최대 속도 끄기':'자동 최대 속도 켜기');
+  button.title=auto.enabled?(auto.mode==='MAX'?'AUTO · 최대 속도':'AUTO · SIM 보호: ×10'):'자동 최대 속도 켜기 (SIM >1500ms이면 ×10 제한, <1000ms이면 MAX)';
+}
 function updatePlay(){
   $('playBtn').innerHTML=app.running?'Ⅱ <span>일시정지</span>':'▶ <span>재생</span>';
   $('playBtn').setAttribute('aria-label',app.running?'일시정지':'재생');
-  $('runtimeStatus').textContent=app.running?'시간 진행 중':'일시정지';
+  $('runtimeStatus').textContent=(app.running?'시간 진행 중':'일시정지')+(app.autoSpeed.enabled?' · AUTO '+(app.autoSpeed.mode==='MAX'?'MAX':'×10'):'');
 }
 function updateSimStatus(){
   const meter=app.simMeter;
@@ -9819,13 +9860,9 @@ function updateSimStatus(){
     `SIM ${formatSimMs(meter.simMs)}ms/batch · ${formatSimMs(meter.msPerDay)}ms/day · ${meter.lastBatchDays}d`;
   label.title='시뮬레이션 계산만 측정한 최근 평활값. 지도 렌더링과 대기시간 제외. 최근 배치의 일수(d)를 함께 표시합니다.';
 }
-function setRunning(yes){app.running=Boolean(yes);app.accumulator=0;app.lastFrame=null;updatePlay();}
-function step(days){
-  const lastQuarter=Math.floor(app.world.dayIndex/30),lastChange=app.world.changeSeq;
-  measureSimBatch(app.simMeter,days,()=>advanceDays(app.world,days,externalRandomUint32));
-  refreshRngControls();
-  updateTime();updateSimStatus();
-  if(app.world.changeSeq!==lastChange||Math.floor(app.world.dayIndex/30)!==lastQuarter){
+function refreshSimulationView(redraw){
+  refreshRngControls();updateTime();updateSimStatus();
+  if(redraw){
     map.draw();updateStats();renderChronicle();
     if(app.activeTab==='map')renderInspector();
     if(app.activeTab==='nation'){renderNationList();renderNationOverview();}
@@ -9835,15 +9872,56 @@ function step(days){
     if(app.activeTab==='chronicle')renderChronicle();
   }
 }
+function flushAutoView(){
+  refreshSimulationView(app.autoUiDirty);
+  app.autoUiDirty=false;
+  app.autoLastUiAt=performance.now();
+}
+function setAutoSpeed(enabled){
+  // Flush deferred UI before leaving MAX; speed is a runtime option, not saved world state.
+  if(app.autoSpeed.enabled&&app.autoUiDirty)flushAutoView();
+  const auto=app.autoSpeed;
+  auto.enabled=Boolean(enabled);auto.mode='MAX';auto.highCount=0;auto.lowCount=0;auto.lastSwitchAt=-Infinity;
+  app.accumulator=0;app.lastFrame=null;app.autoUiDirty=false;app.autoLastUiAt=0;
+  if(auto.enabled)app.simMeter=createSimMeter(); // Start hysteresis with comparable 10-day batches.
+  updateAutoSpeedButton();updatePlay();updateSimStatus();
+}
+function setRunning(yes){
+  if(!yes&&app.autoSpeed.enabled&&app.autoUiDirty)flushAutoView();
+  app.running=Boolean(yes);app.accumulator=0;app.lastFrame=null;updatePlay();
+}
+function step(days,deferUI=false){
+  const lastQuarter=Math.floor(app.world.dayIndex/30),lastChange=app.world.changeSeq;
+  measureSimBatch(app.simMeter,days,()=>advanceDays(app.world,days,externalRandomUint32));
+  const redraw=app.world.changeSeq!==lastChange||Math.floor(app.world.dayIndex/30)!==lastQuarter;
+  if(deferUI)app.autoUiDirty=app.autoUiDirty||redraw;
+  else{refreshSimulationView(redraw||app.autoUiDirty);app.autoUiDirty=false;app.autoLastUiAt=performance.now();}
+  // Meter is always computed on the same 10-day batch in MAX and AUTO ×10.
+  if(app.running&&app.autoSpeed.enabled&&days===10){
+    if(updateAutoSpeedMode(app.autoSpeed,app.simMeter.simMs,performance.now())){
+      app.lastFrame=null;app.accumulator=0;updateAutoSpeedButton();updatePlay();
+    }
+  }
+}
 function animate(now){
   if(app.running){
-    if(app.lastFrame===null)app.lastFrame=now;
-    const elapsed=Math.min(1000,Math.max(0,now-app.lastFrame));app.lastFrame=now;
-    app.accumulator+=elapsed;
-    // A batch is x1, x3, or x10 days, as in original VILOB. Do not catch up a hidden tab endlessly.
-    if(app.accumulator>=SIM_BATCH_INTERVAL_MS){
-      app.accumulator%=SIM_BATCH_INTERVAL_MS;
-      step(app.speed);
+    if(app.autoSpeed.enabled&&app.autoSpeed.mode==='MAX'){
+      // Cooperative burst: do not queue a second RAF/timer or block indefinitely.
+      const started=performance.now();let batches=0;
+      do{
+        step(10,true);batches++;
+      }while(app.running&&app.autoSpeed.enabled&&app.autoSpeed.mode==='MAX'&&
+        batches<AUTO_SPEED_MAX_BATCHES&&performance.now()-started<AUTO_SPEED_FRAME_BUDGET_MS);
+      if(performance.now()-app.autoLastUiAt>=AUTO_SPEED_UI_INTERVAL_MS||app.autoSpeed.mode!=='MAX')flushAutoView();
+    }else{
+      if(app.lastFrame===null)app.lastFrame=now;
+      const elapsed=Math.min(1000,Math.max(0,now-app.lastFrame));app.lastFrame=now;
+      app.accumulator+=elapsed;
+      // Manual ×1/×3/×10 unchanged; AUTO SAFE uses the exact same ×10 cadence.
+      if(app.accumulator>=SIM_BATCH_INTERVAL_MS){
+        app.accumulator%=SIM_BATCH_INTERVAL_MS;
+        step(app.autoSpeed.enabled?10:app.speed);
+      }
     }
   }
   app.frame=requestAnimationFrame(animate);
@@ -9874,12 +9952,14 @@ $('chronicleKindFilter').addEventListener('change',e=>{app.chronicleKind=e.targe
 $('comparisonSort').addEventListener('change',e=>{app.comparisonSort=e.target.value;renderComparisons();});
 v04cInitStatsUI();
 $('playBtn').addEventListener('click',()=>setRunning(!app.running));
+$('autoSpeedBtn').addEventListener('click',()=>setAutoSpeed(!app.autoSpeed.enabled));
 for(const el of document.querySelectorAll('.speed'))el.addEventListener('click',()=>{
+  if(app.autoSpeed.enabled)setAutoSpeed(false);
   app.speed=Number(el.dataset.speed);
   document.querySelectorAll('.speed').forEach(e=>{e.classList.toggle('active',e===el);e.setAttribute('aria-pressed',String(e===el));});
 });
-$('stepBtn').addEventListener('click',()=>step(1));
-$('monthBtn').addEventListener('click',()=>step(30));
+$('stepBtn').addEventListener('click',()=>{if(app.autoSpeed.enabled){setRunning(false);setAutoSpeed(false);}step(1);});
+$('monthBtn').addEventListener('click',()=>{if(app.autoSpeed.enabled){setRunning(false);setAutoSpeed(false);}step(30);});
 for(const btn of document.querySelectorAll('[data-map-mode]'))btn.addEventListener('click',()=>{
   document.querySelectorAll('[data-map-mode]').forEach(b=>b.classList.toggle('selected',b===btn));
   map.setMode(btn.dataset.mapMode);
@@ -10045,7 +10125,7 @@ map.onSelect=(id)=>{
 syncAtlasLayout();
 
 // 브라우저 테스트 및 외부 진단용: 현재 시뮬레이션 데이터를 직접 바꾸지 않는 최소 API
-window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getActiveTab:()=>app.activeTab});
+window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getAutoSpeed:()=>({...app.autoSpeed}),getActiveTab:()=>app.activeTab});
 setWorld(createWorld('vilob-light-01',39,21,{profiles:persistentProfiles}));
 requestAnimationFrame(animate);
 
