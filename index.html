@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.4E5B</title>
+<title>VILOB Light · V0.5A</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -677,9 +677,18 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 <script>
 
 
+
+
+
+
+
+
+
+
+
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.4E5B';
+const VERSION = 'V0.5A';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2221,7 +2230,7 @@ function refreshApCaps(w){
   for(const t of w.tiles)if(t.ownerId!==null&&t.terrain!=='water')counts[t.ownerId]++;
   for(const n of w.nations){n.apMaxUnits=g1ApCapFor(w,n.id,counts);n.apUnits=Math.min(n.apUnits,n.apMaxUnits);}
 }
-function newEconomy(){return {apLedger:{history:[]},civilFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0},gold:140,apUnits:50,apMaxUnits:AP_MAX_UNITS,knowledge:0,researchLevel:0,
+function newEconomy(){return {economicRecovery:{history:[]},apLedger:{history:[]},civilFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0},gold:140,apUnits:50,apMaxUnits:AP_MAX_UNITS,knowledge:0,researchLevel:0,
   resources:{food:130,wood:30,stone:20,iron:3},foodPressure:1,
   lastQuarter:{goldIncome:0,upkeep:0,goldNet:0,apRecovery:0,knowledgeIncome:0,produced:{food:0,wood:0,stone:0,iron:0},foodConsumed:0}};}
 function technicalBuildingPrice(w,nationId,base){
@@ -3696,11 +3705,11 @@ function e5TrustForAge(age){
 function e5TrustBonus(w,a,b){return e5TrustForAge(e5TreatyAge(w,a,b));}
 /** E5B: alliance companionship changes the long-run *stored* relation
  * equilibrium, not the instantaneous sentiment modifier. A new treaty
- * gives no immediate +12; ages 0-2y give 0, 3y +2 ... 8y +12.
+ * gives no immediate bonus; ages 0-2y give 0, 3y +2 ... 6y +8 (cap).
  * Leaving the alliance removes the raised target, not the accumulated base.
  * This calculation is deterministic, has no new saved fields or RNG. */
 function e5bRestingOffsetForAge(age){
- return Math.min(12,Math.max(0,(Math.floor(Math.max(0,age)/E5_YEAR)-2)*2));
+ return Math.min(8,Math.max(0,(Math.floor(Math.max(0,age)/E5_YEAR)-2)*2));
 }
 function e5bNeutralResting(w,a,b){
  const p=w.aiProfiles[w.nations[a].aiProfileId],q=w.aiProfiles[w.nations[b].aiProfileId];
@@ -6072,7 +6081,79 @@ function makeLeader(world,nationId){
 }
 function getLeader(world,n){return world.characters.find(c=>c.id===n.leaderId&&c.alive);}
 function nearby(world,tid){return neighbors4(tid,world.size,world.height).map(id=>world.tiles[id]);}
-function candidatesForNation(world,n,territory){
+// V0.5A · Economic Recovery V1. One lightweight national assessment per AI quarter.
+// No resource transfer, building creation, route changes, or added daily ticks.
+const V05A_HISTORY_WINDOW=12;
+const V05A_RESOURCE_FACILITY=Object.freeze({food:'farm',wood:'lumber',stone:'quarry',iron:'mine'});
+const V05A_FACILITY_RESOURCE=Object.freeze({farm:'food',lumber:'wood',quarry:'stone',mine:'iron'});
+const V05A_RECOVERY_THRESHOLD=Object.freeze({wood:80,stone:60,iron:40});
+function v05aEconomicNeeds(w,n){
+  const q=n.lastQuarter||{produced:{},foodConsumed:0},trade=tradeDependencyReport(w,n.id)?.goods||{};
+  const result={dayIndex:w.dayIndex,goods:{}};
+  for(const good of RESOURCE_KEYS){
+    const stock=n.resources[good]||0,produced=q.produced?.[good]||0;
+    const consumed=good==='food'?q.foodConsumed||0:0;
+    const deficit=good==='food'?Math.max(0,consumed-produced):0;
+    const threshold=good==='food'?Math.max(30,consumed*1.5):V05A_RECOVERY_THRESHOLD[good];
+    // Food production gap and actual post-trade stock must agree before applying
+    // a strong farming priority; industrial shortages use physical stock only.
+    const need=good==='food'?consumed>0&&(deficit>0||stock<consumed):stock<threshold;
+    const severity=!need?0:good==='food'?
+      Math.min(1,deficit/Math.max(1,consumed)*1.5+Math.max(0,1-stock/Math.max(1,consumed))*0.5):
+      Math.min(1,Math.max(0,1-stock/Math.max(1,threshold)));
+    result.goods[good]={need,stock,produced,consumed,deficit,threshold,
+      severity:Math.round(severity*1000)/1000,imports:trade[good]?.quarterImports||0,
+      blockedImports:trade[good]?.blockedImports||0,geologicalTiles:0,
+      candidates:0,legal:0,executable:0,bestGain:0,state:need?'UNASSESSED':'SUFFICIENT'};
+  }
+  return result;
+}
+// Estimate marginal quarterly production using the ALREADY calculated local
+// productivity snapshot. This is a ranking heuristic, not minted production.
+function v05aCandidateGain(w,n,q,c,buildingById){
+  const kind=c.facility,good=V05A_FACILITY_RESOURCE[kind];
+  if(!good||!['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY'].includes(c.action.type))return null;
+  const a=c.action,b=a.buildingId===undefined?null:buildingById.get(a.buildingId);
+  const tile=w.tiles[a.targetTileId??b?.tileId];if(!tile)return null;
+  const townId=a.settlementId??b?.settlementId;
+  const local=q.regionalEconomy.towns.get(townId);
+  if(!local)return null;
+  const before=b?facilityOutput(b,tile.terrain)?.produced?.[good]||0:0;
+  const level=a.type==='UPGRADE_FACILITY'?(b?.level||1)+1:1;
+  const after=facilityOutput({typeId:kind,level,status:'ACTIVE',disconnected:false},tile.terrain)?.produced?.[good]||0;
+  // A depleted local workforce cannot operate another full plant at face value.
+  const demand=local.demand||0,workers=local.workers||0;
+  const addition=LOCAL_LABOR_DEMAND[kind]||0;
+  const laborFactor=demand+addition>workers&&demand+addition>0?
+    Math.max(.65,Math.min(1,workers/(demand+addition))):1;
+  const modifier=1+techBonus(w,n.id,{food:'farmFood',wood:'lumberWood',stone:'quarryStone',iron:'mineIron'}[good]);
+  const gain=Math.max(0,Math.floor((after-before)*local.multiplier*modifier*laborFactor));
+  return {good,gain};
+}
+function v05aCompleteDiagnosis(w,n,context,selected,completed){
+  // One owned-land pass per AI nation, once a quarter, only for scarce goods.
+  const scarce=RESOURCE_KEYS.filter(g=>context.goods[g].need).map(g=>[context.goods[g],BUILDINGS[V05A_RESOURCE_FACILITY[g]].terrains]);
+  if(scarce.length)for(const t of w.tiles){if(t.ownerId!==n.id)continue;
+    for(const [g,terrains] of scarce)if(terrains.includes(t.terrain))g.geologicalTiles++;
+  }
+  for(const good of RESOURCE_KEYS){const g=context.goods[good];if(!g.need)continue;
+    g.state=!g.geologicalTiles?'TERRAIN_UNAVAILABLE':!g.legal?'NO_LEGAL_CANDIDATE':
+      !g.executable?'COST_OR_AP_BLOCKED':'RECOVERY_AVAILABLE';
+  }
+  const event={dayIndex:w.dayIndex,goods:context.goods,selected:selected||null,completed:Boolean(completed)};
+  n.economicRecovery??={history:[]};n.economicRecovery.history.push(event);
+  if(n.economicRecovery.history.length>V05A_HISTORY_WINDOW)n.economicRecovery.history.shift();
+  return event;
+}
+function v05aRecoveryCsv(w){
+  const cols=['nationId','nation','dayIndex','resource','state','stock','produced','consumed','deficit','terrainTiles','candidates','legal','executable','bestGain','quarterImports','blockedImports','chosenAction','completed'];
+  const rows=[cols];for(const n of w.nations)for(const h of n.economicRecovery?.history||[]){
+    for(const good of RESOURCE_KEYS){const g=h.goods?.[good];if(!g)continue;
+      rows.push([n.id,n.name,h.dayIndex,good,g.state,g.stock,g.produced,g.consumed,g.deficit,g.geologicalTiles,g.candidates,g.legal,g.executable,g.bestGain,g.imports,g.blockedImports,h.selected||'',h.completed?1:0]);}
+  }
+  return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+}
+function candidatesForNation(world,n,territory,recovery=null){
   const out=[],owned=world.tiles.filter(t=>t.ownerId===n.id);
   const frontier=new Set();
   for(const t of owned)for(const nbr of nearby(world,t.id))if(nbr.ownerId===null&&TERRAINS[nbr.terrain].passable)frontier.add(nbr.id);
@@ -6164,7 +6245,7 @@ function candidatesForNation(world,n,territory){
   // Trunk roads are a real investment choice, not an automatic decoration.
   const road=roadCandidate(world,n.id);if(road)out.push(road);
   // Buildings can remain useful after the original 100-point development ceiling.
-  out.push(...buildingCandidates(world,n));
+  out.push(...buildingCandidates(world,n,recovery));
   if(n.researchLevel<100)out.push({action:{type:'INVEST_KNOWLEDGE'},utility:1.04+(100-n.researchLevel)/350});
   // Merge is rare and strictly optional; only adjacent settlements, not a separate AI type.
   if(world.dayIndex>=12*DAYS_PER_YEAR){
@@ -6257,9 +6338,10 @@ function strategicFortCandidates(w,n){
   }
   return sites.sort((a,b)=>b.utility-a.utility||a.action.targetTileId-b.action.targetTileId).slice(0,12);
 }
-function buildingCandidates(world,n){
+function buildingCandidates(world,n,recovery=null){
   const candidates=[],q=projectedQuarter(world,n),reserve=n.resources,p=world.aiProfiles[n.aiProfileId];
   const structures=allStructures(world),byTown=new Map(),byTownType=new Map(),activeByTownType=new Map();
+  const byBuildingId=new Map(world.buildings.map(b=>[b.id,b]));
   const generalUsed=new Map(),defenseUsed=new Map(),generalLimit=generalTileSlotLimit(world,n.id);
   for(const b of structures){
     if(!byTown.has(b.settlementId))byTown.set(b.settlementId,[]);
@@ -6447,7 +6529,16 @@ function buildingCandidates(world,n){
     .sort((a,b)=>b.utility-a.utility||a.action.buildingId-b.action.buildingId);
   for(const c of upgrades){const kind=c.facility;if((counts[kind]||0)>=(quotas[kind]||1))continue;
     counts[kind]=(counts[kind]||0)+1;selected.add(c.action.buildingId);}
-  return candidates.filter(c=>c.action.type!=='UPGRADE_FACILITY'||selected.has(c.action.buildingId));
+  const final=candidates.filter(c=>c.action.type!=='UPGRADE_FACILITY'||selected.has(c.action.buildingId));
+  // Only add marginal-yield hints to actual shortlisted construction candidates.
+  if(recovery){
+    for(const c of final){const good=V05A_FACILITY_RESOURCE[c.facility];
+      if(!good||!recovery.goods[good]?.need)continue;
+      const info=v05aCandidateGain(world,n,q,c,byBuildingId);
+      if(info&&info.gain>0)c.v05aRecovery=info;
+    }
+  }
+  return final;
 }
 function actionWeight(type,p,c){
   if(type==='BUILD_ROAD'||type==='UPGRADE_ROAD')return p.weights.development*.65+p.weights.founding*.35;
@@ -6462,7 +6553,7 @@ function actionWeight(type,p,c){
   if(type==='DEVELOP_SETTLEMENT'||type==='EXPAND_SETTLEMENT'||type==='MERGE_SETTLEMENTS')return p.weights.development;
   return p.weights.knowledge;
 }
-function actionScore(world,n,p,leader,c){
+function actionScore(world,n,p,leader,c,recovery=null){
   const a=c.action,base=actionWeight(a.type,p,c)/100;
   let score=base*c.utility;
   const strategy=strategicReport(world,n.id);
@@ -6529,6 +6620,13 @@ function actionScore(world,n,p,leader,c){
       score*=1+Math.min(.65,g.importReliance*g.blockedShare*g.shortage*1.5);
     }
   }
+  // V0.5A: real shortages and positive output gain raise priority without
+  // fabricating construction opportunities or bypassing legal/price checks.
+  const improvement=c.v05aRecovery,need=improvement&&recovery?.goods?.[improvement.good];
+  if(need?.need&&improvement.gain>0){
+    const relative=improvement.gain/Math.max(1,need.consumed||need.threshold);
+    score*=1+Math.min(.75,need.severity*(.42+Math.min(.33,relative*1.2)));
+  }
   // Variable noise only breaks near-ties and uses the saved simulation RNG.
   return score*(.965+rand(world)*.07);
 }
@@ -6546,21 +6644,26 @@ function runQuarter(world){
     if(!leader||!profile)continue;
     const research=chooseAIResearch(world,n.id);
     if(research)executeNationAction(world,n.id,{type:'START_RESEARCH',technologyId:research});
-    let best=null,bestScore=-Infinity,remoteFounding=null,remoteFoundingScore=-Infinity;
+    let best=null,bestScore=-Infinity,bestRecovery=null,remoteFounding=null,remoteFoundingScore=-Infinity;
     const diagnosticCandidates=[],auxOptions=[];
+    const recovery=v05aEconomicNeeds(world,n);
     let strongestBlockedScore=-Infinity;
     const apRecordAtSelection=v04e3ApReport(n),auxQuarter=n.lastQuarter||projectedQuarter(world,n);
     if(apRecordAtSelection){apRecordAtSelection.auxCandidates=0;apRecordAtSelection.auxExecutable=0;apRecordAtSelection.auxBlocked=0;apRecordAtSelection.mainCandidates=0;apRecordAtSelection.mainExecutable=0;apRecordAtSelection.bestBlockedReason='NONE';apRecordAtSelection.bestBlockedAction='';}
     const barracksDiag={dayIndex:world.dayIndex,generated:0,legal:0,affordable:0,unaffordable:0,chosen:false,reason:'NO_CANDIDATE'};
-    for(const c of candidatesForNation(world,n,territory)){
+    for(const c of candidatesForNation(world,n,territory,recovery)){
+      const recoveryInfo=c.v05aRecovery,g=recoveryInfo&&recovery.goods[recoveryInfo.good];
+      if(g?.need){g.candidates++;g.bestGain=Math.max(g.bestGain,recoveryInfo.gain);}
       const barracksCandidate=c.facility==='barracks';
       if(barracksCandidate)barracksDiag.generated++;
       const legal=isNationActionLegal(world,n.id,c.action,territory);
       if(barracksCandidate&&legal)barracksDiag.legal++;
       if(!legal)continue;
+      if(g?.need)g.legal++;
       if(apRecordAtSelection)apRecordAtSelection.mainCandidates++;
-      const score=actionScore(world,n,profile,leader,c);
+      const score=actionScore(world,n,profile,leader,c,recovery);
       const executable=canExecuteNationAction(world,n.id,c.action,territory);
+      if(executable&&g?.need)g.executable++;
       if(barracksCandidate){if(executable)barracksDiag.affordable++;else barracksDiag.unaffordable++;}
       if(!executable&&apRecordAtSelection&&score>strongestBlockedScore){
         strongestBlockedScore=score;
@@ -6585,7 +6688,7 @@ function runQuarter(world){
           if(auxOptions.length>6)auxOptions.length=6;
         }
       }
-      if(executable&&score>bestScore){best=c.action;bestScore=score;}
+      if(executable&&score>bestScore){best=c.action;bestScore=score;bestRecovery=c.v05aRecovery||null;}
       const minRemote=4+(100-profile.weights.founding)/30;
       if(c.action.type==='FOUND_SETTLEMENT'&&executable&&profile.weights.founding>=35&&c.remote>=minRemote&&c.adjacentOwned>=2&&score>remoteFoundingScore){
         remoteFounding=c.action;remoteFoundingScore=score;
@@ -6593,6 +6696,9 @@ function runQuarter(world){
     }
     if(apRecordAtSelection&&apRecordAtSelection.mainCandidates===0)apRecordAtSelection.bestBlockedReason='NO_LEGAL_CANDIDATE';
     const chosen=remoteFounding&&remoteFoundingScore>bestScore*1.05?remoteFounding:best;
+    const selectedRecovery=chosen===best&&bestRecovery&&recovery.goods[bestRecovery.good]?.need?
+      chosen.type+':'+V05A_RESOURCE_FACILITY[bestRecovery.good]:null;
+    const recoverEntry=v05aCompleteDiagnosis(world,n,recovery,selectedRecovery,false);
     barracksDiag.chosen=Boolean(chosen&&['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY'].includes(chosen.type)&&
       (chosen.buildingType==='barracks'||world.buildings.some(b=>b.id===chosen.buildingId&&b.typeId==='barracks')));
     barracksDiag.reason=barracksDiag.chosen?'SELECTED':barracksDiag.generated===0?'NO_CANDIDATE':
@@ -6609,11 +6715,12 @@ function runQuarter(world){
     if(chosen&&!deferred){
       const result=executeNationAction(world,n.id,chosen);
       if(apRecord&&result.ok)apRecord.main++;
+      if(recoverEntry.selected&&result.ok)recoverEntry.completed=true;
       if(barracksDiag.chosen&&!result.ok)barracksDiag.reason='SELECTED_FAILED';
       world.aiDecisions.push({nationId:n.id,dayIndex:world.dayIndex,action:chosen.type,score:Number((chosen===remoteFounding?remoteFoundingScore:bestScore).toFixed(3)),ok:result.ok,top:diagnosticCandidates.map(v=>({action:v.action,score:Number(v.score.toFixed(3))}))});
       if(world.aiDecisions.length>240)world.aiDecisions.splice(0,world.aiDecisions.length-240);
     }
-    followUp.push({id:n.id,chosen:deferred?chosen:null,score:chosen===remoteFounding?remoteFoundingScore:bestScore,top:diagnosticCandidates,barracksDiag,auxOptions,original:chosen});
+    followUp.push({id:n.id,chosen:deferred?chosen:null,score:chosen===remoteFounding?remoteFoundingScore:bestScore,top:diagnosticCandidates,barracksDiag,auxOptions,original:chosen,recoverEntry});
   }
   runMilitaryQuarter(world,executeNationAction);
   for(const entry of followUp){
@@ -6625,6 +6732,7 @@ function runQuarter(world){
       if(canExecuteNationAction(world,n.id,entry.chosen)){
         const result=executeNationAction(world,n.id,entry.chosen);
         if(apRecord&&result.ok)apRecord.main++;
+        if(entry.recoverEntry?.selected&&result.ok)entry.recoverEntry.completed=true;
         if(entry.barracksDiag.chosen&&!result.ok)entry.barracksDiag.reason='SELECTED_FAILED';
         world.aiDecisions.push({nationId:n.id,dayIndex:world.dayIndex,action:entry.chosen.type,score:Number(entry.score.toFixed(3)),ok:result.ok,top:entry.top.map(v=>({action:v.action,score:Number(v.score.toFixed(3))}))});
         if(world.aiDecisions.length>240)world.aiDecisions.splice(0,world.aiDecisions.length-240);
@@ -6648,7 +6756,12 @@ function runQuarter(world){
       // necessary 1.0-AP recruitment order, even when current funds are abundant.
       if(!price||n.apUnits-price.apUnits<15){apRecord.auxBlocked++;continue;}
       const result=executeNationAction(world,n.id,a);
-      if(result.ok){apRecord.auxiliary++;apRecord.auxExecutable++;break;}
+      if(result.ok){apRecord.auxiliary++;apRecord.auxExecutable++;
+        if(!entry.recoverEntry?.selected&&['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY'].includes(a.type)){
+          const facility=a.buildingType||world.buildings.find(b=>b.id===a.buildingId)?.typeId;
+          if(Object.values(V05A_RESOURCE_FACILITY).includes(facility)){entry.recoverEntry.selected=a.type+':'+facility;entry.recoverEntry.completed=true;}
+        }
+        break;}
     }
   }
   refreshApCaps(world);
@@ -6954,6 +7067,14 @@ function validateWorld(w){
   const fail=what=>{throw Error('월드 검증 실패: '+what);};
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
   if(!validateHistoricalChronicle(w))fail('장기 역사 기록');
+  for(const n of w.nations||[]){
+    const history=n.economicRecovery?.history;
+    if(!Array.isArray(history)||history.length>V05A_HISTORY_WINDOW||history.some(h=>
+      !Number.isSafeInteger(h.dayIndex)||h.dayIndex<0||h.dayIndex>w.dayIndex||
+      !h.goods||RESOURCE_KEYS.some(g=>!h.goods[g]||
+        ['stock','produced','consumed','deficit','geologicalTiles','candidates','legal','executable','bestGain','imports','blockedImports'].some(k=>
+          !Number.isFinite(h.goods[g][k])||h.goods[g][k]<0))))fail('V0.5A 경제 회복 진단');
+  }
   if(!Array.isArray(w.barracksEvents)||w.barracksEvents.length>V04E2_BARRACKS_EVENTS_MAX||w.barracksEvents.some(e=>!Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||!['SETTLEMENT_TRANSFER','DETACH','RECONNECT'].includes(e.kind)||!Array.isArray(e.buildingIds)||e.buildingIds.some(id=>!Number.isInteger(id))))fail('병영 소유권 이벤트');
   if(!validateTrade(w))fail('국제 교역 상태');
   if(!validateStrategicReports(w))fail('AI 전략 진단');
@@ -7182,17 +7303,17 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
     for(const b of parsed.buildings||[])if(b.disconnected===undefined)b.disconnected=false;
     if(f3Migration){if(!parsed.trade||!validateTradeLegacyForMigration(parsed))throw Error('F3 이관: 교역 데이터가 손상되었습니다.');parsed.trade.dependency=initialTradeDependency();}
     parsed.barracksEvents??=[]; // Past ownership changes cannot be reconstructed.
-    for(const n of parsed.nations){ensureCivilFinance(n);n.military.barracksFinance??={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};n.military.mobilizationDiagnostics??=[];n.military.barracksAiDiagnostics??=[];n.military.e4RecoveryLastOrderDay??=-120;n.apLedger??={history:[]};}
+    for(const n of parsed.nations){ensureCivilFinance(n);n.military.barracksFinance??={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};n.military.mobilizationDiagnostics??=[];n.military.barracksAiDiagnostics??=[];n.military.e4RecoveryLastOrderDay??=-120;n.apLedger??={history:[]};n.economicRecovery??={history:[]};}
     for(const o of parsed.occupations){
       if(o.siegeClockDay===undefined){
         o.siegeClockDay=parsed.dayIndex;o.siegeCreditDays=0;o.siegeEligible=false;
@@ -7212,7 +7333,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -8457,7 +8578,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v04e5b-world';
+const SAVE_KEY='vilob-light-v04e5c-world';
+const PREVIOUS_04E5B_SAVE_KEY='vilob-light-v04e5b-world';
 const PREVIOUS_04E5A_SAVE_KEY='vilob-light-v04e5a-world';
 const PREVIOUS_04E5_SAVE_KEY='vilob-light-v04e5-world';
 const PREVIOUS_04E4_SAVE_KEY='vilob-light-v04e4-world';
@@ -9015,7 +9137,7 @@ function renderNationOverview(){
       make('span',{class:'nation-badge',text:other.name.slice(0,1),style:{background:other.color}}),
       make('div',{},[make('strong',{text:`${other.name} · ${relation>0?'+':''}${relation}`}),make('div',{class:'muted-line',text:state+age}),
         make('div',{class:'muted-line',text:'우호도 구성 · '+parts.join(' · ')}),
-        ...(alliance?[make('div',{class:'muted-line',text:`장기 관계 안정 · 기본 우호도 수렴 목표 ${signed(stability.target)} (중립 ${signed(stability.neutral)} · 동맹 유지에 따른 목표 +${stability.offset}/12) · 현재 기본 ${signed(breakdown.base)} · 즉시 가산 아님`})]:[])])]);
+        ...(alliance?[make('div',{class:'muted-line',text:`장기 관계 안정 · 기본 우호도 수렴 목표 ${signed(stability.target)} (중립 ${signed(stability.neutral)} · 동맹 유지에 따른 목표 +${stability.offset}/8) · 현재 기본 ${signed(breakdown.base)} · 즉시 가산 아님`})]:[])])]);
     diplomacy.append(row);
   }
   const memoryEvents=(w.diplomacy.history||[]).filter(e=>e.a===n.id||e.b===n.id).slice(-8).reverse();
@@ -9040,10 +9162,24 @@ function renderNationOverview(){
       diplomacy.append(make('div',{class:'muted-line',text:`${Math.floor(v.dayIndex/120)+1}년 · 상대 진영 ${opponent.map(names).join('·')} · ${kinds[v.tier]||v.tier}${Number.isFinite(v.advantage)?' · 승점 차 '+Math.abs(v.advantage).toFixed(2)+'점':' · 승점 기록 없음'} · 진영 전체 양도 ${v.acquiredTiles}타일 · 개인 보상 ${landGained}타일 / ${gained} Gold`}));
     }
   }
+  const recoverySection=make('section',{class:'overview-section'},[make('h3',{text:'V0.5A · 자원 회복 AI (최근 분기)'})]);
+  const recent=n.economicRecovery?.history?.at(-1);
+  if(!recent)recoverySection.append(make('div',{class:'muted-line',text:'아직 회복 AI 판단 기록이 없습니다. 다음 AI 분기부터 기록됩니다.'}));
+  else{
+    const resourceNames={food:'식량',wood:'목재',stone:'석재',iron:'철'};
+    const stateNames={SUFFICIENT:'정상',TERRAIN_UNAVAILABLE:'전용 생산시설 입지 없음',NO_LEGAL_CANDIDATE:'합법 시설 후보 없음',COST_OR_AP_BLOCKED:'비용 또는 AP 제약',RECOVERY_AVAILABLE:'회복 후보 실행 가능'};
+    recoverySection.append(make('div',{class:'muted-line',text:`진단 ${Math.floor(recent.dayIndex/120)+1}년 ${Math.floor(recent.dayIndex%120/30)+1}분기 · 보관 ${n.economicRecovery.history.length}/12분기 · 선택 ${recent.selected||'회복 시설 외 행동'}${recent.selected?recent.completed?' · 실행 성공':' · 실행 미완료':''}` }));
+    for(const [good,g] of Object.entries(recent.goods||{})){
+      recoverySection.append(make('div',{class:'muted-line',text:`${resourceNames[good]}: ${stateNames[g.state]||g.state} · 재고 ${number.format(g.stock)} · 생산 ${number.format(g.produced)}${good==='food'?` / 소비 ${number.format(g.consumed)} · 부족 ${number.format(g.deficit)}`:''} · 후보 ${g.legal}/${g.executable} (합법/실행가능) · 예상 최대 증산 +${g.bestGain}/분기${g.state==='TERRAIN_UNAVAILABLE'?' · 지형 확보 또는 교역 필요':''}` }));
+    }
+  }
+  const recoveryDownload=make('button',{class:'jump-button',type:'button',text:'최근 12분기 경제 회복 진단 CSV'});
+  recoveryDownload.addEventListener('click',()=>download(`vilob-v05a-economic-recovery-y${timeAt(w.dayIndex).year}.csv`,v05aRecoveryCsv(w),'text/csv;charset=utf-8'));
+  recoverySection.append(recoveryDownload);
   const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['military','군사']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={overview:[grid,leadership,trading],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places],military:[makeNationMilitaryPanel(w,n)]};
+  const panels={overview:[grid,leadership,trading,recoverySection],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places],military:[makeNationMilitaryPanel(w,n)]};
   const content=make('div',{class:'nation-subtab-content',id:'nationSubtabContent',role:'tabpanel','aria-label':tabs.find(([id])=>id===app.nationSubtab)[1]},panels[app.nationSubtab]);
   for(const [id,label] of tabs){
     const selected=id===app.nationSubtab;
@@ -9693,7 +9829,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
