@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.5C1</title>
+<title>VILOB Light · V0.6A</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -551,7 +551,7 @@ body.atlas-mode #tab-map .atlas-legend-toggle{display:inline-flex!important;alig
 body.atlas-mode:not(.atlas-legend-open) #tab-map .map-foot .legend{display:none!important}
 body.atlas-mode.atlas-legend-open #tab-map .map-foot .legend{display:flex;flex-wrap:wrap;max-height:min(36vh,320px);overflow-y:auto}
 body.g1-map-focus .shell{max-width:none;padding:0}
-body.g1-map-focus .topbar{position:fixed!important;z-index:110!important;top:9px!important;left:9px!important;right:auto!important;width:auto!important;min-height:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;display:block!important}
+body.g1-map-focus .topbar{position:fixed!important;z-index:110!important;top:9px!important;left:9px!important;right:auto!important;width:auto!important;min-height:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;display:block!important}
 body.g1-map-focus .identity{display:block!important}
 body.g1-map-focus .identity>div:not(.logo-icon){display:none!important}
 body.g1-map-focus #atlasFocusToggle{display:flex!important;width:44px;height:44px;box-shadow:0 7px 22px #000a}
@@ -613,6 +613,9 @@ body.g1-map-focus #tab-map #worldCanvas{width:100%!important;height:100%!importa
 body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:48px;font-size:10px}
 @media(max-width:540px){.auto-speed-button{height:34px;padding:0 5px;min-width:49px;font-size:10px;letter-spacing:0}.controls{gap:3px}.speed-group .speed{padding:4px 6px}}
 @media(max-width:410px){body.atlas-mode .topbar .auto-speed-button{min-width:40px;font-size:9px;padding:0 3px}}
+.v06a-perception-details{border-top:1px solid #30475a;margin-top:6px;padding-top:5px}
+.v06a-perception-details summary{font-size:11px;color:#acd8d3;cursor:pointer;line-height:1.6}
+.v06a-perception-details[open] .muted-line{padding:2px 0 2px 8px;border-left:2px solid #4a7e80}
 </style>
 </head>
 <body>
@@ -696,7 +699,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.5C1';
+const VERSION = 'V0.6A';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3789,7 +3792,7 @@ const pairKey=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 function createDiplomacy(nations){
   const pairs={};
   for(let i=0;i<nations.length;i++)for(let j=i+1;j<nations.length;j++)pairs[pairKey(i,j)]={relation:0};
-  return {pairs,alliances:[],offers:[],calls:[],courtCooldowns:{},memory:{},history:[],borderRevision:0,relationRevision:0};
+  return {pairs,alliances:[],offers:[],calls:[],courtCooldowns:{},memory:{},history:[],perceptions:{},borderRevision:0,relationRevision:0};
 }
 /** Permanent while a living nation has one of its former capitals under the other state's sovereignty.
  * Peace/truce never automatically erases an unresolved former-capital grievance. */
@@ -3808,6 +3811,113 @@ function capitalGrievance(w,a,b){
  const key=pairKey(a,b);
  if(!cached.pairs.has(key))cached.pairs.set(key,occupiedHistoricCapital(w,a,b)||occupiedHistoricCapital(w,b,a)?-45:0);
  return cached.pairs.get(key);
+}
+/** V0.6A: directed, bounded state. A:B is nation A's assessment of B,
+ * NOT a bilateral relation. Events accumulate memory; quarterly updates refresh
+ * perceived relative power without inventing past events for old saves.
+ * Existing E5 symmetric relations, alliance scars and penalties are untouched.
+ */
+const V06A_MEMORY_FIELDS=['trust','grievance','favor','betrayalConcern','powerBias'];
+const V06A_HALFLIVES={trust:20,grievance:35,favor:12,betrayalConcern:40,powerBias:28};
+const v06aRound=value=>Math.round(value*100)/100;
+const v06aKey=(observer,target)=>`${observer}:${target}`;
+function v06aGet(w,observer,target){return w.diplomacy?.perceptions?.[v06aKey(observer,target)]||null;}
+function v06aEnsure(w,observer,target){
+ if(observer===target||!w.nations[observer]||!w.nations[target])return null;
+ const d=w.diplomacy;d.perceptions??={};const key=v06aKey(observer,target);
+ return d.perceptions[key]??=( {trust:0,grievance:0,favor:0,betrayalConcern:0,betrayalCount:0,powerBias:0,perceivedPower:0,lastUpdatedDay:w.dayIndex,lastEventDay:null,lastEventKind:null} );
+}
+function v06aAge(m,day){
+ const elapsed=Math.max(0,day-m.lastUpdatedDay);
+ if(!elapsed)return;
+ for(const field of V06A_MEMORY_FIELDS){
+   const hl=V06A_HALFLIVES[field]*DAYS_PER_YEAR;
+   m[field]=v06aRound(m[field]*Math.pow(.5,elapsed/hl));
+   if(Math.abs(m[field])<.01)m[field]=0;
+ }
+ m.lastUpdatedDay=day;
+}
+function v06aRemember(w,observer,target,kind,changes={}){
+ const m=v06aEnsure(w,observer,target);if(!m)return;
+ v06aAge(m,w.dayIndex);
+ for(const field of V06A_MEMORY_FIELDS)if(changes[field]!==undefined){
+   const limit=field==='powerBias'?30:100;
+   m[field]=v06aRound(bound(m[field]+changes[field],field==='trust'||field==='powerBias'?-limit:0,limit));
+ }
+ if(changes.betrayalCount)m.betrayalCount+=changes.betrayalCount;
+ if(changes.powerBias)m.perceivedPower=Math.round(bound(m.perceivedPower+changes.powerBias,-100,100));
+ m.lastEventDay=w.dayIndex;m.lastEventKind=kind;
+}
+function v06aRememberBoth(w,a,b,kind,changes){v06aRemember(w,a,b,kind,changes);v06aRemember(w,b,a,kind,changes);}
+/** All objective strengths are scanned ONCE per military quarter. */
+function v06aUpdatePerceptionsQuarter(w){
+ const d=w.diplomacy;d.perceptions??={};
+ const info=w.nations.map(n=>({population:0,land:0,men:n.active?nationManpower(w,n.id):0,
+   gold:Math.max(0,n.gold||0),income:Math.max(0,n.lastQuarter?.goldIncome||0),tech:n.technology?.unlocked?.length||0}));
+ for(const s of w.settlements)if(info[s.ownerId])info[s.ownerId].population+=Math.max(0,s.population||0);
+ for(const t of w.tiles)if(t.ownerId!==null&&info[t.ownerId])info[t.ownerId].land++;
+ const log=(a,b,offset)=>Math.log((a+offset)/(b+offset));
+ for(const a of w.nations){if(!a.active)continue;
+   for(const b of w.nations){if(!b.active||a.id===b.id)continue;
+     const m=v06aEnsure(w,a.id,b.id),own=info[a.id],other=info[b.id];v06aAge(m,w.dayIndex);
+     const contrast=.40*log(other.men,own.men,20)+.24*log(other.population,own.population,100)+
+       .12*log(other.gold,own.gold,200)+.10*log(other.land,own.land,8)+
+       .08*log(other.income,own.income,100)+.06*log(other.tech,own.tech,4);
+     m.perceivedPower=Math.round(bound(58*contrast+m.powerBias,-100,100));
+   }
+ }
+}
+/** Small bounded modifiers applied to DECISIONS, never rawRelationOf().
+ * A high positive power perception means the other state is stronger.
+ * A large negative value means the observer feels dominant, not hateful.
+ */
+function v06aAllianceWeight(w,a,b){
+ const m=v06aGet(w,a,b);if(!m)return 0;
+ return bound((m.trust*.13)+(m.favor*.09)-(m.grievance*.12)-(m.betrayalConcern*.18)+
+   Math.max(0,m.perceivedPower)*.055,-20,18);
+}
+function v06aDefenseWeight(w,a,b){
+ const m=v06aGet(w,a,b);if(!m)return 0;
+ return bound(m.trust*.12+m.favor*.22-m.grievance*.07-m.betrayalConcern*.12,-17,22);
+}
+function v06aAttackWeight(w,a,partner,foe){
+ const ally=v06aGet(w,a,partner),enemy=v06aGet(w,a,foe);
+ return bound((ally?ally.trust*.07+ally.favor*.08-ally.betrayalConcern*.11:0)+
+  (enemy?enemy.grievance*.055-Math.max(0,enemy.perceivedPower)*.08:0),-14,15);
+}
+function v06aWarWeight(w,a,b){
+ const m=v06aGet(w,a,b);if(!m)return 1;
+ // A weak rival is a tempting target, but cannot alone cause aggression.
+ // Strategic risk, readiness, treaties and personality still govern legality.
+ return bound(1+m.grievance*.0015-m.trust*.0012-m.favor*.0008-
+  m.betrayalConcern*.0005-m.perceivedPower*.0015,.80,1.20);
+}
+function v06aRememberWarPeace(w,war,tier,winnerSide){
+ const attackers=war.sides?.attackers||[war.attackerId],defenders=war.sides?.defenders||[war.defenderId];
+ const strength=tier==='DECISIVE'?13:tier==='CLEAR'?9:tier==='LIMITED'?5:0;
+ // One update per opposing nation pair; coalition members are credited once.
+ for(const a of attackers)for(const b of defenders){
+   if(!w.nations[a]||!w.nations[b])continue;
+   if(winnerSide){
+     const aWin=winnerSide==='attackers';
+     v06aRemember(w,a,b,'WAR_END',{powerBias:aWin?-strength:strength,grievance:3});
+     v06aRemember(w,b,a,'WAR_END',{powerBias:aWin?strength:-strength,grievance:3});
+   }else{
+     v06aRemember(w,a,b,'WAR_END',{grievance:2});
+     v06aRemember(w,b,a,'WAR_END',{grievance:2});
+   }
+ }
+ // A commitment is not the same as effective help. Credit actual military
+ // participation ONCE at peace; never invent contributions from old history.
+ for(const [principal,members] of [[war.attackerId,attackers],[war.defenderId,defenders]]){
+   for(const helper of members){if(helper===principal)continue;
+     const battles=war.battleWins?.[helper]||0,losses=war.casualties?.[helper]||0;
+     const costs=war.militaryCosts?.[helper]||0,occupation=war.occupationContributions?.[helper]||0;
+     if(battles+losses+costs+occupation<=0)continue;
+     const magnitude=Math.min(13,3+battles*2+Math.min(3,Math.floor(losses/25))+Math.min(3,Math.floor(costs/150))+Math.min(3,occupation));
+     v06aRemember(w,principal,helper,'WAR_SUPPORT',{trust:3,favor:magnitude});
+   }
+ }
 }
 /** E5: bounded, pair-keyed diplomatic memory. Old saves carry live treaties but
  * do not invent already-ended historical treaties. */
@@ -3896,6 +4006,7 @@ function e5EndAlliance(w,t,reason,actorId=null){
  m.lastAllianceDurationDays=age;m.lastEndReason=reason;
  e5InvalidateRelations(w);
  e5AppendHistory(w,'ALLIANCE_END',t.a,t.b,{reason,actorId,durationDays:age});
+ if(reason==='VOLUNTARY'&&actorId!==null)v06aRemember(w,actorId===t.a?t.b:t.a,actorId,'ALLIANCE_END',{trust:-9,grievance:4});
  d.alliances=d.alliances.filter(x=>x!==t);
  w.changeSeq++;
  return age;
@@ -3914,6 +4025,7 @@ function e5RegisterBetrayal(w,a,b,kind){
  // An ordinary declaration already incurs -30; this is the additional breach cost.
  adjustRelation(w,a,b,-45);
  e5AppendHistory(w,'BETRAYAL',a,b,{betrayerId:a,victimId:b,mode:kind});
+ v06aRemember(w,b,a,'BETRAYAL',{trust:-22,grievance:15,betrayalConcern:30,betrayalCount:1});
  event(w,`${w.nations[a].name}이(가) 오랜 동맹국 ${w.nations[b].name}을(를) 배신했습니다. (추가 우호도 -45)`,'diplomacy');
  recordHistoricalEvent(w,'war',w.events[w.events.length-1].text,[a,b],`e5:betrayal:${a}:${b}:${w.dayIndex}`);
 }
@@ -4061,6 +4173,7 @@ function executeAllianceAction(w,id,act){
    d.alliances.push({a:Math.min(a,b),b:Math.max(a,b),formedDay:w.dayIndex,endsDay:w.dayIndex+ALLIANCE_TERM});
    e5InvalidateRelations(w);
    e5AppendHistory(w,'ALLIANCE_START',a,b,{formedDay:w.dayIndex});
+   v06aRememberBoth(w,a,b,'ALLIANCE_START',{trust:7,favor:2});
    adjustRelation(w,a,b,8);event(w,`${w.nations[a].name}과 ${w.nations[b].name}이(가) 상호 방위 동맹을 체결했습니다.`,'diplomacy');
  }else if(act.type==='REJECT_ALLIANCE'){
    d.offers=d.offers.filter(x=>!(x.from===b&&x.to===a));adjustRelation(w,a,b,-2);
@@ -4103,9 +4216,11 @@ function resolveDefenseCall(w,id,act){
    war.sides??={attackers:[war.attackerId],defenders:[war.defenderId]};war.sides.defenders.push(id);
    war.fatigue[id]=0;war.lastCasualties[id]=0;
    for(const c of w.diplomacy.calls)if(c.warId===war.id&&c.allyId===id&&c.status==='PENDING')c.status='EXPIRED';
+   v06aRemember(w,def,id,'DEFENSE_HELP',{trust:6,favor:6});
+   v06aRemember(w,id,def,'DEFENSE_HELP',{trust:4,favor:3});
    event(w,`${w.nations[id].name}이(가) ${w.nations[def].name} 방어전에 참전했습니다.`,'war');
  }else{
-   adjustRelation(w,id,def,-12);event(w,`${w.nations[id].name}이(가) ${w.nations[def].name}의 방어 참전 요청을 거절했습니다.`,'diplomacy');
+   adjustRelation(w,id,def,-12);v06aRemember(w,def,id,'DEFENSE_REFUSED',{trust:-10,grievance:6});event(w,`${w.nations[id].name}이(가) ${w.nations[def].name}의 방어 참전 요청을 거절했습니다.`,'diplomacy');
  }
  w.changeSeq++;return {ok:true,warId:war.id,joined:!!act.accept};
 }
@@ -4127,6 +4242,8 @@ function resolveOffensiveCall(w,id,act){
   war.fatigue[id]=0;war.lastCasualties[id]=0;
   // Once recruited to either side, unresolved competing requests are invalid.
   for(const c of w.diplomacy.calls)if(c.warId===war.id&&c.allyId===id&&c.status==='PENDING')c.status='EXPIRED';
+  v06aRemember(w,war.attackerId,id,'OFFENSE_HELP',{trust:4,favor:7});
+  v06aRemember(w,id,war.attackerId,'OFFENSE_HELP',{trust:2});
   event(w,`${w.nations[id].name}이(가) ${w.nations[war.attackerId].name}의 공격전에 참전했습니다.`,'war');
  }else event(w,`${w.nations[id].name}이(가) 공격 지원 요청을 거절했습니다.`,'diplomacy');
  w.changeSeq++;return {ok:true,warId:war.id,joined:!!act.accept};
@@ -4140,6 +4257,7 @@ function aiOffensiveCallDecision(w,call){
  const fiscal=strategicReport(w,n.id)?.financial;
  const confidence=(p?.diplomacy?.cooperation??50)*.22+(p?.military?.aggression??50)*.30+
   relationOf(w,n.id,ally.id)*.34-relationOf(w,n.id,foe.id)*.17+
+  v06aAttackWeight(w,n.id,ally.id,foe.id)+
   Math.min(14,own/Math.max(30,enemy)*12)-(fiscal?.balance<0?16:0);
  return access&&own>=12&&n.gold>=Math.max(90,militaryUpkeep(w,n.id)*2)&&confidence>=43;
 }
@@ -4152,7 +4270,7 @@ function aiCallDecision(w,call){
  const connected=w.tiles.some(t=>t.ownerId===n.id&&neighbors4(t.id,w.size,w.height).some(x=>w.tiles[x].ownerId===ally.id));
  const fiscal=strategicReport(w,n.id)?.financial;
  const confidence=(p?.diplomacy?.cooperation??50)*.33+relationOf(w,n.id,ally.id)*.37+
-   (p?.military?.defensivePreference??50)*.19+Math.min(18,own/Math.max(30,enemy)*12)-(dist>45?22:0)-(fiscal?.balance<0?15:0);
+   (p?.military?.defensivePreference??50)*.19+v06aDefenseWeight(w,n.id,ally.id)+Math.min(18,own/Math.max(30,enemy)*12)-(dist>45?22:0)-(fiscal?.balance<0?15:0);
  return connected&&own>=12&&n.gold>=Math.max(60,militaryUpkeep(w,n.id))&&confidence>=37;
 }
 /** E1C: anticipated diplomatic backlash if A and B form a new alliance.
@@ -4177,7 +4295,7 @@ function allianceBacklashWeight(w,a,b){
 function allianceCandidateScore(w,a,b,frontiers){
   const p=w.aiProfiles[w.nations[a].aiProfileId]?.diplomacy||{};
   const q=w.aiProfiles[w.nations[b].aiProfileId]?.diplomacy||{};
-  return relationOf(w,a,b)+((p.cooperation??50)+(q.cooperation??50))*.20-
+  return relationOf(w,a,b)+v06aAllianceWeight(w,a,b)+v06aAllianceWeight(w,b,a)*.35+((p.cooperation??50)+(q.cooperation??50))*.20-
     (frontiers.has(pairKey(a,b))?0:30)-allianceBacklashCost(w,a,b)*allianceBacklashWeight(w,a,b);
 }
 function runAllianceQuarter(w,execute,frontiers=quarterBorderPairs(w)){
@@ -4194,6 +4312,7 @@ function runAllianceQuarter(w,execute,frontiers=quarterBorderPairs(w)){
        t.endsDay=Math.max(t.endsDay,w.dayIndex)+ALLIANCE_TERM;
        e5InvalidateRelations(w);
        e5AppendHistory(w,'ALLIANCE_RENEW',t.a,t.b,{formedDay:t.formedDay,renewalRelation:decision.relation,renewalCooperation:decision.cooperation});
+       v06aRememberBoth(w,t.a,t.b,'ALLIANCE_RENEW',{trust:5,favor:2,betrayalConcern:-3});
        event(w,`${w.nations[t.a].name}·${w.nations[t.b].name} 동맹 갱신`,'diplomacy');
      }else if(t.endsDay<=w.dayIndex){
        e5EndAlliance(w,t,'EXPIRED');
@@ -5026,6 +5145,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
     occupationWork:structuredClone(war.occupationWork||{}),capitalOccupationBonusAtPeace:capitalBonusAtPeace,
     reparationsFromId:loser?.id??null,reparationsToId:winner?.id??null,truceDays:truce,score:war.score||0});
   if(w.warHistory.length>200)w.warHistory.shift();
+  v06aRememberWarPeace(w,war,tier,winnerSide);
   const verdict=tier==='WHITE'?'백지 평화':`${winner.name} ${ {LIMITED:'제한적 승리',CLEAR:'명확한 승리',DECISIVE:'결정적 승리'}[tier]}`;
   event(w,`${participants.attackers.map(id=>participantNames[id]).join('·')} VS ${participants.defenders.map(id=>participantNames[id]).join('·')} 평화협정: ${verdict} · 승점 차 ${Math.abs(advantage).toFixed(2)} · 영토 ${count}타일 · 배상 ${reparations}G · 휴전 ${truce/DAYS_PER_YEAR}년.`,'peace');
   recordHistoricalEvent(w,'peace',w.events[w.events.length-1].text,warMembers(war),`war:${war.id}:end`);
@@ -5106,7 +5226,8 @@ function executeMilitaryAction(w,nationId,act){
     const war={id:w.nextWarId++,attackerId:nationId,defenderId:act.targetNationId,startedDay:w.dayIndex,lastBattleDay:w.dayIndex,score:0,battleCount:0,casualties:{},battleCasualties:{},occupationCasualties:{},supplyCasualties:{},battleWins:{},occupationCount:0,
       goal:chooseWarGoal(w,nationId,act.targetNationId),defenderGoal:defenseGoal(),sides:{attackers:[nationId],defenders:[act.targetNationId]},fatigue:{[nationId]:0,[act.targetNationId]:0},
       lastCasualties:{[nationId]:0,[act.targetNationId]:0},pendingPeace:null,nextPeaceOfferDay:0};
-    w.wars.push(war);requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);adjustRelation(w,nationId,act.targetNationId,-30);if(betrays)e5RegisterBetrayal(w,nationId,other,live?'DIRECT':'AFTER_END');event(w,`${n.name}이(가) ${w.nations[act.targetNationId].name}에 선전포고했습니다. (목표: ${war.goal.type==='SETTLEMENT'?'정착지':'국경 영토'} 확보)`,'war');recordHistoricalEvent(w,'war',w.events[w.events.length-1].text,[nationId,act.targetNationId],`war:${war.id}:start`);return {ok:true,warId:war.id};
+    w.wars.push(war);requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);adjustRelation(w,nationId,act.targetNationId,-30);
+    v06aRemember(w,other,nationId,'WAR_DECLARED',{trust:-16,grievance:19});if(betrays)e5RegisterBetrayal(w,nationId,other,live?'DIRECT':'AFTER_END');event(w,`${n.name}이(가) ${w.nations[act.targetNationId].name}에 선전포고했습니다. (목표: ${war.goal.type==='SETTLEMENT'?'정착지':'국경 영토'} 확보)`,'war');recordHistoricalEvent(w,'war',w.events[w.events.length-1].text,[nationId,act.targetNationId],`war:${war.id}:start`);return {ok:true,warId:war.id};
   }
   if(act.type==='OFFER_PEACE'){
     const war=atWar(w,nationId,act.targetNationId);
@@ -5644,7 +5765,7 @@ function warDecision(w,nationId){
     const legacy=(.30+.57*aggression+.11*risk)*(.52+.48*own.ratio)*strengthFactor*diplomaticPressure;
     // Real siege, dependency and fiscal conditions change the threshold, not legality.
     const geoFactor=geo?(.66+geo.attraction/160):1;
-    const willingness=legacy*geoFactor;
+    const willingness=legacy*geoFactor*v06aWarWeight(w,n.id,id);
     if(advantage<.42||willingness<.63)continue;
     if(!best||willingness>best.willingness||(willingness===best.willingness&&id<best.id))best={id,willingness,advantage};
   }
@@ -5769,6 +5890,7 @@ function recallRoutedArmies(w,execute){
 }
 function runMilitaryQuarter(w,execute){
   const frontiers=quarterBorderPairs(w);
+  v06aUpdatePerceptionsQuarter(w);
   updateRelationsQuarter(w,frontiers);
   runAllianceQuarter(w,execute,frontiers);
   for(const a of w.armies){
@@ -5906,7 +6028,8 @@ function runMilitaryQuarter(w,execute){
         const partners=w.diplomacy.alliances.filter(t=>(t.a===n.id||t.b===n.id)&&t.endsDay>w.dayIndex&&w.dayIndex-t.formedDay>=5*E5_YEAR);
         for(const t of partners){
           const foe=t.a===n.id?t.b:t.a;
-          if(relationOf(w,n.id,foe)>5||nationManpower(w,n.id)<1.65*Math.max(1,nationManpower(w,foe)))continue;
+          if(relationOf(w,n.id,foe)>5||v06aAllianceWeight(w,n.id,foe)>-7||
+            (v06aGet(w,n.id,foe)?.perceivedPower??0)>-25||nationManpower(w,n.id)<1.65*Math.max(1,nationManpower(w,foe)))continue;
           const action={type:'BETRAY_ALLIANCE',targetNationId:foe};
           if(canExecuteNationAction(w,n.id,action)&&randCombat(w)<.004){execute(w,n.id,action);break;}
         }
@@ -7230,6 +7353,17 @@ function validateWorld(w){
   if(!w.diplomacy.memory||typeof w.diplomacy.memory!=='object'||!Array.isArray(w.diplomacy.history)||w.diplomacy.history.length>120||
     !Number.isSafeInteger(w.diplomacy.borderRevision)||w.diplomacy.borderRevision<0||
     !Number.isSafeInteger(w.diplomacy.relationRevision)||w.diplomacy.relationRevision<0)fail('E5 외교 기억 자료');
+  if(!w.diplomacy.perceptions||typeof w.diplomacy.perceptions!=='object'||Array.isArray(w.diplomacy.perceptions)||Object.keys(w.diplomacy.perceptions).length>w.nations.length*(w.nations.length-1))fail('V0.6A 인식 목록');
+  for(const [key,m] of Object.entries(w.diplomacy.perceptions)){
+    const ids=key.split(':').map(Number);
+    if(ids.length!==2||ids[0]===ids[1]||!Number.isInteger(ids[0])||!Number.isInteger(ids[1])||!w.nations[ids[0]]||!w.nations[ids[1]]||!m||
+      !Number.isSafeInteger(m.lastUpdatedDay)||m.lastUpdatedDay<0||m.lastUpdatedDay>w.dayIndex||
+      (m.lastEventDay!==null&&(!Number.isSafeInteger(m.lastEventDay)||m.lastEventDay<0||m.lastEventDay>w.dayIndex))||
+      (m.lastEventKind!==null&&(typeof m.lastEventKind!=='string'||m.lastEventKind.length>30))||
+      !Number.isSafeInteger(m.betrayalCount)||m.betrayalCount<0||
+      !Number.isInteger(m.perceivedPower)||Math.abs(m.perceivedPower)>100||
+      V06A_MEMORY_FIELDS.some(field=>!Number.isFinite(m[field])||m[field]<(field==='trust'||field==='powerBias'?(field==='powerBias'?-30:-100):0)||m[field]>(field==='powerBias'?30:100)))fail('V0.6A 국가별 외교 기억');
+  }
   for(const [key,m] of Object.entries(w.diplomacy.memory)){
     const ids=key.split(':').map(Number);
     if(ids.length!==2||!Number.isSafeInteger(ids[0])||!Number.isSafeInteger(ids[1])||ids[0]>=ids[1]||!w.nations[ids[0]]||!w.nations[ids[1]]||
@@ -7441,7 +7575,7 @@ function deserializeWorld(json){
 }
   // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
   if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1'].includes(parsed.version))parsed.version=VERSION;
+  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
   const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1'].includes(originalVersion);
@@ -7459,7 +7593,7 @@ function deserializeWorld(json){
       }
     }
     parsed.diplomacy.alliances??=[];parsed.diplomacy.offers??=[];parsed.diplomacy.calls??=[];parsed.diplomacy.courtCooldowns??={};
-    parsed.diplomacy.memory??={};parsed.diplomacy.history??=[];parsed.diplomacy.borderRevision??=0;parsed.diplomacy.relationRevision??=0;
+    parsed.diplomacy.memory??={};parsed.diplomacy.history??=[];parsed.diplomacy.perceptions??={};parsed.diplomacy.borderRevision??=0;parsed.diplomacy.relationRevision??=0;
     // Live treaties retain formedDay on migration; ended treaties cannot be reconstructed.
     for(const war of parsed.wars||[])war.sides??={attackers:[war.attackerId],defenders:[war.defenderId]};
     // Past negotiated terms must not silently change between offer and acceptance.
@@ -8738,7 +8872,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v04e5c-world';
+const SAVE_KEY='vilob-light-v06a-world';
+const PREVIOUS_V06A_SAVE_KEY='vilob-light-v04e5c-world';
 const PREVIOUS_04E5B_SAVE_KEY='vilob-light-v04e5b-world';
 const PREVIOUS_04E5A_SAVE_KEY='vilob-light-v04e5a-world';
 const PREVIOUS_04E5_SAVE_KEY='vilob-light-v04e5-world';
@@ -9299,6 +9434,17 @@ function renderNationOverview(){
       make('div',{},[make('strong',{text:`${other.name} · ${relation>0?'+':''}${relation}`}),make('div',{class:'muted-line',text:state+age}),
         make('div',{class:'muted-line',text:'우호도 구성 · '+parts.join(' · ')}),
         ...(alliance?[make('div',{class:'muted-line',text:`장기 관계 안정 · 기본 우호도 수렴 목표 ${signed(stability.target)} (중립 ${signed(stability.neutral)} · 동맹 유지에 따른 목표 +${stability.offset}/8) · 현재 기본 ${signed(breakdown.base)} · 즉시 가산 아님`})]:[])])]);
+    const perception=v06aGet(w,n.id,other.id),reverse=v06aGet(w,other.id,n.id);
+    const describePower=x=>x>=65?'매우 강한 상대':x>=25?'강대국 경계':x>-25?'대등·중립':x>-65?'약소국 인식':'압도적 우위';
+    const perceptionLine=(observer,target,m)=>m?`${observer.name} → ${target.name} · 신뢰 ${signed(v06aRound(m.trust))} / 원한 ${v06aRound(m.grievance)} / 은혜 ${v06aRound(m.favor)} / 배신 우려 ${v06aRound(m.betrayalConcern)} (${m.betrayalCount}회) / 세력 인식 ${signed(m.perceivedPower)} [${describePower(m.perceivedPower)}]`:
+      `${observer.name} → ${target.name} · 외교 기억 없음 (다음 분기부터 세력 인식 계산)`;
+    const insight=make('details',{class:'v06a-perception-details'},[
+      make('summary',{text:`외교 기억 보기 · 세력 인식 ${perception?signed(perception.perceivedPower):'미기록'} / 역방향 ${reverse?signed(reverse.perceivedPower):'미기록'}`}),
+      make('div',{class:'muted-line',text:perceptionLine(n,other,perception)}),
+      make('div',{class:'muted-line',text:perceptionLine(other,n,reverse)})]);
+    if(perception){const weights=`AI 판단 보정 · 동맹 ${signed(v06aRound(v06aAllianceWeight(w,n.id,other.id)))} / 방어 지원 ${signed(v06aRound(v06aDefenseWeight(w,n.id,other.id)))} / 전쟁 의지 ×${v06aWarWeight(w,n.id,other.id).toFixed(2)}`;
+      insight.append(make('div',{class:'muted-line',text:weights}));}
+    row.children[1].append(insight);
     diplomacy.append(row);
   }
   const memoryEvents=(w.diplomacy.history||[]).filter(e=>e.a===n.id||e.b===n.id).slice(-8).reverse();
@@ -10051,7 +10197,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
