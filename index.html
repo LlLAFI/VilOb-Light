@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6C1</title>
+<title>VILOB Light · V0.6C2</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -715,7 +715,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6C1';
+const VERSION = 'V0.6C2';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2406,7 +2406,9 @@ function getActionPrice(world,nationId,action,territory=null){
     case 'OFFER_ALLIANCE':return make(.5,30);
     case 'OFFER_SUBMISSION':case 'ACCEPT_SUBMISSION':case 'REJECT_SUBMISSION':case 'OFFER_RELEASE':case 'ACCEPT_RELEASE':case 'REJECT_RELEASE':
     case 'ACCEPT_ALLIANCE':case 'REJECT_ALLIANCE':case 'END_ALLIANCE':case 'RESPOND_DEFENSE_CALL':case 'RESPOND_ATTACK_CALL':return make(0);
-    case 'MAKE_PEACE':case 'OFFER_PEACE':case 'ACCEPT_PEACE':case 'REJECT_PEACE':return make(0);
+    case 'MAKE_PEACE':case 'OFFER_PEACE':case 'ACCEPT_PEACE':case 'REJECT_PEACE':
+    case 'OFFER_INDEPENDENCE_FRONT':case 'ACCEPT_INDEPENDENCE_FRONT':case 'REJECT_INDEPENDENCE_FRONT':
+    case 'OFFER_INDEPENDENCE_SUPPORT':case 'ACCEPT_INDEPENDENCE_SUPPORT':case 'REJECT_INDEPENDENCE_SUPPORT':case 'DECLARE_INDEPENDENCE':return make(0);
     default:return null;
   }
 }
@@ -2430,7 +2432,7 @@ function v04e4AuxEligible(c,n,q){
 }
 function v04e3ApCategory(type){
  if(['START_RESEARCH','INVEST_KNOWLEDGE'].includes(type))return 'research';
- if(['TRAIN_RESERVES','TRAIN_FORMATION','EMERGENCY_MUSTER','RECRUIT_ARMY','REINFORCE_ARMY','REARM_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'].includes(type))return 'military';
+ if(['TRAIN_RESERVES','TRAIN_FORMATION','EMERGENCY_MUSTER','RECRUIT_ARMY','REINFORCE_ARMY','REARM_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE',...C2_ACTIONS].includes(type))return 'military';
  return 'civil';
 }
 function v04e3ApReport(n){return n.apLedger?.history?.at(-1)||null;}
@@ -2550,10 +2552,23 @@ function runEconomyQuarter(world){
     n.military.operationPaidLastQuarter=n.military.operationPaidThisQuarter||0;
     n.military.operationBilledLastQuarter=n.military.operationBilledThisQuarter||0;
     n.military.operationPaidThisQuarter=0;n.military.operationBilledThisQuarter=0;
-    for(const war of world.wars.filter(w=>warSide(w,n.id)!==null)){
-      war.militaryCosts??={};war.upkeepCosts??={};
-      war.militaryCosts[n.id]=(war.militaryCosts[n.id]||0)+q.upkeepBase;
-      war.upkeepCosts[n.id]=(war.upkeepCosts[n.id]||0)+q.upkeepBase;
+    // Attribute the ACTUAL one-time military upkeep across all wars, without
+    // duplicating one nation's payroll in every concurrent war history.
+    const wars=warsOfNation(world,n.id).sort((a,b)=>a.id-b.id);
+    if(wars.length){
+      const men=wars.map(war=>world.armies.filter(a=>a.nationId===n.id&&a.assignedWarId===war.id).reduce((sum,a)=>sum+manpower(a),0));
+      const total=men.reduce((x,y)=>x+y,0);
+      const weights=total>0?men:wars.map(()=>1);
+      const weightTotal=weights.reduce((x,y)=>x+y,0);
+      const shares=weights.map(weight=>Math.floor(q.upkeepBase*weight/weightTotal));
+      let remainder=q.upkeepBase-shares.reduce((x,y)=>x+y,0);
+      // Integer remainder follows a stable war-id order.
+      for(let i=0;remainder>0;i=(i+1)%shares.length,remainder--)shares[i]++;
+      wars.forEach((war,i)=>{
+        war.militaryCosts??={};war.upkeepCosts??={};
+        war.militaryCosts[n.id]=(war.militaryCosts[n.id]||0)+shares[i];
+        war.upkeepCosts[n.id]=(war.upkeepCosts[n.id]||0)+shares[i];
+      });
     }
     if(paid<q.upkeep){
       n.military.unpaidQuarters++;
@@ -3550,7 +3565,8 @@ function reinforce(e,army,side){
 function surrenderArmy(world,army,winningNationId=null){
   const survivors=manpower(army);
   if(!survivors)return 0;
-  const war=world.wars.find(w=>warSide(w,army.nationId)&&(winningNationId===null||warSide(w,winningNationId)));
+  const war=world.wars.find(w=>w.id===army.assignedWarId)||world.wars.find(w=>warSide(w,army.nationId)&&
+   (winningNationId===null||warSide(w,winningNationId)&&warSide(w,winningNationId)!==warSide(w,army.nationId)));
   if(war){war.surrendered??={};war.surrendered[army.nationId]=(war.surrendered[army.nationId]||0)+survivors;}
   world.armies=world.armies.filter(a=>a.id!==army.id);
   const cmd=world.characters.find(c=>c.id===army.commanderId);
@@ -3709,8 +3725,8 @@ function hasSupplyLine(w,a){
     const id=queue[k];if(safeCores.has(id))return true;
     for(const next of neighbors4(id,w.size,w.height)){
       const t=w.tiles[next];if(seen.has(next)||!TERRAINS[t.terrain].passable)continue;
-      if(t.occupiedBy!==null&&t.occupiedBy!==a.nationId&&!(warOfNation(w,a.nationId)&&warSide(warOfNation(w,a.nationId),t.occupiedBy)===warSide(warOfNation(w,a.nationId),a.nationId)))continue;
-      if(!allyAccess(w,a.nationId,t.ownerId)&&t.occupiedBy!==a.nationId&&!(warOfNation(w,a.nationId)&&t.occupiedBy!==null&&warSide(warOfNation(w,a.nationId),t.occupiedBy)===warSide(warOfNation(w,a.nationId),a.nationId)))continue;
+      if(t.occupiedBy!==null&&t.occupiedBy!==a.nationId&&!(warsOfNation(w,a.nationId).some(v=>warSide(v,t.occupiedBy)===warSide(v,a.nationId))))continue;
+      if(!allyAccess(w,a.nationId,t.ownerId)&&t.occupiedBy!==a.nationId&&!(t.occupiedBy!==null&&warsOfNation(w,a.nationId).some(v=>warSide(v,t.occupiedBy)===warSide(v,a.nationId))))continue;
       if(w.armies.some(enemy=>enemy.nationId!==a.nationId&&warAgainst(w,enemy.nationId,a.nationId)&&enemy.tileId===next&&men(enemy)>0&&enemy.status!=='DESTROYED'))continue;
       seen.add(next);queue.push(next);
     }
@@ -3747,7 +3763,7 @@ function updateArmySupply(w){
         const current=men(a);if(!current)break;
         const rate=days>=60?.02:.01;
         const casualties=militaryLosses(a,Math.max(1,Math.ceil(current*rate*(1-techBonus(w,a.nationId,'supplyAttrition')))));
-        const war=warOfNation(w,a.nationId);
+        const war=w.wars.find(v=>v.id===a.assignedWarId)||warOfNation(w,a.nationId);
         if(war&&casualties){war.supplyCasualties??={};war.casualties??={};war.supplyCasualties[a.nationId]=(war.supplyCasualties[a.nationId]||0)+casualties;war.casualties[a.nationId]=(war.casualties[a.nationId]||0)+casualties;}
       }
       if(newTicks>oldTicks)w.changeSeq++;
@@ -3782,10 +3798,12 @@ function beginOccupation(w,army,tid=army.tileId){
   const t=w.tiles[tid];if(!t||t.ownerId===null||!TERRAINS[t.terrain].passable)return null;
   const recapture=allyAccess(w,army.nationId,t.ownerId)&&t.occupiedBy!==null&&t.occupiedBy!==army.nationId;
   if(allyAccess(w,army.nationId,t.ownerId)&&!recapture)return null;
-  const war=warFor(w,army.nationId,recapture?t.occupiedBy:t.ownerId);if(!war)return null;
+  const war=warFor(w,army.nationId,recapture?t.occupiedBy:t.ownerId);if(!war||
+    (army.assignedWarId!=null&&army.assignedWarId!==war.id))return null;
   // E1: defensive allies may liberate the principal defender's land, never annex the attacker's territory.
   // E2: both coalitions may occupy enemy land; allied land may only be liberated.
   if(t.occupiedBy===army.nationId||t.occupiedBy!==null&&warSide(war,t.occupiedBy)===warSide(war,army.nationId))return null;
+  if(t.occupiedBy!==null&&t.occupiedWarId!=null&&t.occupiedWarId!==war.id&&!warSide(war,t.occupiedBy))return null;
   const old=occupationAt(w,tid);
   if(old){
     // E2A: a coalition member joins the same siege, never replaces its progress.
@@ -3906,8 +3924,8 @@ function processOccupationDay(w){
     if(o.progress>=100){
       const credited=Object.keys(o.participation).map(Number)
         .sort((a,b)=>(o.participation[b]||0)-(o.participation[a]||0)||a-b)[0]??o.nationId;
-      if(allyAccess(w,o.nationId,tile.ownerId)){tile.occupiedBy=null;}
-      else{tile.occupiedBy=credited;war.occupationCount=(war.occupationCount||0)+1;
+      if(allyAccess(w,o.nationId,tile.ownerId)){tile.occupiedBy=null;tile.occupiedWarId=null;}
+      else{tile.occupiedBy=credited;tile.occupiedWarId=war.id;war.occupationCount=(war.occupationCount||0)+1;
         war.score+=warSide(war,credited)==='attackers'?.45:-.45;}
       war.occupationContributions??={};
       war.occupationContributions[credited]=(war.occupationContributions[credited]||0)+1;
@@ -3927,7 +3945,7 @@ const pairKey=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 function createDiplomacy(nations){
   const pairs={};
   for(let i=0;i<nations.length;i++)for(let j=i+1;j<nations.length;j++)pairs[pairKey(i,j)]={relation:0};
-  return {pairs,alliances:[],offers:[],calls:[],courtCooldowns:{},memory:{},history:[],perceptions:{},subjectTreaties:[],subjectOffers:[],subjectCooldowns:{},subjectHistory:[],tributeHistory:[],subjectDiagnostics:v06b1NewDiagnostics(0),borderRevision:0,relationRevision:0};
+  return {pairs,alliances:[],offers:[],calls:[],courtCooldowns:{},memory:{},history:[],perceptions:{},subjectTreaties:[],subjectOffers:[],subjectCooldowns:{},subjectHistory:[],tributeHistory:[],subjectDiagnostics:v06b1NewDiagnostics(0),independenceFronts:[],independencePledges:[],independenceOffers:[],independenceStats:{demands:0,accepted:0,rejected:0,wars:0,victories:0,defeats:0},borderRevision:0,relationRevision:0};
 }
 /** Permanent while a living nation has one of its former capitals under the other state's sovereignty.
  * Peace/truce never automatically erases an unresolved former-capital grievance. */
@@ -4284,13 +4302,31 @@ function warFriends(war,id){const side=warSide(war,id);return side==='attackers'
 function warAgainst(w,a,b){if(a===b||a===null||b===null||a===undefined||b===undefined)return null;
  return w.wars.find(v=>warSide(v,a)&&warSide(v,b)&&warSide(v,a)!==warSide(v,b))||null;
 }
+function warsOfNation(w,id){return w.wars.filter(v=>warSide(v,id));}
 function warOfNation(w,id){return w.wars.find(v=>warSide(v,id))||null;}
+/** No nation pair may fight twice or support opposite sides in separate wars. */
+function c2CanJoinWar(w,id,friends,foes,exceptWarId=null){
+ if(!w.nations[id]?.active||friends.includes(id)||foes.includes(id))return false;
+ for(const v of w.wars){if(v.id===exceptWarId)continue;
+   for(const friend of friends)if(warSide(v,id)&&warSide(v,friend)&&warSide(v,id)!==warSide(v,friend))return false;
+   for(const foe of foes)if(warSide(v,id)&&warSide(v,foe))return false;
+ }
+ return true;
+}
+function c2CanStartWar(w,attackers,defenders){
+ if(new Set([...attackers,...defenders]).size!==attackers.length+defenders.length)return false;
+ return attackers.every(id=>w.nations[id]?.active&&c2CanJoinWar(w,id,attackers.filter(v=>v!==id),defenders))&&
+   defenders.every(id=>w.nations[id]?.active&&c2CanJoinWar(w,id,defenders.filter(v=>v!==id),attackers));
+}
+function c2PeaceWar(w,id,act){
+ const war=Number.isInteger(act.warId)?w.wars.find(v=>v.id===act.warId):warAgainst(w,id,act.targetNationId);
+ return war&&warSide(war,id)&&warSide(war,act.targetNationId)&&warSide(war,id)!==warSide(war,act.targetNationId)?war:null;
+}
 function allianceBetween(w,a,b){return (w.diplomacy.alliances||[]).find(x=>x.a===Math.min(a,b)&&x.b===Math.max(a,b)&&x.endsDay>w.dayIndex)||null;}
 function allianceCount(w,id){return (w.diplomacy.alliances||[]).filter(x=>x.endsDay>w.dayIndex&&(x.a===id||x.b===id)).length;}
 function allyAccess(w,armyId,ownerId){
  if(ownerId===armyId)return true;
- const war=warOfNation(w,armyId);
- return Boolean(war&&warSide(war,armyId)&&warSide(war,armyId)===warSide(war,ownerId));
+ return warsOfNation(w,armyId).some(war=>warSide(war,armyId)===warSide(war,ownerId));
 }
 function allianceOffer(w,a,b){return w.diplomacy.offers.find(x=>x.from===a&&x.to===b&&x.expiresDay>w.dayIndex)||null;}
 function allianceActionLegal(w,id,act){
@@ -4335,14 +4371,14 @@ function requestDefensiveSupport(w,war){
  const b=war.defenderId;
  for(const treaty of w.diplomacy.alliances){
    const id=treaty.a===b?treaty.b:treaty.b===b?treaty.a:null;
-   if(id===null||treaty.endsDay<=w.dayIndex||!w.nations[id]?.active||warSide(war,id)||warOfNation(w,id)||allianceBetween(w,id,war.attackerId)||v06bBetween(w,id,war.attackerId))continue;
+   if(id===null||treaty.endsDay<=w.dayIndex||!w.nations[id]?.active||warSide(war,id)||!c2CanJoinWar(w,id,war.sides?.defenders||[war.defenderId],war.sides?.attackers||[war.attackerId])||allianceBetween(w,id,war.attackerId)||v06bBetween(w,id,war.attackerId))continue;
    w.diplomacy.calls.push({warId:war.id,defenderId:b,principalId:b,side:'defenders',allyId:id,status:'PENDING',dayIndex:w.dayIndex,expiresDay:w.dayIndex+2*DAYS_PER_QUARTER});
    event(w,`${w.nations[b].name}이(가) 동맹국 ${w.nations[id].name}에 방어 참전을 요청했습니다.`,'diplomacy');
   }
  // V0.6B: suzerain protects a subject without fabricating a military alliance.
  for(const t of v06bTreaties(w))if(t.subjectId===b){
    const id=t.overlordId;
-   if(!w.nations[id]?.active||warSide(war,id)||warOfNation(w,id)||
+   if(!w.nations[id]?.active||warSide(war,id)||!c2CanJoinWar(w,id,war.sides?.defenders||[war.defenderId],war.sides?.attackers||[war.attackerId])||
       allianceBetween(w,id,war.attackerId)||v06bBetween(w,id,war.attackerId)||
       w.diplomacy.calls.some(c=>c.warId===war.id&&c.allyId===id&&c.status==='PENDING'))continue;
    w.diplomacy.calls.push({warId:war.id,defenderId:b,principalId:b,side:'defenders',allyId:id,basis:'SUZERAIN',status:'PENDING',dayIndex:w.dayIndex,expiresDay:w.dayIndex+2*DAYS_PER_QUARTER});
@@ -4353,7 +4389,7 @@ function requestOffensiveSupport(w,war){
  const a=war.attackerId;
  for(const treaty of w.diplomacy.alliances){
   const id=treaty.a===a?treaty.b:treaty.b===a?treaty.a:null;
-  if(id===null||treaty.endsDay<=w.dayIndex||!w.nations[id]?.active||v06bSubjectOf(w,id)||warSide(war,id)||warOfNation(w,id)||allianceBetween(w,id,war.defenderId)||v06bBetween(w,id,war.defenderId))continue;
+  if(id===null||treaty.endsDay<=w.dayIndex||!w.nations[id]?.active||v06bSubjectOf(w,id)||warSide(war,id)||!c2CanJoinWar(w,id,war.sides?.attackers||[war.attackerId],war.sides?.defenders||[war.defenderId])||allianceBetween(w,id,war.defenderId)||v06bBetween(w,id,war.defenderId))continue;
   w.diplomacy.calls.push({warId:war.id,principalId:a,side:'attackers',allyId:id,status:'PENDING',dayIndex:w.dayIndex,expiresDay:w.dayIndex+2*DAYS_PER_QUARTER});
   event(w,`${w.nations[a].name}이(가) ${w.nations[id].name}에 공격 지원을 요청했습니다.`,'diplomacy');
  }
@@ -4361,12 +4397,16 @@ function requestOffensiveSupport(w,war){
 function defensiveCall(w,warId,allyId){return w.diplomacy.calls.find(x=>x.warId===warId&&x.allyId===allyId&&x.status==='PENDING'&&x.expiresDay>w.dayIndex)||null;}
 function callResponseLegal(w,id,act){
  const call=defensiveCall(w,act.warId,id),war=w.wars.find(x=>x.id===act.warId);
- return Boolean(typeof act.accept==='boolean'&&call&&war&&(call.side||'defenders')==='defenders'&&war.defenderId===call.defenderId&&w.nations[id]?.active&&!warOfNation(w,id)&&!warSide(war,id)&&(allianceBetween(w,id,war.defenderId)||v06bSubjectOf(w,war.defenderId)?.overlordId===id)&&!warSupportTreatyConflict(w,id,war,'defenders'));
+ return Boolean(typeof act.accept==='boolean'&&call&&war&&(call.side||'defenders')==='defenders'&&war.defenderId===call.defenderId&&w.nations[id]?.active&&!warSide(war,id)&&c2CanJoinWar(w,id,war.sides?.defenders||[war.defenderId],war.sides?.attackers||[war.attackerId])&&(allianceBetween(w,id,war.defenderId)||v06bSubjectOf(w,war.defenderId)?.overlordId===id)&&!warSupportTreatyConflict(w,id,war,'defenders'));
 }
 function resolveDefenseCall(w,id,act){
  if(!callResponseLegal(w,id,act))return {ok:false,reason:'방어 요청의 유효 조건 미충족'};
  const call=defensiveCall(w,act.warId,id),war=w.wars.find(x=>x.id===act.warId),def=war.defenderId;
  call.status=act.accept?'ACCEPTED':'DECLINED';call.resolvedDay=w.dayIndex;
+ if(call.basis==='SUZERAIN'){
+   const treaty=v06bBetween(w,def,id);
+   if(treaty){c2TreatyInit(w,treaty);if(act.accept)treaty.protectionHelp++;else treaty.protectionFailures++;}
+ }
  if(act.accept){
    war.sides??={attackers:[war.attackerId],defenders:[war.defenderId]};war.sides.defenders.push(id);
    war.fatigue[id]=0;war.lastCasualties[id]=0;
@@ -4386,7 +4426,7 @@ function warSupportTreatyConflict(w,id,war,side){
 }
 function offensiveCallLegal(w,id,act){
  const call=offensiveCall(w,act.warId,id),war=w.wars.find(x=>x.id===act.warId);
- return Boolean(typeof act.accept==='boolean'&&call&&war&&call.principalId===war.attackerId&&w.nations[id]?.active&&!warOfNation(w,id)&&!warSide(war,id)&&allianceBetween(w,id,war.attackerId)&&!allianceBetween(w,id,war.defenderId)&&!warSupportTreatyConflict(w,id,war,'attackers'));
+ return Boolean(typeof act.accept==='boolean'&&call&&war&&call.principalId===war.attackerId&&w.nations[id]?.active&&!warSide(war,id)&&c2CanJoinWar(w,id,war.sides?.attackers||[war.attackerId],war.sides?.defenders||[war.defenderId])&&allianceBetween(w,id,war.attackerId)&&!allianceBetween(w,id,war.defenderId)&&!warSupportTreatyConflict(w,id,war,'attackers'));
 }
 function resolveOffensiveCall(w,id,act){
  if(!offensiveCallLegal(w,id,act))return {ok:false,reason:'공격 참전 요청 유효 조건 미충족'};
@@ -4483,7 +4523,7 @@ function runAllianceQuarter(w,execute,frontiers=quarterBorderPairs(w)){
  for(const call of d.calls.filter(c=>c.status==='PENDING')){
    const war=w.wars.find(x=>x.id===call.warId);
    const side=call.side||'defenders',principal=side==='attackers'?war?.attackerId:war?.defenderId;
-   if(!war||!(allianceBetween(w,call.allyId,principal)||(side==='defenders'&&v06bSubjectOf(w,principal)?.overlordId===call.allyId))||warOfNation(w,call.allyId)){call.status='EXPIRED';continue;}
+   if(!war||!(allianceBetween(w,call.allyId,principal)||(side==='defenders'&&v06bSubjectOf(w,principal)?.overlordId===call.allyId))||!c2CanJoinWar(w,call.allyId,side==='attackers'?war.sides.attackers:war.sides.defenders,side==='attackers'?war.sides.defenders:war.sides.attackers)){call.status='EXPIRED';continue;}
    if(call.expiresDay<=w.dayIndex){call.status='EXPIRED';continue;}
    if(w.nations[call.allyId].controller==='AI')execute(w,call.allyId,{type:side==='attackers'?'RESPOND_ATTACK_CALL':'RESPOND_DEFENSE_CALL',warId:war.id,accept:side==='attackers'?aiOffensiveCallDecision(w,call):call.basis==='SUZERAIN'?v06bSuzerainDefenseDecision(w,call):aiCallDecision(w,call)});
  }
@@ -4723,7 +4763,7 @@ function v06bCreateTreaty(w,overlordId,subjectId,origin,warId=null){
  d.subjectOffers=d.subjectOffers.filter(o=>o.from!==subjectId&&o.to!==subjectId&&o.from!==overlordId&&o.to!==overlordId);
  const treaty={overlordId,subjectId,origin,warId,formedDay:w.dayIndex,endsDay:w.dayIndex+V06B_TERM,
    rate:V06B_TRIBUTE_RATE,lastPaidDay:null,lastDue:0,lastPaid:0,lastUnpaid:0,totalDue:0,totalPaid:0};
- d.subjectTreaties.push(treaty);
+ c2TreatyInit(w,treaty);d.subjectTreaties.push(treaty);
  const stats=v06b1Diag(w).treaty;stats.formed++;stats[origin==='FORCED'?'forced':'voluntary']++;
  v06bLog(w,'SUBJECT_START',overlordId,subjectId,{origin,warId});
  event(w,`${w.nations[subjectId].name}이(가) ${w.nations[overlordId].name}의 종속국이 되었습니다. (${origin==='FORCED'?'전쟁 복속':'자발적 보호'})`,'diplomacy');
@@ -4736,6 +4776,7 @@ function v06bEndTreaty(w,t,reason){
  d.subjectTreaties=d.subjectTreaties.filter(x=>x!==t);
  const stats=v06b1Diag(w).treaty;stats.ended++;stats.endReasons[reason]=(stats.endReasons[reason]||0)+1;
  d.subjectOffers=d.subjectOffers.filter(o=>o.from!==t.subjectId&&o.to!==t.subjectId);
+ c2CleanupNation(w,t.subjectId);
  d.subjectCooldowns[pairKey(t.overlordId,t.subjectId)]=w.dayIndex+5*DAYS_PER_YEAR;
  v06bLog(w,'SUBJECT_END',t.overlordId,t.subjectId,{reason});
  event(w,`${w.nations[t.subjectId].name}과 ${w.nations[t.overlordId].name}의 종속 관계가 종료됐습니다. (${reason})`,'diplomacy');
@@ -4750,8 +4791,8 @@ function v06bActionLegal(w,id,act){
  if(act.type==='ACCEPT_SUBMISSION')return !!v06bOffer(w,other,id,'SUBMIT')&&v06bVoluntaryEligible(w,other,id);
  if(act.type==='REJECT_SUBMISSION')return !!v06bOffer(w,other,id,'SUBMIT');
  const treaty=v06bBetween(w,id,other);
- if(act.type==='OFFER_RELEASE')return !!treaty&&w.dayIndex>=treaty.formedDay+5*DAYS_PER_YEAR&&!v06bOffer(w,id,other,'RELEASE');
- if(act.type==='ACCEPT_RELEASE'||act.type==='REJECT_RELEASE')return !!treaty&&!!v06bOffer(w,other,id,'RELEASE');
+ if(act.type==='OFFER_RELEASE')return !!treaty&&treaty.status!=='REBELLION'&&w.dayIndex>=treaty.formedDay+5*DAYS_PER_YEAR&&!v06bOffer(w,id,other,'RELEASE')&&w.dayIndex>=(treaty.nextDemandDay||0);
+ if(act.type==='ACCEPT_RELEASE'||act.type==='REJECT_RELEASE')return !!treaty&&treaty.status!=='REBELLION'&&!!v06bOffer(w,other,id,'RELEASE');
  return false;
 }
 function v06bExecuteAction(w,id,act){
@@ -4760,6 +4801,7 @@ function v06bExecuteAction(w,id,act){
  if(act.type==='OFFER_SUBMISSION'||act.type==='OFFER_RELEASE'){
    const kind=act.type==='OFFER_SUBMISSION'?'SUBMIT':'RELEASE';
    d.subjectOffers.push({from:id,to:other,kind,dayIndex:w.dayIndex,expiresDay:w.dayIndex+V06B_OFFER_DAYS});
+   if(kind==='RELEASE'){const treaty=v06bBetween(w,id,other);if(treaty&&treaty.subjectId===id){treaty.lastDemandDay=w.dayIndex;treaty.nextDemandDay=w.dayIndex+C2_DEMAND_COOLDOWN;c2IndependenceData(w).independenceStats.demands++;}}
    if(kind==='SUBMIT')v06b1Diag(w).voluntary.offered++;
    event(w,`${w.nations[id].name}이(가) ${w.nations[other].name}에 ${kind==='SUBMIT'?'보호·종속':'종속 해제'}를 제안했습니다.`,'diplomacy');
  }else if(act.type==='ACCEPT_SUBMISSION'){
@@ -4773,9 +4815,11 @@ function v06bExecuteAction(w,id,act){
    event(w,`${w.nations[id].name}이(가) 종속 제안을 거절했습니다.`,'diplomacy');
  }else if(act.type==='ACCEPT_RELEASE'){
    d.subjectOffers=d.subjectOffers.filter(o=>!(o.from===other&&o.to===id&&o.kind==='RELEASE'));
+   c2IndependenceData(w).independenceStats.accepted++;
    return {ok:v06bEndTreaty(w,v06bBetween(w,id,other),'MUTUAL_RELEASE')};
  }else if(act.type==='REJECT_RELEASE'){
    d.subjectOffers=d.subjectOffers.filter(o=>!(o.from===other&&o.to===id&&o.kind==='RELEASE'));
+   const treaty=v06bBetween(w,id,other);if(treaty&&treaty.subjectId===other){treaty.lastRejectedDay=w.dayIndex;treaty.rejectedDemands=(treaty.rejectedDemands||0)+1;treaty.independencePressure=Math.min(100,treaty.independencePressure+8);c2IndependenceData(w).independenceStats.rejected++;}
    event(w,`${w.nations[id].name}이(가) 종속 해제를 거절했습니다.`,'diplomacy');
  }
  w.changeSeq++;return {ok:true};
@@ -4788,6 +4832,7 @@ function v06bPayTributeQuarter(w){
  for(const t of v06bTreaties(w)){
    if(t.lastPaidDay===w.dayIndex||!w.nations[t.overlordId]?.active||!w.nations[t.subjectId]?.active)continue;
    const o=w.nations[t.overlordId],s=w.nations[t.subjectId];
+   if(t.status==='REBELLION')continue;
    const net=Math.max(0,Math.floor(s.lastQuarter?.goldNet||0));
    const due=Math.floor(net*t.rate),paid=Math.min(due,Math.max(0,s.gold));
    s.gold-=paid;o.gold+=paid;
@@ -4833,13 +4878,9 @@ function v06bRunQuarter(w,execute){
  const d=w.diplomacy;
  for(const t of d.subjectTreaties.slice()){
    if(!w.nations[t.overlordId]?.active||!w.nations[t.subjectId]?.active){v06bEndTreaty(w,t,'NATION_FALL');continue;}
-   if(w.dayIndex<t.endsDay)continue;
+   if(t.status==='REBELLION'||w.dayIndex<t.endsDay)continue;
    const o=w.nations[t.overlordId],s=w.nations[t.subjectId];
    // An offer is the only peaceful route out. Failed or absent consent cannot expire the treaty.
-   if(v06b2WantsIndependence(w,t)&&!v06bOffer(w,s.id,o.id,'RELEASE')){
-     d.subjectOffers.push({from:s.id,to:o.id,kind:'RELEASE',dayIndex:w.dayIndex,expiresDay:w.dayIndex+V06B_OFFER_DAYS});
-     event(w,`${s.name}이(가) 50년 재평가에서 ${o.name}에 독립을 요청했습니다.`,'diplomacy');
-   }
    do{t.endsDay+=V06B_TERM;}while(t.endsDay<=w.dayIndex);
    v06b1Diag(w).treaty.renewed++;
    v06bLog(w,'SUBJECT_RENEW',o.id,s.id,{reviewYears:50,nextReviewDay:t.endsDay});
@@ -4857,7 +4898,7 @@ function v06bRunQuarter(w,execute){
      execute(w,offer.to,{type:legal&&judgment?.approve?'ACCEPT_SUBMISSION':'REJECT_SUBMISSION',targetNationId:offer.from});
    }else if(offer.kind==='RELEASE'){
      const t=v06bBetween(w,offer.from,offer.to);
-     const agree=v06b2AIReleaseConsent(w,t,offer.to);
+     const agree=c2ReleaseConsent(w,t,offer.to);
      execute(w,offer.to,{type:agree?'ACCEPT_RELEASE':'REJECT_RELEASE',targetNationId:offer.from});
    }
  }
@@ -4922,6 +4963,272 @@ function v06bValidate(w,fail){
  if(!diag.voluntary.motives||Object.values(diag.voluntary.motives).some(x=>!Number.isSafeInteger(x)||x<0)||
    !diag.treaty.endReasons||Object.values(diag.treaty.endReasons).some(x=>!Number.isSafeInteger(x)||x<0)||
    [diag.voluntary.choiceReasons,diag.voluntary.suzerainReasons].some(m=>!m||Object.values(m).some(v=>!Number.isSafeInteger(v)||v<0)))fail('V0.6B3 세부 진단');
+}
+// --- src/sim/multi-war.js ---
+/** V0.6C2: front assignment never duplicates soldiers or resets formation experience. */
+function c2FrontPriority(w,a,war){
+  const at=w.tiles[a.tileId],opponents=warOpponents(war,a.nationId);
+  let distance=Infinity;
+  for(const id of opponents){const capital=w.tiles[w.nations[id]?.capitalId];
+    if(capital)distance=Math.min(distance,Math.abs(at.x-capital.x)+Math.abs(at.y-capital.y));}
+  const defensive=warSide(war,a.nationId)==='defenders';
+  const ownCap=w.tiles[w.nations[a.nationId].capitalId];
+  const crisis=defensive&&ownCap&&opponents.some(id=>w.armies.some(b=>b.nationId===id&&
+    Math.abs(w.tiles[b.tileId].x-ownCap.x)+Math.abs(w.tiles[b.tileId].y-ownCap.y)<8));
+  return (war.kind==='INDEPENDENCE'?35:0)+(crisis?85:0)+(defensive?18:0)+Math.max(0,35-distance*1.4);
+}
+function c2AssignFronts(w){
+  // Allocate by existing strength to avoid committing every formation to the first war.
+  const committed=new Map();
+  for(const a of w.armies){
+    const live=warsOfNation(w,a.nationId);
+    if(!live.length){if(a.assignedWarId!=null){a.assignedWarId=null;w.changeSeq++;}continue;}
+    if(a.engagementId!==null){const e=w.engagements.find(e=>e.id===a.engagementId);
+      if(e)a.assignedWarId=e.warId;
+    }
+    if(a.assignedWarId!=null&&live.some(v=>v.id===a.assignedWarId)){
+      const key=a.nationId+':'+a.assignedWarId;
+      committed.set(key,(committed.get(key)||0)+manpower(a));
+    }
+  }
+  for(const a of w.armies){
+    const live=warsOfNation(w,a.nationId);
+    if(!live.length||a.engagementId!==null||a.status==='SAILING'||a.status==='RETREATING'||a.status==='REGROUP')continue;
+    if(a.assignedWarId!=null&&live.some(v=>v.id===a.assignedWarId)&&w.dayIndex<(a.c2NextFrontReviewDay||0))continue;
+    const old=a.assignedWarId;
+    if(old!=null){const key=a.nationId+':'+old;committed.set(key,Math.max(0,(committed.get(key)||0)-manpower(a)));}
+    const ranked=live.map(war=>({war,score:c2FrontPriority(w,a,war)-Math.min(85,(committed.get(a.nationId+':'+war.id)||0)/12)}))
+      .sort((x,y)=>y.score-x.score||x.war.id-y.war.id);
+    const chosen=ranked[0].war;
+    if(chosen.id!==old){a.assignedWarId=chosen.id;a.order=null;a.operation=null;a.needsOrders=true;w.changeSeq++;}
+    const key=a.nationId+':'+chosen.id;committed.set(key,(committed.get(key)||0)+manpower(a));
+    a.c2NextFrontReviewDay=w.dayIndex+30;
+  }
+}
+// --- src/sim/independence.js ---
+/** C2: treaty-bound independence politics and war-only coalitions.
+ * These are not permanent alliances. All parties have to accept a real offer.
+ */
+const C2_YEAR=DAYS_PER_YEAR,C2_FRONT_TERM=10*C2_YEAR,C2_DEMAND_COOLDOWN=5*C2_YEAR;
+const C2_ACTIONS=['OFFER_INDEPENDENCE_FRONT','ACCEPT_INDEPENDENCE_FRONT','REJECT_INDEPENDENCE_FRONT',
+ 'OFFER_INDEPENDENCE_SUPPORT','ACCEPT_INDEPENDENCE_SUPPORT','REJECT_INDEPENDENCE_SUPPORT','DECLARE_INDEPENDENCE'];
+function c2TreatyInit(w,t){
+ if(t.independencePressure===undefined){t.independencePressure=t.origin==='FORCED'?35:10;t.pressureDay=w.dayIndex;
+  t.lastDemandDay=null;t.lastRejectedDay=null;t.rejectedDemands=0;t.nextDemandDay=w.dayIndex+5*C2_YEAR;
+  t.protectionHelp=0;t.protectionFailures=0;t.rebellionWarId=null;t.status='ACTIVE';}
+ return t;
+}
+function c2IndependenceData(w){
+ const d=w.diplomacy;
+ d.independenceFronts??=[];d.independencePledges??=[];
+ d.independenceOffers??=[];
+ d.independenceStats??={demands:0,accepted:0,rejected:0,wars:0,victories:0,defeats:0};
+ return d;
+}
+function c2Front(w,a,b){return c2IndependenceData(w).independenceFronts.find(t=>t.a===Math.min(a,b)&&t.b===Math.max(a,b)&&t.expiresDay>w.dayIndex)||null;}
+function c2Pledge(w,subjectId,supporterId){return c2IndependenceData(w).independencePledges.find(t=>t.subjectId===subjectId&&t.supporterId===supporterId&&t.expiresDay>w.dayIndex)||null;}
+function c2Offer(w,from,to,kind){return c2IndependenceData(w).independenceOffers.find(o=>o.from===from&&o.to===to&&o.kind===kind&&o.expiresDay>w.dayIndex)||null;}
+function c2FrontLegal(w,a,b){
+ const ta=v06bSubjectOf(w,a),tb=v06bSubjectOf(w,b);
+ return Boolean(ta&&tb&&a!==b&&ta.status!=='REBELLION'&&tb.status!=='REBELLION'&&
+  c2TreatyInit(w,ta).independencePressure>=50&&c2TreatyInit(w,tb).independencePressure>=50&&
+  relationOf(w,a,b)>=10&&!warAgainst(w,a,b));
+}
+function c2PledgeLegal(w,subjectId,supporterId){
+ const t=v06bSubjectOf(w,subjectId),independent=w.nations[supporterId];
+ return Boolean(t&&t.status!=='REBELLION'&&independent?.active&&!v06bSubjectOf(w,supporterId)&&
+  !v06bBetween(w,supporterId,subjectId)&&supporterId!==t.overlordId&&
+  !allianceBetween(w,supporterId,t.overlordId)&&
+  !(independent.truces?.[t.overlordId]>w.dayIndex)&&
+  relationOf(w,subjectId,supporterId)>=15&&
+  !warAgainst(w,subjectId,supporterId)&&
+  !warAgainst(w,supporterId,t.overlordId));
+}
+function c2WarCoalition(w,subjectId){
+ const lead=v06bSubjectOf(w,subjectId);if(!lead)return null;
+ let attackers=[subjectId],defenders=[lead.overlordId],claims=[{subjectId,overlordId:lead.overlordId}];
+ // Stable join order makes a one-war-at-a-time choice deterministic even with 100 nations.
+ const fronts=c2IndependenceData(w).independenceFronts.filter(f=>f.expiresDay>w.dayIndex&&(f.a===subjectId||f.b===subjectId));
+ for(const front of fronts){
+   const id=front.a===subjectId?front.b:front.a,t=v06bSubjectOf(w,id);
+   if(!t||t.status==='REBELLION'||t.independencePressure<60||t.lastRejectedDay==null||w.dayIndex-t.lastRejectedDay>15*C2_YEAR)continue;
+   const a=[...attackers,id],d=[...new Set([...defenders,t.overlordId])];
+   if(c2CanStartWar(w,a,d)){attackers=a;defenders=d;claims.push({subjectId:id,overlordId:t.overlordId});}
+ }
+ // A support promise is specific to a subject and the current overlord.
+ for(const pledge of c2IndependenceData(w).independencePledges){
+  if(pledge.expiresDay<=w.dayIndex||pledge.status!=='ACTIVE'||!claims.some(c=>c.subjectId===pledge.subjectId&&c.overlordId===pledge.overlordId))continue;
+  if(!w.nations[pledge.supporterId]?.active||!c2PledgeLegal(w,pledge.subjectId,pledge.supporterId))continue;
+  if(attackers.includes(pledge.supporterId))continue;
+  if(c2CanStartWar(w,[...attackers,pledge.supporterId],defenders))attackers.push(pledge.supporterId);
+ }
+ return {attackers,defenders,claims};
+}
+function c2IndependenceActionLegal(w,id,act){
+ const other=act.targetNationId,t=v06bSubjectOf(w,id),kind=act.type;
+ if(!w.nations[id]?.active)return false;
+ if(kind==='DECLARE_INDEPENDENCE'){
+  if(!t||c2TreatyInit(w,t).status==='REBELLION'||t.lastRejectedDay==null||w.dayIndex-t.lastRejectedDay>15*C2_YEAR||
+     t.independencePressure<70||w.dayIndex<t.formedDay+5*C2_YEAR||!w.armies.some(a=>a.nationId===id&&manpower(a)>=12))return false;
+  const col=c2WarCoalition(w,id);return Boolean(col&&c2CanStartWar(w,col.attackers,col.defenders));
+ }
+ if(!Number.isInteger(other)||!w.nations[other]?.active||other===id)return false;
+ if(kind==='OFFER_INDEPENDENCE_FRONT')return c2FrontLegal(w,id,other)&&!c2Front(w,id,other)&&!c2Offer(w,id,other,'FRONT');
+ if(kind==='ACCEPT_INDEPENDENCE_FRONT')return c2FrontLegal(w,id,other)&&!!c2Offer(w,other,id,'FRONT')&&!c2Front(w,id,other);
+ if(kind==='REJECT_INDEPENDENCE_FRONT')return !!c2Offer(w,other,id,'FRONT');
+ if(kind==='OFFER_INDEPENDENCE_SUPPORT')return c2PledgeLegal(w,id,other)&&!c2Pledge(w,id,other)&&!c2Offer(w,id,other,'SUPPORT');
+ if(kind==='ACCEPT_INDEPENDENCE_SUPPORT')return c2PledgeLegal(w,other,id)&&!!c2Offer(w,other,id,'SUPPORT')&&!c2Pledge(w,other,id);
+ if(kind==='REJECT_INDEPENDENCE_SUPPORT')return !!c2Offer(w,other,id,'SUPPORT');
+ return false;
+}
+function c2ExecuteIndependence(w,id,act){
+ if(!c2IndependenceActionLegal(w,id,act))return {ok:false,reason:'독립 외교 또는 봉기 조건 불충족'};
+ const d=c2IndependenceData(w),other=act.targetNationId;
+ if(act.type==='DECLARE_INDEPENDENCE'){
+  const col=c2WarCoalition(w,id),overlord=v06bSubjectOf(w,id).overlordId;
+  const war={id:w.nextWarId++,kind:'INDEPENDENCE',attackerId:id,defenderId:overlord,startedDay:w.dayIndex,
+   lastBattleDay:w.dayIndex,score:0,battleCount:0,casualties:{},battleCasualties:{},occupationCasualties:{},supplyCasualties:{},
+   battleWins:{},occupationCount:0,goal:chooseWarGoal(w,id,overlord),defenderGoal:defenseGoal(),
+   sides:{attackers:col.attackers,defenders:col.defenders},independenceClaims:col.claims,
+   fatigue:Object.fromEntries([...col.attackers,...col.defenders].map(x=>[x,0])),
+   lastCasualties:Object.fromEntries([...col.attackers,...col.defenders].map(x=>[x,0])),pendingPeace:null,nextPeaceOfferDay:0};
+  for(const claim of col.claims){const t=v06bSubjectOf(w,claim.subjectId);t.status='REBELLION';t.rebellionWarId=war.id;
+   t.lastDemandDay=w.dayIndex;}
+  for(const pledge of d.independencePledges){if(pledge.status==='ACTIVE'&&col.claims.some(c=>c.subjectId===pledge.subjectId&&c.overlordId===pledge.overlordId)){
+    pledge.status=col.attackers.includes(pledge.supporterId)?'FULFILLED':'BROKEN';
+    if(pledge.status==='BROKEN'){v06aRemember(w,pledge.subjectId,pledge.supporterId,'INDEPENDENCE_PLEDGE_BROKEN',{trust:-12,grievance:10});adjustRelation(w,pledge.subjectId,pledge.supporterId,-10);}
+  }}
+  d.independenceFronts=d.independenceFronts.filter(f=>!col.claims.some(c=>c.subjectId===f.a||c.subjectId===f.b));
+  w.diplomacy.subjectOffers=w.diplomacy.subjectOffers.filter(offer=>
+    !col.claims.some(c=>offer.kind==='RELEASE'&&offer.from===c.subjectId&&offer.to===c.overlordId));
+  w.wars.push(war);d.independenceStats.wars++;
+  for(const x of col.attackers)for(const y of col.defenders)adjustRelation(w,x,y,-12);
+  requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);
+  event(w,`${col.claims.map(c=>w.nations[c.subjectId].name).join('·')}이(가) 종주국 연합에 독립전쟁을 선포했습니다. (전쟁 #${war.id})`,'war');
+  recordHistoricalEvent(w,'war',w.events.at(-1).text,[...col.attackers,...col.defenders],`war:${war.id}:start`);
+  return {ok:true,warId:war.id,claims:col.claims.length};
+ }
+ let kind=null;
+ if(act.type.endsWith('_FRONT'))kind='FRONT';if(act.type.endsWith('_SUPPORT'))kind='SUPPORT';
+ if(act.type.startsWith('OFFER_')){
+   d.independenceOffers.push({from:id,to:other,kind,dayIndex:w.dayIndex,expiresDay:w.dayIndex+2*DAYS_PER_QUARTER});
+   event(w,`${w.nations[id].name}이(가) ${w.nations[other].name}에 ${kind==='FRONT'?'독립 공동전선':'독립 지원'}을 제안했습니다.`,'diplomacy');
+ }else{
+   d.independenceOffers=d.independenceOffers.filter(o=>!(o.from===other&&o.to===id&&o.kind===kind));
+   if(act.type.startsWith('ACCEPT_')){
+     if(kind==='FRONT')d.independenceFronts.push({a:Math.min(id,other),b:Math.max(id,other),formedDay:w.dayIndex,expiresDay:w.dayIndex+C2_FRONT_TERM});
+     else d.independencePledges.push({subjectId:other,supporterId:id,overlordId:v06bSubjectOf(w,other).overlordId,
+       formedDay:w.dayIndex,expiresDay:w.dayIndex+C2_FRONT_TERM,status:'ACTIVE'});
+     event(w,`${w.nations[id].name}과 ${w.nations[other].name}이(가) ${kind==='FRONT'?'독립 공동전선':'독립 지원 약속'}을 체결했습니다.`,'diplomacy');
+   }else{adjustRelation(w,id,other,-2);event(w,`${w.nations[id].name}이(가) 독립 외교 제안을 거절했습니다.`,'diplomacy');}
+ }
+ w.changeSeq++;return {ok:true};
+}
+function c2PressureQuarter(w,t){
+ if(t.status==='REBELLION')return;
+ if(t.pressureDay===w.dayIndex)return;
+ const s=w.nations[t.subjectId],o=w.nations[t.overlordId],rel=relationOf(w,s.id,o.id);
+ const strength=nationManpower(w,s.id)/Math.max(1,nationManpower(w,o.id));
+ const treasury=s.gold/Math.max(1,militaryUpkeep(w,s.id)*3+100);
+ const age=(w.dayIndex-t.formedDay)/C2_YEAR;
+ const previous=t.independencePressure;
+ const change=(t.origin==='FORCED'?.45:.03)+(age>20?.3:0)+
+   (t.lastPaid>0&&treasury<1?.65:0)+(strength>1.2?.9:strength>.8?.3:0)+
+   (rel<0?.8:rel>60?-.85:rel>30?-.4:0)+
+   (t.protectionFailures>t.protectionHelp?.5:0)+(v06bThreatened(w,s.id,o.id)?-.4:0);
+ t.independencePressure=Math.max(0,Math.min(100,Math.round((previous+change)*100)/100));
+ t.pressureDay=w.dayIndex;if(previous!==t.independencePressure)w.changeSeq++;
+}
+function c2ReleaseConsent(w,t,responderId){
+ if(!t||w.nations[responderId]?.controller!=='AI')return false;
+ if(responderId===t.subjectId)return true;
+ const o=w.nations[t.overlordId],p=w.aiProfiles[o.aiProfileId],ratio=nationManpower(w,t.subjectId)/Math.max(1,nationManpower(w,o.id));
+ const burden=(o.gold<Math.max(200,militaryUpkeep(w,o.id)*2)?12:0)+(warsOfNation(w,o.id).length*8);
+ const score=(t.independencePressure||0)*.28+ratio*24+burden+(relationOf(w,o.id,t.subjectId)>65?12:0)+
+   (p?.diplomacy?.compromise??50)*.25-(p?.military?.aggression??50)*.22;
+ return score>=62;
+}
+function c2RunIndependenceQuarter(w,execute){
+ const d=c2IndependenceData(w);
+ d.independenceOffers=d.independenceOffers.filter(o=>o.expiresDay>w.dayIndex&&w.nations[o.from]?.active&&w.nations[o.to]?.active);
+ d.independenceFronts=d.independenceFronts.filter(f=>f.expiresDay>w.dayIndex&&c2FrontLegal(w,f.a,f.b));
+ d.independencePledges=d.independencePledges.filter(p=>p.expiresDay>w.dayIndex&&w.nations[p.subjectId]?.active&&w.nations[p.supporterId]?.active&&v06bSubjectOf(w,p.subjectId)?.overlordId===p.overlordId);
+ for(const t of v06bTreaties(w).slice()){
+  c2TreatyInit(w,t);c2PressureQuarter(w,t);
+  if(t.status==='REBELLION')continue;
+  const subject=w.nations[t.subjectId];
+  if(subject?.controller!=='AI')continue;
+  if(t.independencePressure>=60&&w.dayIndex>=t.formedDay+5*C2_YEAR&&w.dayIndex>=(t.nextDemandDay||0)&&
+      !v06bOffer(w,t.subjectId,t.overlordId,'RELEASE')){
+     execute(w,t.subjectId,{type:'OFFER_RELEASE',targetNationId:t.overlordId});
+  }
+ }
+ for(const offer of d.independenceOffers.slice()){
+  if(w.nations[offer.to]?.controller!=='AI')continue;
+  const cooperation=w.aiProfiles[w.nations[offer.to].aiProfileId]?.diplomacy?.cooperation??50;
+  const accept=offer.kind==='FRONT'?c2FrontLegal(w,offer.to,offer.from)&&cooperation>=25:
+    c2PledgeLegal(w,offer.from,offer.to)&&cooperation>=45&&relationOf(w,offer.to,v06bSubjectOf(w,offer.from).overlordId)<15;
+  execute(w,offer.to,{type:accept?(offer.kind==='FRONT'?'ACCEPT_INDEPENDENCE_FRONT':'ACCEPT_INDEPENDENCE_SUPPORT'):
+    offer.kind==='FRONT'?'REJECT_INDEPENDENCE_FRONT':'REJECT_INDEPENDENCE_SUPPORT',targetNationId:offer.from});
+ }
+ // A single new diplomacy proposal per subject/quarter. No new RNG draws.
+ for(const t of v06bTreaties(w).slice()){
+  if(t.status==='REBELLION'||w.nations[t.subjectId]?.controller!=='AI'||t.independencePressure<60)continue;
+  const s=t.subjectId,p=w.aiProfiles[w.nations[s].aiProfileId];
+  if(t.lastRejectedDay!==null&&w.dayIndex-t.lastRejectedDay<=15*C2_YEAR&&t.independencePressure>=70){
+   if(c2IndependenceActionLegal(w,s,{type:'DECLARE_INDEPENDENCE'})){
+    const coalition=c2WarCoalition(w,s);
+    const own=coalition.attackers.reduce((v,id)=>v+nationManpower(w,id),0),
+     enemy=coalition.defenders.reduce((v,id)=>v+nationManpower(w,id),0);
+    const risk=(p?.behavior?.riskTolerance??50)/100;
+    if(own/(enemy+20)>=Math.max(.35,.9-risk*.45)){
+      execute(w,s,{type:'DECLARE_INDEPENDENCE'});continue;
+    }
+   }
+  }
+  if(t.independencePressure>=65&&!d.independenceOffers.some(o=>o.from===s)&&!d.independenceFronts.some(f=>f.a===s||f.b===s)){
+    const peer=v06bTreaties(w).find(x=>x.subjectId!==s&&x.independencePressure>=60&&c2FrontLegal(w,s,x.subjectId)&&!c2Front(w,s,x.subjectId));
+    if(peer){execute(w,s,{type:'OFFER_INDEPENDENCE_FRONT',targetNationId:peer.subjectId});continue;}
+  }
+  if(t.independencePressure>=65&&!d.independenceOffers.some(o=>o.from===s)&&!d.independencePledges.some(x=>x.subjectId===s&&x.status==='ACTIVE')){
+    const candidate=w.nations.filter(n=>n.controller==='AI'&&c2PledgeLegal(w,s,n.id)&&
+      relationOf(w,s,n.id)>=40&&relationOf(w,t.overlordId,n.id)<0).sort((a,b)=>relationOf(w,s,b.id)-relationOf(w,s,a.id)||a.id-b.id)[0];
+    if(candidate)execute(w,s,{type:'OFFER_INDEPENDENCE_SUPPORT',targetNationId:candidate.id});
+  }
+ }
+}
+function c2AfterPeace(w,war,terms){
+ if(war.kind!=='INDEPENDENCE')return null;
+ const d=c2IndependenceData(w),outcome=terms?.tier==='WHITE'?'WHITE':warSide(war,terms?.winnerId);
+ const won=outcome==='attackers';
+ for(const claim of war.independenceClaims||[]){
+  const treaty=v06bBetween(w,claim.subjectId,claim.overlordId);
+  if(!treaty)continue;
+  if(won){v06bEndTreaty(w,treaty,'INDEPENDENCE_WAR');}
+  else{treaty.status='ACTIVE';treaty.rebellionWarId=null;treaty.nextDemandDay=w.dayIndex+10*C2_YEAR;
+   treaty.independencePressure=Math.max(20,treaty.independencePressure-18);}
+ }
+ d.independenceStats[won?'victories':'defeats']++;
+ return {outcome:won?'INDEPENDENT':outcome==='defenders'?'SUPPRESSED':'WHITE_PEACE',claims:structuredClone(war.independenceClaims||[])};
+}
+function c2CleanupNation(w,id){
+ const d=c2IndependenceData(w);
+ d.independenceFronts=d.independenceFronts.filter(f=>f.a!==id&&f.b!==id);
+ d.independencePledges=d.independencePledges.filter(p=>p.subjectId!==id&&p.supporterId!==id&&p.overlordId!==id);
+ d.independenceOffers=d.independenceOffers.filter(o=>o.from!==id&&o.to!==id);
+}
+function c2Validate(w,fail){
+ const d=c2IndependenceData(w);
+ if(!Array.isArray(d.independenceFronts)||!Array.isArray(d.independencePledges)||!Array.isArray(d.independenceOffers))fail('C2 독립 외교 목록');
+ for(const t of v06bTreaties(w)){
+  if(!Number.isFinite(t.independencePressure)||t.independencePressure<0||t.independencePressure>100||
+   !['ACTIVE','REBELLION'].includes(t.status)||t.status==='REBELLION'&&!w.wars.some(v=>v.id===t.rebellionWarId&&v.kind==='INDEPENDENCE'))fail('C2 종속국 독립 상태');
+ }
+ for(const war of w.wars)if(war.kind==='INDEPENDENCE'){
+  if(!Array.isArray(war.independenceClaims)||!war.independenceClaims.length||war.independenceClaims.some(c=>
+   !war.sides.attackers.includes(c.subjectId)||!war.sides.defenders.includes(c.overlordId)||
+    v06bBetween(w,c.subjectId,c.overlordId)?.rebellionWarId!==war.id))fail('C2 독립전쟁 청구권');
+ }
 }
 // --- src/sim/strategy.js ---
 /** V0.3D: one quarter-local geopolitical assessment shared by diplomacy,
@@ -5228,8 +5535,7 @@ function isFriendlyRecoveryTile(w,a,t){
 function canPassMilitaryTile(w,id,t){
   if(!t)return false;
   if(allyAccess(w,id,t.ownerId)||t.occupiedBy===id)return true;
-  const ownWar=warOfNation(w,id);
-  if(ownWar&&t.occupiedBy!==null&&warSide(ownWar,t.occupiedBy)===warSide(ownWar,id))return true;
+  if(t.occupiedBy!==null&&warsOfNation(w,id).some(v=>warSide(v,t.occupiedBy)===warSide(v,id)))return true;
   const war=warAgainst(w,id,t.ownerId);
   return Boolean(war&&warSide(war,id)&&warSide(war,id)!==warSide(war,t.ownerId));
 }
@@ -5312,10 +5618,11 @@ function finishSeaVoyage(w,a){
   w.changeSeq++;
 }
 function isSupplied(w,a){return hasSupplyLine(w,a);}
-const MILITARY_ACTIONS=['REARM_ARMY','TRAIN_RESERVES','TRAIN_FORMATION','EMERGENCY_MUSTER','RECRUIT_ARMY','REINFORCE_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'];
+const MILITARY_ACTIONS=['REARM_ARMY','TRAIN_RESERVES','TRAIN_FORMATION','EMERGENCY_MUSTER','RECRUIT_ARMY','REINFORCE_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE',...C2_ACTIONS];
 function isMilitaryActionLegal(w,nationId,act){
   const n=w.nations[nationId];if(!n?.active||!act||!MILITARY_ACTIONS.includes(act.type))return false;
   const army=getArmy(w,act.armyId);
+  if(C2_ACTIONS.includes(act.type))return c2IndependenceActionLegal(w,nationId,act);
   if(['OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'].includes(act.type))return v06bActionLegal(w,nationId,act);
   if(['IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE'].includes(act.type))return allianceActionLegal(w,nationId,act);
   if(act.type==='RESPOND_DEFENSE_CALL')return callResponseLegal(w,nationId,act);
@@ -5361,18 +5668,26 @@ function isMilitaryActionLegal(w,nationId,act){
       const live=Boolean(target&&allianceBetween(w,nationId,target.id));
       if(v06bSubjectOf(w,nationId)||v06bBetween(w,nationId,target?.id)||v06bSubjectOf(w,target?.id)?.overlordId===nationId)return false;
       if(act.type==='BETRAY_ALLIANCE'?!live||!e5BetrayalEligible(w,nationId,target.id,true):live)return false;
-      if(!target?.active||target.id===nationId||atWar(w,nationId,target.id)||warOfNation(w,nationId)||warOfNation(w,target.id))return false;
+      if(!target?.active||target.id===nationId||atWar(w,nationId,target.id)||!c2CanStartWar(w,[nationId],[target.id]))return false;
       if((n.truces?.[target.id]||0)>w.dayIndex||(target.truces?.[nationId]||0)>w.dayIndex)return false;
       if(!w.armies.some(a=>a.nationId===nationId&&manpower(a)>=12))return false;
       return w.tiles.some(t=>t.ownerId===nationId&&neighborsMilitary8(t.id,w.size,w.height).some(x=>w.tiles[x].ownerId===target.id&&militaryStepPermitted(w,t.id,x,nationId)))||(w.size===100&&maritimeContact(w,nationId,target.id));
     }
-    case 'OFFER_PEACE':return Boolean([atWar(w,nationId,act.targetNationId)?.attackerId,atWar(w,nationId,act.targetNationId)?.defenderId].includes(nationId)&&(act.reparationRate===undefined||(Number.isFinite(act.reparationRate)&&act.reparationRate>=0&&act.reparationRate<=1))&&atWar(w,nationId,act.targetNationId)&&(!act.subjectDemand||v06bForceEligible(w,atWar(w,nationId,act.targetNationId),warOutcome(w,atWar(w,nationId,act.targetNationId))))&&w.dayIndex-atWar(w,nationId,act.targetNationId).startedDay>=90&&!atWar(w,nationId,act.targetNationId).pendingPeace&&w.dayIndex>=(atWar(w,nationId,act.targetNationId).nextPeaceOfferDay||0));
+    case 'OFFER_PEACE':{
+      const war=c2PeaceWar(w,nationId,act);
+      return Boolean(war&&[war.attackerId,war.defenderId].includes(nationId)&&
+        (act.reparationRate===undefined||(Number.isFinite(act.reparationRate)&&act.reparationRate>=0&&act.reparationRate<=1))&&
+        (!act.subjectDemand||war.kind!=='INDEPENDENCE'&&v06bForceEligible(w,war,warOutcome(w,war)))&&
+        w.dayIndex-war.startedDay>=90&&!war.pendingPeace&&w.dayIndex>=(war.nextPeaceOfferDay||0));
+    }
     case 'MAKE_PEACE':case 'ACCEPT_PEACE':{
-      const war=atWar(w,nationId,act.targetNationId);
-      return Boolean(war&&[war.attackerId,war.defenderId].includes(nationId)&&war.pendingPeace&&war.pendingPeace.proposerId!==nationId&&w.dayIndex-war.startedDay>=90&&(!war.pendingPeace.terms.subjectDemand||v06bForceEligible(w,war,war.pendingPeace.terms)));
+      const war=c2PeaceWar(w,nationId,act);
+      return Boolean(war&&[war.attackerId,war.defenderId].includes(nationId)&&war.pendingPeace&&
+        war.pendingPeace.proposerId!==nationId&&w.dayIndex-war.startedDay>=90&&
+        (!war.pendingPeace.terms.subjectDemand||v06bForceEligible(w,war,war.pendingPeace.terms)));
     }
     case 'REJECT_PEACE':{
-      const war=atWar(w,nationId,act.targetNationId);
+      const war=c2PeaceWar(w,nationId,act);
       return Boolean(war&&[war.attackerId,war.defenderId].includes(nationId)&&war.pendingPeace&&war.pendingPeace.proposerId!==nationId);
     }
     default:return false;
@@ -5387,7 +5702,7 @@ function transferCore(w,settlementId,newOwner){
   if(loser.capitalId===s.coreTileId)markCapitalHistory(s,loser.id);
   s.ownerId=newOwner; // The geographic name and historical capitals never change on conquest.
   e5InvalidateBorders(w);
-  for(const id of s.tileIds){w.tiles[id].ownerId=newOwner;w.tiles[id].occupiedBy=null;for(const d of w.defenses||[])if(d.tileId===id)delete d.repair;}
+  for(const id of s.tileIds){w.tiles[id].ownerId=newOwner;w.tiles[id].occupiedBy=null;w.tiles[id].occupiedWarId=null;for(const d of w.defenses||[])if(d.tileId===id)delete d.repair;}
   v04e2RegisterBarracksEvent(w,'SETTLEMENT_TRANSFER',[oldOwner,newOwner],s.id,movedBarracks);
   // No physical deletion: candidate selection immediately re-evaluates both owners.
 }
@@ -5616,11 +5931,11 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   const contributionShares=winnerSide?coalitionContributionShares(w,war,winnerSide):{};
   const sideContributions={attackers:coalitionContributionShares(w,war,'attackers'),defenders:coalitionContributionShares(w,war,'defenders')};
   const occupationAtPeace={
-    [a.id]:w.tiles.filter(t=>defending.has(t.ownerId)&&attacking.has(t.occupiedBy)).length,
-    [b.id]:w.tiles.filter(t=>attacking.has(t.ownerId)&&defending.has(t.occupiedBy)).length
+    [a.id]:w.tiles.filter(t=>t.occupiedWarId===war.id&&defending.has(t.ownerId)&&attacking.has(t.occupiedBy)).length,
+    [b.id]:w.tiles.filter(t=>t.occupiedWarId===war.id&&attacking.has(t.ownerId)&&defending.has(t.occupiedBy)).length
   };
-  const subjugation=Boolean(terms.subjectDemand&&v06bForceEligible(w,war,terms));
-  const cession=winner&&loser&&!subjugation?planCoalitionPeaceCessions(w,war,winner.id,loser.id,tier,contributionShares):null;
+  const subjugation=Boolean(war.kind!=='INDEPENDENCE'&&terms.subjectDemand&&v06bForceEligible(w,war,terms));
+  const cession=war.kind!=='INDEPENDENCE'&&winner&&loser&&!subjugation?planCoalitionPeaceCessions(w,war,winner.id,loser.id,tier,contributionShares):null;
   let count=0;
   const territoryAwards=Object.fromEntries((winner?warFriends(war,winner.id):[]).map(id=>[id,0]));
   if(cession){
@@ -5638,7 +5953,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   const demandRate=winner&&!subjugation?Math.max(0,Math.min(1,Number.isFinite(terms.reparationRate)?terms.reparationRate:1)):0;
   // Legacy pending offers use original formula; newly negotiated treaties use costs.
   const quote=quoteWarReparations(w,war,tier,winner?.id??null,loser?.id??null,demandRate,terms);
-  if(subjugation){quote.reparations=0;quote.demandedGold=0;quote.capGold=0;quote.model='SUZERAINTY';}
+  if(subjugation||war.kind==='INDEPENDENCE'){quote.reparations=0;quote.demandedGold=0;quote.capGold=0;quote.model=subjugation?'SUZERAINTY':'INDEPENDENCE';}
   const {reparations,demandedGold,capGold}=quote;
   const capRate=quote.capRate||0;
   const winnerGoldAtOffer=quote.winnerGoldAtOffer??0;
@@ -5650,7 +5965,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
     for(const [id,gold] of Object.entries(reparationAwards))w.nations[Number(id)].gold+=gold;
   }
   clearOccupationForWar(w,war.id);
-  for(const t of w.tiles)if((attacking.has(t.ownerId)&&defending.has(t.occupiedBy))||(defending.has(t.ownerId)&&attacking.has(t.occupiedBy)))t.occupiedBy=null;
+  for(const t of w.tiles)if(t.occupiedWarId===war.id){t.occupiedBy=null;t.occupiedWarId=null;}
   for(const e of w.engagements.filter(v=>v.warId===war.id))for(const id of new Set([...(e.attackers||[]).map(m=>m.armyId),...(e.defenders||[]).map(m=>m.armyId),e.attackerArmyId,e.defenderArmyId])){
     const army=getArmy(w,id);if(army){army.engagementId=null;army.status='REGROUP';army.regroupUntil=w.dayIndex+22;army.retreatPath=[];}
   }
@@ -5667,8 +5982,8 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
     trucePairs.push([attackerId,defenderId]);
   }
   for(const army of w.armies){
-    if(!warMembers(war).includes(army.nationId))continue;
-    army.order=null;army.operation=null;army.needsOrders=false;
+    if(army.assignedWarId!==war.id)continue;
+    army.assignedWarId=null;army.order=null;army.operation=null;army.needsOrders=false;
     if(atSafeSettlement(w,army)){
       army.repatriation=null;army.status='REGROUP';army.regroupUntil=w.dayIndex+22;army.retreatPath=[];army.engagementId=null;
     }else{
@@ -5692,6 +6007,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   }
   // A nation that fell in this treaty cannot keep diplomatic obligations.
   for(const t of v06bTreaties(w).slice())if(!w.nations[t.overlordId].active||!w.nations[t.subjectId].active)v06bEndTreaty(w,t,'NATION_FALL');
+  const independence=c2AfterPeace(w,war,terms);
   const subjectTreaty=subjugation?v06bCreateTreaty(w,winner.id,loser.id,'FORCED',war.id):null;
   if(subjugation)v06b1Diag(w).forced[subjectTreaty?'accepted':'invalidated']++;
   for(const t of w.diplomacy.alliances.slice())if(!w.nations[t.a].active||!w.nations[t.b].active)e5EndAlliance(w,t,'NATION_FALL');
@@ -5700,12 +6016,12 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   // War memory affects later diplomacy but historical names remain unchanged.
   for(const [attackerId,defenderId] of trucePairs)
     adjustRelation(w,attackerId,defenderId,tier==='WHITE'?-4:-12);
-  const result={dayIndex:w.dayIndex,attackerId:a.id,defenderId:b.id,participants:structuredClone(participants),participantNames,tier,winnerId:winner?.id??null,winningSide:winnerSide,
+  const result={dayIndex:w.dayIndex,warId:war.id,warKind:war.kind||'TERRITORIAL',independence,attackerId:a.id,defenderId:b.id,participants:structuredClone(participants),participantNames,tier,winnerId:winner?.id??null,winningSide:winnerSide,
     acquiredTiles:count,subjectTreaty:subjectTreaty?{overlordId:subjectTreaty.overlordId,subjectId:subjectTreaty.subjectId}:null,reparations,reparationModel:quote.model,advantage,warCost:quote.warCost??null,costBase:quote.costBase??null,incomeCap:quote.incomeCap??null,treasuryCap:quote.treasuryCap??null,reparationRate:demandRate,reparationCapRate:capRate,
     winnerGoldAtOffer,loserGoldAtTreaty,demandedGold,capGold,truceUntil:w.dayIndex+truce,goal:war.goal||null,occupationContributions:structuredClone(war.occupationContributions||{}),contributionShares:structuredClone(sideContributions),reparationAwards,territoryAwards,trucePairs,...transferAudit};
   w.peaceHistory.push(result);if(w.peaceHistory.length>80)w.peaceHistory.shift();
   w.warHistory??=[];
-  w.warHistory.push({id:war.id,attackerId:a.id,defenderId:b.id,participants:structuredClone(participants),participantNames,winningSide:winnerSide,contributionShares:structuredClone(sideContributions),reparationAwards,territoryAwards,trucePairs,startedDay:war.startedDay,endedDay:w.dayIndex,
+  w.warHistory.push({id:war.id,kind:war.kind||'TERRITORIAL',independence,attackerId:a.id,defenderId:b.id,participants:structuredClone(participants),participantNames,winningSide:winnerSide,contributionShares:structuredClone(sideContributions),reparationAwards,territoryAwards,trucePairs,startedDay:war.startedDay,endedDay:w.dayIndex,
     goal:war.goal?structuredClone(war.goal):null,tier,winnerId:winner?.id??null,battles:war.battleCount||0,
     battleWins:Object.fromEntries(warMembers(war).map(id=>[id,war.battleWins?.[id]||0])),
     casualties:Object.fromEntries(warMembers(war).map(id=>[id,war.casualties?.[id]||0])),
@@ -5728,8 +6044,27 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
   if(w.warHistory.length>200)w.warHistory.shift();
   v06aRememberWarPeace(w,war,tier,winnerSide);
   const verdict=tier==='WHITE'?'백지 평화':`${winner.name} ${ {LIMITED:'제한적 승리',CLEAR:'명확한 승리',DECISIVE:'결정적 승리'}[tier]}`;
-  event(w,`${participants.attackers.map(id=>participantNames[id]).join('·')} VS ${participants.defenders.map(id=>participantNames[id]).join('·')} 평화협정: ${verdict} · 승점 차 ${Math.abs(advantage).toFixed(2)} · 영토 ${count}타일 · 배상 ${reparations}G${subjectTreaty?' · 종속 조약 체결':''} · 휴전 ${truce/DAYS_PER_YEAR}년.`,'peace');
+  event(w,`${participants.attackers.map(id=>participantNames[id]).join('·')} VS ${participants.defenders.map(id=>participantNames[id]).join('·')} 평화협정: ${verdict} · 승점 차 ${Math.abs(advantage).toFixed(2)} · 영토 ${count}타일 · 배상 ${reparations}G${subjectTreaty?' · 종속 조약 체결':''}${independence?' · 독립전쟁 '+independence.outcome:''} · 휴전 ${truce/DAYS_PER_YEAR}년.`,'peace');
   recordHistoricalEvent(w,'peace',w.events[w.events.length-1].text,warMembers(war),`war:${war.id}:end`);
+  // A defeated state may cease to exist while still listed in *other* wars.
+  // Keep unrelated surviving wars running: dismiss fallen supporters, and
+  // close only wars whose principal no longer exists.
+  const fallen=warMembers(war).filter(id=>!w.nations[id]?.active);
+  if(fallen.length){
+    for(const other of w.wars.slice().sort((x,y)=>x.id-y.id)){
+      if(!fallen.some(id=>warSide(other,id)))continue;
+      if(fallen.includes(other.attackerId)||fallen.includes(other.defenderId)){
+        settlePeace(w,other,{tier:'WHITE',winnerId:null,loserId:null,advantage:0});
+      }else{
+        other.sides.attackers=other.sides.attackers.filter(id=>!fallen.includes(id));
+        other.sides.defenders=other.sides.defenders.filter(id=>!fallen.includes(id));
+        for(const id of fallen)if(other.fatigue)delete other.fatigue[id];
+        for(const id of fallen)if(other.lastCasualties)delete other.lastCasualties[id];
+        for(const c of w.diplomacy.calls)if(c.warId===other.id&&fallen.includes(c.allyId)&&c.status==='PENDING')c.status='EXPIRED';
+        w.changeSeq++;
+      }
+    }
+  }
   return result;
 }
 
@@ -5738,6 +6073,7 @@ function executeMilitaryAction(w,nationId,act){
   const n=w.nations[nationId],cost=getActionPrice(w,nationId,act);
   if(!canAfford(n,cost))return {ok:false,reason:'AP·Gold 또는 자원 부족'};
   payCost(n,cost,v04e3ApCategory(act.type));
+  if(C2_ACTIONS.includes(act.type))return c2ExecuteIndependence(w,nationId,act);
   if(['OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'].includes(act.type))return v06bExecuteAction(w,nationId,act);
   if(['IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE'].includes(act.type))return executeAllianceAction(w,nationId,act);
   if(act.type==='RESPOND_DEFENSE_CALL')return resolveDefenseCall(w,nationId,act);
@@ -5811,14 +6147,14 @@ function executeMilitaryAction(w,nationId,act){
       e5EndAlliance(w,treaty,'BETRAYAL',nationId);
       repatriateAfterAllianceEnds(w,nationId,other);
     }
-    const war={id:w.nextWarId++,attackerId:nationId,defenderId:act.targetNationId,startedDay:w.dayIndex,lastBattleDay:w.dayIndex,score:0,battleCount:0,casualties:{},battleCasualties:{},occupationCasualties:{},supplyCasualties:{},battleWins:{},occupationCount:0,
+    const war={id:w.nextWarId++,kind:'TERRITORIAL',attackerId:nationId,defenderId:act.targetNationId,startedDay:w.dayIndex,lastBattleDay:w.dayIndex,score:0,battleCount:0,casualties:{},battleCasualties:{},occupationCasualties:{},supplyCasualties:{},battleWins:{},occupationCount:0,
       goal:chooseWarGoal(w,nationId,act.targetNationId),defenderGoal:defenseGoal(),sides:{attackers:[nationId],defenders:[act.targetNationId]},fatigue:{[nationId]:0,[act.targetNationId]:0},
       lastCasualties:{[nationId]:0,[act.targetNationId]:0},pendingPeace:null,nextPeaceOfferDay:0};
     w.wars.push(war);requestDefensiveSupport(w,war);requestOffensiveSupport(w,war);adjustRelation(w,nationId,act.targetNationId,-30);
     v06aRemember(w,other,nationId,'WAR_DECLARED',{trust:-16,grievance:19});if(betrays)e5RegisterBetrayal(w,nationId,other,live?'DIRECT':'AFTER_END');event(w,`${n.name}이(가) ${w.nations[act.targetNationId].name}에 선전포고했습니다. (목표: ${war.goal.type==='SETTLEMENT'?'정착지':'국경 영토'} 확보)`,'war');recordHistoricalEvent(w,'war',w.events[w.events.length-1].text,[nationId,act.targetNationId],`war:${war.id}:start`);return {ok:true,warId:war.id};
   }
   if(act.type==='OFFER_PEACE'){
-    const war=atWar(w,nationId,act.targetNationId);
+    const war=c2PeaceWar(w,nationId,act);
     const terms=warOutcome(w,war);
     const winner=terms.winnerId===null?null:w.nations[terms.winnerId];
     const defaultRate=terms.winnerId===null?0:1;
@@ -5831,13 +6167,13 @@ function executeMilitaryAction(w,nationId,act){
     event(w,`${n.name}이(가) 평화협정을 제안했습니다.`,'diplomacy');return {ok:true};
   }
   if(act.type==='REJECT_PEACE'){
-    const war=atWar(w,nationId,act.targetNationId);
+    const war=c2PeaceWar(w,nationId,act);
     if(war.pendingPeace?.terms?.subjectDemand)v06b1Diag(w).forced.rejected++;
     war.pendingPeace=null;war.nextPeaceOfferDay=w.dayIndex+90;
     event(w,`${n.name}이(가) 평화협정을 거절했습니다.`,'diplomacy');return {ok:true};
   }
   if(act.type==='MAKE_PEACE'||act.type==='ACCEPT_PEACE'){
-    const war=atWar(w,nationId,act.targetNationId);
+    const war=c2PeaceWar(w,nationId,act);
     const result=settlePeace(w,war,war.pendingPeace.terms);return {ok:true,result};
   }
   return {ok:false};
@@ -6117,6 +6453,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[]){
   return best;
 }
 function assignWarOrders(w,execute,reactive=false){
+  c2AssignFronts(w);
   for(const war of w.wars){
     const coalition=coalitionFrontPlan(w,war);
     for(const id of warMembers(war)){
@@ -6124,7 +6461,7 @@ function assignWarOrders(w,execute,reactive=false){
       const n=w.nations[id];if(!n.active||n.controller!=='AI')continue;
       // E2: both supporting sides share coalition targets and ordinary operational planning.
       const profile=w.aiProfiles[n.aiProfileId];
-      const armies=w.armies.filter(a=>a.nationId===id&&manpower(a)>0).sort((a,b)=>a.id-b.id);
+      const armies=w.armies.filter(a=>a.nationId===id&&manpower(a)>0&&a.assignedWarId===war.id).sort((a,b)=>a.id-b.id);
       const reserved=new Set(armies.filter(a=>a.order&&a.status==='READY').map(a=>a.order.targetTileId));
       for(const a of armies){
         if(a.status!=='READY'||a.engagementId!==null)continue;
@@ -6385,9 +6722,10 @@ function v06b4ProjectedCoalition(w,attackerId,defenderId,readiness=null){
  const ready=id=>readiness?.get(id)||militaryReadiness(w,id);
  const war={attackerId,defenderId,sides:{attackers:[attackerId],defenders:[defenderId]}};
  const defensive=[],offensive=[],used=new Set([attackerId,defenderId]);
- const possible=id=>w.nations[id]?.active&&w.nations[id].controller==='AI'&&!used.has(id)&&!warOfNation(w,id);
+ const possible=(id,side)=>w.nations[id]?.active&&w.nations[id].controller==='AI'&&!used.has(id)&&
+   c2CanJoinWar(w,id,side==='defenders'?[defenderId]:[attackerId],side==='defenders'?[attackerId]:[defenderId]);
  const add=(id,side,basis)=>{
-   if(!possible(id)||warSupportTreatyConflict(w,id,war,side))return;
+   if(!possible(id,side)||warSupportTreatyConflict(w,id,war,side))return;
    const call={allyId:id,defenderId,principalId:side==='defenders'?defenderId:attackerId,basis};
    const joins=side==='defenders'?(basis==='SUZERAIN'?v06bSuzerainDefenseDecision(w,call,war):aiCallDecision(w,call,war)):
      aiOffensiveCallDecision(w,call,war);
@@ -6396,7 +6734,7 @@ function v06b4ProjectedCoalition(w,attackerId,defenderId,readiness=null){
    if(men<12)return;
    // The actual joining response occurs next quarterly tick and is not certain.
    const multiplier=basis==='SUZERAIN'?.90:side==='defenders'?.78:.57;
-   const effective=Math.round(b4aReadyPower(w,id)*multiplier);
+   const effective=Math.round(b4aReadyPower(w,id)*multiplier*Math.max(.25,1-warsOfNation(w,id).length*.3));
    const entry={id,basis,ready:men,effective};
    (side==='defenders'?defensive:offensive).push(entry);used.add(id);
  };
@@ -6422,7 +6760,7 @@ function v06b4WarAssessment(w,attackerId,defenderId,context={}){
  const p=w.aiProfiles[w.nations[attackerId].aiProfileId];
  const agg=(p?.military?.aggression??50)/100,risk=(p?.behavior?.riskTolerance??50)/100;
  const join=v06b4ProjectedCoalition(w,attackerId,defenderId,context.readiness);
- const ownForce=b4aReadyPower(w,attackerId)+join.attackSupport;
+ const ownForce=b4aReadyPower(w,attackerId)*Math.max(.25,1-warsOfNation(w,attackerId).length*.30)+join.attackSupport;
  const enemyForce=b4aReadyPower(w,defenderId)+join.defenseSupport+24;
  const strategicRatio=ownForce/Math.max(1,enemyForce);
  const losses=v06b4WarHistoryLoss(w,attackerId,defenderId);
@@ -6473,9 +6811,12 @@ function warDecision(w,nationId){
  const own=militaryReadiness(w,n.id),budget=militaryUpkeep(w,n.id);
  const income=n.lastQuarter?.goldIncome||0;
  if(n.military?.unpaidQuarters>0||n.gold<Math.max(200,budget*2)||budget>income*1.75)return record('FISCAL_PRESSURE');
- if(own.men<18||own.ratio<.55||own.readyRatio<.45)return record('MILITARY_NOT_READY');
+ const liveWars=warsOfNation(w,n.id);
+ if(liveWars.length>=3)return record('MULTI_WAR_OVEREXTENSION');
+ const committed=liveWars.length?Math.min(.66,liveWars.length*.27):0;
+ if(own.men*(1-committed)<18||own.ratio*(1-committed)<.55||own.readyRatio*(1-committed)<.45)return record('MILITARY_NOT_READY');
  const enemies=borderEnemies(w,n.id).filter(id=>{
-   const foe=w.nations[id];return foe.active&&!warOfNation(w,id)&&!allianceBetween(w,n.id,id)&&!v06bBetween(w,n.id,id)&&
+   const foe=w.nations[id];return foe.active&&c2CanStartWar(w,[n.id],[id])&&!allianceBetween(w,n.id,id)&&!v06bBetween(w,n.id,id)&&
      (n.truces?.[id]??0)<=w.dayIndex&&(foe.truces?.[n.id]??0)<=w.dayIndex;
  });
  if(!enemies.length)return record('NO_LEGAL_BORDER_TARGET');
@@ -6628,6 +6969,7 @@ function runMilitaryQuarter(w,execute){
   updateRelationsQuarter(w,frontiers);
   runAllianceQuarter(w,execute,frontiers);
   v06bRunQuarter(w,execute);
+  c2RunIndependenceQuarter(w,execute);
   for(const a of w.armies){
     a.roadSupplied=isRoadSupplied(w,a);
     if(a.roadSupplied&&a.status==='READY')a.morale=Math.min(100,a.morale+1);
@@ -6686,8 +7028,8 @@ function runMilitaryQuarter(w,execute){
     if(war.pendingPeace){
       const recipient=war.pendingPeace.proposerId===war.attackerId?war.defenderId:war.attackerId;
       if(w.nations[recipient].controller==='AI'){
-        if(acceptPeaceOffer(w,war,war.pendingPeace,recipient))execute(w,recipient,{type:'ACCEPT_PEACE',targetNationId:war.pendingPeace.proposerId});
-        else execute(w,recipient,{type:'REJECT_PEACE',targetNationId:war.pendingPeace.proposerId});
+        if(acceptPeaceOffer(w,war,war.pendingPeace,recipient))execute(w,recipient,{type:'ACCEPT_PEACE',warId:war.id,targetNationId:war.pendingPeace.proposerId});
+        else execute(w,recipient,{type:'REJECT_PEACE',warId:war.id,targetNationId:war.pendingPeace.proposerId});
       }
       continue;
     }
@@ -6699,7 +7041,7 @@ function runMilitaryQuarter(w,execute){
       if(assess)v06b1RecordForceAssessment(w,assess);
       const demand=!!assess?.eligible&&
         (p?.military?.aggression??50)>=65&&v06bSubjectsOf(w,id).length<V06B_LIMIT;
-      execute(w,id,{type:'OFFER_PEACE',targetNationId:other,subjectDemand:demand});break;
+      execute(w,id,{type:'OFFER_PEACE',warId:war.id,targetNationId:other,subjectDemand:demand});break;
     }
   }
   // Limited training throughput and treasury-aware mobilization. Shared rules for AI and PLAYER.
@@ -6785,7 +7127,6 @@ function runMilitaryQuarter(w,execute){
   assignPeacetimeGarrisons(w,execute);
   for(const n of w.nations){
     if(!n.active||n.controller!=='AI')continue;
-    if(militaryAtWar(w,n.id))continue;
     const decision=warDecision(w,n.id);
     if(decision){
       // Small per-quarter probability preserves uncertainty and avoids relentless wars.
@@ -6961,7 +7302,7 @@ function b4aEmergencyTile(w,s){
 }
 function b4aEmergencyEligible(w,id,act){
  const n=w.nations[id],s=w.settlements.find(s=>s.id===act.settlementId&&s.ownerId===id);
- const war=warOfNation(w,id);
+ const war=warsOfNation(w,id).find(v=>warSide(v,id)==='defenders')||null;
  if(!n?.active||!war||warSide(war,id)!=='defenders'||!s||s.population<24||
     w.settlements.some(t=>safeSettlement(w,t,id))||ownArmyCount(w,id)>=armyLimit(w,id)||
     n.military.emergencyLastMusterDay===v04eQuarterDay(w))return false;
@@ -6990,7 +7331,7 @@ function b4aExecuteEmergency(w,id,act){
 }
 function b4aRunEmergencyAI(w,n,execute,diag){
  const s=n.survival;
- const war=warOfNation(w,n.id);
+ const war=warsOfNation(w,n.id).find(v=>warSide(v,n.id)==='defenders')||null;
  if(s?.state!=='CRISIS'||!war||warSide(war,n.id)!=='defenders')return false;
  s.emergencyAttempts++;
  const sites=w.settlements.filter(v=>v.ownerId===n.id&&v.population>=24).sort((a,b)=>b.population-a.population||a.id-b.id);
@@ -8465,6 +8806,7 @@ function validateWorld(w){
     charIds.add(c.id);
   }
   for(const n of w.nations)if(n.active&&!w.characters.some(c=>c.id===n.leaderId&&c.nationId===n.id&&c.role==='leader'))fail('국가 지도자');
+  c2Validate(w,fail);
   if(!Array.isArray(w.armies)||!Array.isArray(w.wars)||!Array.isArray(w.engagements)||!Array.isArray(w.occupations)||!Array.isArray(w.battleHistory))fail('군사 목록');
   const armyIds=new Set();const allUnitIds=new Set();
   for(const a of w.armies){
@@ -8475,6 +8817,7 @@ function validateWorld(w){
     for(const u of a.units){if(local.has(u.id)||allUnitIds.has(u.id)||!Number.isInteger(u.manpower)||u.manpower<0||u.manpower>1000000||!UNIT_TYPES[u.typeId]||!WEAPONS[u.weaponId]||!ARMORS[u.armorId])fail('병력 집단');local.add(u.id);allUnitIds.add(u.id);}
     const placements=[...a.deployment.front,...a.deployment.rear,...a.deployment.reserve];
     if(placements.length!==local.size||new Set(placements).size!==placements.length||placements.some(id=>!local.has(id)))fail('전열 배치');
+    if(a.assignedWarId!=null&&!w.wars.some(v=>v.id===a.assignedWarId&&warSide(v,a.nationId)))fail('V0.6C2 편제 전선');
     if(a.rearmPlan&&(!LOADOUTS[a.rearmPlan.unitType]||!rearmArmorLegal(w,a.nationId,a.rearmPlan.armorId)||(a.rearmPlan.position!=null&&!POSITIONS.includes(a.rearmPlan.position))||!Number.isInteger(a.rearmPlan.completeDay)||a.rearmPlan.completeDay<=0))fail('재무장');
     if(!Number.isInteger(a.unsuppliedDays)||a.unsuppliedDays<0||
       !Number.isInteger(a.supplyCheckedDay)||a.supplyCheckedDay>w.dayIndex||a.supplyCheckedDay<0||
@@ -8501,9 +8844,9 @@ function validateWorld(w){
       }
     }
   }
-  const warIds=new Set(),busy=new Set();
+  const warIds=new Set(),pairSides=new Map();
   for(const war of w.wars){
-    if(warIds.has(war.id)||!nations.get(war.attackerId)?.active||!nations.get(war.defenderId)?.active||war.attackerId===war.defenderId||warMembers(war).some(id=>busy.has(id)||!nations.get(id)?.active)||new Set(warMembers(war)).size!==warMembers(war).length||war.sides&&(war.sides.attackers[0]!==war.attackerId||war.sides.defenders[0]!==war.defenderId||!war.sides.attackers.length||!war.sides.defenders.length))fail('전쟁');
+    if(warIds.has(war.id)||!nations.get(war.attackerId)?.active||!nations.get(war.defenderId)?.active||war.attackerId===war.defenderId||warMembers(war).some(id=>!nations.get(id)?.active)||new Set(warMembers(war)).size!==warMembers(war).length||war.sides&&(war.sides.attackers[0]!==war.attackerId||war.sides.defenders[0]!==war.defenderId||!war.sides.attackers.length||!war.sides.defenders.length))fail('전쟁');
     if(war.occupationContributions&&Object.entries(war.occupationContributions).some(([id,n])=>!warMembers(war).includes(Number(id))||!Number.isInteger(n)||n<0))fail('연합 점령 기여도');
     if(war.occupationWork&&Object.entries(war.occupationWork).some(([id,n])=>!warMembers(war).includes(Number(id))||!Number.isFinite(n)||n<0))fail('점령 참여 기여도');
     if(war.peaceExtension&&(!Number.isInteger(war.peaceExtension.usedDays)||war.peaceExtension.usedDays<0||war.peaceExtension.usedDays>360||
@@ -8511,7 +8854,14 @@ function validateWorld(w){
     if(war.goal&&(!['BORDER','SETTLEMENT'].includes(war.goal.type)||war.goal.targetTileId!==null&&!w.tiles[war.goal.targetTileId]))fail('전쟁 목표');
     if(war.fatigue&&[war.attackerId,war.defenderId].some(id=>!Number.isFinite(war.fatigue[id])||war.fatigue[id]<0||war.fatigue[id]>100))fail('전쟁 피로');
     if(war.pendingPeace&&(![war.attackerId,war.defenderId].includes(war.pendingPeace.proposerId)||!war.pendingPeace.terms||!Number.isInteger(war.pendingPeace.offerDay)))fail('평화 제안');
-    warIds.add(war.id);for(const id of warMembers(war))busy.add(id);
+    warIds.add(war.id);
+    const members=warMembers(war);
+    for(let i=0;i<members.length;i++)for(let j=i+1;j<members.length;j++){
+      const key=pairKey(members[i],members[j]),side=warSide(war,members[i])===warSide(war,members[j])?'ALLY':'FOE';
+      if(pairSides.has(key)&&pairSides.get(key)!==side)fail('V0.6C2 전쟁 간 진영 모순');
+      if(pairSides.has(key)&&side==='FOE')fail('V0.6C2 중복 교전');
+      pairSides.set(key,side);
+    }
   }
   const occupationTiles=new Set();
   for(const o of w.occupations){
@@ -8556,107 +8906,12 @@ function validateTradeLegacyForMigration(w){
   return Boolean(t&&Number.isSafeInteger(t.nextId)&&t.nextId>=0&&Number.isInteger(t.quarterDay)&&t.quarterDay>=0&&t.quarterDay<=w.dayIndex&&Array.isArray(t.history)&&t.history.length<=MAX_EVENTS&&t.used&&typeof t.used==='object'&&
     t.history.every(h=>Number.isInteger(h.seller)&&Number.isInteger(h.buyer)&&h.seller!==h.buyer&&w.nations[h.seller]&&w.nations[h.buyer]&&TRADE_GOODS[h.good]&&Number.isSafeInteger(h.quantity)&&h.quantity>0&&Number.isSafeInteger(h.unitPrice)&&h.unitPrice>0&&h.gold===h.quantity*h.unitPrice));
 }
+/** C2 begins a new save generation. No pre-C2 migration is attempted. */
 function deserializeWorld(json){
-  const parsed=JSON.parse(json);
-  const originalVersion=parsed?.version;
-  if(parsed?.schema==='vilob-light-v03d'&&['V0.6B4B','V0.6B4C'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03a'&&parsed.version==='V0.3A'){
-    if(!Array.isArray(parsed.buildings)||!Array.isArray(parsed.nations)||!Array.isArray(parsed.settlements))throw Error('V0.3A 저장 데이터 손상');
-    parsed.defenses=parsed.buildings.filter(b=>b.typeId==='fort');
-    parsed.buildings=parsed.buildings.filter(b=>b.typeId!=='fort');
-    parsed.schema='vilob-light-v03a1';parsed.version='V0.3A1';
-  }
-  if(parsed.schema==='vilob-light-v03a1'&&parsed.version==='V0.3A1'){
-    if(!Array.isArray(parsed.defenses)||!Array.isArray(parsed.occupations))throw Error('V0.3A1 저장 데이터 손상');
-    for(const o of parsed.occupations){
-      const stats=regionalMilitaryStats(parsed,o.tileId);
-      o.resistance=stats.resistance;
-      o.firepower=parsed.tiles[o.tileId]?.ownerId===o.nationId?0:stats.firepower;
-      o.attackRemainder=0;
-      delete o.defense;
-    }
-    parsed.schema='vilob-light-v03b';parsed.version='V0.3B';
-  }
-  // V0.3C upgrades the gameplay schema and adds civil-accounting state.
-  if(parsed.schema==='vilob-light-v03b'&&['V0.3B','V0.3B1'].includes(parsed.version)){
-    parsed.schema='vilob-light-v03c';parsed.version='V0.3C';
-  }
-  if(parsed.schema==='vilob-light-v03c'&&parsed.version==='V0.3C'){
-    parsed.schema='vilob-light-v03d';parsed.version=VERSION;
-    parsed.strategyReports={dayIndex:parsed.dayIndex,nations:{}};
-}
-  // V0.3D2 is UI-only: upgrade the version label, preserve all simulation fields.
-  if(parsed.schema==='vilob-light-v03d'&&['V0.3D','V0.3D1','V0.3D2','V0.3D3','V0.3D4','V0.3D4A','V0.3D5','V0.3D5A','V0.3E1','V0.3E1A','V0.3E1B','V0.3E1C','V0.3E1C1','V0.3E2','V0.3E2A','V0.3E3','V0.3E4'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A'].includes(parsed.version))parsed.version=VERSION;
-  // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
-  // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C','V0.6C1'].includes(originalVersion);
-  if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
-  if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
-    for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
-    for(const b of parsed.buildings||[])if(b.disconnected===undefined)b.disconnected=false;
-    if(f3Migration){if(!parsed.trade||!validateTradeLegacyForMigration(parsed))throw Error('F3 이관: 교역 데이터가 손상되었습니다.');parsed.trade.dependency=initialTradeDependency();}
-    parsed.barracksEvents??=[]; // Past ownership changes cannot be reconstructed.
-    for(const n of parsed.nations){ensureCivilFinance(n);n.military.barracksFinance??={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};n.military.mobilizationDiagnostics??=[];n.military.barracksAiDiagnostics??=[];n.military.e4RecoveryLastOrderDay??=-120;n.apLedger??={history:[]};n.economicRecovery??={history:[]};n.constructionProcurement??={plan:null,history:[]};}
-    for(const o of parsed.occupations){
-      if(o.siegeClockDay===undefined){
-        o.siegeClockDay=parsed.dayIndex;o.siegeCreditDays=0;o.siegeEligible=false;
-        o.nextTickDay=parsed.dayIndex+F3F_SIEGE_DAYS;
-      }
-    }
-    parsed.diplomacy.alliances??=[];parsed.diplomacy.offers??=[];parsed.diplomacy.calls??=[];parsed.diplomacy.courtCooldowns??={};
-    parsed.diplomacy.memory??={};parsed.diplomacy.history??=[];parsed.diplomacy.perceptions??={};parsed.diplomacy.borderRevision??=0;parsed.diplomacy.relationRevision??=0;
-    // Live treaties retain formedDay on migration; ended treaties cannot be reconstructed.
-    for(const war of parsed.wars||[])war.sides??={attackers:[war.attackerId],defenders:[war.defenderId]};
-    // Past negotiated terms must not silently change between offer and acceptance.
-    for(const war of parsed.wars||[])if(war.pendingPeace?.terms&&!war.pendingPeace.terms.reparationModel)war.pendingPeace.terms.reparationModel='legacy';
-  }
-  if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
-    for(const n of parsed.nations)if(n.civilization===undefined)n.civilization=migratedCivilization(parsed,n);
-    parsed.historicalChronicle??=initialHistoricalChronicle(); // Past warHistory shown by UI; do not fabricate other events.
-    for(const n of parsed.nations){
-      if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
-      if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C','V0.6C1'].includes(originalVersion)){
-        // A pre-D medieval nation is already certified. Never rewrite its archived era date.
-        if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
-          n.technology.unlocked.push('regional_governance');
-        if(n.civilization.era==='ancient'&&n.technology.currentResearch&&G_TECH_IDS.has(n.technology.currentResearch)){
-          if(!n.technology.pausedResearch)n.technology.pausedResearch={id:n.technology.currentResearch,progress:n.technology.progress};
-          n.technology.currentResearch=null;n.technology.progress=0;
-        }
-      }
-    }
-  }
-  parsed.warDecisionDiagnostics??=v06b4NewDiagnostics(parsed.dayIndex);
-  for(const n of parsed.nations){
-    n.military.emergencyLastMusterDay??=-30;
-    n.survival??=b4aNewSurvival(parsed,n.id);
-  }
-  for(const a of parsed.armies)a.formationExperience??=b4aNewExperience(parsed.dayIndex);
-  parsed.diplomacy.subjectTreaties??=[];
-  parsed.diplomacy.subjectOffers??=[];
-  parsed.diplomacy.subjectCooldowns??={};
-  parsed.diplomacy.subjectHistory??=[];
-  parsed.diplomacy.tributeHistory??=[];
-  parsed.diplomacy.subjectDiagnostics=v06b3EnsureDiagnostics(parsed.diplomacy.subjectDiagnostics??v06b1NewDiagnostics(parsed.dayIndex));
-  // B2: Convert only live B/B1 treaties. Historic records remain unmodified.
-  // endsDay now marks a fifty-year REVIEW, not a mandatory dissolution.
-  if(['V0.6B','V0.6B1'].includes(originalVersion)){
-    for(const treaty of parsed.diplomacy.subjectTreaties){
-      if(!Number.isSafeInteger(treaty.formedDay)||treaty.formedDay>parsed.dayIndex)continue;
-      const elapsed=Math.max(0,parsed.dayIndex-treaty.formedDay);
-      treaty.endsDay=treaty.formedDay+(Math.floor(elapsed/V06B_TERM)+1)*V06B_TERM;
-    }
-  }
-  if(parsed.setupLocked===undefined)parsed.setupLocked=true; // Old saves are never silently reconfigurable.
-  // C1 exposes all sixteen built-in AI identities even in existing B4C saves.
-  for(const [id,profile] of Object.entries(buildProfileLibrary(true)))if(!parsed.aiProfiles[id])parsed.aiProfiles[id]=profile;
-  for(const profile of Object.values(parsed.aiProfiles||{}))v06a2EnsureProfile(profile);
-  for(const e of parsed.engagements||[])h1EnsureMembers(parsed,e);
-  refreshApCaps(parsed);
-  validateWorld(parsed);
-  return parsed;
+ const parsed=JSON.parse(json);
+ if(parsed?.version!==VERSION||parsed?.schema!=='vilob-light-v03d')throw Error('V0.6C2 세이브만 불러올 수 있습니다.');
+ validateWorld(parsed);
+ return parsed;
 }
 function serializeWorld(world){validateWorld(world);return JSON.stringify(world,null,2);}
 
@@ -9851,7 +10106,7 @@ const ACTIONS=[
  ['IMPROVE_RELATIONS','외교 친선 교섭'],['OFFER_ALLIANCE','군사 동맹 제안'],['ACCEPT_ALLIANCE','동맹 수락'],
  ['REJECT_ALLIANCE','동맹 거절'],['END_ALLIANCE','동맹 해제'],
  ['OFFER_SUBMISSION','보호 요청 · 자발적 종속'],['ACCEPT_SUBMISSION','종속 제안 수락'],['REJECT_SUBMISSION','종속 제안 거절'],
- ['OFFER_RELEASE','종속 관계 해제 제안'],['ACCEPT_RELEASE','종속 해제 수락'],['REJECT_RELEASE','종속 해제 거절'],['RESPOND_DEFENSE_CALL','방어 참전 요청 응답'],['RESPOND_ATTACK_CALL','공격 참전 요청 응답']
+ ['OFFER_INDEPENDENCE_FRONT','독립 공동전선 제안'],['ACCEPT_INDEPENDENCE_FRONT','독립 공동전선 수락'],['REJECT_INDEPENDENCE_FRONT','독립 공동전선 거절'],['OFFER_INDEPENDENCE_SUPPORT','독립국에 지원 요청'],['ACCEPT_INDEPENDENCE_SUPPORT','독립 지원 약속 수락'],['REJECT_INDEPENDENCE_SUPPORT','독립 지원 약속 거절'],['DECLARE_INDEPENDENCE','독립전쟁 선포'],['OFFER_RELEASE','종속 관계 해제 제안'],['ACCEPT_RELEASE','종속 해제 수락'],['REJECT_RELEASE','종속 해제 거절'],['RESPOND_DEFENSE_CALL','방어 참전 요청 응답'],['RESPOND_ATTACK_CALL','공격 참전 요청 응답']
 ];
 const E=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=String(text);return e;};
 const group=(label,control)=>{const l=E('label','player-field');l.append(E('span','',label),control);return l;};
@@ -9963,6 +10218,13 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
      options('accept','참전 여부',[[true,'참전 수락'],[false,'참전 거절']],true);
      draft.accept=draft.accept===true||draft.accept==='true';
    }
+   if(['OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE'].includes(type)){
+     const compatible=borders().filter(war=>[war.attackerId,war.defenderId].includes(n.id)&&
+       (type==='OFFER_PEACE'?!war.pendingPeace:war.pendingPeace&&war.pendingPeace.proposerId!==n.id));
+     options('warId','대상 전쟁',compatible.map(war=>[war.id,`#${war.id} · ${war.kind==='INDEPENDENCE'?'독립전쟁':'영토전쟁'} · ${w.nations[war.attackerId].name} vs ${w.nations[war.defenderId].name}`]));
+     if(draft.warId!=null){const war=compatible.find(w=>w.id===draft.warId);
+       if(war)draft.targetNationId=war.attackerId===n.id?war.defenderId:war.attackerId;}
+   }
    if(type==='OFFER_PEACE'){
      const input=E('input','player-input');input.type='number';input.min='0';input.max='100';input.step='1';
      input.value=String(Math.round((draft.reparationRate??1)*100));draft.reparationRate=Number(input.value)/100;
@@ -9976,14 +10238,15 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
        fields.append(group('결정적 승리: 영토·배상금 대신 종속 요구',cb));
      }else draft.subjectDemand=false;
    }
-   if(['DECLARE_WAR','BETRAY_ALLIANCE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'].includes(type)){
+   if(['DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE',...C2_ACTIONS.filter(t=>t!=='DECLARE_INDEPENDENCE')].includes(type)){
      options('targetNationId','상대 국가',nations(other=>{
        const war=borders().find(v=>v.attackerId===other.id||v.defenderId===other.id);
+       if(C2_ACTIONS.includes(type))return c2IndependenceActionLegal(w,n.id,{type,targetNationId:other.id});
        if(['OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE'].includes(type))return v06bActionLegal(w,n.id,{type,targetNationId:other.id});
        if(type==='IMPROVE_RELATIONS')return allianceActionLegal(w,n.id,{type,targetNationId:other.id});
        if(type==='OFFER_ALLIANCE')return allianceActionLegal(w,n.id,{type,targetNationId:other.id});
        if(type==='ACCEPT_ALLIANCE'||type==='REJECT_ALLIANCE'||type==='END_ALLIANCE')return allianceActionLegal(w,n.id,{type,targetNationId:other.id});
-       return type==='BETRAY_ALLIANCE'?isMilitaryActionLegal(w,n.id,{type,targetNationId:other.id}):type==='DECLARE_WAR'?!war&&!borders().length&&!allianceBetween(w,n.id,other.id):type==='OFFER_PEACE'?war&&!war.pendingPeace:war?.pendingPeace?.proposerId===other.id;
+       return type==='BETRAY_ALLIANCE'?isMilitaryActionLegal(w,n.id,{type,targetNationId:other.id}):type==='DECLARE_WAR'?isMilitaryActionLegal(w,n.id,{type,targetNationId:other.id}):false;
      }));
    }
    updatePreview();
@@ -10144,44 +10407,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06c1-world';
-const PREVIOUS_V06B4C_SAVE_KEY='vilob-light-v06b4c-world';
-const PREVIOUS_V06B4B_SAVE_KEY='vilob-light-v06b4b-world';
-const PREVIOUS_V06B4A_SAVE_KEY='vilob-light-v06b4a-world';
-const PREVIOUS_V06B4_SAVE_KEY='vilob-light-v06b4-world';
-const PREVIOUS_V06B3_SAVE_KEY='vilob-light-v06b3-world';
-const PREVIOUS_V06B2_SAVE_KEY='vilob-light-v06b2-world';
-const PREVIOUS_V06B1_SAVE_KEY='vilob-light-v06b1-world';
-const PREVIOUS_V06B_SAVE_KEY='vilob-light-v06b-world';
-const PREVIOUS_V06A2_SAVE_KEY='vilob-light-v06a2-world';
-const PREVIOUS_V06A1_SAVE_KEY='vilob-light-v06a1-world';
-const PREVIOUS_V06A_SAVE_KEY='vilob-light-v06a-world';
-const PREVIOUS_04E5C_SAVE_KEY='vilob-light-v04e5c-world';
-const PREVIOUS_04E5B_SAVE_KEY='vilob-light-v04e5b-world';
-const PREVIOUS_04E5A_SAVE_KEY='vilob-light-v04e5a-world';
-const PREVIOUS_04E5_SAVE_KEY='vilob-light-v04e5-world';
-const PREVIOUS_04E4_SAVE_KEY='vilob-light-v04e4-world';
-const PREVIOUS_04E3_SAVE_KEY='vilob-light-v04e3-world';
-const PREVIOUS_04E2_SAVE_KEY='vilob-light-v04e2-world';
-const PREVIOUS_04E1_SAVE_KEY='vilob-light-v04e1-world';
-const PREVIOUS_04E_SAVE_KEY='vilob-light-v04e-world';
-const PREVIOUS_04D_SAVE_KEY='vilob-light-v04d-world';
-const PREVIOUS_04C_SAVE_KEY='vilob-light-v04c-world';
-const PREVIOUS_04B_SAVE_KEY='vilob-light-v04b-world';
-const PREVIOUS_04A_SAVE_KEY='vilob-light-v04a-world';
-const PREVIOUS_G2_SAVE_KEY='vilob-light-v03g2-world';
-const PREVIOUS_G_SAVE_KEY='vilob-light-v03g-world';
-const PREVIOUS_F3G_SAVE_KEY='vilob-light-v03f3g-world';
-const PREVIOUS_F3F_SAVE_KEY='vilob-light-v03f3f-world';
-const PREVIOUS_F3E_SAVE_KEY='vilob-light-v03f3e-world';
-const PREVIOUS_F3D_SAVE_KEY='vilob-light-v03f3d-world';
-const PREVIOUS_F3_SAVE_KEY='vilob-light-v03f3-world';
-const PREVIOUS_F2_SAVE_KEY='vilob-light-v03d-world';
-const PREVIOUS_C_SAVE_KEY='vilob-light-v03c-world';
-const PREVIOUS_SAVE_KEY='vilob-light-v03b1-world';
-const PREVIOUS_B_SAVE_KEY='vilob-light-v03b-world';
-const LEGACY_SAVE_KEY='vilob-light-v03a1-world';
-const OLDEST_SAVE_KEY='vilob-light-v03a-world';
+const SAVE_KEY='vilob-light-v06c2-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -10362,6 +10588,9 @@ function renderWarAudit(){
   const w=app.world,r=warAuditReport(w),s=r.current;
   const fields=[['종전 기록 / 진행 중',`${s.warEndsRecorded} / ${s.wars}건`],
     ['진행 중 다자전쟁 / 동맹',`${s.coalitionWars} / ${s.alliances}건`],
+    ['C2 복수 전쟁 참가국',`${w.nations.filter(n=>n.active&&warsOfNation(w,n.id).length>=2).length}개국`],
+    ['C2 진행 중 독립전쟁',`${w.wars.filter(v=>v.kind==='INDEPENDENCE').length}건`],
+    ['C2 독립 요구 / 승인 / 거절',`${w.diplomacy.independenceStats.demands} / ${w.diplomacy.independenceStats.accepted} / ${w.diplomacy.independenceStats.rejected}`],
     ['종전 평균 기간',`${(s.avgWarDays/DAYS_PER_YEAR).toFixed(1)}년 (${s.avgWarDays}일)`],
     ['명확·결정적 승리 / 백지 평화',`${s.clearPeace+s.decisivePeace} / ${s.whitePeace}건`],
     ['비백지 종전 중 영토 0',`${s.zeroCessionNonWhite}건`],
@@ -10418,7 +10647,7 @@ function renderWarfare(){
   const target=$('militaryEconomySummary');
   if(target){
     const n=w.nations[app.selectedNationId]||w.nations[0],men=w.armies.filter(a=>a.nationId===n.id).reduce((sum,a)=>sum+manpower(a),0),econ=projectedQuarter(w,n);
-    const content=[['기준 국가',n.name],['현역 / 목표 병력',`${number.format(men)} / ${number.format(militaryStrengthTarget(w,n.id))}명`],['병영 동원 상한',`${number.format(militaryCapacity(w,n.id))}명 · 가동 ${v04eBarracksEffects(w,n.id).paid}/${v04eBarracksEffects(w,n.id).built}채`],['병영 시설 현황',`${v04e1BarracksInventory(w,n.id).built}채 보유 · 건설 중 ${v04e1BarracksInventory(w,n.id).constructing}채 · 전환 예약 ${v04e1BarracksInventory(w,n.id).pending}채 · 한도 초과 ${v04e1BarracksInventory(w,n.id).overLimit}채 · 단절 ${v04e1BarracksInventory(w,n.id).detached}채`],['분기 예비병 훈련 상한',`${number.format(trainingRate(w,n.id))}명`],['군사 투자 성향',`${w.aiProfiles[n.aiProfileId]?.military?.militaryInvestment??50} / 100`],['병영 운영비 납부',`${number.format(n.military.barracksFinance.paidLastQuarter)} / ${number.format(n.military.barracksFinance.billedLastQuarter)} G · 미납 ${number.format(n.military.barracksFinance.unpaidLastQuarter)} G`],['동원 가능 / 훈련 중',`${n.military.reserveReady} / ${pendingManpower(n)}명`],['군대 편제',`${w.armies.filter(a=>a.nationId===n.id).length} / ${armyLimit(w,n.id)}개 · 여유 ${Math.max(0,armyLimit(w,n.id)-w.armies.filter(a=>a.nationId===n.id).length)}개`],['B4A 국가 생존',`${n.survival?.state||'NORMAL'} · ${n.survival?.reason||'BASELINE'} · 공격 보류 ${n.survival?.warBlocked||0}회 · 비상 소집 ${n.survival?.emergencySuccess||0}회`],['편제 수용량 / 목표',`${number.format(armyLimit(w,n.id)*150)} / ${number.format(militaryStrengthTarget(w,n.id))}명`],['분기 군 유지비·체납',`${number.format(econ.upkeep)} Gold`],['분기 예상 Gold 수지',`${number.format(econ.goldIncome-econ.upkeep-econ.civil.total)} Gold`],['민간 운영비',`${number.format(econ.civil.total)} G · 미납 ${number.format(n.civilFinance?.unpaidLastQuarter||0)} G`],['분기 작전비 청구 / 실지급',`${number.format(n.military.operationBilledLastQuarter||0)} / ${number.format(n.military.operationPaidLastQuarter||0)} G`],['미지급 군사비',`${number.format(n.military.operationArrears||0)} Gold`],['급여 미지급 / 최근 탈영',`${n.military.unpaidQuarters}분기 / ${n.military.desertedLastQuarter}명`]];
+    const content=[['기준 국가',n.name],['C2 참여 중인 전쟁',warsOfNation(w,n.id).map(v=>`#${v.id} ${v.kind==='INDEPENDENCE'?'독립전쟁':'영토전쟁'} ${warSide(v,n.id)==='attackers'?'공격':'방어'} · 배정 ${number.format(w.armies.filter(a=>a.assignedWarId===v.id&&a.nationId===n.id).reduce((s,a)=>s+manpower(a),0))}명`).join(' / ')||'없음'],['현역 / 목표 병력',`${number.format(men)} / ${number.format(militaryStrengthTarget(w,n.id))}명`],['병영 동원 상한',`${number.format(militaryCapacity(w,n.id))}명 · 가동 ${v04eBarracksEffects(w,n.id).paid}/${v04eBarracksEffects(w,n.id).built}채`],['병영 시설 현황',`${v04e1BarracksInventory(w,n.id).built}채 보유 · 건설 중 ${v04e1BarracksInventory(w,n.id).constructing}채 · 전환 예약 ${v04e1BarracksInventory(w,n.id).pending}채 · 한도 초과 ${v04e1BarracksInventory(w,n.id).overLimit}채 · 단절 ${v04e1BarracksInventory(w,n.id).detached}채`],['분기 예비병 훈련 상한',`${number.format(trainingRate(w,n.id))}명`],['군사 투자 성향',`${w.aiProfiles[n.aiProfileId]?.military?.militaryInvestment??50} / 100`],['병영 운영비 납부',`${number.format(n.military.barracksFinance.paidLastQuarter)} / ${number.format(n.military.barracksFinance.billedLastQuarter)} G · 미납 ${number.format(n.military.barracksFinance.unpaidLastQuarter)} G`],['동원 가능 / 훈련 중',`${n.military.reserveReady} / ${pendingManpower(n)}명`],['군대 편제',`${w.armies.filter(a=>a.nationId===n.id).length} / ${armyLimit(w,n.id)}개 · 여유 ${Math.max(0,armyLimit(w,n.id)-w.armies.filter(a=>a.nationId===n.id).length)}개`],['B4A 국가 생존',`${n.survival?.state||'NORMAL'} · ${n.survival?.reason||'BASELINE'} · 공격 보류 ${n.survival?.warBlocked||0}회 · 비상 소집 ${n.survival?.emergencySuccess||0}회`],['편제 수용량 / 목표',`${number.format(armyLimit(w,n.id)*150)} / ${number.format(militaryStrengthTarget(w,n.id))}명`],['분기 군 유지비·체납',`${number.format(econ.upkeep)} Gold`],['분기 예상 Gold 수지',`${number.format(econ.goldIncome-econ.upkeep-econ.civil.total)} Gold`],['민간 운영비',`${number.format(econ.civil.total)} G · 미납 ${number.format(n.civilFinance?.unpaidLastQuarter||0)} G`],['분기 작전비 청구 / 실지급',`${number.format(n.military.operationBilledLastQuarter||0)} / ${number.format(n.military.operationPaidLastQuarter||0)} G`],['미지급 군사비',`${number.format(n.military.operationArrears||0)} Gold`],['급여 미지급 / 최근 탈영',`${n.military.unpaidQuarters}분기 / ${n.military.desertedLastQuarter}명`]];
     target.replaceChildren(...content.map(([label,value])=>make('div',{class:'economy-item'},[make('small',{text:label}),make('strong',{text:value})])));
     const count=w.armies.filter(a=>a.nationId===n.id).length,limit=armyLimit(w,n.id),targetMen=militaryStrengthTarget(w,n.id);
     const fill=(ratio)=>make('div',{class:'military-meter-fill',style:{width:`${Math.max(0,Math.min(100,ratio*100)).toFixed(1)}%`}});
@@ -10740,8 +10969,14 @@ function renderNationOverview(){
   const suzerain=v06bSubjectOf(w,n.id),subjects=v06bSubjectsOf(w,n.id);
   const role=suzerain?`종속국 · 종주국 ${w.nations[suzerain.overlordId].name}`:subjects.length?`종주국 · 종속국 ${subjects.map(t=>w.nations[t.subjectId].name).join('·')}`:'독립국';
   diplomacy.append(make('div',{class:'muted-line',text:`정치적 지위: ${role} · 조공률 10% (종속 관계에만 적용) · 직속 종속국 상한 2개` }));
+  if(suzerain)diplomacy.append(make('div',{class:'muted-line',text:`C2 독립 압력 ${suzerain.independencePressure.toFixed(1)}/100 · ${suzerain.status==='REBELLION'?'독립전쟁 중':'평화적 종속'} · 거절 ${suzerain.rejectedDemands||0}회 · 다음 요구 ${Math.max(0,Math.ceil(((suzerain.nextDemandDay||0)-w.dayIndex)/DAYS_PER_YEAR))}년 후` }));
   if(suzerain)diplomacy.append(make('div',{class:'muted-line',text:`종주 조약: ${suzerain.origin==='FORCED'?'전쟁 복속':'자발적 보호'} · ${timeAt(suzerain.formedDay).year}년 시작 · ${Math.max(0,Math.ceil((suzerain.endsDay-w.dayIndex)/DAYS_PER_YEAR))}년 후 50년 관계 재평가 · 지난 분기 ${number.format(suzerain.lastPaid)} / 청구 ${number.format(suzerain.lastDue)} G · 총 조공 ${number.format(suzerain.totalPaid)} G` }));
+  for(const t of subjects)diplomacy.append(make('div',{class:'muted-line',text:`C2 종속국 ${w.nations[t.subjectId].name} · 독립 압력 ${t.independencePressure.toFixed(1)}/100 · ${t.status==='REBELLION'?'봉기 중':'평시'}` }));
   for(const t of subjects)diplomacy.append(make('div',{class:'muted-line',text:`종속국 ${w.nations[t.subjectId].name}: 지난 분기 ${number.format(t.lastPaid)} G 수령 · 누적 ${number.format(t.totalPaid)} G · ${Math.ceil((t.endsDay-w.dayIndex)/DAYS_PER_YEAR)}년 후 50년 관계 재평가` }));
+  const independenceOffers=(w.diplomacy.independenceOffers||[]).filter(o=>o.to===n.id&&o.expiresDay>w.dayIndex);
+  for(const o of independenceOffers)diplomacy.append(make('div',{class:'muted-line',text:`독립 외교 제안: ${w.nations[o.from].name} · ${o.kind==='FRONT'?'공동전선':'독립 지원'} · ${o.expiresDay-w.dayIndex}일 남음`}));
+  for(const front of w.diplomacy.independenceFronts||[])if(front.a===n.id||front.b===n.id)diplomacy.append(make('div',{class:'muted-line',text:`독립 공동전선: ${w.nations[front.a===n.id?front.b:front.a].name} · 만료까지 ${front.expiresDay-w.dayIndex}일`}));
+  for(const pledge of w.diplomacy.independencePledges||[])if(pledge.subjectId===n.id||pledge.supporterId===n.id)diplomacy.append(make('div',{class:'muted-line',text:`독립지원 약속: ${w.nations[pledge.supporterId].name} → ${w.nations[pledge.subjectId].name} · ${pledge.status}`}));
   const subjectOffers=(w.diplomacy.subjectOffers||[]).filter(o=>o.to===n.id&&o.expiresDay>w.dayIndex);
   for(const o of subjectOffers)diplomacy.append(make('div',{class:'muted-line',text:`요청 수신: ${w.nations[o.from].name} · ${o.kind==='SUBMIT'?'보호·종속 제안':'종속 관계 해제 제안'} · ${o.expiresDay-w.dayIndex}일 남음 (직접 조종 시 명령에서 응답)` }));
   const ds=w.diplomacy.subjectDiagnostics;
@@ -11586,7 +11821,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4C_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4A_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B3_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
