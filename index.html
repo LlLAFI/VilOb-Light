@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6B4C</title>
+<title>VILOB Light · V0.6C1</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -623,6 +623,13 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 .b4c-cluster-rows{display:grid;gap:5px}
 .b4c-cluster-rows button{font-size:11px;padding:8px;text-align:left;background:#213a4a;color:#ebf4f5;border:1px solid #486479;border-radius:6px;cursor:pointer}
 .b4c-cluster-rows button:hover{background:#315569}
+
+/* C1 World setup: responsive controls without touching map/game playback UI */
+.world-count-setup,.c1-world-reconfigure{display:grid;gap:9px;margin:14px 0;padding:14px;border:1px solid rgba(140,169,184,.24);border-radius:12px;background:rgba(24,40,54,.15)}
+.world-count-setup input,.c1-count-row input{width:86px;max-width:100%;box-sizing:border-box;padding:8px;border-radius:7px;border:1px solid #637b8b;background:#172b38;color:#eff7fc;text-align:center}
+.c1-count-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.c1-count-row label{margin-right:auto}.c1-world-reconfigure .scope-note{margin:0}
+.c1-count-row button:disabled{opacity:.48;cursor:not-allowed}
+@media(max-width:520px){.c1-count-row label{width:100%}.c1-count-row .primary-button{flex:1;min-width:150px}}
 </style>
 </head>
 <body>
@@ -668,7 +675,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div id="warHistoryList" class="military-list"></div><nav id="warHistoryPager" class="war-history-pager" aria-label="종전 기록 페이지"></nav></section>
-</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형 · 7개국</option><option value="39x21" selected>39 × 21 · 기본 · 12개국</option><option value="50x50">50 × 50 · 대형 · 12개국</option><option value="100x100">100 × 100 · 초대형 시험 · 12개국</option></select></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
 <div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.3G · 재개발·기술·상위 장비·산악 도로</h2></div><span class="small-label">0.3G</span></div>
@@ -708,7 +715,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6B4C';
+const VERSION = 'V0.6C1';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -754,6 +761,37 @@ const WIDE_NATION_TEMPLATES = Object.freeze([
 ]);
 
 
+
+/** C1: reusable independent AI identities, not a nation-count limit. */
+const C1_EXTRA_NATIONS = Object.freeze([
+  {name:'오르넬', profile:'agrarian_self_sufficient',personality:'농업자급형',color:'#D4A468',description:'식량 자급과 내부 안정에 우선 투자하는 국가'},
+  {name:'세이른', profile:'coalition_diplomat',personality:'연합외교형',color:'#69B8E8',description:'동맹과 집단안보를 적극 추구하는 국가'},
+  {name:'루미르', profile:'elite_military',personality:'군사정예형',color:'#CE7FDA',description:'편제의 훈련·숙련·보존을 중시하는 국가'},
+  {name:'베르카', profile:'strategic_merchant',personality:'전략무역형',color:'#A8D86C',description:'교역 수입과 부족 물자 조달을 중시하는 국가'},
+]);
+const C1_WIDE_SIZES=Object.freeze([[48,27],[64,36],[80,45],[96,54],[112,63],[128,72],[132,75]]);
+function c1ValidMapSize(w,h){return Number.isInteger(w)&&Number.isInteger(h)&&w*h<=10000&&(
+ (w===19&&h===19)||(w===39&&h===21)||(w===50&&h===50)||(w===100&&h===100)||(w===80&&h===120)||C1_WIDE_SIZES.some(p=>p[0]===w&&p[1]===h));}
+function c1DefaultNationCount(w,h){return w===19&&h===19?7:12;}
+/** Conservative capacity gate; actual capital placement also checks separations. */
+function c1NationCapacity(w,h){return Math.min(100,Math.max(c1DefaultNationCount(w,h),Math.floor(w*h*.55/16)));}
+function c1Templates(w,h,count){
+ const initial=w===19&&h===19?NATION_TEMPLATES:WIDE_NATION_TEMPLATES;
+ const all=[...initial];
+ for(let i=0;all.length<count;i++){
+  const template=C1_EXTRA_NATIONS[i%4],cycle=Math.floor(i/4);
+  const hue=(i*137+17)%360;
+  // Deterministic color wheel for repetitions; the four original colors never change.
+  const color=cycle===0?template.color:c1HslHex(hue,58,52);
+  all.push({...template,name:cycle?`${template.name} 제${cycle+1}국`:template.name,color});
+ }
+ return all;
+}
+function c1HslHex(h,s,l){
+ s/=100;l/=100;const a=s*Math.min(l,1-l);
+ const channel=n=>{const k=(n+h/30)%12;return Math.round(255*(l-a*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,'0');};
+ return `#${channel(0)}${channel(8)}${channel(4)}`;
+}
 // --- src/core/rng.js ---
 // 순수 함수 기반 난수. 본편 RNG 및 월드 생성 알고리즘을 사용하지 않는다.
 function hashSeed(input) {
@@ -853,13 +891,15 @@ function renameNation(world,nationId,input){
 
 // --- src/sim/profiles.js ---
 /** 국가명·프로필 ID와 무관한 AI 판단 데이터. 값 0~100. */
-const militaryById={survival:[25,54,88,42],diplomatic:[18,40,70,35],expansionist:[88,80,38,78],balanced:[56,63,58,62],urbanist:[31,54,76,50],resource_seeker:[62,65,52,58],technologist:[30,59,62,52],road_admin:[28,51,77,54],fortress:[31,78,99,83],diplomatic_cautious:[23,47,78,42],expansionist_opportunist:[81,81,44,69],urbanist_productive:[26,57,68,50]};
-const compositionById={survival:[22,68,74],diplomatic:[48,50,66],expansionist:[46,61,43],balanced:[52,52,51],urbanist:[60,52,60],resource_seeker:[37,72,43],technologist:[75,46,58],road_admin:[43,63,61],fortress:[30,80,70],diplomatic_cautious:[45,62,66],expansionist_opportunist:[48,66,47],urbanist_productive:[61,51,57]};
-const palette={survival:'#62A8FF',diplomatic:'#74D69C',expansionist:'#FF8B91',balanced:'#BD9CFF',urbanist:'#F2B45B',resource_seeker:'#5FD0CF',technologist:'#E889C7',road_admin:'#E5CA76',fortress:'#ACAAA0',diplomatic_cautious:'#63A9A4',expansionist_opportunist:'#DF855B',urbanist_productive:'#BE85CD'};
+const militaryById={agrarian_self_sufficient:[19,37,82,43],coalition_diplomat:[27,45,73,55],elite_military:[57,88,81,77],strategic_merchant:[26,51,63,44],survival:[25,54,88,42],diplomatic:[18,40,70,35],expansionist:[88,80,38,78],balanced:[56,63,58,62],urbanist:[31,54,76,50],resource_seeker:[62,65,52,58],technologist:[30,59,62,52],road_admin:[28,51,77,54],fortress:[31,78,99,83],diplomatic_cautious:[23,47,78,42],expansionist_opportunist:[81,81,44,69],urbanist_productive:[26,57,68,50]};
+const compositionById={agrarian_self_sufficient:[38,66,70],coalition_diplomat:[45,58,64],elite_military:[63,79,57],strategic_merchant:[55,54,61],survival:[22,68,74],diplomatic:[48,50,66],expansionist:[46,61,43],balanced:[52,52,51],urbanist:[60,52,60],resource_seeker:[37,72,43],technologist:[75,46,58],road_admin:[43,63,61],fortress:[30,80,70],diplomatic_cautious:[45,62,66],expansionist_opportunist:[48,66,47],urbanist_productive:[61,51,57]};
+const palette={agrarian_self_sufficient:'#D4A468',coalition_diplomat:'#69B8E8',elite_military:'#CE7FDA',strategic_merchant:'#A8D86C',survival:'#62A8FF',diplomatic:'#74D69C',expansionist:'#FF8B91',balanced:'#BD9CFF',urbanist:'#F2B45B',resource_seeker:'#5FD0CF',technologist:'#E889C7',road_admin:'#E5CA76',fortress:'#ACAAA0',diplomatic_cautious:'#63A9A4',expansionist_opportunist:'#DF855B',urbanist_productive:'#BE85CD'};
 /** V0.6A2: five observer-specific shares, not bilateral relation or raw strength. */
 const POWER_PERCEPTION_KEYS=Object.freeze(['military','population','economy','territory','technology']);
 const POWER_PERCEPTION_BASE=Object.freeze({military:25,population:20,economy:20,territory:15,technology:20});
 const POWER_PERCEPTION_BY_ID=Object.freeze({
+  agrarian_self_sufficient:[18,23,31,16,12], coalition_diplomat:[22,13,31,9,25],
+  elite_military:[43,12,13,19,13], strategic_merchant:[15,16,43,10,16],
   survival:[38,18,17,17,10], diplomatic:[15,12,38,10,25],
   expansionist:[43,12,10,25,10], balanced:[25,20,20,15,20],
   urbanist:[15,25,35,10,15], resource_seeker:[20,15,38,22,5],
@@ -905,7 +945,7 @@ function v06a2RebalanceWeights(values,key,newValue){
  for(let left=rest-parts.reduce((a,b)=>a+b,0),i=0;left>0;i++,left--)parts[order[i]]++;
  return {...values,...Object.fromEntries(other.map((k,i)=>[k,parts[i]])),[key]:fixed};
 }
-const makeProfile=(id,name,weights,behavior,terrainPreference)=>({id,name,schemaVersion:4,recommendedColor:palette[id],weights,behavior,terrainPreference,powerPerception:v06a2LegacyWeights({id}),diplomacy:{cooperation:({survival:52,diplomatic:88,expansionist:18,balanced:55,urbanist:60,resource_seeker:35,technologist:48}[id]??50),compromise:({survival:64,diplomatic:84,expansionist:25,balanced:55,urbanist:67,resource_seeker:40,technologist:57}[id]??50)},military:Object.fromEntries(['aggression','militaryInvestment','defensivePreference','warEndurance','rangedPreference','spearPreference','reservePreference'].map((k,i)=>[k,i<4?militaryById[id][i]:compositionById[id][i-4]]))});
+const makeProfile=(id,name,weights,behavior,terrainPreference)=>({id,name,schemaVersion:4,recommendedColor:palette[id],weights,behavior,terrainPreference,powerPerception:v06a2LegacyWeights({id}),diplomacy:{cooperation:({survival:52,diplomatic:88,expansionist:18,balanced:55,urbanist:60,resource_seeker:35,technologist:48,agrarian_self_sufficient:42,coalition_diplomat:97,elite_military:31,strategic_merchant:80}[id]??50),compromise:({survival:64,diplomatic:84,expansionist:25,balanced:55,urbanist:67,resource_seeker:40,technologist:57,agrarian_self_sufficient:58,coalition_diplomat:92,elite_military:48,strategic_merchant:85}[id]??50)},military:Object.fromEntries(['aggression','militaryInvestment','defensivePreference','warEndurance','rangedPreference','spearPreference','reservePreference'].map((k,i)=>[k,i<4?militaryById[id][i]:compositionById[id][i-4]]))});
 const terrain={plain:65,grass:65,forest:48,rock:32,mountain:12};
 const DEFAULT_PROFILES=Object.freeze([
   makeProfile('survival','생존안정형',{expansion:42,founding:43,development:78,knowledge:48},{riskTolerance:25,frontierPreference:24},{...terrain,plain:82,grass:78}),
@@ -919,7 +959,11 @@ const DEFAULT_PROFILES=Object.freeze([
   makeProfile('fortress','요새방어형',{expansion:43,founding:48,development:90,knowledge:51},{riskTolerance:19,frontierPreference:24},{...terrain,rock:61,mountain:42}),
   makeProfile('diplomatic_cautious','외교안정형',{expansion:48,founding:64,development:79,knowledge:71},{riskTolerance:30,frontierPreference:33},{...terrain,plain:80,grass:80}),
   makeProfile('expansionist_opportunist','기회확장형',{expansion:93,founding:67,development:48,knowledge:37},{riskTolerance:76,frontierPreference:78},{...terrain,forest:66,rock:50}),
-  makeProfile('urbanist_productive','생산도시형',{expansion:32,founding:32,development:100,knowledge:73},{riskTolerance:27,frontierPreference:23},{...terrain,plain:87,grass:84})
+  makeProfile('urbanist_productive','생산도시형',{expansion:32,founding:32,development:100,knowledge:73},{riskTolerance:27,frontierPreference:23},{...terrain,plain:87,grass:84}),
+  makeProfile('agrarian_self_sufficient','농업자급형',{expansion:24,founding:42,development:98,knowledge:46},{riskTolerance:19,frontierPreference:17},{...terrain,plain:98,grass:96,forest:45,rock:19,mountain:6}),
+  makeProfile('coalition_diplomat','연합외교형',{expansion:48,founding:70,development:69,knowledge:73},{riskTolerance:36,frontierPreference:39},{...terrain,plain:81,grass:82,forest:52,rock:26,mountain:8}),
+  makeProfile('elite_military','군사정예형',{expansion:57,founding:49,development:65,knowledge:74},{riskTolerance:38,frontierPreference:33},{...terrain,plain:70,grass:70,forest:51,rock:48,mountain:27}),
+  makeProfile('strategic_merchant','전략무역형',{expansion:46,founding:80,development:83,knowledge:74},{riskTolerance:34,frontierPreference:35},{...terrain,plain:95,grass:89,forest:57,rock:30,mountain:9})
 ]);
 const weightKeys=['expansion','founding','development','knowledge'];
 const behaviorKeys=['riskTolerance','frontierPreference'];
@@ -986,7 +1030,7 @@ function validateCustomLibrary(library){
 function saveCustomProfile(world,profile){
   validateProfile(profile);
   if(BASE_PROFILE_IDS.has(profile.id))throw Error('기본 프로필을 직접 수정할 수 없습니다. 복제해 주세요.');
-  if(!world.aiProfiles[profile.id]&&Object.keys(world.aiProfiles).length>=100)throw Error('프로필은 100개까지 등록할 수 있습니다.');
+  if(!world.aiProfiles[profile.id]&&Object.keys(world.aiProfiles).length>=104)throw Error('프로필은 104개까지 등록할 수 있습니다.');
   world.aiProfiles[profile.id]=cloneProfile(profile);world.changeSeq++;
   return profile.id;
 }
@@ -7075,15 +7119,16 @@ function advanceLevel(s){
 }
 function executeNationAction(world,nationId,action){
   // this function intentionally does not inspect controller or AIProfile
-  if(MILITARY_ACTIONS.includes(action?.type))return executeMilitaryAction(world,nationId,action);
+  if(MILITARY_ACTIONS.includes(action?.type)){const r=executeMilitaryAction(world,nationId,action);if(r.ok)world.setupLocked=true;return r;}
   if(!canExecuteNationAction(world,nationId,action))return {ok:false,reason:'실행 조건 또는 국가 역량 부족'};
   const n=world.nations[nationId],type=action.type,delta={};
   if(type==='TRADE_BUY'||type==='TRADE_SELL'){
     const seller=type==='TRADE_BUY'?action.targetNationId:nationId,buyer=type==='TRADE_BUY'?nationId:action.targetNationId;
     const result=executeTrade(world,seller,buyer,action.resource,action.amount);
-    if(result.ok){n.actionStats[type]=(n.actionStats[type]||0)+1;refreshManualTradeDependency(world);}
+    if(result.ok){world.setupLocked=true;n.actionStats[type]=(n.actionStats[type]||0)+1;refreshManualTradeDependency(world);}
     return result;
   }
+  world.setupLocked=true;
   const price=getNationActionCost(world,nationId,action);
   payCost(n,price,v04e3ApCategory(type));
   n.actionStats[type]=(n.actionStats[type]||0)+1;
@@ -8183,20 +8228,25 @@ function chooseCapitals(tiles,seed,size,count,height=size){
     const fair=candidates.filter(id=>nearby.get(id).land>=15&&nearby.get(id).soft>=7);
     const pool=fair.length>=count?fair:candidates;
     const picked=[];
+    const spacing=count>c1DefaultNationCount(size,height)?Math.max(2.2,Math.min(5,Math.sqrt(land.length/count)*.49)):0;
     // Deterministic randomized tie noise is evaluated once per location, not on each round.
     const jitter=new Map(pool.map(id=>[id,rng.next()]));
+    const nearestDistances=new Map(pool.map(id=>[id,Infinity]));
     while(picked.length<count){
       let best=null,bestScore=-Infinity;
       for(const id of pool){
         if(picked.includes(id))continue;
         const p=pointOf(id,size),a=nearby.get(id);
-        const nearest=picked.length?Math.min(...picked.map(s=>{const q=pointOf(s,size);return Math.hypot(p.x-q.x,p.y-q.y);})):0;
+        const nearest=picked.length?nearestDistances.get(id):0;
+        if(picked.length&&nearest<spacing)continue;
         const site=a.land*.13+a.soft*.085+Math.min(10,a.resources)*.11;
         const score=picked.length?nearest*4.5+site+(jitter.get(id)||0)*.65:site-(Math.hypot((p.x-(size-1)/2)/1.6,p.y-(height-1)/2))*.06+(jitter.get(id)||0)*.65;
         if(score>bestScore){bestScore=score;best=id;}
       }
-      if(best===null)throw Error('와이드 세계의 수도 후보가 부족합니다.');
+      if(best===null)throw Error('공정한 수도 간격을 확보할 수 없습니다. 국가 수를 줄이세요.');
       picked.push(best);
+      const q=pointOf(best,size);
+      for(const id of pool){const p=pointOf(id,size);const distance=Math.hypot(p.x-q.x,p.y-q.y);if(distance<nearestDistances.get(id))nearestDistances.set(id,distance);}
     }
     for(let i=picked.length-1;i>0;i--){const j=rng.int(i+1);[picked[i],picked[j]]=[picked[j],picked[i]];}
     return picked;
@@ -8210,16 +8260,24 @@ function chooseCapitals(tiles,seed,size,count,height=size){
     return sb-sa||a-b;
   })[0];
   const selected=[first];
+  const nearestDistances=new Map(candidates.map(id=>{const p=pointOf(id,size);return [id,Math.hypot(p.x-center.x,p.y-center.y)];}));
+  const firstPoint=pointOf(first,size);
+  for(const id of candidates){const p=pointOf(id,size);nearestDistances.set(id,Math.hypot(p.x-firstPoint.x,p.y-firstPoint.y));}
+  const spacing=count>c1DefaultNationCount(size,height)?Math.max(2.2,Math.min(5,Math.sqrt(land.length/count)*.49)):0;
   while(selected.length<count){
     let best=null,bestScore=-Infinity;
     for(const id of candidates){
       if(selected.includes(id))continue;
       const p=pointOf(id,size);
-      const nearest=Math.min(...selected.map(s=>{const q=pointOf(s,size);return Math.hypot(p.x-q.x,p.y-q.y);}));
+      const nearest=nearestDistances.get(id);
+      if(nearest<spacing)continue;
       const score=nearest*5 + quality(id)*.85 + rng.next()*.75;
       if(score>bestScore){bestScore=score;best=id;}
     }
+    if(best===null)throw Error('공정한 수도 간격을 확보할 수 없습니다. 국가 수를 줄이세요.');
     selected.push(best);
+    const q=pointOf(best,size);
+    for(const id of candidates){const p=pointOf(id,size);const distance=Math.hypot(p.x-q.x,p.y-q.y);if(distance<nearestDistances.get(id))nearestDistances.set(id,distance);}
   }
   // 선택 순서가 성향/국가의 위치 우열로 고착되지 않도록 독립 시드로 혼합
   for(let i=selected.length-1;i>0;i--){const j=rng.int(i+1);[selected[i],selected[j]]=[selected[j],selected[i]];}
@@ -8227,21 +8285,13 @@ function chooseCapitals(tiles,seed,size,count,height=size){
 }
 function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customSetup=null){
   if(typeof size==='object'&&size!==null){height=size.height;size=size.width;}
-  if(!Number.isInteger(size)||!Number.isInteger(height)||
-    !((size===19&&height===19)||(size===39&&height===21)||(size===50&&height===50)||(size===100&&height===100)||(size===80&&height===120)))throw Error('19×19, 39×21, 50×50, 100×100 또는 80×120 지도만 지원합니다.');
+  if(!c1ValidMapSize(size,height))throw Error('지원하지 않는 지도 크기 또는 10,000타일 초과입니다.');
   const seedString=String(seedText).trim().slice(0,100)||'vilob-light-01';
+  const count=customSetup?.nationCount??c1DefaultNationCount(size,height);
+  if(!Number.isInteger(count)||count<c1DefaultNationCount(size,height)||count>c1NationCapacity(size,height))
+    throw Error(`이 지도는 ${c1DefaultNationCount(size,height)}~${c1NationCapacity(size,height)}개국을 지원합니다.`);
   const seed=hashSeed(seedString),tiles=generateTerrain(seed,size,height);
-  const baseTemplates=size>=39?WIDE_NATION_TEMPLATES:NATION_TEMPLATES;
-  // Only explicitly imported 100x100 scenarios can expand from 12 to 16 countries.
-  const customCount=customSetup?.nationCount;
-  if(customCount!==undefined && customCount!==baseTemplates.length && !(size===100&&height===100&&customCount===16))throw Error('16개국은 100×100 커스텀 맵에서만 지원합니다.');
-  const extraTemplates=[
-    {name:'오르넬',profile:'balanced',personality:'농업자급형',color:'#D4A468',description:'농업 자립과 신중한 개발'},
-    {name:'세이른',profile:'road_admin',personality:'도로협력형',color:'#69B8E8',description:'내륙 연결과 외교 협력'},
-    {name:'루미르',profile:'expansionist_opportunist',personality:'실리확장형',color:'#CE7FDA',description:'위험과 기회를 비교하며 확장'},
-    {name:'베르카',profile:'technologist',personality:'남방학술형',color:'#A8D86C',description:'지식 투자와 방비 중시'}
-  ];
-  const templates=customCount===16?[...baseTemplates,...extraTemplates]:baseTemplates;
+  const templates=c1Templates(size,height,count);
   const capitals=chooseCapitals(tiles,seed,size,templates.length,height);
   const configuredProfiles=buildProfileLibrary(true);
   if(customSetup?.profiles){for(const [id,p] of Object.entries(customSetup.profiles)){validateProfile(p);if(id!==p.id||Object.hasOwn(configuredProfiles,id))throw Error('새 세계 커스텀 프로필 ID 중복');configuredProfiles[id]=v06a2EnsureProfile(structuredClone(p));}}
@@ -8257,15 +8307,15 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
     name:`${n.name} 수도`,founderNationId:n.id,formerCapitalOf:[n.id],tileIds:[n.capitalId],population:17,development:12,level:1}));
   for(const t of tiles)t.roadLevel=0;
   for(const s of settlements){tiles[s.coreTileId].ownerId=s.ownerId;tiles[s.coreTileId].settlementId=s.id;}
-  const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,rngState:hash32(seed^0x71a78b09)||1,
+  const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,nations,settlements,trade:initialTrade(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
-    nextSettlementId:settlements.length,changeSeq:0,aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:size===19?'일곱 국가가 세계에 정착했습니다.':'열두 국가가 세계에 정착했습니다.',kind:'world'}]};
+    nextSettlementId:settlements.length,changeSeq:0,aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
   for(const n of nations){makeLeader(world,n.id);n.survival=b4aNewSurvival(world,n.id);}
   refreshApCaps(world);
   return world;
 }
-function advanceDays(world,days=1,entropySource=null){return advanceSimulation(world,days,entropySource);}
+function advanceDays(world,days=1,entropySource=null){if(days>0)world.setupLocked=true;return advanceSimulation(world,days,entropySource);}
 function worldSummary(world){
   const t=timeAt(world.dayIndex),owned=world.tiles.filter(tile=>tile.ownerId!==null).length;
   return {...t,nations:world.nations.filter(n=>n.active).length,settlements:world.settlements.length,owned,armies:world.armies.length,wars:world.wars.length,
@@ -8297,13 +8347,13 @@ function validateWorld(w){
   if(!Array.isArray(w.barracksEvents)||w.barracksEvents.length>V04E2_BARRACKS_EVENTS_MAX||w.barracksEvents.some(e=>!Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||!['SETTLEMENT_TRANSFER','DETACH','RECONNECT'].includes(e.kind)||!Array.isArray(e.buildingIds)||e.buildingIds.some(id=>!Number.isInteger(id))))fail('병영 소유권 이벤트');
   if(!validateTrade(w))fail('국제 교역 상태');
   if(!validateStrategicReports(w))fail('AI 전략 진단');
-  if(!((w.size===19&&w.height===19)||(w.size===39&&w.height===21)||(w.size===50&&w.height===50)||(w.size===100&&w.height===100)||(w.size===80&&w.height===120))||!Number.isSafeInteger(w.dayIndex)||w.dayIndex<0)fail('시간·크기');
+  if(!c1ValidMapSize(w.size,w.height)||!Number.isSafeInteger(w.dayIndex)||w.dayIndex<0||typeof w.setupLocked!=='boolean'||w.dayIndex>0&&!w.setupLocked)fail('시간·크기·초기 설정 잠금');
   if(!Number.isInteger(w.rngState)||w.rngState<0||w.rngState>0xffffffff)fail('RNG');
   const policy=w.rngPolicy;
   if(!policy||typeof policy.fixed!=='boolean'||![30,120].includes(policy.intervalDays)||!Number.isSafeInteger(policy.reseedCount)||policy.reseedCount<0||
     !(policy.lastReseedDay===null||Number.isSafeInteger(policy.lastReseedDay)&&policy.lastReseedDay>=0&&policy.lastReseedDay<=w.dayIndex&&policy.lastReseedDay%policy.intervalDays===0))fail('RNG 설정');
-  if(!Array.isArray(w.tiles)||w.tiles.length!==w.size*w.height||!Array.isArray(w.nations)||!(w.size===19?w.nations.length===7:(w.size===39||w.size===50)?w.nations.length===12:[12,16].includes(w.nations.length)))fail('지도·국가');
-  if(!w.aiProfiles||Object.keys(w.aiProfiles).length>100)fail('AI 프로필');
+  if(!Array.isArray(w.tiles)||w.tiles.length!==w.size*w.height||!Array.isArray(w.nations)||(w.nations.length<c1DefaultNationCount(w.size,w.height)||w.nations.length>c1NationCapacity(w.size,w.height)))fail('지도·국가');
+  if(!w.aiProfiles||Object.keys(w.aiProfiles).length>104)fail('AI 프로필');
   if(!Array.isArray(w.aiDecisions)||w.aiDecisions.length>240||w.aiDecisions.some(d=>!Number.isInteger(d.nationId)||!w.nations[d.nationId]||!Number.isInteger(d.dayIndex)||d.dayIndex<0||d.dayIndex>w.dayIndex||typeof d.action!=='string'||d.action.length>80||!Number.isFinite(d.score)))fail('AI 행동 진단');
   for(const [id,p] of Object.entries(w.aiProfiles)){try{validateProfile(p);if(!p.powerPerception)throw Error('missing perception weights');}catch{fail('AI 프로필 수치');}if(id!==p.id)fail('AI 프로필 ID');}
   if(w.warAuditYears!==undefined&&(!Array.isArray(w.warAuditYears)||w.warAuditYears.length>E4_AUDIT_MAX_YEARS||w.warAuditYears.some((s,i)=>!Number.isSafeInteger(s.dayIndex)||s.dayIndex<0||s.dayIndex>w.dayIndex||s.dayIndex%DAYS_PER_YEAR!==0||(i>0&&s.dayIndex<=w.warAuditYears[i-1].dayIndex)||E4_AUDIT_COLUMNS.some(k=>!Number.isFinite(s[k])||s[k]<0))))fail('E4 연간 전쟁 진단');
@@ -8509,6 +8559,7 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
   const parsed=JSON.parse(json);
   const originalVersion=parsed?.version;
+  if(parsed?.schema==='vilob-light-v03d'&&['V0.6B4B','V0.6B4C'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03a'&&parsed.version==='V0.3A'){
     if(!Array.isArray(parsed.buildings)||!Array.isArray(parsed.nations)||!Array.isArray(parsed.settlements))throw Error('V0.3A 저장 데이터 손상');
     parsed.defenses=parsed.buildings.filter(b=>b.typeId==='fort');
@@ -8539,7 +8590,7 @@ function deserializeWorld(json){
   if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C','V0.6C1'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
@@ -8566,7 +8617,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C','V0.6C1'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -8598,6 +8649,9 @@ function deserializeWorld(json){
       treaty.endsDay=treaty.formedDay+(Math.floor(elapsed/V06B_TERM)+1)*V06B_TERM;
     }
   }
+  if(parsed.setupLocked===undefined)parsed.setupLocked=true; // Old saves are never silently reconfigurable.
+  // C1 exposes all sixteen built-in AI identities even in existing B4C saves.
+  for(const [id,profile] of Object.entries(buildProfileLibrary(true)))if(!parsed.aiProfiles[id])parsed.aiProfiles[id]=profile;
   for(const profile of Object.values(parsed.aiProfiles||{}))v06a2EnsureProfile(profile);
   for(const e of parsed.engagements||[])h1EnsureMembers(parsed,e);
   refreshApCaps(parsed);
@@ -8693,6 +8747,7 @@ function createWorldFromMap(input){
     }
   }
   w.settlements=settlements;w.nextSettlementId=Math.max(...settlements.map(s=>s.id))+1;
+  w.setupLocked=true; // Keep the authored terrain and capital ownership safe from procedural reconfiguration.
   w.events=[{dayIndex:0,text:`커스텀 맵 「${map.name}」에서 ${w.nations.length}개 국가가 시작했습니다.`,kind:'world'}];
   validateWorld(w);
   return w;
@@ -10036,7 +10091,8 @@ const assignment=picker(options,nation.aiProfileId,v=>{try{ctx.assignProfile(nat
   right.append(diagnostic);
   const fileBox=e('div','ai-file-import');const loader=inp('file','',async()=>{const file=loader.files?.[0];if(!file)return;try{if(file.size>100000)throw Error('100KB 이하 JSON만 가져올 수 있습니다.');const profiles=decodeProfilesJson(await file.text());ctx.importProfiles(profiles);state.selected=profiles[0]?.id||state.selected;state.draft=null;state.draftSource=null;mountAIEditor(root,ctx,state);}catch(err){ctx.message('JSON 불러오기 실패: '+err.message);}},{accept:'.json,application/json'});field(fileBox,'커스텀 프로필 JSON 가져오기',loader);root.append(fileBox);
   const worldBox=e('div','ai-new-world');worldBox.append(e('h3','','새 세계의 국가명·프로필·색상 사전 지정'),e('p','scope-note','현재 선택한 월드 크기에 맞춰 새 세계 생성 시 적용됩니다. 위의 국가 실시간 변경과 별도입니다.'));
-  const templates=ctx.worldShape()==='39x21'?WIDE_NATION_TEMPLATES:NATION_TEMPLATES;
+  const dims=ctx.worldShape().split('x').map(Number);
+  const templates=c1Templates(dims[0],dims[1],ctx.newWorldNationCount());
   for(const [i,t] of templates.entries()){
     const conf=state.newNationSetup[i]||{profileId:t.profile,color:t.color,name:t.name};const wrap=e('div','ai-new-nation-row');wrap.append(e('strong','',`#${i+1}`));
     const newName=inp('text',conf.name??t.name,v=>{state.newNationSetup[i]={...conf,...state.newNationSetup[i],name:v};},{maxlength:30});wrap.append(newName);
@@ -10088,7 +10144,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06b4c-world';
+const SAVE_KEY='vilob-light-v06c1-world';
+const PREVIOUS_V06B4C_SAVE_KEY='vilob-light-v06b4c-world';
 const PREVIOUS_V06B4B_SAVE_KEY='vilob-light-v06b4b-world';
 const PREVIOUS_V06B4A_SAVE_KEY='vilob-light-v06b4a-world';
 const PREVIOUS_V06B4_SAVE_KEY='vilob-light-v06b4-world';
@@ -10288,14 +10345,14 @@ function togglePlayerNation(nationId){
     }
     showToast(`${target.name}: 직접 조종 시작 · 자동 국가 명령 중단`);
   }
-  world.changeSeq++;refreshPlayerUI();
+  world.setupLocked=true;world.changeSeq++;c1RefreshWorldControls();refreshPlayerUI();
 }
 function issuePlayerAction(nationId,action){
   const n=app.world.nations[nationId];if(!n?.active||n.controller!=='PLAYER')return {ok:false,reason:'직접 조종 중인 국가가 아닙니다.'};
   if((action.type==='DECLARE_WAR'||action.type==='BETRAY_ALLIANCE')&&!window.confirm(`${app.world.nations[action.targetNationId]?.name||'대상국'}에 ${action.type==='BETRAY_ALLIANCE'?'동맹을 배신하고 ':''}선전포고할까요?`))return {ok:false,reason:'선전포고가 취소되었습니다.'};
   const result=executeNationAction(app.world,nationId,action);
   showToast(result.ok?`${n.name}: ${action.type} 명령을 실행했습니다.`:`명령 실패: ${result.reason||'조건을 확인하세요.'}`);
-  if(result.ok){map.draw();updateStats();renderChronicle();renderInspector();refreshPlayerUI();renderWorldTrade();}
+  if(result.ok){c1RefreshWorldControls();map.draw();updateStats();renderChronicle();renderInspector();refreshPlayerUI();renderWorldTrade();}
   return result;
 }
 function refreshPlayerUI(){renderNationList();renderNationOverview();renderPlayerPanel();renderWarfare();renderMilitaryRoster();renderWarHistory();renderComparisons();}
@@ -11106,6 +11163,7 @@ function redrawNationPresentation(){
 function profileContext(){return {
   world:()=>app.world,
   worldShape:()=>$('worldSizeSelect').value,
+  newWorldNationCount:()=>Number($('newNationCount').value)||c1DefaultNationCount(...$('worldSizeSelect').value.split('x').map(Number)),
   exportJson:(filename,text)=>download(filename,text,'application/json'),
   message:showToast,
   saveProfile:(profile,oldId)=>{
@@ -11126,7 +11184,7 @@ function profileContext(){return {
   renameNation:(id,name)=>{renameNation(app.world,id,name);redrawNationPresentation();$('warHistoryList').dataset.historyKey='';renderWarHistory();showToast('국가명을 변경했습니다.');},
   importProfiles:profiles=>{
     // Atomic preflight: reject ID conflicts before mutating world/library.
-    if(Object.keys(app.world.aiProfiles).length+profiles.length>100)throw Error('프로필 100개 상한을 초과합니다.');
+    if(Object.keys(app.world.aiProfiles).length+profiles.length>104)throw Error('프로필 104개 상한을 초과합니다.');
     for(const p of profiles){validateProfile(p);if(app.world.aiProfiles[p.id]||persistentProfiles[p.id])throw Error('이미 존재하는 프로필 ID: '+p.id);}
     const next={...persistentProfiles};for(const p of profiles)next[p.id]=cloneProfile(p);
     validateCustomLibrary(next);
@@ -11253,6 +11311,10 @@ function setWorld(world){
   atlasMapCover=world.size===19;
   map.setWorld(world);syncAtlasLayout();
   $('seedInput').value=world.seed;
+  $('worldSizeSelect').value=`${world.size}x${world.height}`;
+  $('newNationCount').value=String(world.nations.length);
+  $('setupNationCount').value=String(world.nations.length);
+  c1RefreshWorldControls();
   refreshRngControls();
   $('warHistoryList').dataset.historyKey='';
   editorState.draft=null;editorState.draftSource=null;
@@ -11325,9 +11387,11 @@ function setRunning(yes){
   app.running=Boolean(yes);app.accumulator=0;app.lastFrame=null;updatePlay();
 }
 function step(days,deferUI=false){
+  const wasInitial=app.world.dayIndex===0&&!app.world.setupLocked;
   const lastQuarter=Math.floor(app.world.dayIndex/30),lastChange=app.world.changeSeq;
   measureSimBatch(app.simMeter,days,()=>advanceDays(app.world,days,externalRandomUint32));
   const redraw=app.world.changeSeq!==lastChange||Math.floor(app.world.dayIndex/30)!==lastQuarter;
+  if(wasInitial&&app.world.dayIndex>0)c1RefreshWorldControls();
   if(deferUI)app.autoUiDirty=app.autoUiDirty||redraw;
   else{refreshSimulationView(redraw||app.autoUiDirty);app.autoUiDirty=false;app.autoLastUiAt=performance.now();}
   // Meter is always computed on the same 10-day batch in MAX and AUTO ×10.
@@ -11412,26 +11476,70 @@ $('zoomOutBtn').addEventListener('click',()=>map.zoomAt(1/1.35));
 $('resetViewBtn').addEventListener('click',()=>map.resetView());
 $('randomSeedBtn').addEventListener('click',()=>{$('seedInput').value=randomSeed();});
 $('rngFixedToggle').addEventListener('change',e=>{
-  app.world.rngPolicy.fixed=e.target.checked;app.world.changeSeq++;refreshRngControls();
+  app.world.setupLocked=true;app.world.rngPolicy.fixed=e.target.checked;app.world.changeSeq++;refreshRngControls();c1RefreshWorldControls();
   showToast(e.target.checked?'RNG 고정이 활성화되었습니다.':'RNG 변동 활성화 · 다음 설정된 달력 경계부터 적용');
 });
 $('rngPeriodSelect').addEventListener('change',e=>{
-  app.world.rngPolicy.intervalDays=Number(e.target.value);app.world.rngPolicy.lastReseedDay=null;
+  app.world.setupLocked=true;app.world.rngPolicy.intervalDays=Number(e.target.value);app.world.rngPolicy.lastReseedDay=null;c1RefreshWorldControls();
   app.world.changeSeq++;refreshRngControls();
+});
+
+function c1RefreshWorldControls(){
+ if(!app.world)return;
+ const [w,h]=$('worldSizeSelect').value.split('x').map(Number);
+ const capacity=c1NationCapacity(w,h),min=c1DefaultNationCount(w,h);
+ const input=$('newNationCount');input.min=min;input.max=capacity;
+ const proposed=input.value===''?NaN:Number(input.value);
+ const validProposal=Number.isInteger(proposed)&&proposed>=min&&proposed<=capacity;
+ $('newWorldBtn').disabled=!validProposal;
+ $('newNationStatus').textContent=`${w} × ${h} · ${(w*h).toLocaleString('ko-KR')}타일 · ${validProposal?proposed+'개국':'국가 수 확인 필요'} (가능 ${min}~${capacity})${w*h>=5000?' · 대형 지도 시험용':''}`;
+ const present=app.world.nations.length;
+ const enabled=app.world.dayIndex===0&&!app.world.setupLocked;
+ const edit=$('setupNationCount'),cap=c1NationCapacity(app.world.size,app.world.height),base=c1DefaultNationCount(app.world.size,app.world.height);
+ edit.min=base;edit.max=cap;edit.disabled=!enabled;
+ const target=edit.value===''?NaN:Number(edit.value);
+ const valid=Number.isInteger(target)&&target>=base&&target<=cap;
+ $('reconfigureWorldBtn').disabled=!enabled||!valid||target===present;
+ $('setupCurrentStatus').textContent=`현재 ${app.world.size} × ${app.world.height} · ${present}개국 / 최대 ${cap}개국 · ${enabled?'명령·시간 진행 전: 재배치 가능':'시작 후 잠금: 새 세계 생성만 가능'}`;
+ $('setupCountPreview').textContent=valid?`${present}개국 → ${target}개국${target>present?' · 추가 '+(target-present)+'개국':target<present?' · 감소 '+(present-target)+'개국':' · 변경 없음'}`:'허용 범위를 확인하세요.';
+ const added=valid&&target>base?c1Templates(app.world.size,app.world.height,target).slice(base).map(t=>t.name).join(' · '):valid?'기본 국가만 유지':'국가 수가 유효하지 않습니다.';
+ $('setupNationPreview').textContent=`추가 국가 순서: ${added}`;
+}
+$('newNationCount').addEventListener('input',()=>{c1RefreshWorldControls();renderAIEditor();});
+$('setupNationCount').addEventListener('input',c1RefreshWorldControls);
+for(const [id,delta] of [['setupMinus',-1],['setupPlus',1]])$(id).addEventListener('click',()=>{
+ const inp=$('setupNationCount');inp.value=String(Math.max(Number(inp.min),Math.min(Number(inp.max),Number(inp.value)+delta)));
+ c1RefreshWorldControls();
+});
+$('reconfigureWorldBtn').addEventListener('click',()=>{
+ try{
+  const old=app.world;
+  if(old.dayIndex!==0||old.setupLocked)throw Error('1년 1분기 1일 · 명령 전의 세계에서만 재배치할 수 있습니다.');
+  const count=Number($('setupNationCount').value);
+  const existing=Object.fromEntries(old.nations.slice(0,count).map(n=>[n.id,{name:n.name,color:n.color,profileId:n.aiProfileId}]));
+  for(let i=old.nations.length;i<count;i++)if(editorState.newNationSetup[i])existing[i]=editorState.newNationSetup[i];
+  const customProfiles=Object.fromEntries(Object.entries(old.aiProfiles).filter(([id])=>!BASE_PROFILE_IDS.has(id)));
+  const fresh=createWorld(old.seed,old.size,old.height,{nationCount:count,profiles:{...persistentProfiles,...customProfiles},nations:existing});
+  // Keep exactly the original terrain (the deterministic generator uses the same seed),
+  // while all capitals, ownership, initial settlements, diplomacy and leaders are rebuilt atomically.
+  if(fresh.tiles.some((t,i)=>t.terrain!==old.tiles[i].terrain))throw Error('원본 지형 일치 검증 실패');
+  validateWorld(fresh);setWorld(fresh);
+  showToast(`${count}개국으로 초기 세계 전체를 재배치했습니다.`);
+ }catch(error){showToast('국가 수 재배치 실패: '+error.message);}
 });
 $('newWorldBtn').addEventListener('click',()=>{
   try{
     const seed=$('seedInput').value.trim()||'vilob-light-01';
-    if(app.world.dayIndex>0&&!window.confirm('현재 세계를 새로 생성하면 진행 시간이 초기화됩니다. 계속할까요?'))return;
+    if((app.world.dayIndex>0||app.world.setupLocked)&&!window.confirm('현재 세계를 새로 생성하면 저장하지 않은 진행과 명령이 초기화됩니다. 계속할까요?'))return;
     const shape=$('worldSizeSelect').value;
-    const selectedTemplates=shape==='19x19'?7:12;
-    const customSetup={profiles:persistentProfiles,nations:{}};
+    const selectedTemplates=Number($('newNationCount').value);
+    const customSetup={profiles:persistentProfiles,nations:{},nationCount:selectedTemplates};
     for(let i=0;i<selectedTemplates;i++)if(editorState.newNationSetup[i])customSetup.nations[i]=editorState.newNationSetup[i];
     const [width,height]=shape.split('x').map(Number);
     setWorld(createWorld(seed,width,height,customSetup));showToast('커스텀 AI 설정을 반영해 새 세계를 생성했습니다.');
   }catch(error){showToast(`생성 실패: ${error.message}`);}
 });
-$('worldSizeSelect').addEventListener('change',()=>renderAIEditor());
+$('worldSizeSelect').addEventListener('change',()=>{const [w,h]=$('worldSizeSelect').value.split('x').map(Number);$('newNationCount').value=String(c1DefaultNationCount(w,h));c1RefreshWorldControls();renderAIEditor();});
 $('seedInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('newWorldBtn').click();});
 $('apBudgetCsvBtn').addEventListener('click',()=>{try{download(`vilob-e4-ap-budget-y${timeAt(app.world.dayIndex).year}.csv`,v04e3ApCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('AP CSV 실패: '+e.message);}});
 $('mobilizationCsvBtn').addEventListener('click',()=>{try{download(`vilob-e2-mobilization-y${timeAt(app.world.dayIndex).year}.csv`,v04e2MobilizationCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('동원 진단 CSV 실패: '+e.message);}});
@@ -11478,7 +11586,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4A_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B3_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4C_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4A_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B3_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
