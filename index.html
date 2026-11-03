@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6B4B</title>
+<title>VILOB Light · V0.6B4C</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -616,6 +616,13 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 .v06a-perception-details{border-top:1px solid #30475a;margin-top:6px;padding-top:5px}
 .v06a-perception-details summary{font-size:11px;color:#acd8d3;cursor:pointer;line-height:1.6}
 .v06a-perception-details[open] .muted-line{padding:2px 0 2px 8px;border-left:2px solid #4a7e80}
+/* B4C: localized map cluster details only; game-control bars remain unchanged. */
+.b4c-cluster-panel[hidden]{display:none!important}
+.b4c-cluster-panel{position:absolute;z-index:45;width:min(250px,calc(100% - 16px));max-height:min(290px,45vh);overflow:auto;padding:10px;display:grid;gap:8px;color:#edf4f6;background:rgba(10,24,35,.97);border:1px solid #658b92;border-radius:9px;box-shadow:0 12px 28px #0009;user-select:text}
+.b4c-cluster-panel strong{font-size:12px;color:#f1dda9}
+.b4c-cluster-rows{display:grid;gap:5px}
+.b4c-cluster-rows button{font-size:11px;padding:8px;text-align:left;background:#213a4a;color:#ebf4f5;border:1px solid #486479;border-radius:6px;cursor:pointer}
+.b4c-cluster-rows button:hover{background:#315569}
 </style>
 </head>
 <body>
@@ -638,8 +645,8 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 <div aria-live="polite" class="stat-grid" id="statGrid"><div class="atlas-stats-header"><span>◈ 세계 현황</span><button type="button" id="atlasStatsToggle" aria-expanded="true" aria-controls="atlasStatItems" aria-label="세계 현황 접기" title="세계 현황 접기">⌃</button></div><div id="atlasStatItems" class="atlas-stat-items"><div class="stat"><span>총인구</span><b>119</b></div><div class="stat"><span>정착지</span><b>7</b></div><div class="stat"><span>소유 타일</span><b>7</b></div><div class="stat"><span>중립 육지</span><b>—</b></div></div></div>
 <section aria-label="세계 지도" class="map-card">
-<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
-<div class="canvas-area" id="canvasArea"><canvas aria-label="타일을 선택하거나 드래그해 지도를 이동할 수 있습니다." id="worldCanvas"></canvas>
+<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select id="settlementLabels" aria-label="정착지 및 수도 지명 표시"><option value="auto" selected>자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
+<div class="canvas-area" id="canvasArea"><canvas aria-label="타일을 선택하거나 드래그해 지도를 이동할 수 있습니다." id="worldCanvas"></canvas><div id="mapArmyClusterPanel" class="b4c-cluster-panel" aria-label="밀집 군대 편제 목록" hidden></div>
 <section id="fortressDetail" class="fortress-detail-popover" aria-label="선택한 요새의 지역 군사 능력" hidden>
   <div class="fortress-detail-head"><div><div class="fortress-eyebrow">♜ SELECTED FORTRESS</div><strong id="fortressDetailTitle">요새</strong><small id="fortressDetailMeta">—</small></div><button type="button" id="fortressDetailClose" class="fortress-detail-close" aria-label="요새 상세 정보 닫기">×</button></div>
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label resistance">◆ 저항력 R</span><strong id="fortressResistanceValue">—</strong><span id="fortressResistanceDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill resistance" id="fortressResistanceTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressResistanceMean">—</b></small></div>
@@ -701,7 +708,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6B4B';
+const VERSION = 'V0.6B4C';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -8532,7 +8539,7 @@ function deserializeWorld(json){
   if(parsed.schema==='vilob-light-v03d'&&['V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A'].includes(parsed.version))parsed.version=VERSION;
   // F3 adds a bounded forward-only real trade-flow ledger. Never invent prior flows
   // from F2's truncated 160-entry display history.
-  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B'].includes(originalVersion);
+  const f3Migration=!['V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1','V0.4A','V0.4B','V0.4C','V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C'].includes(originalVersion);
   if(parsed.schema==='vilob-light-v03d'&&['V0.3F2','V0.3F3','V0.3F3D','V0.3F3E','V0.3F3F','V0.3F3G','V0.3F3G1','V0.3F3G2','V0.3F3H1','V0.3F3H1A','V0.3G','V0.3G1','V0.3G2','V0.3G2A','V0.3G2A1'].includes(parsed.version))parsed.version=VERSION;
   if(parsed.schema==='vilob-light-v03d'&&parsed.version===VERSION){
     for(const d of parsed.defenses||[]){if(!Number.isInteger(d.hp))d.hp=fortMaxHP(d);d.zeroHpSince??=null;}
@@ -8559,7 +8566,7 @@ function deserializeWorld(json){
     for(const n of parsed.nations){
       if(!n.knowledgeExchange)n.knowledgeExchange=initialKnowledgeExchange();
       if(n.technology.pausedResearch===undefined)n.technology.pausedResearch=null;
-      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B'].includes(originalVersion)){
+      if(!['V0.4D','V0.4E','V0.4E1','V0.4E2','V0.4E3','V0.4E4','V0.4E5','V0.4E5A','V0.4E5B','V0.4E5C','V0.5A','V0.5B','V0.5B1','V0.5C','V0.5C1','V0.6A','V0.6A1','V0.6A2','V0.6B','V0.6B1','V0.6B2','V0.6B3','V0.6B4','V0.6B4A','V0.6B4B','V0.6B4C'].includes(originalVersion)){
         // A pre-D medieval nation is already certified. Never rewrite its archived era date.
         if(n.civilization.era==='medieval'&&!n.technology.unlocked.includes('regional_governance'))
           n.technology.unlocked.push('regional_governance');
@@ -8807,11 +8814,51 @@ function buildDiplomaticBorderSegments(w){
   }
   return segments;
 }
+
+// B4C: pure camera-space collision/aggregation helpers (render-only; never use SIM RNG).
+function b4cOverlap(a,b,pad=3){return a.x<b.x+b.w+pad&&a.x+a.w+pad>b.x&&a.y<b.y+b.h+pad&&a.y+a.h+pad>b.y;}
+function b4cArmyClusters(badges,tiles,scale,ox,oy,selectedId,zoom){
+  const result=[];
+  // At detailed zoom the viewer sees individual tile groups; at ordinary zoom
+  // friendly close-by tiles combine visually, without changing any Army/UnitGroup.
+  const radius=zoom>=2.50?0:zoom>=1.45?92:105;
+  for(const [tid,factions] of [...badges].sort((a,b)=>a[0]-b[0]))for(const item of factions){
+    if(item.amount<=0)continue;
+    const t=tiles[tid],x=ox+(t.x+.5)*scale,y=oy+(t.y+.10)*scale;
+    const member={tid,armyGroups:item.armies};
+    const target=radius&&tid!==selectedId?result.find(g=>g.nationId===item.nationId&&!g.selected&&
+      Math.hypot(g.x-x,g.y-y)<radius&&g.members.length<9):null;
+    if(target){
+      const count=target.amount+item.amount;
+      target.x=(target.x*target.amount+x*item.amount)/count;
+      target.y=(target.y*target.amount+y*item.amount)/count;
+      target.amount=count;target.strength+=item.strength;
+      target.weightedXP+=item.weightedXP;target.members.push(member);
+      for(const [k,v] of Object.entries(item.types))target.types[k]=(target.types[k]||0)+v;
+      target.allSailing&&=item.allSailing;target.soonestArrival=Math.min(target.soonestArrival,item.soonestArrival);
+    }else result.push({nationId:item.nationId,x,y,amount:item.amount,strength:item.strength,weightedXP:item.weightedXP,
+      types:{...item.types},members:[member],selected:tid===selectedId,allSailing:item.allSailing,soonestArrival:item.soonestArrival});
+  }
+  return result;
+}
+function b4cFindLabelSpot(anchor,w,h,used,vw,vh){
+  const x=anchor.x,y=anchor.y;
+  const offsets=[[0,-h-5],[0,5],[-w*.64,-h*.70],[w*.64,-h*.70],[-w*.68,h*.58],[w*.68,h*.58],[0,-h-26],[0,27],[-w-8,-h*.35],[w+8,-h*.35]];
+  for(const [dx,dy] of offsets){
+    const rect={x:Math.round(x+dx-w/2),y:Math.round(y+dy),w,h};
+    if(rect.x<5||rect.y<5||rect.x+w>vw-5||rect.y+h>vh-5)continue;
+    if(!used.some(r=>b4cOverlap(rect,r)))return rect;
+  }
+  return null;
+}
+function b4cDominant(types){return Object.entries(types).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))[0]?.[0]||'levy';}
+function b4cTypeSymbol(type){return ['archer','longbowman','crossbowman'].includes(type)?'🏹':['heavy_infantry','pikeman'].includes(type)?'🛡':'⚔';}
+
 class MapRenderer {
   constructor(canvas,{onSelect,onHover}={}){
     this.canvas=canvas;this.ctx=canvas.getContext('2d',{alpha:false});
     this.onSelect=onSelect;this.onHover=onHover;
-    this.world=null;this.selectedId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
+    this.world=null;this.selectedId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.settlementLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
     this.offset={x:0,y:0};this.width=0;this.height=0;this.scale=1;this.originX=0;this.originY=0;
     // F3G1: renderer-private caches; nothing persists in saves or advances the SIM RNG.
     this.frameHandle=null;this.visualCache=null;this.fortDetailKey=null;this.fortDetailShown=false;
@@ -8825,7 +8872,7 @@ class MapRenderer {
     canvas.addEventListener('wheel',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(e.deltaY>0?1/1.13:1.13,p.x,p.y);},{passive:false});
     canvas.addEventListener('dblclick',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(1.28,p.x,p.y);});
   }
-  setWorld(world){this.world=world;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.draw();}
+  setWorld(world){this.world=world;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.closeArmyCluster();this.draw();}
   // F3G1 P0: coalesce high-frequency pointer/pinch/wheel events to one draw per frame.
   requestDraw(){
     if(this.frameHandle!==null)return;
@@ -9002,6 +9049,8 @@ class MapRenderer {
     const {nodes}=this.getFortGraph();
     ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
     for(const n of nodes){
+      // B4C: minor forts remain on the tactical layer when closely zoomed or explicitly requested.
+      if(this.defenseLabelMode==='network'&&this.zoom<2.30&&n.level<2&&n.id!==this.selectedId)continue;
       const t=ts[n.id],core=coreTiles.has(n.id);
       const px=originX+(t.x+(core?.82:.5))*scale,py=originY+(t.y+(core?.20:.5))*scale;
       if(px<-18||py<-18||px>w+18||py>h+18)continue;
@@ -9028,10 +9077,10 @@ class MapRenderer {
     }
     ctx.restore();
   }
-  setSelected(id){this.selectedId=id;this.detailDismissedFor=null;this.fortDetailKey=null;this.draw();}
+  setSelected(id){this.closeArmyCluster();this.selectedId=id;this.detailDismissedFor=null;this.fortDetailKey=null;this.draw();}
   dismissSelectedFortress(){this.detailDismissedFor=this.selectedId;this.updateDefensePopover();}
   setMode(mode){this.mode=['terrain','political','era'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
-resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
+resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw();}
   centerOn(id){
     if(!this.world||!this.world.tiles[id])return;
     const t=this.world.tiles[id],scale=this.baseScale()*this.zoom;
@@ -9039,14 +9088,14 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
     this.offset.y=((this.world.height??this.world.size)/2-(t.y+.5))*scale;
     this.clampPan();this.draw();
   }
-  setZoom(z){this.zoom=Math.max(MIN_MAP_ZOOM,Math.min(MAX_MAP_ZOOM,z));this.clampPan();this.draw();}
+  setZoom(z){this.closeArmyCluster();this.zoom=Math.max(MIN_MAP_ZOOM,Math.min(MAX_MAP_ZOOM,z));this.clampPan();this.draw();}
   zoomAt(factor,pX=this.width/2,pY=this.height/2){
     if(!this.world)return;
     const before=this.zoom,next=Math.max(MIN_MAP_ZOOM,Math.min(MAX_MAP_ZOOM,this.zoom*factor));
     if(Math.abs(before-next)<.001)return;
     const {originX,originY,scale}=this.mapGeometry();
     const mapX=(pX-originX)/scale,mapY=(pY-originY)/scale;
-    this.zoom=next;
+    this.zoom=next;this.closeArmyCluster();
     const newScale=this.baseScale()*next;
     const newOriginX=(this.width-this.world.size*newScale)/2;
     const newOriginY=(this.height-(this.world.height??this.world.size)*newScale)/2;
@@ -9141,7 +9190,7 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
       this.zoomAt(target/this.zoom,midpoint.x,midpoint.y);
     }else if(this.drag){
       const dx=p.x-this.drag.start.x,dy=p.y-this.drag.start.y;
-      if(Math.hypot(dx,dy)>6)this.drag.moved=true;
+      if(Math.hypot(dx,dy)>6){this.drag.moved=true;this.closeArmyCluster();}
       if(this.drag.moved){this.offset.x=this.drag.original.x+dx;this.offset.y=this.drag.original.y+dy;this.clampPan();this.requestDraw();}
     }
   }
@@ -9150,7 +9199,11 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
     const p=this.point(e),wasDrag=this.drag;
     this.pointers.delete(e.pointerId);
     if(this.pointers.size===0){
-      if(wasDrag&&!wasDrag.moved){const id=this.hit(p.x,p.y);if(id!==null)this.onSelect?.(id);}
+      if(wasDrag&&!wasDrag.moved){
+        const label=(this.armyHitBoxes||[]).slice().reverse().find(g=>p.x>=g.rect.x&&p.x<=g.rect.x+g.rect.w&&p.y>=g.rect.y&&p.y<=g.rect.y+g.rect.h);
+        if(label&&label.group.members.length>1){this.openArmyCluster(label.group,p);}
+        else {this.closeArmyCluster();const id=label?label.group.members[0].tid:this.hit(p.x,p.y);if(id!==null)this.onSelect?.(id);}
+      }
       this.drag=null;this.pinch=null;
     }else{this.drag=null;this.pinch=null;}
   }
@@ -9397,6 +9450,25 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
       ctx.fillStyle='#f5f2e7';ctx.fillText(p.name,0,0);ctx.restore();
     }
     ctx.restore();
+    // At whole-world scale show compact strategic troop concentrations, not detailed badges.
+    if(this.armyLabelMode!=='off'){
+      const groups=new Map();
+      for(const a of w.armies){
+        const t=ts[a.tileId];if(!t)continue;
+        const unit=scale<11?4:3,k=`${a.nationId}:${Math.floor(t.x/unit)}:${Math.floor(t.y/unit)}`;
+        let g=groups.get(k);if(!g){g={nation:a.nationId,x:0,y:0,n:0,pop:0};groups.set(k,g);}
+        const m=manpower(a);g.x+=(t.x+.5)*m;g.y+=(t.y+.5)*m;g.pop+=m;g.n++;
+      }
+      const drawn=[];
+      for(const g of [...groups.values()].sort((a,b)=>b.pop-a.pop)){
+        if(!g.pop)continue;
+        const x=ox+g.x/g.pop*scale,y=oy+g.y/g.pop*scale;
+        if(x<8||y<8||x>cw-8||y>ch-8||drawn.some(d=>Math.hypot(x-d.x,y-d.y)<16))continue;
+        const nation=w.nations[g.nation],r=Math.max(4,Math.min(10,4+Math.sqrt(g.pop)*.1));
+        ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=nation.color;
+        ctx.fill();ctx.strokeStyle='#10202b';ctx.lineWidth=1.5;ctx.stroke();drawn.push({x,y});
+      }
+    }
   }
 
   draw(){
@@ -9408,6 +9480,7 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
     const world=this.world,ts=world.tiles,size=world.size,height=world.height??size;
     const {scale,originX,originY}=this.mapGeometry();
     if(scale<22){
+      this.armyHitBoxes=[];
       this.scale=scale;this.originX=originX;this.originY=originY;
       this.drawStrategicAtlas(ctx,scale,originX,originY,w,h);
       const p=document.getElementById('fortressDetail');if(p)p.hidden=true;
@@ -9427,7 +9500,7 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
     ctx.translate(originX,originY);ctx.scale(scale,scale);
     ctx.lineJoin='round';
     // Facility symbols share a small corner of the tile, never replace capital or army labels.
-    if(this.buildingLabelMode!=='off'){
+    if(this.buildingLabelMode==='detail'||(this.buildingLabelMode==='auto'&&this.zoom>=1.58&&scale>=35)){
       const placed=visuals.buildingBadges;
       const detail=this.buildingLabelMode==='detail'||this.zoom>=1.8;
       for(const [tid,badge] of placed){
@@ -9504,66 +9577,123 @@ resetView(){this.zoom=1;this.offset={x:0,y:0};this.draw();}
     ctx.restore();
     // E1A: screen-size fortress badges stay visible even when the atlas is zoomed out.
     this.drawFortMarkers(ctx,ts,scale,originX,originY,w,h);
-    // Army labels in SCREEN pixels, not tiny tile-space fonts. Army data is grouped by faction.
-    // Avoid dense labels at low zoom; the inspector always shows per-unit data.
-    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-    for(const [tid,factions] of byTile){
-      const tile=ts[tid],px=originX+(tile.x+.5)*scale,py=originY+(tile.y+.10)*scale;
-      if(px<-70||py<-30||px>w+70||py>h+30)continue;
-      // Pre-grouped by nation; cached stats never combine opposing armies.
-      const selected=tid===this.selectedId;
-      const detailed=this.armyLabelMode==='detail'||(this.armyLabelMode==='auto'&&(this.zoom>=1.85||selected));
-      const compact=scale<22&&!selected&&this.armyLabelMode!=='detail';
-      for(let i=0;i<factions.length;i++){
-        const badge=factions[i],group=badge.armies,nation=world.nations[badge.nationId];
-        const amount=badge.amount,strength=badge.strength;
-        const troops=amount>=1000?(amount/1000).toFixed(1)+'k':String(amount);
-        const abbrev=nation.name.slice(0,1);
-        const atSea=badge.allSailing;
-        const dominant=Object.entries(badge.types).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))[0]?.[0]||'levy';
-        const typeSymbol=['archer','longbowman','crossbowman'].includes(dominant)?'🏹':
-          ['heavy_infantry','pikeman'].includes(dominant)?'🛡':'⚔';
-        const averageXP=Math.round(badge.weightedXP/Math.max(1,amount));
-        const rank=['I','II','III','IV','V','VI'][b4aRankIndex({formationExperience:{xp:averageXP}})];
-        const core=`${abbrev} ${typeSymbol}${troops}${group.length>1?' ×'+group.length:''}`;
-        const headline=atSea?`⛵ ${core}`:compact?`${abbrev}${troops}`:`${core} · ${rank}`;
-        const second=detailed&&scale>=21?(atSea?`상륙 ${Math.max(0,badge.soonestArrival-world.dayIndex)}일`:`⚔ ${strength} · ${averageXP}XP`):null;
-        const fontSize=Math.max(9,Math.min(12,scale*.34));
-        ctx.font=`700 ${fontSize}px system-ui,sans-serif`;
-        const width=Math.max(23,ctx.measureText(headline).width+16),height=second?27:16;
-        const top=py-5+i*(height+2);
-        const left=px-width/2;
-        ctx.fillStyle='rgba(9,22,33,.94)';ctx.strokeStyle=nation.color;
-        ctx.lineWidth=1.4;ctx.beginPath();ctx.roundRect(left,top,width,height,4);ctx.fill();ctx.stroke();
-        ctx.fillStyle=nation.color;ctx.fillRect(left+1.4,top+2.1,3.8,height-4.2);
-        ctx.fillStyle='#f3f6f0';ctx.textAlign='center';ctx.textBaseline='middle';
-        ctx.fillText(headline,px+2,top+(second?9:8));
-        if(second){
-          ctx.font=`600 ${Math.max(8,fontSize-2)}px system-ui,sans-serif`;
-          ctx.fillStyle='#efd18c';ctx.fillText(second,px+2,top+20);
-        }
-      }
-    }
-    ctx.restore();
-    // 수도 라벨을 별도 화면 좌표로 찍어서 확대/축소 시 읽기 쉽도록
-    ctx.save();
-    ctx.textAlign='center';ctx.textBaseline='top';ctx.font=`600 ${Math.max(10,Math.min(14,scale*.36))}px system-ui, sans-serif`;
-    for(const s of world.settlements){
-      const t=ts[s.coreTileId],owner=world.nations[s.ownerId];
-      const x=originX+(t.x+.5)*scale,y=originY+(t.y+.95)*scale;
-      if(y<0||y>h+20||x<0||x>w)continue;
-      const text=settlementDisplayName(world,s),isCapital=s.coreTileId===owner.capitalId;
-      const top=y+5;
-      ctx.font=`${isCapital?700:600} ${Math.max(10,Math.min(isCapital?14:13,scale*.34))}px system-ui,sans-serif`;
-      // Transparent map labels: keep terrain visible, retain legibility with a thin outline.
-      ctx.lineJoin='round';ctx.lineWidth=2.7;
-      ctx.strokeStyle='rgba(7,18,26,.92)';ctx.strokeText(text,x,top);
-      ctx.fillStyle=isCapital?'#ffe4a6':'#edf4f5';ctx.fillText(text,x,top);
-    }
-    ctx.restore();
+    this.drawAdaptiveLabelsB4C(ctx,visuals,scale,originX,originY,w,h);
     this.updateDefensePopover();
   }
 
+  closeArmyCluster(){
+    const panel=document.getElementById('mapArmyClusterPanel');
+    if(panel){panel.hidden=true;panel.replaceChildren();}
+  }
+  openArmyCluster(group,point){
+    const panel=document.getElementById('mapArmyClusterPanel');if(!panel)return;
+    panel.replaceChildren();
+    const title=document.createElement('strong');title.textContent=`${this.world.nations[group.nationId].name} · 편제 ${group.members.reduce((n,m)=>n+m.armyGroups.length,0)}개 · ${group.amount}명`;
+    panel.append(title);
+    const rows=document.createElement('div');rows.className='b4c-cluster-rows';
+    for(const m of group.members)for(const a of m.armyGroups){
+      const btn=document.createElement('button');btn.type='button';
+      btn.textContent=`제${a.id+1}군 · ${manpower(a)}명 · ${b4aRankLabel(a)} (${a.formationExperience?.xp||0}XP)`;
+      btn.addEventListener('click',()=>{this.closeArmyCluster();this.onSelect?.(m.tid);});rows.append(btn);
+    }
+    panel.append(rows);panel.hidden=false;
+    const cw=this.width,ch=this.height,pw=panel.offsetWidth,ph=panel.offsetHeight;
+    panel.style.left=`${Math.max(8,Math.min(Math.max(8,cw-pw-8),point.x+8))}px`;
+    panel.style.top=`${Math.max(8,Math.min(Math.max(8,ch-ph-8),point.y+15))}px`;
+  }
+  drawAdaptiveLabelsB4C(ctx,visuals,scale,ox,oy,w,h){
+    const world=this.world,ts=world.tiles;
+    const used=[],names=[],hits=[];
+    const labelMode=this.settlementLabelMode;
+    const showNames=labelMode!=='off';
+    const showSecondary=labelMode==='all'||(labelMode==='auto'&&this.zoom>=1.52&&scale>=35);
+    // Capitals are reserved first; non-capital names wait for army labels and
+    // quietly disappear if there is no free space. Selected settlement is exempt.
+    if(showNames){
+      const capitals=[],regular=[];
+      for(const s of world.settlements){
+        const t=ts[s.coreTileId],n=world.nations[s.ownerId];if(!t||!n)continue;
+        const isCapital=s.coreTileId===n.capitalId,selected=s.coreTileId===this.selectedId;
+        if(!isCapital&&!showSecondary&&!selected)continue;
+        const x=ox+(t.x+.5)*scale,y=oy+(t.y+.95)*scale+5;
+        if(x<-60||x>w+60||y<-25||y>h+25)continue;
+        const size=isCapital?Math.max(11,Math.min(14,scale*.34)):Math.max(10,Math.min(12,scale*.31));
+        ctx.font=`${isCapital?750:600} ${size}px system-ui,sans-serif`;
+        const text=settlementDisplayName(world,s);
+        const entry={text,isCapital,selected,size,x,y,w:ctx.measureText(text).width+7,h:size+5};
+        (isCapital||selected?capitals:regular).push(entry);
+      }
+      for(const entry of capitals.sort((a,b)=>Number(b.selected)-Number(a.selected)||Number(b.isCapital)-Number(a.isCapital))){
+        const rect=b4cFindLabelSpot({x:entry.x,y:entry.y+entry.h/2},entry.w,entry.h,used,w,h);
+        if(rect){entry.rect=rect;names.push(entry);used.push(rect);}
+      }
+      // Store optional names until after armies have reserved their spots.
+      this.b4cOptionalNames=regular;
+    }else this.b4cOptionalNames=[];
+    if(this.armyLabelMode!=='off'){
+      const clusters=b4cArmyClusters(visuals.armyBadges,ts,scale,ox,oy,this.selectedId,this.zoom);
+      clusters.sort((a,b)=>Number(b.selected)-Number(a.selected)||b.amount-a.amount||a.nationId-b.nationId);
+      const overview=scale<31||this.zoom<.80;
+      const detailed=this.armyLabelMode==='detail'||(this.armyLabelMode==='auto'&&this.zoom>=2.2);
+      for(const g of clusters){
+        if(g.x<-110||g.x>w+110||g.y<-60||g.y>h+60)continue;
+        const nation=world.nations[g.nationId];if(!nation)continue;
+        const count=g.members.reduce((n,m)=>n+m.armyGroups.length,0);
+        const xp=Math.round(g.weightedXP/Math.max(1,g.amount));
+        const rank=['I','II','III','IV','V','VI'][b4aRankIndex({formationExperience:{xp}})];
+        const troops=g.amount>=1000?(g.amount/1000).toFixed(1)+'k':String(g.amount);
+        const type=b4cTypeSymbol(b4cDominant(g.types));
+        const abbrev=nation.name.slice(0,1);
+        const headline=this.armyLabelMode==='compact'||overview?
+          `${abbrev} ${troops}${count>1?' ×'+count:''}`:
+          `${abbrev} ${type}${troops} · ${rank}${count>1?' ×'+count:''}`;
+        const second=detailed&&scale>=40&&(!overview||g.selected)?
+          (g.allSailing?`상륙 ${Math.max(0,g.soonestArrival-world.dayIndex)}일`:`전투력 ${g.strength} · ${xp}XP`):null;
+        const fontSize=Math.max(10,Math.min(12,scale*.26));
+        ctx.font=`700 ${fontSize}px system-ui,sans-serif`;
+        const width=Math.max(34,Math.ceil(ctx.measureText(headline).width)+15),height=second?32:21;
+        let rect=b4cFindLabelSpot({x:g.x,y:g.y},width,height,used,w,h);
+        let actual=headline,actualSecond=second;
+        if(!rect&&this.armyLabelMode!=='compact'){
+          actual=`${abbrev} ${troops}${count>1?' ×'+count:''}`;actualSecond=null;
+          ctx.font=`700 ${fontSize}px system-ui,sans-serif`;
+          rect=b4cFindLabelSpot({x:g.x,y:g.y},Math.max(32,Math.ceil(ctx.measureText(actual).width)+13),19,used,w,h);
+        }
+        if(!rect){
+          // Dense opposing armies: preserve a small faction-colored anchor, not overlapping prose.
+          const dot={x:Math.round(g.x-4),y:Math.round(g.y-4),w:8,h:8};
+          if(dot.x>=4&&dot.x+8<w-4&&dot.y>=4&&dot.y+8<h-4&&!used.some(r=>b4cOverlap(dot,r))){
+            ctx.fillStyle=nation.color;ctx.strokeStyle='#0b1822';ctx.lineWidth=1.4;
+            ctx.beginPath();ctx.arc(g.x,g.y,4,0,Math.PI*2);ctx.fill();ctx.stroke();
+            used.push(dot);hits.push({rect:dot,group:g});
+          }
+          continue;
+        }
+        used.push(rect);hits.push({rect,group:g});
+        ctx.fillStyle='rgba(9,22,33,.94)';ctx.strokeStyle=nation.color;ctx.lineWidth=1.25;
+        ctx.beginPath();ctx.roundRect(rect.x,rect.y,rect.w,rect.h,4);ctx.fill();ctx.stroke();
+        ctx.fillStyle=nation.color;ctx.fillRect(rect.x+1.2,rect.y+2.2,3.3,rect.h-4.4);
+        ctx.font=`700 ${fontSize}px system-ui,sans-serif`;
+        ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#f4f6f4';
+        ctx.fillText(actual,rect.x+rect.w/2+1.4,rect.y+(actualSecond?10:rect.h/2));
+        if(actualSecond){ctx.font=`600 10px system-ui,sans-serif`;ctx.fillStyle='#ead09d';
+          ctx.fillText(actualSecond,rect.x+rect.w/2+1.4,rect.y+23);}
+      }
+    }
+    this.armyHitBoxes=hits;
+    for(const entry of this.b4cOptionalNames){
+      const rect=b4cFindLabelSpot({x:entry.x,y:entry.y+entry.h/2},entry.w,entry.h,used,w,h);
+      if(rect){entry.rect=rect;names.push(entry);used.push(rect);}
+    }
+    ctx.save();ctx.textBaseline='middle';ctx.textAlign='center';ctx.lineJoin='round';
+    for(const n of names){
+      ctx.font=`${n.isCapital?750:600} ${n.size}px system-ui,sans-serif`;
+      ctx.lineWidth=n.isCapital?2.5:2.3;ctx.strokeStyle='rgba(7,18,26,.94)';
+      const x=n.rect.x+n.rect.w/2,y=n.rect.y+n.rect.h/2;
+      ctx.strokeText(n.text,x,y);ctx.fillStyle=n.isCapital?'#ffe4a6':'#edf4f5';ctx.fillText(n.text,x,y);
+    }
+    ctx.restore();
+  }
   updateDefensePopover(){
     const panel=document.getElementById('fortressDetail');
     if(!panel)return;
@@ -9958,7 +10088,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06b4b-world';
+const SAVE_KEY='vilob-light-v06b4c-world';
+const PREVIOUS_V06B4B_SAVE_KEY='vilob-light-v06b4b-world';
 const PREVIOUS_V06B4A_SAVE_KEY='vilob-light-v06b4a-world';
 const PREVIOUS_V06B4_SAVE_KEY='vilob-light-v06b4-world';
 const PREVIOUS_V06B3_SAVE_KEY='vilob-light-v06b3-world';
@@ -11271,7 +11402,8 @@ for(const btn of document.querySelectorAll('[data-map-mode]'))btn.addEventListen
 $('bordersToggle').addEventListener('change',e=>{map.showBorders=e.target.checked;map.draw();});
 $('diplomaticBordersToggle').addEventListener('change',e=>{map.showDiplomaticBorders=e.target.checked;map.draw();});
 $('roadsToggle').addEventListener('change',e=>{map.showRoads=e.target.checked;map.draw();});
-$('armyLabels').addEventListener('change',e=>{map.armyLabelMode=e.target.value;map.draw();});
+$('armyLabels').addEventListener('change',e=>{map.armyLabelMode=e.target.value;map.closeArmyCluster();map.draw();});
+$('settlementLabels').addEventListener('change',e=>{map.settlementLabelMode=e.target.value;map.draw();});
 $('buildingLabels').addEventListener('change',e=>{map.buildingLabelMode=e.target.value;map.draw();});
 $('defenseLabels').addEventListener('change',e=>{map.defenseLabelMode=e.target.value;map.draw();});
 $('fortressDetailClose').addEventListener('click',()=>map.dismissSelectedFortress());
@@ -11346,7 +11478,7 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4A_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B3_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
+  try{const raw=localStorage.getItem(SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4A_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B4_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B3_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06B_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A2_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A1_SAVE_KEY)||localStorage.getItem(PREVIOUS_V06A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5A_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E5_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E4_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E3_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E2_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E1_SAVE_KEY)||localStorage.getItem(PREVIOUS_04E_SAVE_KEY)||localStorage.getItem(PREVIOUS_04D_SAVE_KEY)||localStorage.getItem(PREVIOUS_04C_SAVE_KEY)||localStorage.getItem(PREVIOUS_04B_SAVE_KEY)||localStorage.getItem(PREVIOUS_04A_SAVE_KEY)||localStorage.getItem(PREVIOUS_G2_SAVE_KEY)||localStorage.getItem(PREVIOUS_G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3G_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3F_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3E_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3D_SAVE_KEY)||localStorage.getItem(PREVIOUS_F3_SAVE_KEY)||localStorage.getItem(PREVIOUS_F2_SAVE_KEY)||localStorage.getItem(PREVIOUS_C_SAVE_KEY)||localStorage.getItem(PREVIOUS_SAVE_KEY)||localStorage.getItem(PREVIOUS_B_SAVE_KEY)||localStorage.getItem(LEGACY_SAVE_KEY)||localStorage.getItem(OLDEST_SAVE_KEY);if(!raw){showToast('저장된 월드가 없습니다.');return;}setWorld(deserializeWorld(raw));showToast('저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
