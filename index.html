@@ -724,7 +724,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6C5A';
+const VERSION = 'V0.6C6';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2737,6 +2737,7 @@ function runEconomyQuarter(world){
     }else n.military.unpaidQuarters=0;
     // Destroyed cohorts can no longer occupy a map tile. Remove only outside active battles.
     for(const a of world.armies.filter(a=>a.nationId===n.id&&a.engagementId===null&&a.units.every(u=>u.manpower<=0))){
+      c6RecordArmyEnd(world,a,n.military.desertedLastQuarter>0?'DESERTION':'FIELD_LOSS');
       world.armies=world.armies.filter(other=>other.id!==a.id);
       world.characters=world.characters.filter(c=>c.id!==a.commanderId);
       world.occupations=world.occupations.filter(o=>o.armyId!==a.id);
@@ -3722,6 +3723,7 @@ function surrenderArmy(world,army,winningNationId=null){
   const war=world.wars.find(w=>w.id===army.assignedWarId)||world.wars.find(w=>warSide(w,army.nationId)&&
    (winningNationId===null||warSide(w,winningNationId)&&warSide(w,winningNationId)!==warSide(w,army.nationId)));
   if(war){war.surrendered??={};war.surrendered[army.nationId]=(war.surrendered[army.nationId]||0)+survivors;}
+  c6RecordArmyEnd(world,army,'SURRENDER');
   world.armies=world.armies.filter(a=>a.id!==army.id);
   const cmd=world.characters.find(c=>c.id===army.commanderId);
   if(cmd){
@@ -5155,33 +5157,132 @@ function c2FrontPriority(w,a,war){
   const protectorBonus=ward?24+Math.max(0,30-nearWard*1.4):0;
   return (war.kind==='INDEPENDENCE'?35:0)+(crisis?85:0)+(defensive?18:0)+protectorBonus+Math.max(0,35-distance*1.4);
 }
-function c2AssignFronts(w){
-  // Allocate by existing strength to avoid committing every formation to the first war.
-  const committed=new Map();
-  for(const a of w.armies){
-    const live=warsOfNation(w,a.nationId);
-    if(!live.length){if(a.assignedWarId!=null){a.assignedWarId=null;w.changeSeq++;}continue;}
-    if(a.engagementId!==null){const e=w.engagements.find(e=>e.id===a.engagementId);
-      if(e)a.assignedWarId=e.warId;
+/** C6: reuse a national legal-land component graph once per real multi-war review.
+ * This is a cheap static *filter*, not a substitute for army A* orders.
+ * A fort tile may be assaulted but is not a transit corridor.
+ */
+function c6LandComponents(w,nationId,fortNet){
+  const count=w.tiles.length,open=new Uint8Array(count),labels=new Int32Array(count).fill(-1);
+  for(const t of w.tiles)if(TERRAINS[t.terrain]?.passable&&canPassMilitaryTile(w,nationId,t)&&
+      !fortLineBlocks(w,t.id,nationId,fortNet))open[t.id]=1;
+  let nextComponent=0;
+  for(let i=0;i<count;i++){
+    if(!open[i]||labels[i]!==-1)continue;
+    const q=[i];labels[i]=nextComponent;
+    for(let k=0;k<q.length;k++){
+      const id=q[k];if(hostileFortUncaptured(w,id,nationId,fortNet))continue;
+      for(const nb of neighborsMilitary8(id,w.size,w.height)){
+        if(!open[nb]||labels[nb]!==-1||!militaryStepPermitted(w,id,nb,nationId,fortNet))continue;
+        labels[nb]=nextComponent;q.push(nb);
+      }
     }
+    nextComponent++;
+  }
+  return labels;
+}
+function c6WarLandAccess(w,army,war,labels){
+  const component=labels[army.tileId];if(component<0)return false;
+  const foes=new Set(warOpponents(war,army.nationId));
+  // Restoring a friendly occupied city is a valid front objective too.
+  for(const t of w.tiles)if(labels[t.id]===component&&
+    (foes.has(t.ownerId)||foes.has(t.occupiedBy)))return true;
+  return false;
+}
+function c2AssignFronts(w){
+  // In the common peace state, skip both expensive per-formation war lists entirely.
+  if(!w.wars.length){
+    for(const a of w.armies)if(a.assignedWarId!=null){a.assignedWarId=null;delete a.c6FrontDecision;w.changeSeq++;}
+    return;
+  }
+  // Preserve soldiers/XP. Recompute access only for armies whose 30-day front review is due.
+  const committed=new Map(),warsByNation=new Map();
+  const liveFor=id=>{if(!warsByNation.has(id))warsByNation.set(id,warsOfNation(w,id));return warsByNation.get(id);};
+  for(const a of w.armies){
+    const live=liveFor(a.nationId);
+    if(!live.length){if(a.assignedWarId!=null){a.assignedWarId=null;w.changeSeq++;}if(a.c6FrontDecision)delete a.c6FrontDecision;continue;}
+    if(a.engagementId!==null){const e=w.engagements.find(e=>e.id===a.engagementId);if(e)a.assignedWarId=e.warId;}
     if(a.assignedWarId!=null&&live.some(v=>v.id===a.assignedWarId)){
       const key=a.nationId+':'+a.assignedWarId;
       committed.set(key,(committed.get(key)||0)+manpower(a));
     }
   }
+  let fortNet=null;
+  const componentsByNation=new Map(),accessByNationArmy=new Map();
   for(const a of w.armies){
-    const live=warsOfNation(w,a.nationId);
+    const live=liveFor(a.nationId);
     if(!live.length||a.engagementId!==null||a.status==='SAILING'||a.status==='RETREATING'||a.status==='REGROUP')continue;
     if(a.assignedWarId!=null&&live.some(v=>v.id===a.assignedWarId)&&w.dayIndex<(a.c2NextFrontReviewDay||0))continue;
     const old=a.assignedWarId;
     if(old!=null){const key=a.nationId+':'+old;committed.set(key,Math.max(0,(committed.get(key)||0)-manpower(a)));}
-    const ranked=live.map(war=>({war,score:c2FrontPriority(w,a,war)-Math.min(85,(committed.get(a.nationId+':'+war.id)||0)/12)}))
+    let reach=null;
+    if(live.length>1){
+      if(!componentsByNation.has(a.nationId)){
+        fortNet??=fortificationNetwork(w);
+        componentsByNation.set(a.nationId,c6LandComponents(w,a.nationId,fortNet));
+      }
+      const labels=componentsByNation.get(a.nationId);
+      // Cache per origin tile: nearby formations share the same legal-land component.
+      const cacheKey=a.nationId+':'+labels[a.tileId];
+      reach=accessByNationArmy.get(cacheKey);
+      if(!reach){reach=new Map();for(const war of live)reach.set(war.id,c6WarLandAccess(w,a,war,labels));accessByNationArmy.set(cacheKey,reach);}
+    }
+    const ranked=live.map(war=>({war,reachable:reach?reach.get(war.id):true,
+      score:c2FrontPriority(w,a,war)-Math.min(85,(committed.get(a.nationId+':'+war.id)||0)/12)}))
       .sort((x,y)=>y.score-x.score||x.war.id-y.war.id);
-    const chosen=ranked[0].war;
-    if(chosen.id!==old){a.assignedWarId=chosen.id;a.order=null;a.operation=null;a.needsOrders=true;w.changeSeq++;}
-    const key=a.nationId+':'+chosen.id;committed.set(key,(committed.get(key)||0)+manpower(a));
+    const plausible=ranked.filter(x=>x.reachable);
+    const chosen=(plausible[0]||ranked[0]);
+    if(chosen.war.id!==old){a.assignedWarId=chosen.war.id;a.order=null;a.operation=null;a.needsOrders=true;w.changeSeq++;}
+    const key=a.nationId+':'+chosen.war.id;committed.set(key,(committed.get(key)||0)+manpower(a));
     a.c2NextFrontReviewDay=w.dayIndex+30;
+    a.c6FrontDecision={dayIndex:w.dayIndex,warId:chosen.war.id,priority:Math.round(chosen.score*100)/100,
+      reason:live.length===1?'SINGLE_WAR':!plausible.length?'NO_ACCESSIBLE_WAR':chosen.reachable?'LAND_REACHABLE':'NO_LAND_ACCESS'};
+    if(w.c6StrategyStats){w.c6StrategyStats.frontReviews++;if(reach)w.c6StrategyStats.unreachableChecks+=live.filter(v=>!reach.get(v.id)).length;}
   }
+}
+// --- src/sim/army-lifecycle.js ---
+/** C6: bounded, event-driven formation history. No per-day historical snapshots. */
+const C6_ARMY_HISTORY_LIMIT=300;
+const C6_ARMY_END_REASONS=['BATTLE_LOSS','FIELD_LOSS','SURRENDER','DISBAND','DESERTION','NATION_FALL'];
+function c6RecordArmyEnd(w,a,reason){
+  if(!C6_ARMY_END_REASONS.includes(reason))throw Error('C6 unknown formation end reason');
+  const ledger=w.c6ArmyHistory;
+  if(!ledger)return; // historical direct-import diagnostics never creates fake history
+  const exp=a.formationExperience||{};
+  const row={id:a.id,nationId:a.nationId,createdDay:Number.isSafeInteger(a.c6CreatedDay)?a.c6CreatedDay:null,
+    endedDay:w.dayIndex,reason,survivors:manpower(a),xp:Math.max(0,Math.floor(exp.xp||0)),
+    combatRounds:Math.max(0,Math.floor(exp.combatRounds||0)),trainingSessions:Math.max(0,Math.floor(exp.trainingSessions||0))};
+  ledger.entries.push(row);
+  ledger.byReason[reason]=(ledger.byReason[reason]||0)+1;
+  if(ledger.entries.length>C6_ARMY_HISTORY_LIMIT){ledger.entries.shift();ledger.dropped++;}
+}
+function c6ValidateArmyHistory(w){
+  const h=w.c6ArmyHistory;
+  if(!h||!Array.isArray(h.entries)||h.entries.length>C6_ARMY_HISTORY_LIMIT||!Number.isSafeInteger(h.dropped)||h.dropped<0||!h.byReason||typeof h.byReason!=='object')return false;
+  for(const [kind,count] of Object.entries(h.byReason))if(!C6_ARMY_END_REASONS.includes(kind)||!Number.isSafeInteger(count)||count<0)return false;
+  const total=Object.values(h.byReason).reduce((s,n)=>s+n,0);
+  if(total!==h.entries.length+h.dropped)return false;
+  let last=-1;
+  for(const r of h.entries){
+    if(!Number.isInteger(r.id)||r.id<0||r.id>=w.nextArmyId||!w.nations[r.nationId]||
+       !C6_ARMY_END_REASONS.includes(r.reason)||!Number.isSafeInteger(r.endedDay)||r.endedDay<last||r.endedDay>w.dayIndex||
+       r.createdDay!==null&&(!Number.isSafeInteger(r.createdDay)||r.createdDay<0||r.createdDay>r.endedDay)||
+       [r.survivors,r.xp,r.combatRounds,r.trainingSessions].some(x=>!Number.isSafeInteger(x)||x<0))return false;
+    last=r.endedDay;
+  }
+  for(const a of w.armies)if(a.c6CreatedDay!==undefined&&(!Number.isSafeInteger(a.c6CreatedDay)||a.c6CreatedDay<0||a.c6CreatedDay>w.dayIndex))return false;
+  return true;
+}
+const C6_STRATEGY_FIELDS=['frontReviews','unreachableChecks','pathChecks','noReachableOrders'];
+function c6ValidateStrategyStats(w){
+ const d=w.c6StrategyStats;
+ if(!d||C6_STRATEGY_FIELDS.some(k=>!Number.isSafeInteger(d[k])||d[k]<0))return false;
+ for(const a of w.armies){
+   const f=a.c6FrontDecision;if(!f)continue;
+   if(!Number.isSafeInteger(f.dayIndex)||f.dayIndex>w.dayIndex||f.dayIndex<0||
+      !['LAND_REACHABLE','NO_LAND_ACCESS','SINGLE_WAR','NO_ACCESSIBLE_WAR'].includes(f.reason)||
+      !Number.isInteger(f.warId)||f.warId<0||!Number.isFinite(f.priority))return false;
+ }
+ return true;
 }
 // --- src/sim/independence.js ---
 /** C2: treaty-bound independence politics and war-only coalitions.
@@ -6433,6 +6534,7 @@ function settlePeace(w,war,terms=warOutcome(w,war)){
       n.active=false;n.capitalId=null;n.leaderId=null;n.settlementIds=[];
       e5InvalidateBorders(w);
       for(const t of w.tiles)if(t.ownerId===n.id){t.ownerId=null;t.settlementId=null;t.occupiedBy=null;}
+      for(const lost of w.armies)if(lost.nationId===n.id)c6RecordArmyEnd(w,lost,'NATION_FALL');
       w.armies=w.armies.filter(v=>v.nationId!==n.id);
       w.characters=w.characters.filter(c=>c.nationId!==n.id);
       event(w,`${n.name}이(가) 마지막 정착지를 잃고 멸망했습니다.`,'fall');
@@ -6541,7 +6643,7 @@ function executeMilitaryAction(w,nationId,act){
     const deployment={front:[],rear:[],reserve:[]};
     for(let i=0;i<plan.length;i++)deployment[plan[i].position].push(units[i].id);
     const a={id,nationId,commanderId:commander.id,tileId:s.coreTileId,morale:78,units,deployment,
-      status:'READY',order:null,operation:null,needsOrders:false,nextMoveDay:w.dayIndex+3,engagementId:null,regroupUntil:0,formationExperience:b4aNewExperience(w.dayIndex),supplied:true,unsuppliedDays:0,supplyMultiplier:1,supplyCheckedDay:w.dayIndex};
+      status:'READY',order:null,operation:null,needsOrders:false,nextMoveDay:w.dayIndex+3,engagementId:null,regroupUntil:0,formationExperience:b4aNewExperience(w.dayIndex),c6CreatedDay:w.dayIndex,supplied:true,unsuppliedDays:0,supplyMultiplier:1,supplyCheckedDay:w.dayIndex};
     w.armies.push(a);event(w,`${n.name}에서 ${a.id+1}군 (${act.amount}명)을 편성했습니다. 사령관 ${commander.name}.`,'army');return {ok:true,armyId:a.id};
   }
   const a=getArmy(w,act.armyId);
@@ -6572,7 +6674,7 @@ function executeMilitaryAction(w,nationId,act){
   }
   if(act.type==='DISBAND_ARMY'){
     const s=w.settlements.find(s=>safeSettlement(w,s,nationId)&&s.coreTileId===a.tileId);
-    if(s)s.population+=manpower(a);w.armies=w.armies.filter(v=>v.id!==a.id);
+    if(s)s.population+=manpower(a);c6RecordArmyEnd(w,a,'DISBAND');w.armies=w.armies.filter(v=>v.id!==a.id);
     w.characters=w.characters.filter(c=>c.id!==a.commanderId);
     event(w,`${n.name}이(가) 부대를 해산하고 병력을 귀환시켰습니다.`,'army');return {ok:true};
   }
@@ -6729,6 +6831,7 @@ function processMilitaryDay(w,execute){
   // Remove destroyed forces; their losses were deducted permanently from recruited manpower.
   for(const a of w.armies.filter(a=>!manpower(a)||a.status==='DESTROYED')){
     event(w,`${w.nations[a.nationId].name}의 군대가 소멸했습니다.`,'battle');
+    c6RecordArmyEnd(w,a,a.status==='DESTROYED'?'BATTLE_LOSS':'FIELD_LOSS');
     w.armies=w.armies.filter(v=>v.id!==a.id);
     const c=w.characters.find(c=>c.id===a.commanderId);if(c){
       w.pastCommanders.push({name:c.name,nationId:c.nationId,age:c.age,victories:c.victories||0});
@@ -6795,12 +6898,14 @@ function coalitionFrontPlan(w,war){
  return plans;
 }
 /** Common military planner. No national-name branches: profile numbers affect the scoring. */
-function chooseOperation(w,army,war,profile,reserved,sharedTargets=[]){
+function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=null){
   const foes=warOpponents(war,army.nationId),friends=new Set(warFriends(war,army.nationId)),hostiles=new Set(foes),foe=warSide(war,army.nationId)==='attackers'?war.defenderId:war.attackerId;
   const own=w.nations[army.nationId],defensive=(profile?.military?.defensivePreference??50)/100,
     aggression=(profile?.military?.aggression??50)/100;
-  const enemySoldiers=w.armies.filter(v=>hostiles.has(v.nationId)&&manpower(v)>0);
-  const fortNet=fortificationNetwork(w);
+  const key=war.id+':'+warSide(war,army.nationId);
+  let enemySoldiers=c6Context?.foes.get(key);
+  if(!enemySoldiers){enemySoldiers=w.armies.filter(v=>hostiles.has(v.nationId)&&manpower(v)>0);c6Context?.foes.set(key,enemySoldiers);}
+  const fortNet=c6Context?(c6Context.fortNet??=fortificationNetwork(w)):fortificationNetwork(w);
   const tiles=new Map();
   const propose=(id,role,value)=>{const current=tiles.get(id);if(!current||value>current.value)tiles.set(id,{id,role,value});};
   for(const target of sharedTargets)propose(target.id,target.role,target.value+2);
@@ -6863,6 +6968,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[]){
   for(const entry of choices.values()){
     if(entry.id===army.tileId)continue;
     // Strongly discourage selecting targets with a defender beyond safe strength unless defensive.
+    if(w.c6StrategyStats)w.c6StrategyStats.pathChecks++;
     const path=landRoute(w,army.tileId,entry.id,t=>canPassMilitaryTile(w,army.nationId,t),army.nationId,fortNet);
     if(!path)continue;
     const defenders=troopsByTile.get(entry.id)||0;
@@ -6891,6 +6997,8 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[]){
 }
 function assignWarOrders(w,execute,reactive=false){
   c2AssignFronts(w);
+  // Order generation never mutates territory or fortifications; share these derived inputs.
+  const c6Context={fortNet:null,foes:new Map()};
   for(const war of w.wars){
     const coalition=coalitionFrontPlan(w,war);
     for(const id of warMembers(war)){
@@ -6929,7 +7037,7 @@ function assignWarOrders(w,execute,reactive=false){
           // Keep legal in-flight orders unless an alternative is better, never interrupt every day.
           const previous=a.order,priorRole=a.operation;
           reserved.delete(previous.targetTileId);
-          const alternative=chooseOperation(w,a,war,profile,reserved,common);
+          const alternative=chooseOperation(w,a,war,profile,reserved,common,c6Context);
           if(alternative&&alternative.id!==previous.targetTileId){
             if(execute(w,id,{type:'MOVE_ARMY',armyId:a.id,targetTileId:alternative.id}).ok){
               a.operation={type:alternative.role,targetTileId:alternative.id,assignedDay:w.dayIndex};
@@ -6954,9 +7062,9 @@ function assignWarOrders(w,execute,reactive=false){
          // A MOVE_ARMY order costs 0.2 AP. Record a real shortage instead of
          // misclassifying a valid target as a pathfinding/AI order failure.
          if(n.apUnits<2){a.needsOrders=false;a.g2aOrderStatus='AP_SHORTAGE';a.g2aNextOrderReviewDay=w.dayIndex+20;continue;}
-         const next=chooseOperation(w,a,war,profile,reserved,common);
+         const next=chooseOperation(w,a,war,profile,reserved,common,c6Context);
          a.needsOrders=false;a.g2aNextOrderReviewDay=w.dayIndex+20;
-         if(!next){a.g2aOrderStatus='NO_REACHABLE_TARGET';continue;}
+         if(!next){a.g2aOrderStatus='NO_REACHABLE_TARGET';if(w.c6StrategyStats)w.c6StrategyStats.noReachableOrders++;continue;}
          const sent=execute(w,id,{type:'MOVE_ARMY',armyId:a.id,targetTileId:next.id});
          if(sent.ok){
            a.operation={type:next.role,targetTileId:next.id,assignedDay:w.dayIndex};reserved.add(next.id);
@@ -7763,7 +7871,7 @@ function b4aExecuteEmergency(w,id,act){
    deployment:{front:[units[0].id],rear:[],reserve:reserve?[units[1].id]:[]},
    status:'REGROUP',order:null,operation:null,needsOrders:false,nextMoveDay:w.dayIndex+30,engagementId:null,
    regroupUntil:w.dayIndex+30,supplied:true,unsuppliedDays:0,supplyMultiplier:1,supplyCheckedDay:w.dayIndex,
-   emergencyMuster:true,formationExperience:b4aNewExperience(w.dayIndex)};
+   emergencyMuster:true,formationExperience:b4aNewExperience(w.dayIndex),c6CreatedDay:w.dayIndex};
  w.armies.push(a);n.military.emergencyLastMusterDay=v04eQuarterDay(w);
  n.survival.emergencySuccess++;
  event(w,`${n.name} 비상 소집: ${s.name}의 주민 ${act.amount}명이 제${armyId+1}군을 조직했습니다. (30일 집결)`,'army');
@@ -9093,7 +9201,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,nations,settlements,trade:initialTrade(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
-    nextSettlementId:settlements.length,changeSeq:0,aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
+    nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
   for(const n of nations){makeLeader(world,n.id);n.survival=b4aNewSurvival(world,n.id);}
   refreshApCaps(world);
   return world;
@@ -9110,6 +9218,8 @@ function validateWorld(w){
   const fail=what=>{throw Error('월드 검증 실패: '+what);};
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
   if(!validateHistoricalChronicle(w))fail('장기 역사 기록');
+  if(!c6ValidateArmyHistory(w))fail('C6 편제 수명주기 기록');
+  if(!c6ValidateStrategyStats(w))fail('C6 전선·경로 진단');
   for(const n of w.nations||[]){
     const s=n.constructionProcurement;
     if(!s||!Array.isArray(s.history)||s.history.length>V05B_PROCUREMENT_WINDOW||
@@ -9351,7 +9461,7 @@ function validateTradeLegacyForMigration(w){
 /** C2 begins a new save generation. No pre-C2 migration is attempted. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- if(parsed?.version!==VERSION||parsed?.schema!=='vilob-light-v03d')throw Error('V0.6C5A 세이브만 불러올 수 있습니다.');
+ if(parsed?.version!==VERSION||parsed?.schema!=='vilob-light-v03d')throw Error('V0.6C6 세이브만 불러올 수 있습니다.');
  validateWorld(parsed);
  return parsed;
 }
@@ -9610,7 +9720,7 @@ class MapRenderer {
   constructor(canvas,{onSelect,onHover}={}){
     this.canvas=canvas;this.ctx=canvas.getContext('2d',{alpha:false});
     this.onSelect=onSelect;this.onHover=onHover;
-    this.world=null;this.selectedId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.settlementLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
+    this.world=null;this.selectedId=null;this.focusArmyId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.settlementLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
     this.offset={x:0,y:0};this.width=0;this.height=0;this.scale=1;this.originX=0;this.originY=0;
     // F3G1: renderer-private caches; nothing persists in saves or advances the SIM RNG.
     this.frameHandle=null;this.visualCache=null;this.fortDetailKey=null;this.fortDetailShown=false;
@@ -9624,7 +9734,7 @@ class MapRenderer {
     canvas.addEventListener('wheel',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(e.deltaY>0?1/1.13:1.13,p.x,p.y);},{passive:false});
     canvas.addEventListener('dblclick',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(1.28,p.x,p.y);});
   }
-  setWorld(world){this.world=world;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.closeArmyCluster();this.draw();}
+  setWorld(world){this.world=world;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.focusArmyId=null;this.closeArmyCluster();this.draw();}
   // F3G1 P0: coalesce high-frequency pointer/pinch/wheel events to one draw per frame.
   requestDraw(){
     if(this.frameHandle!==null)return;
@@ -9829,7 +9939,24 @@ class MapRenderer {
     }
     ctx.restore();
   }
-  setSelected(id){this.closeArmyCluster();this.selectedId=id;this.detailDismissedFor=null;this.fortDetailKey=null;this.draw();}
+  setSelected(id){this.closeArmyCluster();this.selectedId=id;this.focusArmyId=null;this.detailDismissedFor=null;this.fortDetailKey=null;this.draw();}
+  focusArmy(id){this.focusArmyId=id;this.requestDraw();}
+  drawC6ArmyObjective(ctx,scale,ox,oy){
+    if(this.focusArmyId===null)return;
+    const w=this.world,a=w?.armies.find(v=>v.id===this.focusArmyId);
+    if(!a)return;
+    const targetId=a.order?.targetTileId??a.operation?.targetTileId;
+    const from=w.tiles[a.tileId],to=w.tiles[targetId];if(!from||!to||from.id===to.id)return;
+    const ax=ox+(from.x+.5)*scale,ay=oy+(from.y+.5)*scale,
+      bx=ox+(to.x+.5)*scale,by=oy+(to.y+.5)*scale;
+    ctx.save();ctx.beginPath();ctx.rect(0,0,this.width,this.height);ctx.clip();
+    ctx.setLineDash([6,5]);ctx.lineWidth=2.5;ctx.strokeStyle='#f7d68d';
+    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#0f2530';ctx.strokeStyle='#f7d68d';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(ax,ay,5,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(bx,by,7,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+  }
   dismissSelectedFortress(){this.detailDismissedFor=this.selectedId;this.updateDefensePopover();}
   setMode(mode){this.mode=['terrain','political','era','independence'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
 resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw();}
@@ -10272,6 +10399,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       this.scale=scale;this.originX=originX;this.originY=originY;
       this.drawStrategicAtlas(ctx,scale,originX,originY,w,h);
       this.drawIndependenceOverlay(ctx,scale,originX,originY,w,h);
+      this.drawC6ArmyObjective(ctx,scale,originX,originY);
       const p=document.getElementById('fortressDetail');if(p)p.hidden=true;
       return;
     }
@@ -10367,6 +10495,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     // E1A: screen-size fortress badges stay visible even when the atlas is zoomed out.
     this.drawFortMarkers(ctx,ts,scale,originX,originY,w,h);
     this.drawIndependenceOverlay(ctx,scale,originX,originY,w,h);
+    this.drawC6ArmyObjective(ctx,scale,originX,originY);
     this.drawAdaptiveLabelsB4C(ctx,visuals,scale,originX,originY,w,h);
     this.updateDefensePopover();
   }
@@ -10887,7 +11016,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06c5a-world';
+const SAVE_KEY='vilob-light-v06c6-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -11226,7 +11355,13 @@ function renderWarfare(){
     return make('div',{class:'war-row'},[make('strong',{text:`${(war.sides?.attackers||[a.id]).map(id=>w.nations[id].name).join(' + ')} ⚔ ${(war.sides?.defenders||[b.id]).map(id=>w.nations[id].name).join(' + ')}`}),
       make('small',{text:`전쟁 ${Math.floor((w.dayIndex-war.startedDay)/120)+1}년차 · ${war.goal?.type==='SETTLEMENT'?'정착지 확보':'국경 확보'} · 교전 ${war.battleCount}회 · 공격국 기준 승점 차 ${warBalance(w,war)>=0?'+':''}${warBalance(w,war).toFixed(2)}점 · 목표 ${goalProgress(w,war)>0?'달성':'진행 중'}`}),
       make('small',{text:`수도 점령 승점 ${warCapitalAdvantage(w,war)>=0?'+':''}${warCapitalAdvantage(w,war).toFixed(1)} · ${war.peaceExtension&&war.peaceExtension.untilDay>w.dayIndex?`우세국 추가 작전 ${war.peaceExtension.untilDay-w.dayIndex}일 남음 (${war.peaceExtension.usedDays}/360일 사용)`: '추가 작전 없음'}`}),
-      make('small',{text:`전쟁 피로: ${a.name} ${(war.fatigue?.[a.id]||0).toFixed(1)} / ${b.name} ${(war.fatigue?.[b.id]||0).toFixed(1)} · ${war.pendingPeace?`${w.nations[war.pendingPeace.proposerId].name} 평화 제안 대기`:'협상 제안 없음'}`})]);
+      make('small',{text:`전쟁 피로: ${a.name} ${(war.fatigue?.[a.id]||0).toFixed(1)} / ${b.name} ${(war.fatigue?.[b.id]||0).toFixed(1)} · ${war.pendingPeace?`${w.nations[war.pendingPeace.proposerId].name} 평화 제안 대기`:'협상 제안 없음'}`}),
+      make('small',{text:'C6 전선 배정: '+warMembers(war).map(id=>{
+        const assigned=w.armies.filter(a=>a.nationId===id&&a.assignedWarId===war.id),
+          men=assigned.reduce((sum,a)=>sum+manpower(a),0),
+          blocked=assigned.filter(a=>a.g2aOrderStatus==='NO_REACHABLE_TARGET'||a.c6FrontDecision?.reason==='NO_ACCESSIBLE_WAR').length;
+        return `${w.nations[id].name} ${assigned.length}개 편제·${number.format(men)}명${blocked?` (접근·목표 제한 ${blocked}개)`:''}`;
+      }).join(' / ')})]);
   });
   const occupations=[];
   for(const o of w.occupations.slice(0,15)){
@@ -11331,7 +11466,32 @@ function makeNationMilitaryPanel(w,n){
     make('h3',{text:`군사 현황 · 군대 ${sorted.length}개 / 병력 ${number.format(total)}명`}),
     make('div',{class:'muted-line',text:`현역 ${number.format(total)}명 · 전문훈련 완료 ${number.format(prepared)}명 / 진행 중 ${number.format(trainees)}명 · 전문훈련 수용량 ${c3TrainingCapacity(w,n.id)}명 · 누적 훈련비 ${number.format(n.military.specialistTrainingSpent||0)} Gold · 편제 XP는 별도 유지`})
   ]);
-  if(!sorted.length){box.append(make('div',{class:'war-empty',text:'편성된 군대가 없습니다.'}));return box;}
+  const activeWars=warsOfNation(w,n.id);
+  const front=make('div',{class:'military-list'});
+  if(activeWars.length){
+    front.append(make('strong',{text:'C6 · 전쟁별 배정 현황'}));
+    for(const war of activeWars){
+      const assigned=sorted.filter(a=>a.assignedWarId===war.id),men=assigned.reduce((v,a)=>v+manpower(a),0);
+      const stuck=assigned.filter(a=>a.g2aOrderStatus==='NO_REACHABLE_TARGET'||a.c6FrontDecision?.reason==='NO_ACCESSIBLE_WAR').length;
+      front.append(make('div',{class:'army-detail'},[
+        make('strong',{text:`전쟁 #${war.id+1} · ${war.kind==='INDEPENDENCE'?'독립전쟁':'영토전쟁'} · ${warSide(war,n.id)==='attackers'?'공격':'방어'}`}),
+        make('small',{text:`배정 ${assigned.length}개 편제 / ${number.format(men)}명 · 경로·목표 제약 ${stuck}개 편제`})
+      ]));
+    }
+  }
+  const history=w.c6ArmyHistory?.entries.filter(r=>r.nationId===n.id).slice(-10).reverse()||[];
+  const labels={BATTLE_LOSS:'전투로 소멸',FIELD_LOSS:'작전 중 소멸·원인 미확정',SURRENDER:'항복',DISBAND:'평시 해산',DESERTION:'군사비 체납·탈영',NATION_FALL:'국가 멸망'};
+  const ledger=make('div',{class:'military-list'},[
+    make('strong',{text:'C6 · 편제 소멸 기록 (최근 10건)'}),
+    make('div',{class:'muted-line',text:`세계 누적 ${Object.values(w.c6ArmyHistory?.byReason||{}).reduce((a,b)=>a+b,0)}건 · 상세 ${w.c6ArmyHistory?.entries.length||0}/300건 · 오래된 기록 ${w.c6ArmyHistory?.dropped||0}건 집계 보존`})
+  ]);
+  for(const h of history)ledger.append(make('div',{class:'army-detail'},[
+    make('strong',{text:`제${h.id+1}군 · ${labels[h.reason]||h.reason} · ${Math.floor(h.endedDay/120)+1}년`}),
+    make('small',{text:`창설 ${h.createdDay===null?'과거 기록 없음':`${Math.floor(h.createdDay/120)+1}년`} · 마지막 ${h.xp}XP / 교전 ${h.combatRounds}라운드 · 생존 ${h.survivors}명`})
+  ]));
+  if(!history.length)ledger.append(make('div',{class:'war-empty',text:'기록된 편제 소멸이 없습니다.'}));
+  box.append(front);
+  if(!sorted.length){box.append(make('div',{class:'war-empty',text:'편성된 군대가 없습니다.'}),ledger);return box;}
   const roster=make('div',{class:'military-list'});
   for(const a of sorted){
     const cmd=w.characters.find(c=>c.id===a.commanderId),card=make('div',{class:'army-detail'});
@@ -11343,14 +11503,21 @@ function makeNationMilitaryPanel(w,n){
       const labels={RECOVERING:'재편·사기 회복 중',NO_REACHABLE_TARGET:'현재 접근 가능한 공격 목표 없음',AP_SHORTAGE:'명령 AP 부족',ORDER_REJECTED:'이동 명령 불가 — 재검토 예정',ADVANCING:'공세 목표 배정'};
       card.append(make('small',{text:`군사 AI: ${labels[a.g2aOrderStatus]||a.g2aOrderStatus} · 다음 재검토 ${Math.max(0,(a.g2aNextOrderReviewDay||w.dayIndex)-w.dayIndex)}일` }));
     }
+    const currentWar=w.wars.find(v=>v.id===a.assignedWarId);
+    if(currentWar){
+      const reason={SINGLE_WAR:'참전 중인 유일한 전선',LAND_REACHABLE:'육로 접근 가능 전선 우선 배정',NO_LAND_ACCESS:'육로 접근 불가',NO_ACCESSIBLE_WAR:'접근 가능한 전선 없음 · 기존 우선순위로 배정'};
+      card.append(make('small',{text:`C6 전선: 전쟁 #${currentWar.id+1} · ${reason[a.c6FrontDecision?.reason]||'배정 확인 중'}${a.c6FrontDecision?` · 재평가 ${Math.max(0,(a.c2NextFrontReviewDay||0)-w.dayIndex)}일 후`:''}`}));
+      const to=a.order?.targetTileId??a.operation?.targetTileId;
+      if(Number.isInteger(to))card.append(make('small',{text:`현재 작전 목표 (${to%w.size}, ${Math.floor(to/w.size)}) · 지도 점선은 방향만 표시하며 실제 이동 경로가 아닙니다.`}));
+    }
     if(a.f3fRout&&!armyOffensiveReady(w,a))card.append(make('small',{text:`패전 후 출동 제한 · 사기 ${Math.round(a.morale)}/${F3F_RALLY_MORALE}`}));
     const groups=make('div',{class:'military-meta'}),roles={front:'전열',rear:'후열',reserve:'예비'};
     const byGroup=new Map(Object.entries(a.deployment).flatMap(([role,ids])=>ids.map(id=>[id,roles[role]||role])));
     for(const u of a.units.filter(u=>u.manpower))groups.append(make('span',{class:'unit-pill',text:`${UNIT_TYPES[u.typeId]?.label||u.typeId} (${byGroup.get(u.id)||'미배치'}) ${u.manpower}명 · 준비 ${c3ReadyMen(u)}명 / 훈련 ${c3PendingMen(u)}명 · 전문훈련 ${u.training??100}% · ${u.trainingRequirementDays||0}일 필요 · ${u.trainingBatches?.length?`현재 배치 잔여 ${Math.max(0,(u.trainingRequirementDays||0)-Math.max(...u.trainingBatches.map(b=>b.days)))}일`:'완료'} · ${WEAPONS[u.weaponId]?.label||u.weaponId||'기본 무기'} · ${ARMORS[u.armorId]?.label||u.armorId||'무갑'}`}));
     const jump=make('button',{class:'jump-button',type:'button',text:'▦ 지도에서 보기'});
-    jump.addEventListener('click',()=>goToMap(a.tileId));card.append(groups,jump);roster.append(card);
+    jump.addEventListener('click',()=>{goToMap(a.tileId);map.focusArmy(a.id);});card.append(groups,jump);roster.append(card);
   }
-  box.append(roster);return box;
+  box.append(roster,ledger);return box;
 }
 function renderNationOverview(){
   const box=$('nationOverview');if(!box||!app.world)return;
@@ -11606,7 +11773,8 @@ function renderNationOverview(){
   const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['military','군사']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={overview:[grid,leadership,trading,recoverySection,procurement],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places],military:[makeNationMilitaryPanel(w,n)]};
+  const panels={overview:[grid,leadership,trading,recoverySection,procurement],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places]};
+  if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
   const content=make('div',{class:'nation-subtab-content',id:'nationSubtabContent',role:'tabpanel','aria-label':tabs.find(([id])=>id===app.nationSubtab)[1]},panels[app.nationSubtab]);
   for(const [id,label] of tabs){
     const selected=id===app.nationSubtab;
@@ -11767,12 +11935,19 @@ function renderMilitaryRoster(){
     card.append(make('strong',{text:`⚔ ${n.name} 제${a.id+1}군 · ${manpower(a)}명`}),
       make('small',{text:`전투력 ${getArmyBasePower(w,a)} · 사기 ${Math.round(a.morale)} · 사령관 ${cmd?.name||'없음'} · ${b4aRankLabel(a)} ${a.formationExperience?.xp||0}XP (+${(b4aPowerBonus(a)*100).toFixed(1)}%)`}),
       make('small',{text:`전열 ${lineCount(a,'front')} · 후열 ${lineCount(a,'rear')} · 예비 ${lineCount(a,'reserve')} · ${a.status==='TRAPPED'?'포위':a.status} · 보급 ${armySupplyLabel(a)} · ${a.operation?.type||'대기'}`}));
+    if(a.assignedWarId!==null){
+      const reason={LAND_REACHABLE:'접근 가능한 전선',NO_ACCESSIBLE_WAR:'육로 전선 없음',SINGLE_WAR:'단일 전쟁'};
+      const why=a.g2aOrderStatus==='NO_REACHABLE_TARGET'?' · 도달 가능한 목표 없음':
+        a.g2aOrderStatus==='AP_SHORTAGE'?' · 명령 AP 부족':a.g2aOrderStatus==='RECOVERING'?' · 사기·병력 재편 중':
+        a.g2aOrderStatus==='TRAINING'?' · 전문훈련 중':'';
+      card.append(make('small',{text:`C6 전쟁 #${a.assignedWarId+1} · ${reason[a.c6FrontDecision?.reason]||'전선 배정'}${why}`}));
+    }
     if(a.f3fRout&&!armyOffensiveReady(w,a))card.append(make('small',{text:`패전 후 출동 제한 · 사기 ${Math.round(a.morale)}/${F3F_RALLY_MORALE} · 병력 ${manpower(a)}/${a.f3fRout.minimumMen}명 · 본국 방어/증원 가능`}));
     const types=make('div',{class:'military-meta'});
     const positionNames={front:'전열',rear:'후열',reserve:'예비'};
     const positionByGroup=new Map(Object.entries(a.deployment).flatMap(([role,ids])=>ids.map(id=>[id,positionNames[role]||role])));
     for(const u of a.units.filter(u=>u.manpower))types.append(make('span',{class:'unit-pill',text:`${UNIT_TYPES[u.typeId]?.label||u.typeId} (${positionByGroup.get(u.id)||'미배치'}) ${u.manpower}명 · 준비 ${c3ReadyMen(u)} / 훈련 ${c3PendingMen(u)} (${u.training??100}%)` }));
-    const jump=make('button',{class:'jump-button',type:'button',text:'▦ 지도에서 보기'});jump.addEventListener('click',()=>goToMap(a.tileId));
+    const jump=make('button',{class:'jump-button',type:'button',text:'▦ 지도에서 보기'});jump.addEventListener('click',()=>{goToMap(a.tileId);map.focusArmy(a.id);});
     card.append(types,jump);return card;
   });
   const countryCards=w.nations.filter(n=>n.active).map(n=>{
