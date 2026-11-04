@@ -658,6 +658,20 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 .c5-diplomacy-entry small{opacity:.8;line-height:1.4}
 .c5-pressure-track{height:6px;overflow:hidden;border-radius:6px;background:rgba(133,153,168,.25)}
 .c5-pressure-fill{height:100%;border-radius:6px}
+
+/* D1B civilian grievances: compact, lazy UI; score tracks are not stored. */
+.d1b-social-heading,.d1b-score-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.d1b-social-heading h3{margin:0;font-size:14px}.d1b-social-heading strong{font-size:19px;color:#e8b987}
+.d1b-social-sub{font-size:11px;color:#9db9c5;line-height:1.6;margin:5px 0 12px}
+.d1b-score-list{display:grid;gap:9px;margin:10px 0 14px}
+.d1b-score-row{display:grid;gap:4px}.d1b-score-top{font-size:11px;color:#b7cbd5}.d1b-score-top strong{font-size:12px}
+.d1b-score-track{height:8px;background:#294051;border-radius:999px;overflow:hidden}.d1b-score-fill{height:100%;border-radius:999px}
+.d1b-social-insights{display:grid;gap:5px;background:#132a39;border:1px solid #35556a;border-radius:8px;padding:10px;color:#bed1d6;font-size:11px;line-height:1.55;margin:8px 0 14px}
+.d1b-group-list{max-height:330px;overflow:auto;display:grid;gap:5px}.d1b-group{background:#152b3b;border:1px solid #345263;border-radius:7px;padding:8px 10px}
+.d1b-group summary{font-size:11px;cursor:pointer;color:#e4eeee;line-height:1.5}.d1b-group-details{padding:9px 4px 3px;display:grid;gap:5px;font-size:11px;color:#a8c7d1}
+.d1b-inspector{border:1px solid #406579;border-radius:9px;padding:10px;background:#142d3d}.d1b-inspector summary{font-weight:700;color:#d2e7ee;font-size:12px;cursor:pointer}
+.d1b-inspector-row{font-size:11px;color:#aaccd2;padding:5px 0;border-top:1px solid #2d4655}
+@media(max-width:720px){.d1b-group-list{max-height:250px}.d1b-social-panel{min-width:0}.d1b-social-heading strong{font-size:17px}}
 </style>
 </head>
 <body>
@@ -680,7 +694,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 <div aria-live="polite" class="stat-grid" id="statGrid"><div class="atlas-stats-header"><span>◈ 세계 현황</span><button type="button" id="atlasStatsToggle" aria-expanded="true" aria-controls="atlasStatItems" aria-label="세계 현황 접기" title="세계 현황 접기">⌃</button></div><div id="atlasStatItems" class="atlas-stat-items"><div class="stat"><span>총인구</span><b>119</b></div><div class="stat"><span>정착지</span><b>7</b></div><div class="stat"><span>소유 타일</span><b>7</b></div><div class="stat"><span>중립 육지</span><b>—</b></div></div></div>
 <section aria-label="세계 지도" class="map-card">
-<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><button class="chip" data-map-mode="culture">문화</button><label class="army-mode-selector d2-culture-selector" id="d2CultureModeControl" hidden>문화 표시 <select id="d2CultureMode" aria-label="문화 지도 표시 방식"><option value="dominant">주요 문화</option><option value="mix">문화 혼합도</option></select></label><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select id="settlementLabels" aria-label="정착지 및 수도 지명 표시"><option value="auto" selected>자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
+<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><button class="chip" data-map-mode="culture">문화</button><button class="chip" data-map-mode="social">사회</button><label class="army-mode-selector d2-culture-selector" id="d2CultureModeControl" hidden>문화 표시 <select id="d2CultureMode" aria-label="문화 지도 표시 방식"><option value="dominant">주요 문화</option><option value="mix">문화 혼합도</option></select></label><label class="army-mode-selector d1b-social-selector" id="d1bSocialModeControl" hidden>사회 지표 <select id="d1bSocialMode" aria-label="사회 불만 지도 표시 방식"><option value="overall">종합 불만</option><option value="economy">경제</option><option value="safety">안전</option><option value="governance">통치</option><option value="culture">문화</option></select></label><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select id="settlementLabels" aria-label="정착지 및 수도 지명 표시"><option value="auto" selected>자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
 <div class="canvas-area" id="canvasArea"><canvas aria-label="타일을 선택하거나 드래그해 지도를 이동할 수 있습니다." id="worldCanvas"></canvas><div id="mapArmyClusterPanel" class="b4c-cluster-panel" aria-label="밀집 군대 편제 목록" hidden></div>
 <section id="fortressDetail" class="fortress-detail-popover" aria-label="선택한 요새의 지역 군사 능력" hidden>
   <div class="fortress-detail-head"><div><div class="fortress-eyebrow">♜ SELECTED FORTRESS</div><strong id="fortressDetailTitle">요새</strong><small id="fortressDetailMeta">—</small></div><button type="button" id="fortressDetailClose" class="fortress-detail-close" aria-label="요새 상세 정보 닫기">×</button></div>
@@ -688,7 +702,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="d2-culture-map-key" hidden>● 주요 문화: 정착지 인구 최대 문화의 색 · 혼합도: 최다 문화 외 인구 비중 · 타일 전체의 문화가 아님</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="d1b-social-map-key" hidden>● 사회: 정착지 주민의 인구 가중 불만 (0~100) · 청록: 낮음 / 주황: 중간 / 적색: 높음 · 종속국 독립 압력과 별도</span><span class="d2-culture-map-key" hidden>● 주요 문화: 정착지 인구 최대 문화의 색 · 혼합도: 최다 문화 외 인구 비중 · 타일 전체의 문화가 아님</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -743,7 +757,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6D1A2'; // D1A2: read-only Cultural Atlas and demographics
+const VERSION = 'V0.6D1B'; // D1B: deterministic civilian grievances V1
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1583,6 +1597,168 @@ function d1CultureAudit(w){
 // --- end D1A1 culture-accounting ---
 
 
+// --- src/sim/civil-grievances-d1b.js ---
+/** D1B: passive, deterministic civilian grievances. 0..1000 = 0..100.0 on screen.
+ * No additional world RNG calls; independent of the C5 subject-independence pressure.
+ */
+const D1B_SCHEMA=1;
+const D1B_KEYS=Object.freeze(['economy','safety','governance','culture']);
+const D1B_NAMES=Object.freeze({economy:'경제',safety:'안전',governance:'통치',culture:'문화'});
+const D1B_CAUSES=Object.freeze({
+  FOOD:'식량 공급 부족',WAR:'국가 간 전쟁',OCCUPATION:'정착지 영토의 점령',CRISIS:'국가 생존 위기',
+  CIVIL:'민간 운영비 미납',CONQUEST:'통치권 변경',FOREIGN_CONQUEST:'다른 문화권의 정복',
+  RECOVERY:'안정에 따른 회복',STABLE:'유의미한 신규 압박 없음'
+});
+const d1bClamp=n=>Math.max(0,Math.min(1000,Math.round(n)));
+function d1bNewGroup(){return {economy:0,safety:0,governance:0,culture:0,
+  delta:{economy:0,safety:0,governance:0,culture:0},reasons:{economy:'STABLE',safety:'STABLE',governance:'STABLE',culture:'STABLE'},
+  lastPressure:{economy:'STABLE',safety:'STABLE',governance:'STABLE',culture:'STABLE'},
+  lastPressureDay:{economy:null,safety:null,governance:null,culture:null}};}
+function d1bNewSettlement(w,s){
+  s.civilGrievances={lastUpdatedDay:w.dayIndex,groups:Object.fromEntries(Object.keys(s.culturePopulation||{}).map(id=>[id,d1bNewGroup()])),pendingTransfers:[]};
+  return s.civilGrievances;
+}
+function d1bInitializeWorld(w,{migrated=false,sourceVersion=null}={}){
+  w.socialSchema=D1B_SCHEMA;
+  w.socialBootstrap={source:migrated?'imported-no-history':'new-world',sourceVersion:migrated?sourceVersion:null,dayIndex:w.dayIndex};
+  for(const s of w.settlements)d1bNewSettlement(w,s);
+  return w;
+}
+function d1bSyncGroups(s){
+  const state=s.civilGrievances;if(!state)return;
+  for(const id of Object.keys(state.groups))if(!(s.culturePopulation?.[id]>0))delete state.groups[id];
+  for(const id of Object.keys(s.culturePopulation||{}))if(!state.groups[id])state.groups[id]=d1bNewGroup();
+}
+/** Capture is recorded at the actual ownership event, consumed once at the next quarter.
+ * Do not infer grievances from ancient conquest history when loading an old save.
+ */
+function d1bRecordTransfer(w,s,oldOwnerId,newOwnerId){
+  const state=s.civilGrievances;if(!state)return;
+  state.pendingTransfers.push({dayIndex:w.dayIndex,oldOwnerId,newOwnerId});
+  if(state.pendingTransfers.length>12)state.pendingTransfers.splice(0,state.pendingTransfers.length-12);
+}
+function d1bMergeSettlements(primary,secondary){
+  const a=primary.civilGrievances,b=secondary.civilGrievances;if(!a||!b)return;
+  const pools=new Set([...Object.keys(primary.culturePopulation),...Object.keys(secondary.culturePopulation)]);
+  const merged={};
+  for(const id of pools){
+    const x=primary.culturePopulation[id]||0,y=secondary.culturePopulation[id]||0;
+    if(x+y<=0)continue;
+    const left=a.groups[id]||d1bNewGroup(),right=b.groups[id]||d1bNewGroup(),group=d1bNewGroup();
+    for(const key of D1B_KEYS){
+      group[key]=Math.round((x*left[key]+y*right[key])/(x+y));
+      group.delta[key]=Math.round((x*left.delta[key]+y*right.delta[key])/(x+y));
+      group.reasons[key]=x>=y?left.reasons[key]:right.reasons[key];
+      const lead=x>=y?left:right;
+      group.lastPressure[key]=lead.lastPressure[key];
+      group.lastPressureDay[key]=lead.lastPressureDay[key];
+    }
+    merged[id]=group;
+  }
+  a.groups=merged;
+  a.lastUpdatedDay=Math.min(a.lastUpdatedDay,b.lastUpdatedDay);
+  a.pendingTransfers=[...a.pendingTransfers,...b.pendingTransfers].sort((x,y)=>x.dayIndex-y.dayIndex).slice(-12);
+}
+/** O(T + S + G + N + occupations): tile and war risk are indexed once. */
+function d1bQuarter(w){
+  const endangered=new Set();
+  for(const t of w.tiles)if(t.settlementId!==null&&t.occupiedBy!==null)endangered.add(t.settlementId);
+  for(const o of w.occupations)if(w.tiles[o.tileId]?.settlementId!==null)endangered.add(w.tiles[o.tileId].settlementId);
+  const nationRisk=w.nations.map(n=>{
+    const f=n.civilFinance||{},invoice=f.billedLastQuarter||0;
+    return {food:d1bClamp((1-(n.foodPressure??1))*1000)/1000,war:militaryAtWar(w,n.id),
+      civil:invoice?Math.min(1,(f.unpaidLastQuarter||0)/invoice):0,
+      crisis:n.survival?.state==='CRISIS'};
+  });
+  for(const s of w.settlements){
+    if(!s.civilGrievances)d1bNewSettlement(w,s);
+    const state=s.civilGrievances;
+    if(state.lastUpdatedDay>=w.dayIndex)continue;
+    d1bSyncGroups(s);
+    const risk=nationRisk[s.ownerId],isOccupied=endangered.has(s.id);
+    const transfers=state.pendingTransfers;
+    for(const [cultureId,group] of Object.entries(state.groups)){
+      const shocks={economy:0,safety:0,governance:0,culture:0};
+      let foreignCapture=false;
+      for(const event of transfers){
+        shocks.safety+=60;shocks.governance+=100;
+        if(cultureId!==w.nations[event.newOwnerId]?.primaryCultureId){
+          shocks.culture+=160;foreignCapture=true;
+        }
+      }
+      const pressures={
+        economy:Math.round(risk.food*120),
+        safety:(risk.war?22:0)+(isOccupied?95:0)+(risk.crisis?25:0)+shocks.safety,
+        governance:Math.round(risk.civil*85)+shocks.governance,
+        culture:shocks.culture
+      };
+      const normalRecovery={economy:18,safety:17,governance:14,culture:12};
+      for(const key of D1B_KEYS){
+        const pressure=pressures[key],recovery=pressure>0?5:normalRecovery[key];
+        const old=group[key],next=d1bClamp(old+Math.min(240,pressure)-recovery);
+        group[key]=next;group.delta[key]=next-old;
+        group.reasons[key]=key==='economy'&&risk.food>0?'FOOD':key==='safety'&&isOccupied?'OCCUPATION':
+          key==='safety'&&transfers.length?'CONQUEST':key==='safety'&&risk.crisis?'CRISIS':
+          key==='safety'&&risk.war?'WAR':key==='governance'&&transfers.length?'CONQUEST':
+          key==='governance'&&risk.civil>0?'CIVIL':key==='culture'&&foreignCapture?'FOREIGN_CONQUEST':
+          next<old?'RECOVERY':'STABLE';
+        if(pressure>0&&group.reasons[key]!=='STABLE'){
+          group.lastPressure[key]=group.reasons[key];
+          group.lastPressureDay[key]=w.dayIndex;
+        }
+      }
+    }
+    state.pendingTransfers=[];
+    state.lastUpdatedDay=w.dayIndex;
+  }
+}
+/** Population-weighted derived metrics; computed for requested nation/town, never saved. */
+function d1bSummary(w,settlements,key='overall'){
+  const sums={economy:0,safety:0,governance:0,culture:0},changes={...sums};
+  let population=0,highPopulation=0,highest=null;
+  for(const s of settlements){
+    const state=s.civilGrievances;if(!state)continue;
+    for(const [id,count] of Object.entries(s.culturePopulation||{})){
+      const g=state.groups[id];if(!g||count<=0)continue;
+      population+=count;
+      let raw=0;
+      for(const field of D1B_KEYS){sums[field]+=g[field]*count;changes[field]+=g.delta[field]*count;raw+=g[field];}
+      const average=raw/4;
+      if(average>=600)highPopulation+=count;
+      if(!highest||average>highest.score)highest={id,score:average,settlementId:s.id,count};
+    }
+  }
+  const values=Object.fromEntries(D1B_KEYS.map(k=>[k,population?sums[k]/population:0]));
+  const deltas=Object.fromEntries(D1B_KEYS.map(k=>[k,population?changes[k]/population:0]));
+  return {population,values,deltas,overall:D1B_KEYS.reduce((a,k)=>a+values[k],0)/4,
+    highPopulation,highest,selected:key==='overall'?D1B_KEYS.reduce((a,k)=>a+values[k],0)/4:values[key]||0};
+}
+function d1bValidate(w,fail){
+  if(w.socialSchema!==D1B_SCHEMA||!w.socialBootstrap||!['new-world','imported-no-history'].includes(w.socialBootstrap.source)||
+    !(w.socialBootstrap.sourceVersion===null||['V0.6C6','V0.6D1A1','V0.6D1A2'].includes(w.socialBootstrap.sourceVersion))||
+    !Number.isSafeInteger(w.socialBootstrap.dayIndex)||w.socialBootstrap.dayIndex<0||w.socialBootstrap.dayIndex>w.dayIndex)fail('D1B 사회 스키마');
+  const ids=new Set(w.cultures.map(c=>c.id));
+  for(const s of w.settlements){
+    const state=s.civilGrievances;
+    if(!state||!Number.isSafeInteger(state.lastUpdatedDay)||state.lastUpdatedDay<0||state.lastUpdatedDay>w.dayIndex||
+      !state.groups||typeof state.groups!=='object'||Array.isArray(state.groups)||
+      !Array.isArray(state.pendingTransfers)||state.pendingTransfers.length>12)fail('D1B 정착지 사회 상태');
+    for(const event of state.pendingTransfers)if(!Number.isSafeInteger(event.dayIndex)||event.dayIndex<0||event.dayIndex>w.dayIndex||
+      !w.nations[event.oldOwnerId]||!w.nations[event.newOwnerId])fail('D1B 통치 전환 이력');
+    for(const [id,g] of Object.entries(state.groups)){
+      if(!ids.has(id)||!g||!g.delta||!g.reasons||!g.lastPressure||!g.lastPressureDay)fail('D1B 문화집단');
+      for(const key of D1B_KEYS)if(!Number.isSafeInteger(g[key])||g[key]<0||g[key]>1000||
+        !Number.isSafeInteger(g.delta[key])||Math.abs(g.delta[key])>1000||
+        !Object.hasOwn(D1B_CAUSES,g.reasons[key])||!Object.hasOwn(D1B_CAUSES,g.lastPressure[key])||
+        (g.lastPressureDay[key]!==null&&(!Number.isSafeInteger(g.lastPressureDay[key])||g.lastPressureDay[key]<0||g.lastPressureDay[key]>w.dayIndex)))fail('D1B 불만 수치·원인');
+    }
+    // Transfers/recruitment can temporarily remove a group between quarters.
+    // Extra zero-population groups are trimmed at the next quarter boundary.
+  }
+  return true;
+}
+// --- end D1B social simulation ---
+
 // --- src/ui/culture-atlas-d1a2.js ---
 /** D1A2: read-only cultural census, no world mutations and no RNG. */
 function d2CultureLookup(w){return new Map(w.cultures.map(c=>[c.id,c]));}
@@ -1636,7 +1812,7 @@ function d2MakeNationCulturePanel(w,n){
       make('span',{text:`민간 ${d2FormatPopulation(summary.population)}`}),
       make('span',{text:`문화집단 ${summary.groups}개`}),
       make('span',{text:`최다 문화 외 비중 ${summary.mix.toFixed(1)}%`})]),
-    make('div',{class:'d2-culture-info',text:`이 국가의 현재 소유 정착지 ${settlements.length}곳만 집계합니다. 국가의 기본 문화는 ${lookup.get(n.primaryCultureId)?.name||n.primaryCultureId}. 문화의 차이는 불만·전투력에 영향을 주지 않습니다.`}),
+    make('div',{class:'d2-culture-info',text:`이 국가의 현재 소유 정착지 ${settlements.length}곳만 집계합니다. 국가의 기본 문화는 ${lookup.get(n.primaryCultureId)?.name||n.primaryCultureId}. 문화 차이 자체는 불만·전투력에 직접 영향을 주지 않습니다.`}),
     d2CultureBars(w,civilian)]);
   const pools=make('section',{class:'overview-section'},[
     make('h3',{text:'군사 인구 · 민간과 분리 집계'}),
@@ -1692,6 +1868,71 @@ function d2RenderMilitaryCultures(){
   box.replaceChildren(...cards);
 }
 // --- end D1A2 cultural atlas ---
+
+// --- src/ui/civil-grievances-d1b.js ---
+/** Read-only grievance presentation. No simulation calls, RNG, or persistent UI cache. */
+function d1bFormat(raw){return (raw/10).toFixed(1);}
+function d1bCauseText(reason){return D1B_CAUSES[reason]||'새 압박 없음';}
+function d1bCauseDetail(g,key){
+  const current=d1bCauseText(g.reasons[key]);
+  if(g.reasons[key]==='RECOVERY'&&g[key]>0&&g.lastPressure[key]!=='STABLE')
+    return `${current} · 누적 원인 ${d1bCauseText(g.lastPressure[key])} (${g.lastPressureDay[key]}일)`;
+  return current;
+}
+function d1bScoreColor(score){return score>=650?'#E98079':score>=350?'#E0B56D':'#72B8AB';}
+function d1bScoreBars(summary){
+  return make('div',{class:'d1b-score-list'},D1B_KEYS.map(key=>{
+    const score=summary.values[key]||0,delta=summary.deltas[key]||0;
+    return make('div',{class:'d1b-score-row'},[
+      make('div',{class:'d1b-score-top'},[
+        make('strong',{text:D1B_NAMES[key]}),
+        make('span',{text:`${d1bFormat(score)} / 100 · ${delta>0?'+':''}${d1bFormat(delta)} 이번 분기`})]),
+      make('div',{class:'d1b-score-track'},[make('div',{class:'d1b-score-fill',style:{width:(score/10)+'%',background:d1bScoreColor(score)}})])]);
+  }));
+}
+function d1bNationPanel(w,n){
+  const settlements=w.settlements.filter(s=>s.ownerId===n.id),summary=d1bSummary(w,settlements),lookup=d2CultureLookup(w);
+  const byGroup=[];
+  for(const s of settlements)for(const [id,count] of Object.entries(s.culturePopulation)){
+    const g=s.civilGrievances?.groups[id];if(!g||count<=0)continue;
+    byGroup.push({s,id,count,g,score:D1B_KEYS.reduce((x,k)=>x+g[k],0)/4});
+  }
+  byGroup.sort((a,b)=>b.score-a.score||b.count-a.count||a.s.id-b.s.id);
+  const root=make('section',{class:'d1b-social-panel overview-section'},[
+    make('div',{class:'d1b-social-heading'},[make('h3',{text:'민간 불만 · 사회 상태 V1'}),
+      make('strong',{text:`${d1bFormat(summary.overall)} / 100`})]),
+    make('p',{class:'d1b-social-sub',text:`현재 소유 정착지 ${settlements.length}곳 · 민간 ${d2FormatPopulation(summary.population)} · 불만은 정치적 동원·반란에 아직 영향을 주지 않습니다.`}),
+    d1bScoreBars(summary),
+    make('div',{class:'d1b-social-insights'},[
+      make('div',{text:`평균 불만 60 이상인 인구: ${d2FormatPopulation(summary.highPopulation)} · ${d2Percent(summary.highPopulation,summary.population)}`}),
+      make('div',{text:summary.highest?`최고 불만 집단: ${lookup.get(summary.highest.id)?.name||summary.highest.id} · ${d1bFormat(summary.highest.score)} · ${settlementDisplayName(w,w.settlements.find(s=>s.id===summary.highest.settlementId))}`:'활성 문화집단 없음'}),
+      make('div',{text:`사회 관측 시작: ${w.socialBootstrap?.dayIndex??0}일 · ${w.socialBootstrap?.source==='imported-no-history'?`${w.socialBootstrap.sourceVersion}에서 이관 · 과거 불만 미복원`:'신규 세계'}`})]),
+    make('h3',{text:'불만이 높은 문화집단 · 정착지별'}),
+    make('div',{class:'d1b-group-list'},byGroup.slice(0,30).map(item=>{
+      const g=item.g,entries=D1B_KEYS.map(key=>({key,score:g[key],reason:g.reasons[key]})).sort((a,b)=>b.score-a.score);
+      return make('details',{class:'d1b-group'},[
+        make('summary',{text:`${lookup.get(item.id)?.name||item.id} · ${settlementDisplayName(w,item.s)} · ${item.count}명 · 불만 ${d1bFormat(item.score)}`}),
+        make('div',{class:'d1b-group-details'},[
+          ...entries.map(e=>make('div',{text:`${D1B_NAMES[e.key]} ${d1bFormat(e.score)} · ${d1bCauseDetail(g,e.key)}`}))])]);
+    })),
+    ...(byGroup.length>30?[make('p',{class:'d1b-social-sub',text:`상위 30개 집단만 표시 · 평균값은 전체 ${byGroup.length}개 집단을 반영합니다.`})]:[]),
+    make('p',{class:'scope-note',text:'점수는 실제 관측 가능한 경제·전쟁·점령·통치 변화에 따른 분기별 상태입니다. 소수문화라는 사실만으로 불만을 증가시키지 않습니다. 국가별 종속 독립 압력과 무관합니다.'})]);
+  return root;
+}
+function d1bInspectorPanel(w,s){
+  const summary=d1bSummary(w,[s]),lookup=d2CultureLookup(w);
+  const groups=Object.entries(s.culturePopulation).filter(([,count])=>count>0).sort((a,b)=>b[1]-a[1]);
+  return make('details',{class:'d1b-inspector'},[
+    make('summary',{text:`◎ 주민 불만 ${d1bFormat(summary.overall)} / 100 · 상세 보기`}),
+    d1bScoreBars(summary),
+    ...groups.map(([id,count])=>{
+      const g=s.civilGrievances?.groups[id];if(!g)return make('div',{text:`${lookup.get(id)?.name||id}: 최초 정산 전`});
+      const top=D1B_KEYS.map(key=>({key,score:g[key]})).sort((a,b)=>b.score-a.score)[0];
+      return make('div',{class:'d1b-inspector-row',text:`${lookup.get(id)?.name||id} ${count}명 · 종합 ${d1bFormat(D1B_KEYS.reduce((a,k)=>a+g[k],0)/4)} · 주요 ${D1B_NAMES[top.key]} ${d1bFormat(top.score)} (${d1bCauseDetail(g,top.key)})`});
+    })]);
+}
+// --- end D1B social UI ---
+
 
 // --- src/sim/units.js ---
 /** V0.1E: deterministic cohort loadouts; names/AI IDs never dictate combat rules. */
@@ -6483,6 +6724,7 @@ function transferCore(w,settlementId,newOwner){
   loser.settlementIds=loser.settlementIds.filter(id=>id!==s.id);winner.settlementIds.push(s.id);
   if(loser.capitalId===s.coreTileId)markCapitalHistory(s,loser.id);
   s.ownerId=newOwner; // The geographic name and historical capitals never change on conquest.
+  d1bRecordTransfer(w,s,oldOwner,newOwner);
   e5InvalidateBorders(w);
   for(const id of s.tileIds){w.tiles[id].ownerId=newOwner;w.tiles[id].occupiedBy=null;w.tiles[id].occupiedWarId=null;for(const d of w.defenses||[])if(d.tileId===id)delete d.repair;}
   v04e2RegisterBarracksEvent(w,'SETTLEMENT_TRANSFER',[oldOwner,newOwner],s.id,movedBarracks);
@@ -6864,7 +7106,7 @@ function executeMilitaryAction(w,nationId,act){
   if(act.type==='RESPOND_ATTACK_CALL')return resolveOffensiveCall(w,nationId,act);
   if(act.type==='TRAIN_RESERVES'){
     const s=w.settlements.find(s=>s.id===act.settlementId);
-    const cultures=d1CultureTake(s.culturePopulation,act.amount);s.population-=act.amount;
+    const cultures=d1CultureTake(s.culturePopulation,act.amount);s.population-=act.amount;d1bSyncGroups(s);
     n.military.training.push({amount:act.amount,completeDay:w.dayIndex+trainingDays(w,nationId),culturePopulation:cultures});
     n.military.lastTrainingDay=Math.floor(w.dayIndex/30)*30;
     event(w,`${n.name}: 예비병 ${act.amount}명 훈련 시작 (완료 ${w.dayIndex+trainingDays(w,nationId)}일)`, 'army');
@@ -6922,7 +7164,7 @@ function executeMilitaryAction(w,nationId,act){
   }
   if(act.type==='DISBAND_ARMY'){
     const s=w.settlements.find(s=>safeSettlement(w,s,nationId)&&s.coreTileId===a.tileId);
-    if(s){s.population+=manpower(a);d1CultureAdd(s.culturePopulation,d1CultureArmyPopulation(a));}c6RecordArmyEnd(w,a,'DISBAND');w.armies=w.armies.filter(v=>v.id!==a.id);
+    if(s){s.population+=manpower(a);d1CultureAdd(s.culturePopulation,d1CultureArmyPopulation(a));d1bSyncGroups(s);}c6RecordArmyEnd(w,a,'DISBAND');w.armies=w.armies.filter(v=>v.id!==a.id);
     w.characters=w.characters.filter(c=>c.id!==a.commanderId);
     event(w,`${n.name}이(가) 부대를 해산하고 병력을 귀환시켰습니다.`,'army');return {ok:true};
   }
@@ -8110,7 +8352,7 @@ function b4aEmergencyEligible(w,id,act){
 function b4aExecuteEmergency(w,id,act){
  const n=w.nations[id],s=w.settlements.find(s=>s.id===act.settlementId);
  const tile=w.tiles[act.targetTileId],commander=spawnCommander(w,id),armyId=w.nextArmyId++;
- const cultureDraft=d1CultureTake(s.culturePopulation,act.amount);s.population-=act.amount;refreshSettlementLevel(s);
+ const cultureDraft=d1CultureTake(s.culturePopulation,act.amount);s.population-=act.amount;d1bSyncGroups(s);refreshSettlementLevel(s);
  const front=Math.max(1,Math.floor(act.amount*.8)),reserve=act.amount-front;
  const units=[{id:`unit-${armyId}-0`,typeId:'levy',weaponId:'basic_arms',armorId:'none',manpower:front,allocationWeight:front,training:0}];
  if(reserve>0)units.push({id:`unit-${armyId}-1`,typeId:'levy',weaponId:'basic_arms',armorId:'none',manpower:reserve,allocationWeight:reserve,training:0});
@@ -8307,7 +8549,7 @@ function executeNationAction(world,nationId,action){
     case 'FOUND_SETTLEMENT':{
       const id=world.nextSettlementId++;
       const settlement={id,ownerId:nationId,coreTileId:tile.id,name:`${n.name} 제${n.actionStats.FOUND_SETTLEMENT+1} 정착지`,founderNationId:nationId,formerCapitalOf:[],foundedDay:world.dayIndex,tileIds:[tile.id],population:12+Math.floor(n.researchLevel/12),development:9,level:1};
-      settlement.culturePopulation=d1CulturePool(n.primaryCultureId,settlement.population);
+      settlement.culturePopulation=d1CulturePool(n.primaryCultureId,settlement.population);d1bNewSettlement(world,settlement);
       world.settlements.push(settlement);n.settlementIds.push(id);tile.settlementId=id;reconnectAnnexedFacilities(world,tile.id,id);delta.settlementId=id;
       recordActionEvent(world,`${n.name}이(가) ${settlement.name}을(를) 설립했습니다.`,'settlement');break;
     }
@@ -8324,6 +8566,7 @@ function executeNationAction(world,nationId,action){
         s.formerCapitalOf.length?s:other.formerCapitalOf.length?other:s;
       const secondary=primary===s?other:s;
       const housingBefore=settlementHousing(world,primary)+settlementHousing(world,secondary);
+      d1bMergeSettlements(primary,secondary);
       primary.tileIds.push(...secondary.tileIds);primary.population+=secondary.population;d1CultureAdd(primary.culturePopulation,secondary.culturePopulation);
       // Never erase the historical-capital center in a merger.
       for(const id of secondary.formerCapitalOf)markCapitalHistory(primary,id);
@@ -9017,6 +9260,7 @@ function runQuarter(world){
   buildGeopoliticalReports(world);
   b4aDecayFormations(world);
   b4aUpdateSurvival(world);
+  d1bQuarter(world);
   const followUp=[];
   for(const n of world.nations){
     if(!n.active||n.controller!=='AI')continue;
@@ -9171,7 +9415,7 @@ function runYear(world){
       const crowding=Math.max(0,s.population/maxPopulation-.88);
       const effectiveGrowth=annual*n.foodPressure-.045*(1-n.foodPressure)-crowding*.19;
       const next=clampInt(s.population*(1+effectiveGrowth),1,Math.max(1,maxPopulation));
-      if(next!==s.population){d1CultureResize(s.culturePopulation,next,n.primaryCultureId);s.population=next;refreshSettlementLevel(s);world.changeSeq++;}
+      if(next!==s.population){d1CultureResize(s.culturePopulation,next,n.primaryCultureId);s.population=next;d1bSyncGroups(s);refreshSettlementLevel(s);world.changeSeq++;}
     }
     if(leader){
       leader.age++;
@@ -9454,6 +9698,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   for(const n of nations){makeLeader(world,n.id);n.survival=b4aNewSurvival(world,n.id);}
   refreshApCaps(world);
   d1InitializeCultureWorld(world);
+  d1bInitializeWorld(world);
   return world;
 }
 function advanceDays(world,days=1,entropySource=null){if(days>0)world.setupLocked=true;return advanceSimulation(world,days,entropySource);}
@@ -9702,6 +9947,7 @@ function validateWorld(w){
   for(const a of w.armies)if((a.status==='ENGAGED'||a.engagementId!==null)&&!usedInBattle.has(a.id))fail('고아 교전 편제');
   if(!Array.isArray(w.events)||w.events.length>180||!Number.isInteger(w.nextArmyId)||!Number.isInteger(w.nextEngagementId)||!Number.isInteger(w.nextWarId))fail('기록·ID');
   d1ValidateCultureWorld(w,fail);
+  d1bValidate(w,fail);
   return true;
 }
 function validateTradeLegacyForMigration(w){
@@ -9710,17 +9956,14 @@ function validateTradeLegacyForMigration(w){
     t.history.every(h=>Number.isInteger(h.seller)&&Number.isInteger(h.buyer)&&h.seller!==h.buyer&&w.nations[h.seller]&&w.nations[h.buyer]&&TRADE_GOODS[h.good]&&Number.isSafeInteger(h.quantity)&&h.quantity>0&&Number.isSafeInteger(h.unitPrice)&&h.unitPrice>0&&h.gold===h.quantity*h.unitPrice));
 }
 /** D1A1: explicit one-generation migration only; never invent cultural history. */
+/** D1B one-way save migration: never invent historical grievances. */
 function deserializeWorld(json){
- const parsed=JSON.parse(json);
- if(parsed?.schema!=='vilob-light-v03d'||![VERSION,'V0.6D1A1',D1A1_PREVIOUS_VERSION].includes(parsed.version))
-   throw Error('V0.6C6, V0.6D1A1 또는 V0.6D1A2 세이브만 불러올 수 있습니다.');
- if(parsed.version===D1A1_PREVIOUS_VERSION){
-   parsed.version=VERSION;
-   d1InitializeCultureWorld(parsed,{migrated:true});
- }else if(parsed.version==='V0.6D1A1'){
-   // D1A2 introduces no persistent state; preserve the existing cultural census verbatim.
-   parsed.version=VERSION;
- }
+ const parsed=JSON.parse(json),previous=parsed?.version;
+ if(parsed?.schema!=='vilob-light-v03d'||![VERSION,'V0.6D1A2','V0.6D1A1',D1A1_PREVIOUS_VERSION].includes(previous))
+   throw Error('V0.6C6 ~ V0.6D1B 세이브만 불러올 수 있습니다.');
+ if(previous===D1A1_PREVIOUS_VERSION)d1InitializeCultureWorld(parsed,{migrated:true});
+ if(previous!==VERSION)d1bInitializeWorld(parsed,{migrated:true,sourceVersion:previous});
+ parsed.version=VERSION;
  validateWorld(parsed);
  return parsed;
 }
@@ -9813,7 +10056,7 @@ function createWorldFromMap(input){
       settlements.push(settlement);n.settlementIds.push(sid);first=false;
     }
   }
-  w.settlements=settlements;w.nextSettlementId=Math.max(...settlements.map(s=>s.id))+1;
+  w.settlements=settlements;for(const s of settlements)d1bNewSettlement(w,s);w.nextSettlementId=Math.max(...settlements.map(s=>s.id))+1;
   w.setupLocked=true; // Keep the authored terrain and capital ownership safe from procedural reconfiguration.
   w.events=[{dayIndex:0,text:`커스텀 맵 「${map.name}」에서 ${w.nations.length}개 국가가 시작했습니다.`,kind:'world'}];
   validateWorld(w);
@@ -9983,7 +10226,7 @@ class MapRenderer {
     this.world=null;this.selectedId=null;this.focusArmyId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.settlementLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
     this.offset={x:0,y:0};this.width=0;this.height=0;this.scale=1;this.originX=0;this.originY=0;
     // F3G1: renderer-private caches; nothing persists in saves or advances the SIM RNG.
-    this.frameHandle=null;this.visualCache=null;this.d2CultureCache=null;this.cultureDisplay="dominant";this.fortDetailKey=null;this.fortDetailShown=false;
+    this.frameHandle=null;this.visualCache=null;this.d2CultureCache=null;this.cultureDisplay="dominant";this.d1bSocialCache=null;this.socialDisplay="overall";this.fortDetailKey=null;this.fortDetailShown=false;
     this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.staticAtlasStats={builds:0,hits:0,skipped:0};
     this.pointers=new Map();this.drag=null;this.pinch=null;this.hoverId=null;this.resizeObserver=new ResizeObserver(()=>this.resize());
     this.resizeObserver.observe(canvas);
@@ -9994,14 +10237,14 @@ class MapRenderer {
     canvas.addEventListener('wheel',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(e.deltaY>0?1/1.13:1.13,p.x,p.y);},{passive:false});
     canvas.addEventListener('dblclick',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(1.28,p.x,p.y);});
   }
-  setWorld(world){this.world=world;this.d2CultureCache=null;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.focusArmyId=null;this.closeArmyCluster();this.draw();}
+  setWorld(world){this.world=world;this.d2CultureCache=null;this.d1bSocialCache=null;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.focusArmyId=null;this.closeArmyCluster();this.draw();}
   // F3G1 P0: coalesce high-frequency pointer/pinch/wheel events to one draw per frame.
   requestDraw(){
     if(this.frameHandle!==null)return;
     this.frameHandle=requestAnimationFrame(()=>{this.frameHandle=null;this.draw();});
   }
   // Manual invalidation is safe for editor/synthetic direct world mutations without changeSeq.
-  invalidateVisualCache(){this.d2CultureCache=null;this.visualCache=null;this.fortAverageCache=null;this.fortDetailKey=null;this.staticAtlasCache=null;}
+  invalidateVisualCache(){this.d1bSocialCache=null;this.d2CultureCache=null;this.visualCache=null;this.fortAverageCache=null;this.fortDetailKey=null;this.staticAtlasCache=null;}
   // F3G1 P2: build groups and derived army strengths once per world revision.
   getVisualData(){
     const w=this.world,previous=this.visualCache;
@@ -10218,7 +10461,7 @@ class MapRenderer {
     ctx.restore();
   }
   dismissSelectedFortress(){this.detailDismissedFor=this.selectedId;this.updateDefensePopover();}
-  setMode(mode){this.mode=['terrain','political','era','independence','culture'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
+  setMode(mode){this.mode=['terrain','political','era','independence','culture','social'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
   setCultureDisplay(mode){this.cultureDisplay=mode==='mix'?'mix':'dominant';if(this.mode==='culture')this.requestDraw();}
   getCultureOverlayData(){
     const w=this.world,cache=this.d2CultureCache;
@@ -10230,6 +10473,33 @@ class MapRenderer {
         color:lookup.get(stat.dominant)?.color||'#9DB9C0',mix:stat.mix};
     }).filter(x=>x.population>0).sort((a,b)=>b.population-a.population||a.id-b.id);
     this.d2CultureCache={world:w,day:w.dayIndex,seq:w.changeSeq,count:w.settlements.length,markers};return markers;
+  }
+  setSocialDisplay(mode){this.socialDisplay=D1B_KEYS.includes(mode)?mode:'overall';this.d1bSocialCache=null;if(this.mode==='social')this.requestDraw();}
+  getSocialOverlayData(){
+    const w=this.world,cache=this.d1bSocialCache;
+    if(cache&&cache.world===w&&cache.day===w.dayIndex&&cache.seq===w.changeSeq&&cache.mode===this.socialDisplay&&cache.count===w.settlements.length)return cache.markers;
+    const markers=w.settlements.map(s=>({id:s.id,tileId:s.coreTileId,population:s.population,
+      score:d1bSummary(w,[s],this.socialDisplay).selected})).filter(m=>m.population>0).sort((a,b)=>b.population-a.population||a.id-b.id);
+    this.d1bSocialCache={world:w,day:w.dayIndex,seq:w.changeSeq,count:w.settlements.length,mode:this.socialDisplay,markers};
+    return markers;
+  }
+  drawSocialOverlay(ctx,scale,ox,oy,cw,ch){
+    if(this.mode!=='social')return;
+    const w=this.world,markers=this.getSocialOverlayData(),small=scale<22,occupied=new Set();
+    ctx.save();ctx.beginPath();ctx.rect(0,0,cw,ch);ctx.clip();
+    for(const m of markers){
+      const t=w.tiles[m.tileId];if(!t)continue;
+      const px=ox+(t.x+(small?.5:.76))*scale,py=oy+(t.y+(small?.5:.23))*scale;
+      if(px< -15||px>cw+15||py< -15||py>ch+15)continue;
+      if(small){const key=Math.floor(px/12)+':'+Math.floor(py/12);if(occupied.has(key))continue;occupied.add(key);}
+      const r=small?Math.max(2.8,Math.min(5,scale*.34)):Math.max(4.5,Math.min(9,scale*.21));
+      const color=blend('#4B9F98','#E36A65',Math.min(1,m.score/750));
+      ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fillStyle='rgba(9,25,35,.9)';ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,r-.9,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+      ctx.strokeStyle=m.tileId===this.selectedId?'#FFF0BA':'#112B37';ctx.lineWidth=m.tileId===this.selectedId?2.2:1.4;ctx.stroke();
+      if(!small&&scale>=32){ctx.fillStyle='#11202A';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(Math.round(m.score/10)),px,py);}
+    }
+    ctx.restore();
   }
   /** Screen-space settlement markers: never imply population on every owned tile. */
   drawCultureOverlay(ctx,scale,ox,oy,cw,ch){
@@ -10693,6 +10963,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       this.scale=scale;this.originX=originX;this.originY=originY;
       this.drawStrategicAtlas(ctx,scale,originX,originY,w,h);
       this.drawCultureOverlay(ctx,scale,originX,originY,w,h);
+      this.drawSocialOverlay(ctx,scale,originX,originY,w,h);
       this.drawIndependenceOverlay(ctx,scale,originX,originY,w,h);
       this.drawC6ArmyObjective(ctx,scale,originX,originY);
       const p=document.getElementById('fortressDetail');if(p)p.hidden=true;
@@ -10750,6 +11021,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     // D1A2 screen-space cultural markers remain separate from static map bitmaps.
     ctx.restore();
     this.drawCultureOverlay(ctx,scale,originX,originY,w,h);
+    this.drawSocialOverlay(ctx,scale,originX,originY,w,h);
     ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();ctx.translate(originX,originY);ctx.scale(scale,scale);
     // Contested territory: amber progress perimeter, not the solid finished-occupation overlay.
     for(const o of world.occupations){
@@ -11315,7 +11587,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06d1a2-world';
+const SAVE_KEY='vilob-light-v06d1b-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -11385,7 +11657,7 @@ function renderInspector(){
     rows.push(cell('주요 주민 문화',main?`${main.name} · ${d2Percent(c.dominantCount,c.population)}`:'주민 없음'),cell('문화 혼합도',c.mix.toFixed(1)+'% · '+c.groups+'개 문화'));}
   if(terra.passable) {const stats=regionalMilitaryStats(app.world,t.id);rows.push(cell('지역 저항력 R',number.format(stats.resistance)),cell('지역 공격력 A',number.format(stats.firepower)));}
   box.replaceChildren(banner,make('div',{class:'detail-grid'},rows));
-  if(settlement)box.append(d2MakeCultureDetails(app.world,settlement.culturePopulation,'정착지 문화별 민간 인구 (타일 전체의 인구 아님)'));
+  if(settlement){box.append(d2MakeCultureDetails(app.world,settlement.culturePopulation,'정착지 문화별 민간 인구 (타일 전체의 인구 아님)'));box.append(d1bInspectorPanel(app.world,settlement));}
   const tileBuildings=app.world.buildings.filter(b=>b.tileId===t.id);
   if(tileBuildings.length)box.append(make('section',{class:'facility-mini'},[
     make('strong',{text:`일반 시설 ${tileBuildings.length} / ${t.ownerId===null?BUILDING_TILE_SLOTS:generalTileSlotLimit(app.world,t.ownerId)}`}),
@@ -12072,11 +12344,11 @@ function renderNationOverview(){
   const procurementDownload=make('button',{class:'jump-button',type:'button',text:'최근 12분기 건설 자원 조달 CSV'});
   procurementDownload.addEventListener('click',()=>download(`vilob-v05b-procurement-y${timeAt(w.dayIndex).year}.csv`,v05bProcurementCsv(w),'text/csv;charset=utf-8'));
   procurement.append(procurementDownload);
-  const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','문화'],['military','군사']];
+  const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
   const panels={overview:[grid,leadership,trading,recoverySection,procurement],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places]};
-  if(app.nationSubtab==='culture')panels.culture=[d2MakeNationCulturePanel(w,n)];
+  if(app.nationSubtab==='culture')panels.culture=[d1bNationPanel(w,n),d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
   const content=make('div',{class:'nation-subtab-content',id:'nationSubtabContent',role:'tabpanel','aria-label':tabs.find(([id])=>id===app.nationSubtab)[1]},panels[app.nationSubtab]);
   for(const [id,label] of tabs){
@@ -12716,9 +12988,12 @@ for(const btn of document.querySelectorAll('[data-map-mode]'))btn.addEventListen
   document.querySelectorAll('.v04c-era-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='era');
   document.querySelectorAll('.c5-independence-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='independence');
   document.querySelectorAll('.d2-culture-map-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='culture');
+  document.querySelectorAll('.d1b-social-map-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='social');
+  $('d1bSocialModeControl').hidden=btn.dataset.mapMode!=='social';
   $('d2CultureModeControl').hidden=btn.dataset.mapMode!=='culture';
 });
 $('d2CultureMode').addEventListener('change',e=>map.setCultureDisplay(e.target.value));
+$('d1bSocialMode').addEventListener('change',e=>map.setSocialDisplay(e.target.value));
 $('d2MilitaryCultureCard').addEventListener('toggle',()=>d2RenderMilitaryCultures());
 $('bordersToggle').addEventListener('change',e=>{map.showBorders=e.target.checked;map.draw();});
 $('diplomaticBordersToggle').addEventListener('change',e=>{map.showDiplomaticBorders=e.target.checked;map.draw();});
@@ -12851,12 +13126,12 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const current=localStorage.getItem(SAVE_KEY);
-    const previous=current?null:localStorage.getItem('vilob-light-v06d1a1-world');
-    const legacy=current||previous?null:localStorage.getItem('vilob-light-v06c6-world');
-    const raw=current||previous||legacy;if(!raw){showToast('저장된 월드가 없습니다.');return;}
-    setWorld(deserializeWorld(raw));showToast(legacy?'C6 세계를 문화 초기 추정값으로 이관했습니다. 새 저장 버튼으로 D1A2에 보관하세요.':previous?'D1A1 문화 인구 세계를 D1A2로 불러왔습니다. 저장하면 별도 보관됩니다.':'저장된 월드를 불러왔습니다.');}
-  catch(error){showToast('불러오기 실패: '+error.message);}
+  try{
+    const keys=[SAVE_KEY,'vilob-light-v06d1a2-world','vilob-light-v06d1a1-world','vilob-light-v06c6-world'];
+    const key=keys.find(k=>localStorage.getItem(k)),raw=key?localStorage.getItem(key):null;
+    if(!raw){showToast('저장된 월드가 없습니다.');return;}
+    setWorld(deserializeWorld(raw));showToast(key===SAVE_KEY?'저장된 D1B 세계를 불러왔습니다.':'이전 세계를 D1B로 이관했습니다. 사회적 불만은 가져온 날짜부터 계산됩니다.');
+  }catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
   const editing=e.target instanceof HTMLInputElement||e.target instanceof HTMLTextAreaElement;
