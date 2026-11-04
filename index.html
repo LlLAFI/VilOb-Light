@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6D1A1</title>
+<title>VILOB Light · V0.6D1A2</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -624,6 +624,25 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 .b4c-cluster-rows button{font-size:11px;padding:8px;text-align:left;background:#213a4a;color:#ebf4f5;border:1px solid #486479;border-radius:6px;cursor:pointer}
 .b4c-cluster-rows button:hover{background:#315569}
 
+/* D1A2: passive culture census views. Off-mode rendering and simulation unchanged. */
+.d2-culture-selector[hidden],.d2-culture-map-key[hidden]{display:none!important}
+.d2-culture-world-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,265px),1fr));gap:8px;margin-top:12px}
+.d2-culture-world-row{background:#152a3b;border:1px solid #355364;border-radius:10px;padding:10px 12px;min-width:0}
+.d2-culture-name{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:750;min-width:0}
+.d2-culture-dot{width:12px;height:12px;display:inline-block;flex-shrink:0;border:1px solid #fff6;border-radius:50%}
+.d2-culture-line{display:flex;justify-content:space-between;gap:7px;align-items:center;margin:5px 0;font-size:12px}
+.d2-culture-line small{color:#a0bcc9;font-size:11px}
+.d2-culture-track{height:7px;overflow:hidden;border-radius:999px;background:#274054;margin-top:6px}
+.d2-culture-fill{height:100%;border-radius:999px}
+.d2-culture-info{font-size:11px;color:#9cb7c4;line-height:1.5;margin-top:6px}
+.d2-culture-summary{padding:12px;background:#142c3b;border:1px solid #355466;border-radius:10px;display:grid;gap:9px;margin-bottom:13px}
+.d2-culture-breakdown{display:grid;gap:7px}
+.d2-culture-breakdown details{background:#132a39;border:1px solid #395669;border-radius:7px;padding:8px 10px}
+.d2-culture-breakdown summary{font-size:11px;font-weight:650;color:#bee1d5;cursor:pointer}
+.d2-culture-indicators{display:flex;gap:7px;flex-wrap:wrap;font-size:11px;color:#bed7df}
+.d2-culture-indicators span{border-radius:6px;background:#204052;padding:5px 8px}
+@media(max-width:600px){.d2-culture-world-list{grid-template-columns:1fr}}
+
 /* C1 World setup: responsive controls without touching map/game playback UI */
 .world-count-setup,.c1-world-reconfigure{display:grid;gap:9px;margin:14px 0;padding:14px;border:1px solid rgba(140,169,184,.24);border-radius:12px;background:rgba(24,40,54,.15)}
 .world-count-setup input,.c1-count-row input{width:86px;max-width:100%;box-sizing:border-box;padding:8px;border-radius:7px;border:1px solid #637b8b;background:#172b38;color:#eff7fc;text-align:center}
@@ -661,7 +680,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 <div aria-live="polite" class="stat-grid" id="statGrid"><div class="atlas-stats-header"><span>◈ 세계 현황</span><button type="button" id="atlasStatsToggle" aria-expanded="true" aria-controls="atlasStatItems" aria-label="세계 현황 접기" title="세계 현황 접기">⌃</button></div><div id="atlasStatItems" class="atlas-stat-items"><div class="stat"><span>총인구</span><b>119</b></div><div class="stat"><span>정착지</span><b>7</b></div><div class="stat"><span>소유 타일</span><b>7</b></div><div class="stat"><span>중립 육지</span><b>—</b></div></div></div>
 <section aria-label="세계 지도" class="map-card">
-<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select id="settlementLabels" aria-label="정착지 및 수도 지명 표시"><option value="auto" selected>자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
+<div class="map-card-head"><div class="head-title"><button type="button" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" aria-label="지도 설정 접기" aria-expanded="true" aria-controls="atlasMapSettingsContent" title="지도 설정 접기">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><button class="chip atlas-fit-button" id="atlasMapFitToggle" type="button" title="지도 화면 맞춤 전환">◧ 지도 전체</button><button class="chip atlas-inspector-button" id="atlasInspectorToggle" type="button" aria-expanded="true" title="타일 정보창 표시 전환">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><button class="chip" data-map-mode="culture">문화</button><label class="army-mode-selector d2-culture-selector" id="d2CultureModeControl" hidden>문화 표시 <select id="d2CultureMode" aria-label="문화 지도 표시 방식"><option value="dominant">주요 문화</option><option value="mix">문화 혼합도</option></select></label><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select id="settlementLabels" aria-label="정착지 및 수도 지명 표시"><option value="auto" selected>자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option value="auto" selected="">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select id="defenseLabels" aria-label="지도 요새 및 방어망 표시"><option value="network" selected>요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label></div></div>
 <div class="canvas-area" id="canvasArea"><canvas aria-label="타일을 선택하거나 드래그해 지도를 이동할 수 있습니다." id="worldCanvas"></canvas><div id="mapArmyClusterPanel" class="b4c-cluster-panel" aria-label="밀집 군대 편제 목록" hidden></div>
 <section id="fortressDetail" class="fortress-detail-popover" aria-label="선택한 요새의 지역 군사 능력" hidden>
   <div class="fortress-detail-head"><div><div class="fortress-eyebrow">♜ SELECTED FORTRESS</div><strong id="fortressDetailTitle">요새</strong><small id="fortressDetailMeta">—</small></div><button type="button" id="fortressDetailClose" class="fortress-detail-close" aria-label="요새 상세 정보 닫기">×</button></div>
@@ -669,7 +688,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="d2-culture-map-key" hidden>● 주요 문화: 정착지 인구 최대 문화의 색 · 혼합도: 최다 문화 외 인구 비중 · 타일 전체의 문화가 아님</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -680,11 +699,11 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 <section class="sidebar-card war-card military-primary"><div class="card-heading"><div><div class="eyebrow">ACTIVE WARS</div><h2>⚔ 진행 중인 전쟁</h2></div><span class="small-label" id="warCount">0건</span></div><div class="military-list" id="warList"></div></section>
 <details class="sidebar-card occupation-collapsible" id="occupationListCard"><summary class="occupation-summary"><span><span class="eyebrow">ACTIVE OCCUPATIONS</span><strong>⚑ 점령 진행 현황</strong> <small id="occupationCount">0건</small></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-list occupation-scroll" id="occupationList"></div></details>
 <details class="sidebar-card engagement-collapsible" id="engagementListCard"><summary class="occupation-summary"><span><span class="eyebrow">ACTIVE ENGAGEMENTS</span><strong>⚔ 진행 중인 교전</strong> <small id="engagementCount">0건</small></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-list occupation-scroll" id="engagementList"></div></details>
-<section class="sidebar-card war-audit-card" aria-label="E4 전쟁 통합 진단"><div class="card-heading"><div><div class="eyebrow">E4 WAR & DIPLOMACY AUDIT</div><h2>전쟁·외교 장기 진단</h2></div><span class="small-label" id="warAuditYearCount">0년 기록</span></div><div id="c5IndependenceDashboard" class="c5-diplomacy-dashboard"></div><div class="military-economy-summary" id="warAuditSummary"></div><div class="file-actions"><button class="text-button" type="button" id="warAuditJsonBtn">↓ 진단 JSON</button><button class="text-button" type="button" id="warAuditCsvBtn">↓ 연간 CSV</button></div><p class="scope-note">연 1회 기록 · 최근 180개 연도 · 과거 E3 세이브는 E4 적용 이후부터 수집. 군사비는 실제 납부액이 아닌 발생 비용(체납 포함)입니다.</p></section>
+<details class="sidebar-card army-roster-collapsible" id="d2MilitaryCultureCard"><summary><span><span class="eyebrow">D1A2 CULTURAL ROSTER</span><strong>◉ 군 편제별 문화 구성</strong><small>현역 부대의 문화별 병력 · 클릭해서 펼치기</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="army-roster-content" id="d2ArmyCultureList"></div></details><section class="sidebar-card war-audit-card" aria-label="E4 전쟁 통합 진단"><div class="card-heading"><div><div class="eyebrow">E4 WAR & DIPLOMACY AUDIT</div><h2>전쟁·외교 장기 진단</h2></div><span class="small-label" id="warAuditYearCount">0년 기록</span></div><div id="c5IndependenceDashboard" class="c5-diplomacy-dashboard"></div><div class="military-economy-summary" id="warAuditSummary"></div><div class="file-actions"><button class="text-button" type="button" id="warAuditJsonBtn">↓ 진단 JSON</button><button class="text-button" type="button" id="warAuditCsvBtn">↓ 연간 CSV</button></div><p class="scope-note">연 1회 기록 · 최근 180개 연도 · 과거 E3 세이브는 E4 적용 이후부터 수집. 군사비는 실제 납부액이 아닌 발생 비용(체납 포함)입니다.</p></section>
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div id="warHistoryList" class="military-list"></div><nav id="warHistoryPager" class="war-history-pager" aria-label="종전 기록 페이지"></nav></section>
-</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
 <div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.3G · 재개발·기술·상위 장비·산악 도로</h2></div><span class="small-label">0.3G</span></div>
@@ -724,7 +743,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6D1A1'; // V0.6D1A-1: culture identity + population accounting
+const VERSION = 'V0.6D1A2'; // D1A2: read-only Cultural Atlas and demographics
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1562,6 +1581,117 @@ function d1CultureAudit(w){
   out.verified=true;return out;
 }
 // --- end D1A1 culture-accounting ---
+
+
+// --- src/ui/culture-atlas-d1a2.js ---
+/** D1A2: read-only cultural census, no world mutations and no RNG. */
+function d2CultureLookup(w){return new Map(w.cultures.map(c=>[c.id,c]));}
+function d2CultureEntries(pool,lookup){
+  return Object.entries(pool||{}).filter(([,count])=>count>0)
+    .map(([id,count])=>({id,count,culture:lookup.get(id)}))
+    .sort((a,b)=>b.count-a.count||a.id.localeCompare(b.id));
+}
+function d2CultureSummary(pool){
+  const entries=Object.entries(pool||{}).filter(([,count])=>count>0).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const population=entries.reduce((v,[,count])=>v+count,0);
+  const dominant=entries[0]?.[0]||null;
+  const dominantCount=entries[0]?.[1]||0;
+  return {population,dominant,dominantCount,groups:entries.length,mix:population?100*(population-dominantCount)/population:0};
+}
+function d2CultureCollect(pools){const out={};for(const pool of pools)d1CultureAdd(out,pool||{});return out;}
+function d2FormatPopulation(n){return number.format(n)+'명';}
+function d2Percent(count,total){return total?(100*count/total).toFixed(1)+'%':'0.0%';}
+function d2CultureBars(w,pool,{limit=24}={}){
+  const lookup=d2CultureLookup(w),items=d2CultureEntries(pool,lookup),total=d1CultureTotal(pool);
+  const box=make('div',{class:'d2-culture-breakdown'});
+  for(const {id,count,culture} of items.slice(0,limit)){
+    const color=culture?.color||'#8BABB8',label=culture?.name||id;
+    box.append(make('div',{class:'d2-culture-world-row'},[
+      make('div',{class:'d2-culture-line'},[
+        make('span',{class:'d2-culture-name'},[make('i',{class:'d2-culture-dot',style:{background:color}}),make('span',{text:label})]),
+        make('strong',{text:`${d2FormatPopulation(count)} · ${d2Percent(count,total)}`})]),
+      make('div',{class:'d2-culture-track'},[make('div',{class:'d2-culture-fill',style:{width:(100*count/total)+'%',background:color}})])]));
+  }
+  if(items.length>limit)box.append(make('small',{class:'d2-culture-info',text:`그 밖의 문화 ${items.length-limit}개 · 화면 목록 한정 (통계에는 포함)`}));
+  if(!items.length)box.append(make('div',{class:'muted-line',text:'해당 인구가 없습니다.'}));
+  return box;
+}
+function d2MakeCultureDetails(w,pool,title){
+  const summary=d2CultureSummary(pool),lookup=d2CultureLookup(w);
+  const dominant=lookup.get(summary.dominant);
+  return make('details',{class:'d2-unit-cultures'},[
+    make('summary',{text:`◉ ${title} · ${summary.groups}개 문화${summary.population?` · 주요 ${dominant?.name||summary.dominant} ${d2Percent(summary.dominantCount,summary.population)}`:''}`}),
+    d2CultureBars(w,pool)]);
+}
+function d2MakeNationCulturePanel(w,n){
+  const settlements=w.settlements.filter(s=>s.ownerId===n.id);
+  const civilian=d2CultureCollect(settlements.map(s=>s.culturePopulation));
+  const trainees=d2CultureCollect(n.military.training.map(t=>t.culturePopulation));
+  const reserves=n.military.reserveCulturePopulation;
+  const military=d2CultureCollect(w.armies.filter(a=>a.nationId===n.id).flatMap(a=>a.units.map(u=>u.culturePopulation)));
+  const summary=d2CultureSummary(civilian),lookup=d2CultureLookup(w);
+  const top=make('div',{class:'d2-culture-summary'},[
+    make('h3',{text:'현재 주민 문화 분포'}),
+    make('div',{class:'d2-culture-indicators'},[
+      make('span',{text:`민간 ${d2FormatPopulation(summary.population)}`}),
+      make('span',{text:`문화집단 ${summary.groups}개`}),
+      make('span',{text:`최다 문화 외 비중 ${summary.mix.toFixed(1)}%`})]),
+    make('div',{class:'d2-culture-info',text:`이 국가의 현재 소유 정착지 ${settlements.length}곳만 집계합니다. 국가의 기본 문화는 ${lookup.get(n.primaryCultureId)?.name||n.primaryCultureId}. 문화의 차이는 불만·전투력에 영향을 주지 않습니다.`}),
+    d2CultureBars(w,civilian)]);
+  const pools=make('section',{class:'overview-section'},[
+    make('h3',{text:'군사 인구 · 민간과 분리 집계'}),
+    make('div',{class:'d2-culture-indicators'},[
+      make('span',{text:`훈련 ${d2FormatPopulation(d1CultureTotal(trainees))}`}),
+      make('span',{text:`예비 ${d2FormatPopulation(d1CultureTotal(reserves))}`}),
+      make('span',{text:`현역 ${d2FormatPopulation(d1CultureTotal(military))}`})]),
+    make('div',{class:'d2-culture-breakdown'},[
+      d2MakeCultureDetails(w,trainees,'훈련병 구성'),d2MakeCultureDetails(w,reserves,'예비병 구성'),d2MakeCultureDetails(w,military,'현역병 구성')])]);
+  const places=make('section',{class:'overview-section'},[
+    make('h3',{text:'정착지별 문화 구성'}),
+    make('div',{class:'d2-culture-breakdown'},[
+      ...settlements.slice(0,80).map(s=>{
+        const x=d2CultureSummary(s.culturePopulation);
+        return d2MakeCultureDetails(w,s.culturePopulation,`${settlementDisplayName(w,s)} · 주민 ${d2FormatPopulation(s.population)} · 혼합도 ${x.mix.toFixed(1)}%`);
+      }),
+      ...(settlements.length>80?[make('div',{class:'d2-culture-info',text:`정착지 ${settlements.length}곳 중 80곳 표시 · 국가 통계는 전체 합산`})]:[])]),
+    make('p',{class:'scope-note',text:'혼합도는 최다 문화 외 주민 비중입니다. 별도 행정·문화권 지도나 역사적 인구 이동을 추정하지 않습니다.'})]);
+  return make('div',{},[top,pools,places]);
+}
+function d2RenderWorldCultures(){
+  const box=document.getElementById('d2WorldCultureList');if(!box||!app.world)return;
+  const w=app.world,stats=new Map(w.cultures.map(c=>[c.id,{culture:c,count:0,owners:new Set()}]));
+  for(const s of w.settlements)for(const [id,count] of Object.entries(s.culturePopulation)){
+    const x=stats.get(id);if(!x||count<=0)continue;x.count+=count;x.owners.add(s.ownerId);
+  }
+  const grand=[...stats.values()].reduce((v,x)=>v+x.count,0);
+  const items=[...stats.values()].sort((a,b)=>b.count-a.count||a.culture.id.localeCompare(b.culture.id));
+  box.replaceChildren(...items.map(({culture:c,count,owners})=>make('div',{class:'d2-culture-world-row'},[
+    make('div',{class:'d2-culture-line'},[
+      make('span',{class:'d2-culture-name'},[make('i',{class:'d2-culture-dot',style:{background:c.color}}),make('span',{text:c.name})]),
+      make('strong',{text:d2FormatPopulation(count)})]),
+    make('div',{class:'d2-culture-track'},[make('div',{class:'d2-culture-fill',style:{width:(grand?100*count/grand:0)+'%',background:c.color}})]),
+    make('div',{class:'d2-culture-info',text:`민간 인구 세계 비중 ${d2Percent(count,grand)} · 존재 국가 ${owners.size}개 · 최초 문화 기원: ${w.nations[c.originNationId]?.name||'미상'}`})])));
+}
+
+// D1A2 live military tab. Built only while the roster is expanded.
+function d2RenderMilitaryCultures(){
+  const box=document.getElementById('d2ArmyCultureList'),root=document.getElementById('d2MilitaryCultureCard');
+  if(!box||!root?.open||!app.world)return;
+  const w=app.world,armies=[...w.armies].sort((a,b)=>a.nationId-b.nationId||a.id-b.id);
+  if(!armies.length){box.replaceChildren(make('p',{class:'muted-line',text:'현재 현역 군대가 없습니다. 부대가 편성되면 문화별 구성을 이곳에서 확인할 수 있습니다.'}));return;}
+  const cards=armies.map(a=>{
+    const title=`${w.nations[a.nationId]?.name||'미상'} 제${a.id+1}군`,crew=d1CultureArmyPopulation(a);
+    const units=a.units.filter(u=>u.manpower>0);
+    return make('section',{class:'army-detail'},[
+      make('strong',{text:`⚔ ${title} · ${d2FormatPopulation(manpower(a))}`}),
+      make('small',{text:`사기 ${Math.round(a.morale)} · ${a.status} · 문화 구성은 정치적 충성도를 의미하지 않음`}),
+      d2MakeCultureDetails(w,crew,'군대 전체 문화 인원'),
+      ...units.map(u=>d2MakeCultureDetails(w,u.culturePopulation,`${UNIT_TYPES[u.typeId]?.label||u.typeId} · ${d2FormatPopulation(u.manpower)}`))
+    ]);
+  });
+  box.replaceChildren(...cards);
+}
+// --- end D1A2 cultural atlas ---
 
 // --- src/sim/units.js ---
 /** V0.1E: deterministic cohort loadouts; names/AI IDs never dictate combat rules. */
@@ -9582,11 +9712,14 @@ function validateTradeLegacyForMigration(w){
 /** D1A1: explicit one-generation migration only; never invent cultural history. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- if(parsed?.schema!=='vilob-light-v03d'||![VERSION,D1A1_PREVIOUS_VERSION].includes(parsed.version))
-   throw Error('V0.6C6 또는 V0.6D1A1 세이브만 불러올 수 있습니다.');
+ if(parsed?.schema!=='vilob-light-v03d'||![VERSION,'V0.6D1A1',D1A1_PREVIOUS_VERSION].includes(parsed.version))
+   throw Error('V0.6C6, V0.6D1A1 또는 V0.6D1A2 세이브만 불러올 수 있습니다.');
  if(parsed.version===D1A1_PREVIOUS_VERSION){
    parsed.version=VERSION;
    d1InitializeCultureWorld(parsed,{migrated:true});
+ }else if(parsed.version==='V0.6D1A1'){
+   // D1A2 introduces no persistent state; preserve the existing cultural census verbatim.
+   parsed.version=VERSION;
  }
  validateWorld(parsed);
  return parsed;
@@ -9850,7 +9983,7 @@ class MapRenderer {
     this.world=null;this.selectedId=null;this.focusArmyId=null;this.mode='political';this.showBorders=true;this.showDiplomaticBorders=true;this.borderOverlayCache=null;this.showRoads=true;this.armyLabelMode='auto';this.buildingLabelMode='auto';this.settlementLabelMode='auto';this.defenseLabelMode='network';this.fortGraphCache=null;this.zoom=1;this.detailDismissedFor=null;
     this.offset={x:0,y:0};this.width=0;this.height=0;this.scale=1;this.originX=0;this.originY=0;
     // F3G1: renderer-private caches; nothing persists in saves or advances the SIM RNG.
-    this.frameHandle=null;this.visualCache=null;this.fortDetailKey=null;this.fortDetailShown=false;
+    this.frameHandle=null;this.visualCache=null;this.d2CultureCache=null;this.cultureDisplay="dominant";this.fortDetailKey=null;this.fortDetailShown=false;
     this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.staticAtlasStats={builds:0,hits:0,skipped:0};
     this.pointers=new Map();this.drag=null;this.pinch=null;this.hoverId=null;this.resizeObserver=new ResizeObserver(()=>this.resize());
     this.resizeObserver.observe(canvas);
@@ -9861,14 +9994,14 @@ class MapRenderer {
     canvas.addEventListener('wheel',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(e.deltaY>0?1/1.13:1.13,p.x,p.y);},{passive:false});
     canvas.addEventListener('dblclick',e=>{e.preventDefault();const p=this.point(e);this.zoomAt(1.28,p.x,p.y);});
   }
-  setWorld(world){this.world=world;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.focusArmyId=null;this.closeArmyCluster();this.draw();}
+  setWorld(world){this.world=world;this.d2CultureCache=null;this.fortGraphCache=null;this.borderOverlayCache=null;this.visualCache=null;this.fortDetailKey=null;this.fortAverageCache=null;this.staticAtlasCache=null;this.labelCache=null;this.detailDismissedFor=null;this.zoom=1;this.offset={x:0,y:0};this.selectedId=world.nations[0].capitalId;this.focusArmyId=null;this.closeArmyCluster();this.draw();}
   // F3G1 P0: coalesce high-frequency pointer/pinch/wheel events to one draw per frame.
   requestDraw(){
     if(this.frameHandle!==null)return;
     this.frameHandle=requestAnimationFrame(()=>{this.frameHandle=null;this.draw();});
   }
   // Manual invalidation is safe for editor/synthetic direct world mutations without changeSeq.
-  invalidateVisualCache(){this.visualCache=null;this.fortAverageCache=null;this.fortDetailKey=null;this.staticAtlasCache=null;}
+  invalidateVisualCache(){this.d2CultureCache=null;this.visualCache=null;this.fortAverageCache=null;this.fortDetailKey=null;this.staticAtlasCache=null;}
   // F3G1 P2: build groups and derived army strengths once per world revision.
   getVisualData(){
     const w=this.world,previous=this.visualCache;
@@ -10085,7 +10218,41 @@ class MapRenderer {
     ctx.restore();
   }
   dismissSelectedFortress(){this.detailDismissedFor=this.selectedId;this.updateDefensePopover();}
-  setMode(mode){this.mode=['terrain','political','era','independence'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
+  setMode(mode){this.mode=['terrain','political','era','independence','culture'].includes(mode)?mode:'political';this.staticAtlasCache=null;this.draw();}
+  setCultureDisplay(mode){this.cultureDisplay=mode==='mix'?'mix':'dominant';if(this.mode==='culture')this.requestDraw();}
+  getCultureOverlayData(){
+    const w=this.world,cache=this.d2CultureCache;
+    if(cache&&cache.world===w&&cache.day===w.dayIndex&&cache.seq===w.changeSeq&&cache.count===w.settlements.length)return cache.markers;
+    const lookup=d2CultureLookup(w);
+    const markers=w.settlements.map(s=>{
+      const stat=d2CultureSummary(s.culturePopulation);
+      return {id:s.id,tileId:s.coreTileId,population:stat.population,dominant:stat.dominant,
+        color:lookup.get(stat.dominant)?.color||'#9DB9C0',mix:stat.mix};
+    }).filter(x=>x.population>0).sort((a,b)=>b.population-a.population||a.id-b.id);
+    this.d2CultureCache={world:w,day:w.dayIndex,seq:w.changeSeq,count:w.settlements.length,markers};return markers;
+  }
+  /** Screen-space settlement markers: never imply population on every owned tile. */
+  drawCultureOverlay(ctx,scale,ox,oy,cw,ch){
+    if(this.mode!=='culture')return;
+    const w=this.world,markers=this.getCultureOverlayData(),small=scale<22,occupied=new Set();
+    ctx.save();ctx.beginPath();ctx.rect(0,0,cw,ch);ctx.clip();
+    for(const m of markers){
+      const t=w.tiles[m.tileId];if(!t)continue;
+      const px=ox+(t.x+(small?.5:.76))*scale,py=oy+(t.y+(small?.5:.23))*scale;
+      if(px< -14||px>cw+14||py< -14||py>ch+14)continue;
+      if(small){const cell=12,key=Math.floor(px/cell)+':'+Math.floor(py/cell);if(occupied.has(key))continue;occupied.add(key);}
+      const r=small?Math.max(2.8,Math.min(5,scale*.34)):Math.max(4.5,Math.min(9,scale*.21));
+      const color=this.cultureDisplay==='mix'?blend('#3A8E90','#E4A36E',Math.min(1,m.mix/70)):m.color;
+      ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fillStyle='rgba(9,25,35,.88)';ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,r-.85,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+      ctx.strokeStyle=m.tileId===this.selectedId?'#FFF0BA':'#112B37';ctx.lineWidth=m.tileId===this.selectedId?2.2:1.5;ctx.stroke();
+      if(this.cultureDisplay==='dominant'&&m.mix>=2){
+        ctx.beginPath();ctx.arc(px,py,r-.9,-Math.PI/2,-Math.PI/2+2*Math.PI*m.mix/100);
+        ctx.strokeStyle='#F2D79C';ctx.lineWidth=Math.max(1.5,r*.34);ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
 resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw();}
   centerOn(id){
     if(!this.world||!this.world.tiles[id])return;
@@ -10525,6 +10692,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       this.armyHitBoxes=[];
       this.scale=scale;this.originX=originX;this.originY=originY;
       this.drawStrategicAtlas(ctx,scale,originX,originY,w,h);
+      this.drawCultureOverlay(ctx,scale,originX,originY,w,h);
       this.drawIndependenceOverlay(ctx,scale,originX,originY,w,h);
       this.drawC6ArmyObjective(ctx,scale,originX,originY);
       const p=document.getElementById('fortressDetail');if(p)p.hidden=true;
@@ -10579,6 +10747,10 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       }
       ctx.restore();
     }
+    // D1A2 screen-space cultural markers remain separate from static map bitmaps.
+    ctx.restore();
+    this.drawCultureOverlay(ctx,scale,originX,originY,w,h);
+    ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();ctx.translate(originX,originY);ctx.scale(scale,scale);
     // Contested territory: amber progress perimeter, not the solid finished-occupation overlay.
     for(const o of world.occupations){
       if(!this.isTileVisible(o.tileId,visible))continue;
@@ -11143,7 +11315,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06d1a1-world';
+const SAVE_KEY='vilob-light-v06d1a2-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -11208,9 +11380,12 @@ function renderInspector(){
   if(settlement){
     rows.push(cell('최초 설립국',app.world.nations[settlement.founderNationId]?.name||'기록 없음'));
     if(settlement.formerCapitalOf.length)rows.push(cell('수도 연혁',capitalHistoryLabel(app.world,settlement)+(isCurrentCapital(app.world,settlement)?' · 현재 수도':' · 현재는 고도')));
-    rows.push(cell('정착지 인구 / 주거',`${number.format(settlement.population)} / ${number.format(settlementHousing(app.world,settlement))}명`),cell('발전 · 단계',settlement.development+' / 100 · '+settlement.level+'단계'));}
+    rows.push(cell('정착지 인구 / 주거',`${number.format(settlement.population)} / ${number.format(settlementHousing(app.world,settlement))}명`),cell('발전 · 단계',settlement.development+' / 100 · '+settlement.level+'단계'));
+    const c=d2CultureSummary(settlement.culturePopulation),main=app.world.cultures.find(x=>x.id===c.dominant);
+    rows.push(cell('주요 주민 문화',main?`${main.name} · ${d2Percent(c.dominantCount,c.population)}`:'주민 없음'),cell('문화 혼합도',c.mix.toFixed(1)+'% · '+c.groups+'개 문화'));}
   if(terra.passable) {const stats=regionalMilitaryStats(app.world,t.id);rows.push(cell('지역 저항력 R',number.format(stats.resistance)),cell('지역 공격력 A',number.format(stats.firepower)));}
   box.replaceChildren(banner,make('div',{class:'detail-grid'},rows));
+  if(settlement)box.append(d2MakeCultureDetails(app.world,settlement.culturePopulation,'정착지 문화별 민간 인구 (타일 전체의 인구 아님)'));
   const tileBuildings=app.world.buildings.filter(b=>b.tileId===t.id);
   if(tileBuildings.length)box.append(make('section',{class:'facility-mini'},[
     make('strong',{text:`일반 시설 ${tileBuildings.length} / ${t.ownerId===null?BUILDING_TILE_SLOTS:generalTileSlotLimit(app.world,t.ownerId)}`}),
@@ -11897,10 +12072,11 @@ function renderNationOverview(){
   const procurementDownload=make('button',{class:'jump-button',type:'button',text:'최근 12분기 건설 자원 조달 CSV'});
   procurementDownload.addEventListener('click',()=>download(`vilob-v05b-procurement-y${timeAt(w.dayIndex).year}.csv`,v05bProcurementCsv(w),'text/csv;charset=utf-8'));
   procurement.append(procurementDownload);
-  const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['military','군사']];
+  const tabs=[['overview','개요·경제'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','문화'],['military','군사']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
   const panels={overview:[grid,leadership,trading,recoverySection,procurement],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places]};
+  if(app.nationSubtab==='culture')panels.culture=[d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
   const content=make('div',{class:'nation-subtab-content',id:'nationSubtabContent',role:'tabpanel','aria-label':tabs.find(([id])=>id===app.nationSubtab)[1]},panels[app.nationSubtab]);
   for(const [id,label] of tabs){
@@ -12075,7 +12251,8 @@ function renderMilitaryRoster(){
     const positionByGroup=new Map(Object.entries(a.deployment).flatMap(([role,ids])=>ids.map(id=>[id,positionNames[role]||role])));
     for(const u of a.units.filter(u=>u.manpower))types.append(make('span',{class:'unit-pill',text:`${UNIT_TYPES[u.typeId]?.label||u.typeId} (${positionByGroup.get(u.id)||'미배치'}) ${u.manpower}명 · 준비 ${c3ReadyMen(u)} / 훈련 ${c3PendingMen(u)} (${u.training??100}%)` }));
     const jump=make('button',{class:'jump-button',type:'button',text:'▦ 지도에서 보기'});jump.addEventListener('click',()=>{goToMap(a.tileId);map.focusArmy(a.id);});
-    card.append(types,jump);return card;
+    const crew=d2CultureCollect(a.units.map(u=>u.culturePopulation));
+    card.append(types,d2MakeCultureDetails(w,crew,'부대 문화별 현역 인원'),jump);return card;
   });
   const countryCards=w.nations.filter(n=>n.active).map(n=>{
     const b=v04eBarracksEffects(w,n.id),men=activeManpower(w,n.id),target=militaryStrengthTarget(w,n.id),capacity=militaryCapacity(w,n.id);
@@ -12393,7 +12570,7 @@ function setWorld(world){
   refreshRngControls();
   $('warHistoryList').dataset.historyKey='';
   editorState.draft=null;editorState.draftSource=null;
-  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();renderWarHistory();renderComparisons();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();
+  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();if(app.activeTab==='world')d2RenderWorldCultures();
   $('coordinateLabel').textContent='X — · Y —';
 }
 function refreshRngControls(){
@@ -12437,9 +12614,9 @@ function refreshSimulationView(redraw){
     map.draw();updateStats();renderChronicle();
     if(app.activeTab==='map')renderInspector();
     if(app.activeTab==='nation'){renderNationList();renderNationOverview();}
-    if(app.activeTab==='military'){renderWarfare();renderMilitaryRoster();renderWarHistory();}
+    if(app.activeTab==='military'){renderWarfare();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();}
     if(app.activeTab==='statistics')renderV04CStats();
-    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();}
+    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();d2RenderWorldCultures();}
     if(app.activeTab==='chronicle')renderChronicle();
   }
 }
@@ -12515,9 +12692,9 @@ navigation=bindTabs(tab=>{
   // A hidden canvas has zero layout size; refresh dimensions only upon visible navigation.
   if(tab==='map')requestAnimationFrame(()=>map.resize());
   else if(tab==='nation'){renderNationOverview();renderPlayerPanel();}
-  else if(tab==='military'){renderMilitaryRoster();renderWarfare();renderWarHistory();}
+  else if(tab==='military'){renderMilitaryRoster();renderWarfare();d2RenderMilitaryCultures();renderWarHistory();}
   else if(tab==='statistics'){v04cSyncStatsUI();renderV04CStats();}
-  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();}
+  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();d2RenderWorldCultures();}
   else if(tab==='chronicle'){renderChronicle();window.scrollTo(0,0);}
 });
 $('chronicleNationFilter').addEventListener('change',e=>{app.chronicleNation=e.target.value;app.chroniclePage=1;renderChronicle();});
@@ -12538,7 +12715,11 @@ for(const btn of document.querySelectorAll('[data-map-mode]'))btn.addEventListen
   map.setMode(btn.dataset.mapMode);
   document.querySelectorAll('.v04c-era-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='era');
   document.querySelectorAll('.c5-independence-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='independence');
+  document.querySelectorAll('.d2-culture-map-key').forEach(el=>el.hidden=btn.dataset.mapMode!=='culture');
+  $('d2CultureModeControl').hidden=btn.dataset.mapMode!=='culture';
 });
+$('d2CultureMode').addEventListener('change',e=>map.setCultureDisplay(e.target.value));
+$('d2MilitaryCultureCard').addEventListener('toggle',()=>d2RenderMilitaryCultures());
 $('bordersToggle').addEventListener('change',e=>{map.showBorders=e.target.checked;map.draw();});
 $('diplomaticBordersToggle').addEventListener('change',e=>{map.showDiplomaticBorders=e.target.checked;map.draw();});
 $('roadsToggle').addEventListener('change',e=>{map.showRoads=e.target.checked;map.draw();});
@@ -12670,9 +12851,11 @@ $('saveBtn').addEventListener('click',()=>{
   catch(error){showToast('저장할 수 없습니다: '+error.message);}
 });
 $('loadBtn').addEventListener('click',()=>{
-  try{const current=localStorage.getItem(SAVE_KEY),legacy=current?null:localStorage.getItem('vilob-light-v06c6-world');
-    const raw=current||legacy;if(!raw){showToast('저장된 월드가 없습니다.');return;}
-    setWorld(deserializeWorld(raw));showToast(legacy?'C6 세계를 문화 초기 추정값으로 이관했습니다. 새 저장 버튼으로 D1A1에 보관하세요.':'저장된 월드를 불러왔습니다.');}
+  try{const current=localStorage.getItem(SAVE_KEY);
+    const previous=current?null:localStorage.getItem('vilob-light-v06d1a1-world');
+    const legacy=current||previous?null:localStorage.getItem('vilob-light-v06c6-world');
+    const raw=current||previous||legacy;if(!raw){showToast('저장된 월드가 없습니다.');return;}
+    setWorld(deserializeWorld(raw));showToast(legacy?'C6 세계를 문화 초기 추정값으로 이관했습니다. 새 저장 버튼으로 D1A2에 보관하세요.':previous?'D1A1 문화 인구 세계를 D1A2로 불러왔습니다. 저장하면 별도 보관됩니다.':'저장된 월드를 불러왔습니다.');}
   catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
