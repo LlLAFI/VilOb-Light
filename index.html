@@ -669,7 +669,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
   <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span id="fortressFirepowerDelta" class="fortress-delta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
   <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 점선: 종속 → 종주</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="map-foot"><div class="atlas-legend-watermark" aria-hidden="true"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button class="atlas-legend-toggle" id="atlasLegendToggle" type="button" aria-controls="atlasLegendList" aria-expanded="false" title="지도 범례 보기">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="c5-independence-key" hidden>독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
@@ -724,7 +724,7 @@ body.atlas-mode .topbar .auto-speed-button{height:29px;padding:0 5px;min-width:4
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6C5';
+const VERSION = 'V0.6C5A';
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -5217,15 +5217,27 @@ function c2FrontLegal(w,a,b){
   c2TreatyInit(w,ta).independencePressure>=50&&c2TreatyInit(w,tb).independencePressure>=50&&
   relationOf(w,a,b)>=10&&!warAgainst(w,a,b));
 }
-function c2PledgeLegal(w,subjectId,supporterId){
+/** C5A: Diplomacy is screened at signing. A ratified pledge is NOT revoked by
+ * quarterly neutral-reversion alone, but may fail for real legal conflicts. */
+function c5aPledgeStructuralLegal(w,subjectId,supporterId){
  const t=v06bSubjectOf(w,subjectId),independent=w.nations[supporterId];
  return Boolean(t&&t.status!=='REBELLION'&&independent?.active&&!v06bSubjectOf(w,supporterId)&&
   !v06bBetween(w,supporterId,subjectId)&&supporterId!==t.overlordId&&
   !allianceBetween(w,supporterId,t.overlordId)&&
   !(independent.truces?.[t.overlordId]>w.dayIndex)&&
-  relationOf(w,subjectId,supporterId)>=15&&
   !warAgainst(w,subjectId,supporterId)&&
   !warAgainst(w,supporterId,t.overlordId));
+}
+function c5aMatureContact(w,subjectId,supporterId){
+ const t=v06bSubjectOf(w,subjectId),o=c5OutreachState(w,subjectId);
+ return Boolean(t&&o&&o.targetId===supporterId&&o.progress>=4&&
+  o.treatyDay===t.formedDay&&o.overlordId===t.overlordId&&
+  relationOf(w,subjectId,supporterId)>=-10&&
+  relationOf(w,supporterId,t.overlordId)<=-10);
+}
+function c2PledgeLegal(w,subjectId,supporterId){
+ return c5aPledgeStructuralLegal(w,subjectId,supporterId)&&
+  (relationOf(w,subjectId,supporterId)>=15||c5aMatureContact(w,subjectId,supporterId));
 }
 function c2WarCoalition(w,subjectId){
  const lead=v06bSubjectOf(w,subjectId);if(!lead)return null;
@@ -5241,7 +5253,8 @@ function c2WarCoalition(w,subjectId){
  // A support promise is specific to a subject and the current overlord.
  for(const pledge of c2IndependenceData(w).independencePledges){
   if(pledge.expiresDay<=w.dayIndex||pledge.status!=='ACTIVE'||!claims.some(c=>c.subjectId===pledge.subjectId&&c.overlordId===pledge.overlordId))continue;
-  if(!w.nations[pledge.supporterId]?.active||!c2PledgeLegal(w,pledge.subjectId,pledge.supporterId))continue;
+  if(!w.nations[pledge.supporterId]?.active||
+     !c5aPledgeStructuralLegal(w,pledge.subjectId,pledge.supporterId))continue;
   if(attackers.includes(pledge.supporterId))continue;
   if(c2CanStartWar(w,[...attackers,pledge.supporterId],defenders))attackers.push(pledge.supporterId);
  }
@@ -5258,7 +5271,10 @@ function c4PreparedMen(w,id){
  return cache.ready.get(id)||0;
 }
 /** C5: read-only explanation shared by the AI and the nation interface. */
-function c5OutreachState(w,subjectId){return c2IndependenceData(w).independenceOutreach[subjectId]||null;}
+function c5OutreachState(w,subjectId){
+ const t=v06bSubjectOf(w,subjectId),o=c2IndependenceData(w).independenceOutreach[subjectId];
+ return t&&o?.treatyDay===t.formedDay&&o?.overlordId===t.overlordId?o:null;
+}
 function c5IndependenceSituation(w,subjectId){
  const t=v06bSubjectOf(w,subjectId);if(!t)return null;
  const outreach=c5OutreachState(w,subjectId);
@@ -5281,7 +5297,10 @@ function c5IndependenceSituation(w,subjectId){
 /** C4: deterministic expected payoff of an external commitment, not an RNG coin toss. */
 function c4BackingAssessment(w,supporterId,subjectId){
  const t=v06bSubjectOf(w,subjectId),n=w.nations[supporterId];
- if(!t||!n?.active||!c2PledgeLegal(w,subjectId,supporterId))return {approve:false,reason:'ILLEGAL'};
+ if(!t||!n?.active||!c5aPledgeStructuralLegal(w,subjectId,supporterId))
+  return {approve:false,reason:'ILLEGAL'};
+ if(!c2PledgeLegal(w,subjectId,supporterId))
+  return {approve:false,reason:'TRUST_NOT_READY'};
  const p=w.aiProfiles[n.aiProfileId]||{},relation=relationOf(w,supporterId,subjectId),
    rivalRelation=relationOf(w,supporterId,t.overlordId);
  const ready=c4PreparedMen(w,supporterId),foe=c4PreparedMen(w,t.overlordId);
@@ -5290,11 +5309,12 @@ function c4BackingAssessment(w,supporterId,subjectId){
  const fronts=warsOfNation(w,supporterId).length;
  const promises=c2IndependenceData(w).independencePledges.filter(x=>x.supporterId===supporterId&&x.status==='ACTIVE'&&x.expiresDay>w.dayIndex).length;
  const contact=c5OutreachState(w,subjectId),engaged=contact?.targetId===supporterId&&contact.progress>=2;
- const strategic=engaged&&relation>=20&&rivalRelation<=10;
+ const mature=c5aMatureContact(w,subjectId,supporterId);
+ const strategic=mature||(engaged&&relation>=20&&rivalRelation<=10);
  const historic=relation>=35&&rivalRelation<=-15;
  const attraction=(p.diplomacy?.cooperation??50)*.25+(p.military?.aggression??50)*.12+
     Math.max(0,relation)*.34+Math.max(0,-rivalRelation)*.40+
-    Math.min(20,Math.max(-20,(advantage-1)*18))+(strategic?13:0);
+    Math.min(20,Math.max(-20,(advantage-1)*18))+(strategic?13:0)+(mature?8:0);
  const risk=44+fronts*12+(n.gold<Math.max(200,militaryUpkeep(w,supporterId)*3)?16:0)+
     (advantage<.85?19:0);
  let reason='LOW_EXPECTED_GAIN';
@@ -5304,7 +5324,7 @@ function c4BackingAssessment(w,supporterId,subjectId){
  else if(!historic&&!strategic)reason='RELATION_OR_INTEREST';
  else if(attraction>=risk)reason='STRATEGIC_SUPPORT';
  return {approve:reason==='STRATEGIC_SUPPORT',attraction:Math.round(attraction),risk:Math.round(risk),
-    advantage:Math.round(advantage*100)/100,relation,rivalRelation,engaged,reason};
+    advantage:Math.round(advantage*100)/100,relation,rivalRelation,engaged,mature,reason};
 }
 function c4FrontAssessment(w,subjectId,peerId){
  const a=v06bSubjectOf(w,subjectId),b=v06bSubjectOf(w,peerId);
@@ -5350,7 +5370,12 @@ function c2ExecuteIndependence(w,id,act){
    t.lastDemandDay=w.dayIndex;}
   for(const pledge of d.independencePledges){if(pledge.status==='ACTIVE'&&col.claims.some(c=>c.subjectId===pledge.subjectId&&c.overlordId===pledge.overlordId)){
     pledge.status=col.attackers.includes(pledge.supporterId)?'FULFILLED':'BROKEN';
-    if(pledge.status==='BROKEN'){v06aRemember(w,pledge.subjectId,pledge.supporterId,'INDEPENDENCE_PLEDGE_BROKEN',{trust:-12,grievance:10});adjustRelation(w,pledge.subjectId,pledge.supporterId,-10);}
+    if(pledge.status==='BROKEN'){
+     v06aRemember(w,pledge.subjectId,pledge.supporterId,'INDEPENDENCE_PLEDGE_BROKEN',{trust:-12,grievance:10});
+     adjustRelation(w,pledge.subjectId,pledge.supporterId,-10);
+     const msg=`${w.nations[pledge.supporterId].name}이(가) ${w.nations[pledge.subjectId].name}에 대한 독립지원 약속을 이행하지 못했습니다.`;
+     event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[pledge.subjectId,pledge.supporterId],`c5a:broken:${pledge.subjectId}:${pledge.supporterId}:${war.id}`);
+    }
   }}
   d.independenceFronts=d.independenceFronts.filter(f=>!col.claims.some(c=>c.subjectId===f.a||c.subjectId===f.b));
   w.diplomacy.subjectOffers=w.diplomacy.subjectOffers.filter(offer=>
@@ -5430,7 +5455,7 @@ function c5RunIndependenceOutreach(w){
   const s=t.subjectId,sub=w.nations[s];
   if(t.status==='REBELLION'||sub?.controller!=='AI'||t.independencePressure<65)continue;
   if(t.lastRejectedDay===null||t.rejectedDemands<2)continue;
-  const previous=d.independenceOutreach[s];
+  const previous=c5OutreachState(w,s);
   if(previous&&w.dayIndex<previous.nextAttemptDay)continue;
   if(d.independencePledges.some(p=>p.subjectId===s&&p.status==='ACTIVE'&&p.expiresDay>w.dayIndex))continue;
   const st=d.independenceStats;
@@ -5450,7 +5475,7 @@ function c5RunIndependenceOutreach(w){
   st.outreachAttempts++;
   if(!chosen){
    st.outreachBlocked++;st.outreachReasons.NO_STRATEGIC_PARTNER=(st.outreachReasons.NO_STRATEGIC_PARTNER||0)+1;
-   d.independenceOutreach[s]={targetId:null,startedDay:previous?.startedDay??w.dayIndex,
+   d.independenceOutreach[s]={targetId:null,treatyDay:t.formedDay,overlordId:t.overlordId,startedDay:previous?.startedDay??w.dayIndex,
     lastAttemptDay:w.dayIndex,nextAttemptDay:w.dayIndex+2*C2_YEAR,progress:0,lastReason:'NO_STRATEGIC_PARTNER'};
    continue;
   }
@@ -5462,11 +5487,15 @@ function c5RunIndependenceOutreach(w){
   const relationGain=chosen.relationship<15?9:chosen.relationship<35?7:3;
   const expense=Math.min(sub.gold,12);sub.gold-=expense;st.outreachGoldSpent+=expense;
   adjustRelation(w,s,chosen.id,relationGain);
-  d.independenceOutreach[s]={targetId:chosen.id,startedDay:first?w.dayIndex:prior.startedDay,
+  d.independenceOutreach[s]={targetId:chosen.id,treatyDay:t.formedDay,overlordId:t.overlordId,startedDay:first?w.dayIndex:prior.startedDay,
    lastAttemptDay:w.dayIndex,nextAttemptDay:w.dayIndex+2*C2_YEAR,progress,lastReason:progress>=2?'CONTACT_MATURE':'CONTACT_STARTED'};
   if(first){st.outreachStarted++;
-   const msg=`${sub.name}이(가) 독립을 위한 외교 접촉을 ${w.nations[chosen.id].name}과 시작했습니다.`;
-   event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[s,chosen.id,t.overlordId],`c5:outreach:${s}:${chosen.id}:${w.dayIndex}`);
+   // One chronicle entry per suzerainty treaty, not one per switched contact.
+   if(!t.c5aOutreachAnnounced){
+    const msg=`${sub.name}이(가) ${w.nations[t.overlordId].name}로부터의 독립을 준비하며 외국과 외교 접촉을 시작했습니다.`;
+    event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[s,chosen.id,t.overlordId],`c5a:outreach:${s}:${t.overlordId}:${t.formedDay}`);
+    t.c5aOutreachAnnounced=true;
+   }
   }else st.outreachProgress++;
   w.changeSeq++;
  }
@@ -5478,6 +5507,14 @@ function c2RunIndependenceQuarter(w,execute){
      d.independenceBackingCooldowns[pairKey(o.from,o.to)]=w.dayIndex+2*C2_YEAR;
  d.independenceOffers=d.independenceOffers.filter(o=>o.expiresDay>w.dayIndex&&w.nations[o.from]?.active&&w.nations[o.to]?.active);
  d.independenceFronts=d.independenceFronts.filter(f=>f.expiresDay>w.dayIndex&&c2FrontLegal(w,f.a,f.b));
+ // Record material promise expiry/invalidation only; ordinary proposal failures stay out of chronicle.
+ for(const p of d.independencePledges){
+  if(p.status!=='ACTIVE')continue;
+  const changed=v06bSubjectOf(w,p.subjectId)?.overlordId!==p.overlordId;
+  if(p.expiresDay>w.dayIndex&&!changed)continue;
+  const msg=`${w.nations[p.supporterId].name}의 ${w.nations[p.subjectId].name} 독립지원 약속이 ${changed?'종주 관계 변경으로 무효화':'기간 만료'}되었습니다.`;
+  event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[p.subjectId,p.supporterId],`c5a:pledge:end:${p.subjectId}:${p.supporterId}:${p.formedDay}`);
+ }
  d.independencePledges=d.independencePledges.filter(p=>p.expiresDay>w.dayIndex&&w.nations[p.subjectId]?.active&&w.nations[p.supporterId]?.active&&v06bSubjectOf(w,p.subjectId)?.overlordId===p.overlordId);
  for(const t of v06bTreaties(w).slice()){
   c2TreatyInit(w,t);c2PressureQuarter(w,t);
@@ -5541,7 +5578,8 @@ function c4RunProactiveBacking(w,execute){
   if(d.independenceOffers.some(o=>o.from===sponsor.id&&o.kind==='BACKING'))continue;
   const targets=v06bTreaties(w).filter(t=>{
      const contact=c5OutreachState(w,t.subjectId),relation=relationOf(w,sponsor.id,t.subjectId),rival=relationOf(w,sponsor.id,t.overlordId);
-     return ((relation>=35&&rival<=-15)||(contact?.targetId===sponsor.id&&contact.progress>=2&&relation>=20&&rival<=10));
+     return ((relation>=35&&rival<=-15)||c5aMatureContact(w,t.subjectId,sponsor.id)||
+       (contact?.targetId===sponsor.id&&contact.progress>=2&&relation>=20&&rival<=10));
     }).filter(t=>t.status!=='REBELLION'&&t.independencePressure>=60&&
      !c2Pledge(w,t.subjectId,sponsor.id)&&!c2Offer(w,t.subjectId,sponsor.id,'SUPPORT')&&
      w.dayIndex>=(d.independenceBackingCooldowns[pairKey(t.subjectId,sponsor.id)]||0)&&
@@ -5599,11 +5637,15 @@ function c2Validate(w,fail){
     !(o.targetId===null||Number.isInteger(o.targetId)&&w.nations[o.targetId])||
     !Number.isInteger(o.progress)||o.progress<0||o.progress>5||
     ![o.startedDay,o.lastAttemptDay,o.nextAttemptDay].every(x=>Number.isSafeInteger(x)&&x>=0)||
-    o.lastAttemptDay>w.dayIndex||o.nextAttemptDay<o.lastAttemptDay||typeof o.lastReason!=='string'||o.lastReason.length>40)fail('C5 독립 외교 접촉');
+    o.lastAttemptDay>w.dayIndex||o.nextAttemptDay<o.lastAttemptDay||
+    !Number.isSafeInteger(o.treatyDay)||o.treatyDay<0||
+    !Number.isInteger(o.overlordId)||!w.nations[o.overlordId]||
+    typeof o.lastReason!=='string'||o.lastReason.length>40)fail('C5A 독립 외교 접촉');
  }
  for(const [k,day] of Object.entries(d.independenceBackingCooldowns))
     if(!/^\d+:\d+$/.test(k)||!Number.isSafeInteger(day)||day<0)fail('C4 독립 지원 재제안 제한');
  for(const t of v06bTreaties(w)){
+  if(t.c5aOutreachAnnounced!==undefined&&t.c5aOutreachAnnounced!==true)fail('C5A 최초 외교 연대기');
   if(!Number.isFinite(t.independencePressure)||t.independencePressure<0||t.independencePressure>100||
    !['ACTIVE','REBELLION'].includes(t.status)||t.status==='REBELLION'&&!w.wars.some(v=>v.id===t.rebellionWarId&&v.kind==='INDEPENDENCE'))fail('C2 종속국 독립 상태');
  }
@@ -9309,7 +9351,7 @@ function validateTradeLegacyForMigration(w){
 /** C2 begins a new save generation. No pre-C2 migration is attempted. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- if(parsed?.version!==VERSION||parsed?.schema!=='vilob-light-v03d')throw Error('V0.6C5 세이브만 불러올 수 있습니다.');
+ if(parsed?.version!==VERSION||parsed?.schema!=='vilob-light-v03d')throw Error('V0.6C5A 세이브만 불러올 수 있습니다.');
  validateWorld(parsed);
  return parsed;
 }
@@ -10195,6 +10237,18 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       const ex=ox+(b.x+.5)*scale,ey=oy+(b.y+.5)*scale;
       if(Math.max(sx,ex)<-30||Math.min(sx,ex)>cw+30||Math.max(sy,ey)<-30||Math.min(sy,ey)>ch+30)continue;
       const pressure=Math.round(t.independencePressure||0),color=pressure>=80?'#F47D72':pressure>=50?'#F0C477':'#A9B5C5';
+      // Committed supporters use a solid mint link; mature contact is a subtle dotted link.
+      const p=(w.diplomacy.independencePledges||[]).find(p=>p.subjectId===t.subjectId&&p.overlordId===t.overlordId&&p.status==='ACTIVE'&&p.expiresDay>w.dayIndex);
+      const o=w.diplomacy.independenceOutreach?.[t.subjectId];
+      const supporter=p?.supporterId??((o?.treatyDay===t.formedDay&&o?.overlordId===t.overlordId&&o.progress>=4)?o.targetId:null);
+      if(supporter!==null&&supporter!==undefined&&w.nations[supporter]?.active){
+       const loc=w.tiles[w.nations[supporter].capitalId];
+       if(loc){
+        ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ox+(loc.x+.5)*scale,oy+(loc.y+.5)*scale);
+        ctx.strokeStyle=p?'#68D8A2':'#91CAD8';ctx.lineWidth=p?2.8:1.4;
+        ctx.globalAlpha=.9;ctx.setLineDash(p?[]:[2,5]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+       }
+      }
       ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.strokeStyle=color;
       ctx.lineWidth=1.8;ctx.globalAlpha=.88;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
       if(sx>=-15&&sy>=-15&&sx<=cw+15&&sy<=ch+15){
@@ -10833,7 +10887,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06c5-world';
+const SAVE_KEY='vilob-light-v06c5a-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -11009,8 +11063,37 @@ function issuePlayerAction(nationId,action){
 }
 function refreshPlayerUI(){renderNationList();renderNationOverview();renderPlayerPanel();renderWarfare();renderMilitaryRoster();renderWarHistory();renderComparisons();}
 
-const C5_BACKING_REASONS={ILLEGAL:'지원 계약 법적 요건 미충족',PROMISE_LIMIT:'지원 약속 상한',MILITARY_RISK:'지원국 군사력·승산 부족',PRESSURE_LOW:'독립 압력 부족',RELATION_OR_INTEREST:'관계·전략적 이해관계 부족',LOW_EXPECTED_GAIN:'지원 비용이 기대 이익보다 큼',STRATEGIC_SUPPORT:'지원 조건 충족'};
+const C5_BACKING_REASONS={TRUST_NOT_READY:'지원 계약 신뢰 부족 (일반 관계 +15 또는 성숙 접촉 필요)',ILLEGAL:'전쟁·휴전·종주 관계 등 지원 불가',PROMISE_LIMIT:'지원 약속 상한',MILITARY_RISK:'지원국 군사력·승산 부족',PRESSURE_LOW:'독립 압력 부족',RELATION_OR_INTEREST:'관계·전략적 이해관계 부족',LOW_EXPECTED_GAIN:'지원 비용이 기대 이익보다 큼',STRATEGIC_SUPPORT:'지원 조건 충족'};
 function c5BackingReason(reason){return C5_BACKING_REASONS[reason]||reason||'관측 대기';}
+/** C5A: one source of truth for the two diplomacy panels. No duplicate AI decision model. */
+function c5aSigningBlockExplanation(w,subjectId,sponsorId){
+ const t=v06bSubjectOf(w,subjectId),supporter=w.nations[sponsorId];
+ if(!t||!supporter?.active)return '유효한 종속국·지원국 상태가 아님';
+ if(v06bSubjectOf(w,sponsorId))return '지원 후보도 다른 나라의 종속국';
+ if(sponsorId===t.overlordId||v06bBetween(w,sponsorId,subjectId))return '지원 불가능한 종주 관계';
+ if(warAgainst(w,sponsorId,t.overlordId))return '지원 후보와 종주국이 이미 전쟁 중';
+ if(warAgainst(w,sponsorId,subjectId))return '지원 후보와 종속국이 전쟁 중';
+ if(allianceBetween(w,sponsorId,t.overlordId))return '지원 후보가 종주국과 동맹 관계';
+ if((supporter.truces?.[t.overlordId]||0)>w.dayIndex)return '지원 후보와 종주국의 휴전 기간';
+ return '지원 계약의 정치·법적 조건 미충족';
+}
+function c5aSupportExplanation(w,subjectId,situation=null){
+ const info=situation||c5IndependenceSituation(w,subjectId),o=info?.outreach;
+ if(!info)return '종속 관계 없음';
+ if(info.pledged.length){
+  const names=info.pledged.map(p=>w.nations[p.supporterId]?.name||'?').join('·');
+  return `독립지원 약속 체결 · ${names} · 실제 참전은 전쟁·휴전·동맹 등 법적 조건에 따라 결정`;
+ }
+ if(!o)return '독립 외교 접촉 대기 · 압력 65 이상·독립 요구 2회 거절 후 시작';
+ if(o.targetId===null)return `지원 후보 없음 · ${Math.max(0,Math.ceil((o.nextAttemptDay-w.dayIndex)/DAYS_PER_YEAR))}년 뒤 재검토`;
+ const name=w.nations[o.targetId]?.name||'알 수 없음';
+ const decision=c4BackingAssessment(w,o.targetId,subjectId);
+ const mature=c5aMatureContact(w,subjectId,o.targetId);
+ const stage=decision.approve?'지원 심사 통과·계약 미체결':
+  mature?'접촉 성숙·전략/합법성 심사':o.progress>=4?'접촉 5단계 달성·실제 지원 조건 미충족':'외교 접촉 진행 중';
+ const reason=decision.reason==='ILLEGAL'?c5aSigningBlockExplanation(w,subjectId,o.targetId):c5BackingReason(decision.reason);
+ return `${name} · 접촉 ${o.progress}/5 · ${stage} · ${reason} · ${Math.max(0,Math.ceil((o.nextAttemptDay-w.dayIndex)/DAYS_PER_YEAR))}년 뒤 접촉 가능`;
+}
 function renderC5IndependenceDashboard(){
  const target=$('c5IndependenceDashboard');if(!target||!app.world)return;
  const w=app.world,ts=(w.diplomacy.subjectTreaties||[]).filter(t=>w.nations[t.subjectId]?.active);
@@ -11021,8 +11104,7 @@ function renderC5IndependenceDashboard(){
  for(const t of [...ts].sort((a,b)=>b.independencePressure-a.independencePressure||a.subjectId-b.subjectId).slice(0,8)){
   const s=c5IndependenceSituation(w,t.subjectId),o=s.outreach,partner=o?.targetId!==null&&o?.targetId!==undefined?w.nations[o.targetId]?.name:null;
   const txt=`${w.nations[t.subjectId].name} → ${w.nations[t.overlordId].name} · 독립 압력 ${t.independencePressure.toFixed(1)}/100 · ${s.blockers.join('·')||'봉기 요건 검토 가능'}`;
-  const decision=partner?c4BackingAssessment(w,o.targetId,t.subjectId):null;
-  const detail=o?`${partner?`외교 접촉 ${partner} · 진행 ${o.progress}/5 · 지원 판단 ${c5BackingReason(decision.reason)}`:'외교 후보 없음'} · ${o.progress>=5?'접촉 충분·지원 판단 중':`다음 접촉 ${Math.max(0,Math.ceil((o.nextAttemptDay-w.dayIndex)/DAYS_PER_YEAR))}년 후`}`:'외교 접촉 대기';
+  const detail=c5aSupportExplanation(w,t.subjectId,s);
   const card=make('div',{class:'c5-diplomacy-entry'},[make('strong',{text:txt}),make('div',{class:'c5-pressure-track'},[make('div',{class:'c5-pressure-fill',style:{width:`${Math.min(100,t.independencePressure)}%`,background:t.independencePressure>=80?'#e68a7b':'#c6a56d'}})]),make('small',{text:detail})]);
   target.append(card);
  }
@@ -11421,8 +11503,7 @@ function renderNationOverview(){
   diplomacy.append(make('div',{class:'muted-line',text:`정치적 지위: ${role} · 조공률 10% (종속 관계에만 적용) · 직속 종속국 상한 2개` }));
   if(suzerain){const status=c5IndependenceSituation(w,n.id),out=status.outreach,partner=out?.targetId!==null&&out?.targetId!==undefined?w.nations[out.targetId]?.name:null;
    diplomacy.append(make('div',{class:'muted-line',text:`C5 독립 판단 · 준비 병력 ${number.format(status.own)} / 종주국 ${number.format(status.foe)} · 외부 지원 ${number.format(status.allies)} · 예상 비율 ${status.ratio.toFixed(2)} (봉기 기준 ${status.threshold.toFixed(2)}) · 주요 제약: ${status.blockers.join(' / ')||'조건 충족 가능'}`}));
-   const reason=partner?c5BackingReason(c4BackingAssessment(w,out.targetId,n.id).reason):'접촉 가능한 지원국 없음';
-   diplomacy.append(make('div',{class:'muted-line',text:out?`C5 독립 외교 · ${partner?partner+' 접촉 '+out.progress+'/5 · '+reason:'접촉 가능한 지원국 없음'} · ${out.progress>=5?'접촉 충분·지원 판단 중':`다음 시도 ${Math.max(0,Math.ceil((out.nextAttemptDay-w.dayIndex)/DAYS_PER_YEAR))}년 후`}`:'C5 독립 외교 · 접촉 기록 없음'}));}
+   diplomacy.append(make('div',{class:'muted-line',text:`C5A 독립 외교 · ${c5aSupportExplanation(w,n.id,status)}`}));}
   if(suzerain)diplomacy.append(make('div',{class:'muted-line',text:`C2 독립 압력 ${suzerain.independencePressure.toFixed(1)}/100 · ${suzerain.status==='REBELLION'?'독립전쟁 중':'평화적 종속'} · 거절 ${suzerain.rejectedDemands||0}회 · 다음 요구 ${Math.max(0,Math.ceil(((suzerain.nextDemandDay||0)-w.dayIndex)/DAYS_PER_YEAR))}년 후` }));
   if(suzerain)diplomacy.append(make('div',{class:'muted-line',text:`종주 조약: ${suzerain.origin==='FORCED'?'전쟁 복속':'자발적 보호'} · ${timeAt(suzerain.formedDay).year}년 시작 · ${Math.max(0,Math.ceil((suzerain.endsDay-w.dayIndex)/DAYS_PER_YEAR))}년 후 50년 관계 재평가 · 지난 분기 ${number.format(suzerain.lastPaid)} / 청구 ${number.format(suzerain.lastDue)} G · 총 조공 ${number.format(suzerain.totalPaid)} G` }));
   if(suzerain)diplomacy.append(make('div',{class:'muted-line',text:`C4 종주국 보호 실적 · 방어 요청 수락 ${suzerain.protectionHelp||0} / 거절 ${suzerain.protectionFailures||0} · 실제 교전 지원 ${suzerain.protectionBattleAid||0} · 방어전 패배 ${suzerain.protectionDefeats||0}` }));
