@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6E2A</title>
+<title>VILOB Light · V0.6E3</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -831,7 +831,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6E2A'; // E2A: deterministic facility focus policy AI
+const VERSION = 'V0.6E4'; // E4: paid settlement/culture assimilation V1; preserves E3A and H1
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1774,8 +1774,8 @@ const D1B_KEYS=Object.freeze(['economy','safety','governance','culture']);
 const D1B_NAMES=Object.freeze({economy:'경제',safety:'안전',governance:'통치',culture:'문화'});
 const D1B_CAUSES=Object.freeze({
   FOOD:'식량 공급 부족',WAR:'국가 간 전쟁',OCCUPATION:'정착지 영토의 점령',CRISIS:'국가 생존 위기',
-  CIVIL:'민간 운영비 미납',CONQUEST:'통치권 변경',FOREIGN_CONQUEST:'다른 문화권의 정복',
-  FOREIGN_RULE:'통치국과 주민의 문화 차이',RECOVERY:'안정에 따른 회복',STABLE:'유의미한 신규 압박 없음'
+  CIVIL:'민간 운영비 미납',TAX_HIGH:'높은 조세 부담',SERVICES_LOW:'공공서비스 축소',CONQUEST:'통치권 변경',FOREIGN_CONQUEST:'다른 문화권의 정복',
+  FOREIGN_RULE:'통치국과 주민의 문화 차이',ASSIMILATION:'동화 정책으로 인한 문화적 반발',RECOVERY:'안정에 따른 회복',STABLE:'유의미한 신규 압박 없음'
 });
 const D1B_BASE_FOREIGN=150;
 const D1B_HISTORY_QUARTERS=12;
@@ -1812,10 +1812,12 @@ function d1bSyncGroups(s,w){
     if(!state.groups[id])state.groups[id]=d1bNewGroup();
     if(w)state.groups[id].culture=d1bCultureScore(w,s,id,state.groups[id]);
   }
+  if(w)e4PruneAbsent(w,s); // E4: clear missing-culture slots after recruitment, annual resize.
 }
 /** Ownership event: immediately recompute derived culture floor; capture shock is still next quarter. */
 function d1bRecordTransfer(w,s,oldOwnerId,newOwnerId){
   const state=s.civilGrievances;if(!state)return;
+  if(w.e2bPeacefulTransfer){d1bSyncGroups(s,w);d2aSyncGroups(w,s);return;}
   state.pendingTransfers.push({dayIndex:w.dayIndex,oldOwnerId,newOwnerId});
   if(state.pendingTransfers.length>12)state.pendingTransfers.splice(0,state.pendingTransfers.length-12);
   d1bSyncGroups(s,w);d2aSyncGroups(w,s);
@@ -1897,21 +1899,25 @@ function d1bQuarter(w){
       }
       const pressures={economy:Math.round(risk.food*120),
         safety:(risk.war?22:0)+(isOccupied?95:0)+(risk.crisis?25:0)+shocks.safety,
-        governance:Math.round(risk.civil*85)+shocks.governance,culture:shocks.culture};
+        governance:Math.round(risk.civil*85)+shocks.governance,
+        culture:shocks.culture+e4CulturePressure(w,s,cultureId)};
       const normalRecovery={economy:18,safety:17,governance:14,culture:12};
       for(const key of D1B_KEYS){
         const pressure=pressures[key],recovery=pressure>0?5:normalRecovery[key],old=group[key];
         if(key==='culture'){
           group.cultureEvent=d1bClamp(group.cultureEvent+Math.min(240,pressure)-recovery);
           group.culture=d1bCultureScore(w,s,cultureId,group);
-        }else group[key]=d1bClamp(old+Math.min(240,pressure)-recovery);
+        }else group[key]=d1bClamp(old+Math.min(240,pressure)-recovery+e3GrievanceDelta(w,w.nations[s.ownerId],key)+e3aGrievanceDelta(w,w.nations[s.ownerId],key));
         const next=group[key];group.delta[key]=next-old;
         group.ceilingQuarters[key]=next===1000?Math.min(1000000,group.ceilingQuarters[key]+1):0;
         group.reasons[key]=key==='economy'&&risk.food>0?'FOOD':key==='safety'&&isOccupied?'OCCUPATION':
           key==='safety'&&transfers.length?'CONQUEST':key==='safety'&&risk.crisis?'CRISIS':
           key==='safety'&&risk.war?'WAR':key==='governance'&&transfers.length?'CONQUEST':
           key==='governance'&&risk.civil>0?'CIVIL':key==='culture'&&foreignCapture?'FOREIGN_CONQUEST':
-          next<old?'RECOVERY':key==='culture'&&d1bCultureBase(w,s,cultureId)>0?'FOREIGN_RULE':'STABLE';
+          key==='culture'&&e4CulturePressure(w,s,cultureId)>0?'ASSIMILATION':
+          next<old?'RECOVERY':key==='economy'&&e3GrievanceDelta(w,w.nations[s.ownerId],key)>0?'TAX_HIGH':
+          (key==='governance'||key==='safety')&&e3GrievanceDelta(w,w.nations[s.ownerId],key)>0?'SERVICES_LOW':
+          key==='culture'&&d1bCultureBase(w,s,cultureId)>0?'FOREIGN_RULE':'STABLE';
         if(pressure>0&&group.reasons[key]!=='STABLE'){
           group.lastPressure[key]=group.reasons[key];group.lastPressureDay[key]=w.dayIndex;
         }
@@ -1994,7 +2000,7 @@ function d1bValidate(w,fail){
 
 // --- src/sim/military-politics-d1c.js ---
 /** V0.6D1C: political grievances of active UnitGroup culture cohorts. Read-only to combat/AI. */
-const D1C_SCHEMA=1,D1C_WINDOW=12,D1C_FIELDS=Object.freeze(['pay','supply','war','command','culture']);
+const D1C_SCHEMA=1,D1C_WINDOW=12,D1C_COMMANDER_HISTORY_DAYS=360,D1C_FIELDS=Object.freeze(['pay','supply','war','command','culture']);
 const D1C_CAUSES=Object.freeze({NONE:'압박 없음',PAY:'군사 급여 미지급',SUPPLY:'군 보급 단절',WAR:'장기 참전',BATTLE:'실제 전투 손실',COMMAND:'전시 지휘관 반복 교체',CULTURE:'소속국과 문화 차이'});
 const d1cBound=n=>Math.max(0,Math.min(1000,Math.round(n||0)));
 function d1cNewGroup(){return {pay:0,supply:0,war:0,command:0,lossShock:0,battleLosses:0,lastBattleDay:null,lastCause:'NONE',lastCauseDay:null};}
@@ -2031,6 +2037,19 @@ function d1cObserveLoss(u,lost,reason='OTHER',day=null){
   g.battleLosses+=count;
   if(Number.isSafeInteger(day)){g.lastBattleDay=day;g.lastCauseDay=day;}
   g.lastCause='BATTLE';
+ }
+}
+/** H1: expire only valid, elapsed commander-change dates at every actual SIM time jump.
+ * No RNG, morale, combat, or AI decisions are invoked here. Leave malformed data
+ * intact so that d1cValidate still reports it instead of silently repairing it. */
+function d1cPruneCommanderHistory(w){
+ for(const army of w.armies){
+  const days=army.militaryPolitics?.commanderChangeDays;
+  if(!Array.isArray(days))continue;
+  for(let i=days.length-1;i>=0;i--){
+   const day=days[i];
+   if(Number.isSafeInteger(day)&&day>=0&&day<=w.dayIndex&&w.dayIndex-day>D1C_COMMANDER_HISTORY_DAYS)days.splice(i,1);
+  }
  }
 }
 /** Only multiple actual commander changes within 360 days of active war count as instability. */
@@ -2079,7 +2098,7 @@ function d1cQuarter(w){
   byNation.get(a.nationId)?.push(a);
   a.militaryPolitics??={commanderChangeDays:[]};
   const meta=a.militaryPolitics;
-  meta.commanderChangeDays=meta.commanderChangeDays.filter(day=>w.dayIndex-day<=360);
+  meta.commanderChangeDays=meta.commanderChangeDays.filter(day=>w.dayIndex-day<=D1C_COMMANDER_HISTORY_DAYS);
   const war=wars.get(a.assignedWarId),months=war?Math.floor((w.dayIndex-war.startedDay)/30):0;
   const warTarget=war?Math.min(380,months*20):0;
   const supplyTarget=a.supplied?0:(a.unsuppliedDays>=60?650:a.unsuppliedDays>=30?400:a.unsuppliedDays>=10?150:0);
@@ -2126,7 +2145,7 @@ function d1cValidate(w,fail){
  for(const a of w.armies){
   const meta=a.militaryPolitics;
   if(!meta||!Array.isArray(meta.commanderChangeDays)||meta.commanderChangeDays.length>8||
-    meta.commanderChangeDays.some(d=>!Number.isSafeInteger(d)||d<0||d>w.dayIndex||w.dayIndex-d>360))fail('D1C 지휘 변경 이력');
+    meta.commanderChangeDays.some(d=>!Number.isSafeInteger(d)||d<0||d>w.dayIndex||w.dayIndex-d>D1C_COMMANDER_HISTORY_DAYS))fail('D1C 지휘 변경 이력');
   for(const u of a.units){
    const state=u.militaryGrievances;
    if(!state||!state.groups||typeof state.groups!=='object'||Array.isArray(state.groups)||
@@ -3547,9 +3566,12 @@ function civilUpkeep(world,nationId){
   const roads=world.tiles.filter(t=>t.ownerId===nationId)
     .reduce((sum,t)=>sum+(t.roadLevel===2?3:t.roadLevel===1?1:0),0);
   const roadCosts=Math.ceil(roads*(1-roadDiscount));
-  const services=Math.floor(pop*.06);
+  const gov=world.nations[nationId]?.governance?.national||{};
+  const services=e3ServiceDue(Math.floor(pop*.06),gov.publicServices||'NORMAL');
+  const relief=gov.relief==='ON'?e3aSocialDue(pop,'relief'):0;
+  const security=gov.security==='ON'?e3aSocialDue(pop,'security'):0;
   const barracks=v04eBarracksCandidates(world,nationId).reduce((sum,b)=>sum+V04E_BARRACKS[b.level].upkeep,0);
-  return {services,buildings,forts,roads:roadCosts,barracks,total:services+buildings+forts+roadCosts+barracks};
+  return {services,relief,security,buildings,forts,roads:roadCosts,barracks,total:services+relief+security+buildings+forts+roadCosts+barracks};
 }
 function ensureCivilFinance(n){
   if(!n.civilFinance)n.civilFinance={billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0};
@@ -3574,7 +3596,7 @@ function projectedQuarter(world,nation){
     const gathered=k==='food'?Math.floor(passive[k]*(1+techBonus(world,nation.id,'passiveFood'))):passive[k];
     return [k,gathered+Math.floor(facilities.produced[k]*(1+bonus))];
   }));
-  const goldIncome=Math.floor((6+pop*.34+dev*.18+owned.length*.15)*(1+techBonus(world,nation.id,'goldIncome')))+network.gold+network.connected*techBonus(world,nation.id,'roadGold');
+  const goldIncome=e3TaxGold((6+pop*.34+dev*.18+owned.length*.15)*(1+techBonus(world,nation.id,'goldIncome')),nation.governance?.national?.tax||'NORMAL')+network.gold+network.connected*techBonus(world,nation.id,'roadGold');
   const foodConsumed=Math.ceil(pop*.38);
   const knowledgeIncome=Math.max(1,Math.floor(settlements.length+dev/55))+facilities.knowledge;
   const upkeepBase=militaryUpkeep(world,nation.id);
@@ -3671,9 +3693,26 @@ function runEconomyQuarter(world){
     barracksFinance.unpaidLastQuarter=q.civil.barracks-barracksPaid;
     barracksFinance.totalPaid+=barracksPaid;
     barracksFinance.totalUnpaid+=q.civil.barracks-barracksPaid;
-    const finance=ensureCivilFinance(n),otherCivilPaid=Math.min(n.gold,q.civil.total-q.civil.barracks);
+    // E3A: the old civil invoice retains priority; discretionary social measures
+    // are all-or-nothing and cannot crowd out the previous public-service payment.
+    const finance=ensureCivilFinance(n),baseDue=q.civil.total-q.civil.barracks-q.civil.relief-q.civil.security;
+    const otherCivilPaid=Math.min(n.gold,baseDue);
     n.gold-=otherCivilPaid;
-    const civilPaid=barracksPaid+otherCivilPaid;
+    const serviceFinance=n.governance.serviceFinance,servicePaid=Math.min(otherCivilPaid,q.civil.services);
+    serviceFinance.lastQuarterDay=world.dayIndex;serviceFinance.billed=q.civil.services;serviceFinance.paid=servicePaid;serviceFinance.unpaid=q.civil.services-servicePaid;
+    serviceFinance.totalPaid+=servicePaid;serviceFinance.totalUnpaid+=serviceFinance.unpaid;
+    const social=n.governance.socialFinance;
+    let socialPaid=0;
+    social.lastQuarterDay=world.dayIndex;
+    for(const key of E3A_SOCIAL_KEYS){
+      const due=q.civil[key];
+      const paid=due>0&&n.gold>=due?due:0;
+      n.gold-=paid;socialPaid+=paid;
+      social[key+'Billed']=due;social[key+'Paid']=paid;
+    }
+    social.billed=q.civil.relief+q.civil.security;social.paid=socialPaid;social.unpaid=social.billed-socialPaid;
+    social.totalPaid+=socialPaid;social.totalUnpaid+=social.unpaid;
+    const civilPaid=barracksPaid+otherCivilPaid+socialPaid;
     finance.billedLastQuarter=q.civil.total;finance.paidLastQuarter=civilPaid;
     finance.unpaidLastQuarter=q.civil.total-civilPaid;finance.totalPaid+=civilPaid;finance.totalUnpaid+=finance.unpaidLastQuarter;
     n.knowledge=Math.min(1000000,n.knowledge+q.knowledgeIncome);
@@ -5192,7 +5231,7 @@ function e5aRenewalDecision(w,t){
  const parts=e5RelationComponents(w,t.a,t.b);
  // Remove the post-expiration trust (normally zero) before adding the final
  // valid day's trust. Decompose before clamping to preserve +/-100 semantics.
- const relation=bound(parts.base+parts.capital+parts.border+parts.betrayal+parts.tension+trust,-100,100);
+ const relation=bound(parts.base+parts.capital+parts.border+parts.betrayal+parts.tension+parts.culture+trust,-100,100);
  const p=w.aiProfiles[w.nations[t.a].aiProfileId],q=w.aiProfiles[w.nations[t.b].aiProfileId];
  const cooperation=(p?.diplomacy?.cooperation??50)+(q?.diplomacy?.cooperation??50);
  const reason=w.nations[t.a].controller!=='AI'||w.nations[t.b].controller!=='AI'?'PLAYER_CONTROLLED':
@@ -5223,11 +5262,11 @@ function e5BilateralModifier(w,a,b){
 }
 function e5InvalidateRelations(w){w.diplomacy.relationRevision=(w.diplomacy.relationRevision||0)+1;e5RelationCache.delete(w);}
 function e5RelationComponents(w,a,b){
- if(a===b)return {base:100,capital:0,border:0,trust:0,betrayal:0,tension:0,total:100};
+ if(a===b)return {base:100,capital:0,border:0,trust:0,betrayal:0,tension:0,culture:0,total:100};
  const base=w.diplomacy?.pairs?.[pairKey(a,b)]?.relation??0;
 const capital=capitalGrievance(w,a,b),border=e5BorderPenalty(w,a,b);
- const trust=e5TrustBonus(w,a,b),betrayal=e5BetrayalScar(w,a,b),tension=allianceTensionOf(w,a,b);
- return {base,capital,border,trust,betrayal,tension,total:bound(base+capital+border+trust+betrayal+tension,-100,100)};
+ const trust=e5TrustBonus(w,a,b),betrayal=e5BetrayalScar(w,a,b),tension=allianceTensionOf(w,a,b),culture=e2bCulturalModifier(w,a,b);
+ return {base,capital,border,trust,betrayal,tension,culture,total:bound(base+capital+border+trust+betrayal+tension+culture,-100,100)};
 }
 function e5AppendHistory(w,kind,a,b,extra={}){
  const d=w.diplomacy;d.history??=[];
@@ -5272,7 +5311,7 @@ function e5InvalidateBorders(w){w.diplomacy.borderRevision=(w.diplomacy.borderRe
  * third-party hostility must not recursively depend on itself. */
 function rawRelationOf(w,a,b){
   if(a===b)return 100;
-  return bound((w.diplomacy?.pairs?.[pairKey(a,b)]?.relation??0)+capitalGrievance(w,a,b)+e5BilateralModifier(w,a,b),-100,100);
+  return bound((w.diplomacy?.pairs?.[pairKey(a,b)]?.relation??0)+capitalGrievance(w,a,b)+e5BilateralModifier(w,a,b)+e2bCulturalModifier(w,a,b),-100,100);
 }
 /** Active war takes priority over the third state's pre-existing hostility. */
 function thirdPartyAlliancePenalty(w,third,partner){
@@ -10380,7 +10419,7 @@ function d2bInspectorPanel(w,s){
 }
 function d2bNationPanel(w,n){
  const list=w.uprisings.active.filter(f=>f.authorityNationId===n.id),sum=list.reduce((a,f)=>a+d2bSize(f),0),section=make('section',{class:'overview-section d2b-panel'});
- section.append(make('h3',{text:'⚔ V0.6E2A · 시설 정책 AI · 반란군 편제'}),make('div',{class:'muted-line',text:`활동 중인 봉기 ${list.length}세력 · 반란군 ${number.format(sum)}명 · 국가군과 별도 소속·실제 편제 전투력 적용`}));
+ section.append(make('h3',{text:'⚔ V0.6E3 · 재통합 외교·문화 우호도 · 재정·시설 정책 AI'}),make('div',{class:'muted-line',text:`활동 중인 봉기 ${list.length}세력 · 반란군 ${number.format(sum)}명 · 국가군과 별도 소속·실제 편제 전투력 적용`}));
  for(const f of list)for(const d of f.militia)if(d.men>0)section.append(d2bUprisingCard(w,f,d,true));
  if(n.rebelOrigin)section.append(make('div',{class:'muted-line',text:`⚑ 봉기에서 성립 · 봉기 #${n.rebelOrigin.uprisingId} · 과거 통치국 ${w.nations[n.rebelOrigin.originNationId]?.name||'미상'} · ${n.rebelOrigin.status} · 참여 문화 ${n.rebelOrigin.cultureId}`}));
  if(!list.length)section.append(make('div',{class:'muted-line',text:'현재 활동 중인 무장 봉기가 없습니다.'}));
@@ -10573,7 +10612,7 @@ function d2cValidate(w,fail){
   Object.values(u.foundingBlocked).some(v=>!Number.isSafeInteger(v)||v<0))fail('D2C founding counters');
  for(const n of w.nations){const r=n.rebelOrigin;if(!r)continue;
   if(!Number.isSafeInteger(r.uprisingId)||!w.nations[r.originNationId]||!w.cultures.some(c=>c.id===r.cultureId)||
-    !['SECESSION','INDEPENDENT','RECONQUERED'].includes(r.status)||!Number.isSafeInteger(r.formedDay)||
+    !['SECESSION','INDEPENDENT','RECONQUERED','REUNIFIED'].includes(r.status)||!Number.isSafeInteger(r.formedDay)||
     r.formedDay>w.dayIndex||n.primaryCultureId!==r.cultureId||
     !Array.isArray(r.mobilizationLedgers)||r.mobilizationLedgers.some(l=>l.cultureId!==r.cultureId||!Number.isSafeInteger(l.baselinePopulation)||
     l.initialCap!==Math.floor(l.baselinePopulation*D2C_INITIAL_CAP_RATE)||l.lifetimeCap!==Math.floor(l.baselinePopulation*D2C_LIFETIME_CAP_RATE)||
@@ -10592,14 +10631,14 @@ function d2cValidate(w,fail){
 const E1_SCHEMA=1,E1_HISTORY_MAX=48,E1_ELIGIBLE_FACILITIES=Object.freeze(['farm','lumber','quarry','mine','academy','barracks']);
 const E1_DEFINITIONS={
  FACILITY_FOCUS:{scope:'facility',label:'시설 생산 집중',release:'E2',enabled:true,gold:0,apUnits:0},
- TAX:{scope:'nation',label:'조세',release:'E3',enabled:false,gold:0,apUnits:0},
- PUBLIC_SERVICES:{scope:'nation',label:'공공서비스',release:'E3',enabled:false,gold:0,apUnits:0},
- RELIEF:{scope:'nation',label:'구휼',release:'E3',enabled:false,gold:0,apUnits:0},
- SECURITY:{scope:'nation',label:'치안',release:'E3',enabled:false,gold:0,apUnits:0},
- ASSIMILATION:{scope:'culture',label:'동화',release:'E4',enabled:false,gold:0,apUnits:0},
+ TAX:{scope:'nation',label:'조세',release:'E3',enabled:true,gold:0,apUnits:0},
+ PUBLIC_SERVICES:{scope:'nation',label:'공공서비스',release:'E3',enabled:true,gold:0,apUnits:0},
+ RELIEF:{scope:'nation',label:'구휼',release:'E3A',enabled:true,gold:0,apUnits:0},
+ SECURITY:{scope:'nation',label:'치안',release:'E3A',enabled:true,gold:0,apUnits:0},
+ ASSIMILATION:{scope:'culture',label:'동화',release:'E4',enabled:true,gold:0,apUnits:0},
  MASS_KILLING:{scope:'culture',label:'학살',release:'E5',enabled:false,gold:0,apUnits:0}
 };
-function e1NewGovernance(day=0){return {policyAI:e2aNewState(day,120),schema:E1_SCHEMA,national:{tax:'NORMAL',publicServices:'NORMAL',security:'NORMAL'},facilities:{},cultures:{},
+function e1NewGovernance(day=0){return {policyAI:e2aNewState(day,120),serviceFinance:e3NewServiceFinance(),socialFinance:e3aNewSocialFinance(),assimilationFinance:e4NewFinance(),fiscalAI:e3NewFiscalAI(day),schema:E1_SCHEMA,national:{tax:'NORMAL',publicServices:'NORMAL',relief:'OFF',security:'OFF'},facilities:{},cultures:{},
  finance:{lastQuarterDay:null,billedGold:0,paidGold:0,unpaidGold:0,billedAPUnits:0,paidAPUnits:0,unpaidAPUnits:0,
   totalPaidGold:0,totalUnpaidGold:0,totalPaidAPUnits:0,totalUnpaidAPUnits:0,activeCount:0,fundedCount:0},history:[]};}
 function e1InitWorld(w){for(const n of w.nations)n.governance=e1NewGovernance();}
@@ -10638,9 +10677,9 @@ function e1CanChange(w,nationId,policyId,target,enable){
  const n=w.nations[nationId],definition=E1_DEFINITIONS[policyId];
  if(!n?.active||!n.governance||typeof enable!=='boolean'||!definition?.enabled)return {ok:false,reason:'미구현 정책 또는 비활성 국가'};
  const scope=definition.scope,key=e1Key(scope,target);if(key===null)return {ok:false,reason:'유효하지 않은 정책 대상'};
- if(scope==='nation')return {ok:false,reason:'E1 국가 정책은 중립 상태로 고정'};
+ if(scope==='nation')return {ok:false,reason:'국가 조세·공공서비스 정책은 수준별 변경 API 이용'};
  if(scope==='facility'&&enable&&!e1FacilityValid(w,nationId,Number(key)))return {ok:false,reason:'소유·가동 시설이 아니거나 정책 대상 제외'};
- if(scope==='culture'&&!e1CultureValid(w,nationId,target))return {ok:false,reason:'대상 문화집단 없음'};
+ if(scope==='culture'&&enable&&!e1CultureValid(w,nationId,target))return {ok:false,reason:'대상 문화집단 없음'};
  const bucket=scope==='facility'?n.governance.facilities:n.governance.cultures,old=bucket[key];
  if(enable&&old)return {ok:false,reason:'이미 활성화된 정책'};
  if(!enable&&(!old||old.policyId!==policyId))return {ok:false,reason:'활성화된 정책이 아님'};
@@ -10649,8 +10688,10 @@ function e1CanChange(w,nationId,policyId,target,enable){
 }
 function e1ChangePolicy(w,nationId,policyId,target,enable,actor='PLAYER'){
  const check=e1CanChange(w,nationId,policyId,target,enable);if(!check.ok)return check;
+ if(policyId==='ASSIMILATION'&&(actor!=='PLAYER'||w.nations[nationId]?.controller!=='PLAYER'))return {ok:false,reason:'E4 동화 정책은 플레이어 통제 국가에서만 변경 가능'};
  const n=w.nations[nationId],bucket=check.scope==='facility'?n.governance.facilities:n.governance.cultures;
- if(enable)bucket[check.key]={policyId,startedDay:w.dayIndex,lastChangedDay:w.dayIndex,paidQuarterDay:null};
+ if(enable)bucket[check.key]={policyId,startedDay:w.dayIndex,lastChangedDay:w.dayIndex,paidQuarterDay:null,
+  ...(policyId==='ASSIMILATION'?{carryProgress:0,lastConverted:0,totalConverted:0,lastConvertedDay:null}: {})};
  else delete bucket[check.key];
  e1History(w,n,enable?'START':'STOP',policyId,check.scope,check.key,actor==='AI'?'AI':'PLAYER');
  w.changeSeq++;return {ok:true,policyId,scope:check.scope,key:check.key,enabled:enable};
@@ -10675,7 +10716,15 @@ function e1OnSettlementMerge(w,nationId,primaryId,secondaryId){
  for(const key of Object.keys(gov.cultures).filter(k=>k.startsWith(`${secondaryId}|`))){
    const newKey=`${primaryId}|${key.split('|').slice(1).join('|')}`;
    if(!Object.hasOwn(gov.cultures,newKey))gov.cultures[newKey]=gov.cultures[key];
-   else e1History(w,n,'ENDED',gov.cultures[key].policyId,'culture',key,'MERGE_CONFLICT');
+   else {
+    const incumbent=gov.cultures[newKey],incoming=gov.cultures[key];
+    if(incumbent.policyId==='ASSIMILATION'&&incoming.policyId==='ASSIMILATION'){
+      incumbent.carryProgress+=incoming.carryProgress;
+      incumbent.totalConverted+=incoming.totalConverted;
+      incumbent.lastConverted+=incoming.lastConverted;
+      if(incoming.lastConvertedDay!==null&&(incumbent.lastConvertedDay===null||incoming.lastConvertedDay>incumbent.lastConvertedDay))incumbent.lastConvertedDay=incoming.lastConvertedDay;
+    } else e1History(w,n,'ENDED',incoming.policyId,'culture',key,'MERGE_CONFLICT');
+   }
    delete gov.cultures[key];
  }
 }
@@ -10701,12 +10750,15 @@ function e1SettleQuarter(w,n){
    // Incomplete/upgrading/disconnected buildings retain intent, but receive no funding.
    if(!e1CheckActive(w,n,scope,key,e)||scope==='facility'&&e.policyId===E2_FOCUS_POLICY&&!e2FocusBillable(w,n,e1Building(w,Number(key)))){e.paidQuarterDay=null;continue;}
    fin.activeCount++;
-   const gold=e.policyId===E2_FOCUS_POLICY?e2FocusQuarterCost(e1Building(w,Number(key))):Math.max(0,Math.floor(def.gold)),apUnits=Math.max(0,Math.floor(def.apUnits));
+   const gold=e.policyId===E2_FOCUS_POLICY?e2FocusQuarterCost(e1Building(w,Number(key))):
+     e.policyId==='ASSIMILATION'?e4QuarterCost(w,key):Math.max(0,Math.floor(def.gold)),apUnits=Math.max(0,Math.floor(def.apUnits));
+   if(e.policyId==='ASSIMILATION')e4RecordInvoice(w,n,e,gold);
    fin.billedGold+=gold;fin.billedAPUnits+=apUnits;
    const price={gold,apUnits,knowledge:0,resources:{}};
    const paid=payCost(n,price,'civil');
    if(paid){fin.paidGold+=gold;fin.paidAPUnits+=apUnits;fin.fundedCount++;e.paidQuarterDay=w.dayIndex;}
    else{fin.unpaidGold+=gold;fin.unpaidAPUnits+=apUnits;e.paidQuarterDay=null;}
+   if(e.policyId==='ASSIMILATION')e4RecordPayment(w,n,gold,paid);
   }
  }
  fin.totalPaidGold+=fin.paidGold;fin.totalUnpaidGold+=fin.unpaidGold;
@@ -10718,7 +10770,7 @@ function e1Validate(w,fail){
  const int=(v)=>Number.isSafeInteger(v)&&v>=0;
  for(const n of w.nations){
   const g=n.governance,f=g?.finance;
-  if(!g||g.schema!==E1_SCHEMA||!g.national||g.national.tax!=='NORMAL'||g.national.publicServices!=='NORMAL'||g.national.security!=='NORMAL'||
+  if(!g||g.schema!==E1_SCHEMA||!g.national||!Object.hasOwn(E3_TAX_RATES,g.national.tax)||!Object.hasOwn(E3_SERVICE_RATES,g.national.publicServices)||!E3A_SOCIAL_TIERS.includes(g.national.relief)||!E3A_SOCIAL_TIERS.includes(g.national.security)||
     !g.facilities||Array.isArray(g.facilities)||!g.cultures||Array.isArray(g.cultures)||!f||!Array.isArray(g.history)||g.history.length>E1_HISTORY_MAX)
      fail('E1 정책 구조');
   const kv=['billedGold','paidGold','unpaidGold','billedAPUnits','paidAPUnits','unpaidAPUnits','totalPaidGold','totalUnpaidGold','totalPaidAPUnits','totalUnpaidAPUnits','activeCount','fundedCount'];
@@ -10734,14 +10786,171 @@ function e1Validate(w,fail){
       if(!def?.enabled||def.scope!==scope||!int(e.startedDay)||!int(e.lastChangedDay)||e.startedDay>w.dayIndex||e.lastChangedDay>w.dayIndex||
         !(e.paidQuarterDay===null||int(e.paidQuarterDay)&&e.paidQuarterDay<=w.dayIndex&&e.paidQuarterDay%30===0)||
         (scope==='facility'&&(!/^(0|[1-9]\d*)$/.test(key)||!e1FacilityOwned(w,n.id,Number(key))))||
-        (scope==='culture'&&(!/^\d+\|[^|]+$/.test(key)||!e1CheckActive(w,n,scope,key,e))))fail('E1 정책 대상');
+        (scope==='culture'&&(!/^\d+\|[^|]+$/.test(key)||!e1CheckActive(w,n,scope,key,e)))||
+        (e.policyId==='ASSIMILATION'&&!e4ValidEntry(w,e)))fail('E1 정책 대상');
     }
   }
  }
  return true;
 }
-function e1GovernancePanel(w,n){return e2GovernancePanel(w,n);}
+function e1GovernancePanel(w,n){const wrapper=make('div');wrapper.append(e3FiscalPanel(w,n),e4AssimilationPanel(w,n),e2GovernancePanel(w,n));return wrapper;}
 // -- end V0.6E1 policy foundation --
+
+// V0.6E4 — deterministic, conservation-only cultural assimilation V1.
+// Manual nation settlement/culture policy; E6 AI never starts this policy here.
+// One quarter = 30 days. 0.004 per remaining target, saved fractional carry.
+const E4_RATE=.004,E4_GOLD_PER_PERSON=.02,E4_CULTURE_PRESSURE=18;
+function e4NewFinance(){return {lastQuarterDay:null,billed:0,paid:0,unpaid:0,converted:0,
+ totalBilled:0,totalPaid:0,totalUnpaid:0,totalConverted:0};}
+function e4MigrateWorld(w){for(const n of w.nations)n.governance.assimilationFinance??=e4NewFinance();}
+function e4QuarterCost(w,key){
+ const [sid,id]=key.split('|'),s=w.settlements.find(t=>t.id===Number(sid));
+ const count=s?.culturePopulation?.[id]||0;
+ return count>0?Math.max(1,Math.ceil(count*E4_GOLD_PER_PERSON)):0;
+}
+function e4RecordInvoice(w,n,e,gold){
+ const f=n.governance.assimilationFinance;
+ if(f.lastQuarterDay!==w.dayIndex){f.lastQuarterDay=w.dayIndex;f.billed=0;f.paid=0;f.unpaid=0;f.converted=0;}
+ f.billed+=gold;f.totalBilled+=gold;
+ e.lastBilledGold=gold;
+}
+function e4RecordPayment(w,n,gold,success){
+ const f=n.governance.assimilationFinance;
+ if(success){f.paid+=gold;f.totalPaid+=gold;}
+ else{f.unpaid+=gold;f.totalUnpaid+=gold;}
+}
+function e4PruneAbsent(w,s){
+ const n=w.nations[s.ownerId],bucket=n?.governance?.cultures;if(!bucket)return;
+ const prefix=`${s.id}|`;
+ for(const key of Object.keys(bucket))if(key.startsWith(prefix)){
+  const id=key.slice(prefix.length);
+  if(!(s.culturePopulation?.[id]>0)||id===n.primaryCultureId)e1PrunePolicy(w,n,'culture',key,'CULTURE_NOT_PRESENT');
+ }
+}
+function e4CulturePressure(w,s,id){
+ const e=w.nations[s.ownerId]?.governance?.cultures?.[`${s.id}|${id}`];
+ return e?.policyId==='ASSIMILATION'&&e.paidQuarterDay===w.dayIndex?E4_CULTURE_PRESSURE:0;
+}
+function e4ValidEntry(w,e){
+ const valid=x=>Number.isSafeInteger(x)&&x>=0;
+ return Number.isFinite(e.carryProgress)&&e.carryProgress>=0&&e.carryProgress<10000&&
+  valid(e.lastConverted)&&valid(e.totalConverted)&&e.lastConverted<=e.totalConverted&&
+  (e.lastConvertedDay===null||valid(e.lastConvertedDay)&&e.lastConvertedDay<=w.dayIndex&&e.lastConvertedDay%30===0)&&
+  (e.lastBilledGold===undefined||valid(e.lastBilledGold));
+}
+/** Preserve source cohorts' grievances and movement supporters when culture membership changes. */
+function e4CarrySocial(w,s,source,target,amount){
+ const pool=s.culturePopulation,oldTarget=pool[target]||0,fromCount=pool[source]||0;
+ if(!amount||fromCount<amount)return;
+ const src=s.civilGrievances.groups[source]||d1bNewGroup(),dst=s.civilGrievances.groups[target]||d1bNewGroup();
+ const total=oldTarget+amount;
+ const mix=(a,b)=>Math.round((a*oldTarget+b*amount)/total);
+ for(const key of D1B_KEYS){
+  if(key==='culture')continue; // recompute culture floor for the new identity
+  dst[key]=mix(dst[key],src[key]);
+  dst.delta[key]=mix(dst.delta[key],src.delta[key]);
+  dst.ceilingQuarters[key]=mix(dst.ceilingQuarters[key],src.ceilingQuarters[key]);
+  if(amount>oldTarget){dst.reasons[key]=src.reasons[key];dst.lastPressure[key]=src.lastPressure[key];dst.lastPressureDay[key]=src.lastPressureDay[key];}
+ }
+ dst.cultureEvent=mix(dst.cultureEvent,src.cultureEvent);
+ dst.culture=d1bCultureScore(w,s,target,dst);
+ dst.delta.culture=mix(dst.delta.culture,src.delta.culture);
+ dst.ceilingQuarters.culture=mix(dst.ceilingQuarters.culture,src.ceilingQuarters.culture);
+ if(amount>oldTarget){dst.reasons.culture=src.reasons.culture;dst.lastPressure.culture=src.lastPressure.culture;dst.lastPressureDay.culture=src.lastPressureDay.culture;}
+ s.civilGrievances.groups[target]=dst;
+ const political=s.politicalMovementGroups||{},srcPol=political[source]||d2aNewGroup(w.dayIndex),dstPol=political[target]||d2aNewGroup(w.dayIndex);
+ for(const type of D2A_TYPE_ORDER)dstPol.streaks[type]=mix(dstPol.streaks[type],srcPol.streaks[type]);
+ dstPol.cooldownUntil=Math.max(dstPol.cooldownUntil,srcPol.cooldownUntil);
+ if(srcPol.movement){
+  const movedSupport=Math.min(srcPol.movement.supporters,Math.floor(srcPol.movement.supporters*amount/fromCount));
+  srcPol.movement.supporters-=movedSupport;
+  if(!dstPol.movement){dstPol.movement=structuredClone(srcPol.movement);dstPol.movement.supporters=movedSupport;}
+  else{dstPol.movement.supporters=Math.min(total,dstPol.movement.supporters+movedSupport);
+   dstPol.movement.organization=mix(dstPol.movement.organization,srcPol.movement.organization);
+   dstPol.movement.radicalization=mix(dstPol.movement.radicalization,srcPol.movement.radicalization);}
+  dstPol.movement.authorityNationId=s.ownerId;
+  if(dstPol.movement.type==='REUNIFICATION')dstPol.movement.claimNationId=d2aGoal(w,s,target,'REUNIFICATION');
+ }
+ political[target]=dstPol;
+}
+function e4ApplyQuarter(w){
+ if(w.dayIndex%30!==0)return;
+ for(const n of w.nations){
+  const gov=n.governance,f=gov.assimilationFinance;
+  if(f.lastQuarterDay!==w.dayIndex){f.lastQuarterDay=w.dayIndex;f.billed=0;f.paid=0;f.unpaid=0;f.converted=0;}
+  const keys=Object.keys(gov.cultures).sort();
+  for(const key of keys){
+   const entry=gov.cultures[key];if(entry?.policyId!=='ASSIMILATION'||entry.paidQuarterDay!==w.dayIndex)continue;
+   const [sid,source]=key.split('|'),s=w.settlements.find(t=>t.id===Number(sid));
+   if(!s||s.ownerId!==n.id)continue;
+   const count=s.culturePopulation?.[source]||0;
+   const target=n.primaryCultureId;
+   if(count<=0||source===target)continue;
+   const progress=count*E4_RATE+entry.carryProgress;
+   const converted=Math.min(count,Math.floor(progress+1e-10));
+   entry.carryProgress=Math.max(0,progress-converted);
+   entry.lastConverted=converted;
+   entry.lastConvertedDay=w.dayIndex;
+   if(converted){
+    e4CarrySocial(w,s,source,target,converted);
+    s.culturePopulation[source]-=converted;
+    if(!s.culturePopulation[source])delete s.culturePopulation[source];
+    s.culturePopulation[target]=(s.culturePopulation[target]||0)+converted;
+    // No civilians created/lost and no changes to reserve, trainee or field armies.
+    entry.totalConverted+=converted;f.converted+=converted;f.totalConverted+=converted;
+    d1bSyncGroups(s,w);d2aSyncGroups(w,s);w.changeSeq++;
+   }
+   if(!(s.culturePopulation[source]>0))e1PrunePolicy(w,n,'culture',key,'CULTURE_FULLY_ASSIMILATED');
+  }
+ }
+}
+function e4Validate(w,fail){
+ const integer=x=>Number.isSafeInteger(x)&&x>=0;
+ for(const n of w.nations){
+  const f=n.governance?.assimilationFinance;
+  if(!f||['billed','paid','unpaid','converted','totalBilled','totalPaid','totalUnpaid','totalConverted'].some(k=>!integer(f[k]))||
+    f.billed!==f.paid+f.unpaid||f.totalBilled!==f.totalPaid+f.totalUnpaid||f.paid>f.billed||f.converted>f.totalConverted||
+    !(f.lastQuarterDay===null||integer(f.lastQuarterDay)&&f.lastQuarterDay<=w.dayIndex&&f.lastQuarterDay%30===0))fail('E4 동화 비용·인구 회계');
+  if(f.lastQuarterDay===null&&(f.billed||f.paid||f.converted))fail('E4 정산 시점');
+ }
+}
+function e4Audit(w){
+ return {version:w.version,dayIndex:w.dayIndex,rate:E4_RATE,settlements:w.settlements.length,
+  byNation:w.nations.map(n=>({id:n.id,name:n.name,activePolicies:Object.keys(n.governance.cultures).length,
+   ...n.governance.assimilationFinance}))};
+}
+function e4AssimilationPanel(w,n){
+ const section=make('section',{class:'overview-section','aria-label':'E4 정착지별 문화 동화 정책'});
+ section.append(make('h3',{text:'E4 · 문화 동화 정책'}));
+ const f=n.governance.assimilationFinance,control=n.controller==='PLAYER'&&n.active;
+ section.append(make('p',{class:'muted-line',text:`대상 문화 인구 × 0.40% / 분기 · 분기당 대상 1인 × 0.02 Gold(올림) · 전액 지급 시에만 전환 · AI 자동 채택 없음`}));
+ section.append(make('p',{class:'muted-line',text:`최근 ${f.lastQuarterDay??'미정산'}일: 청구 ${number.format(f.billed)} G / 지급 ${number.format(f.paid)} G / 동화 ${number.format(f.converted)}명 · 누적 동화 ${number.format(f.totalConverted)}명`}));
+ const rows=[];
+ for(const s of w.settlements.filter(s=>s.ownerId===n.id).sort((a,b)=>a.id-b.id))
+  for(const [id,count] of Object.entries(s.culturePopulation).filter(([id,c])=>id!==n.primaryCultureId&&c>0).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])))
+   rows.push({s,id,count,record:n.governance.cultures[`${s.id}|${id}`]});
+ if(!rows.length)section.append(make('p',{class:'muted-line',text:'동화 가능한 타문화 민간 집단이 없습니다.'}));
+ for(const {s,id,count,record} of rows.slice(0,80)){
+  const label=w.cultures.find(c=>c.id===id)?.name||id,due=Math.max(1,Math.ceil(count*E4_GOLD_PER_PERSON));
+  const row=make('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',flexWrap:'wrap',padding:'7px 8px',border:'1px solid var(--line, #51606a)',borderRadius:'7px',margin:'6px 0'}});
+  row.append(make('div',{},[
+   make('strong',{text:`${settlementDisplayName(w,s)} · ${label} ${number.format(count)}명`}),
+   make('div',{class:'muted-line',text:`${number.format(due)} G / 분기 · ${record?'ON':'OFF'}${record?` · 이번 분기 ${number.format(record.lastConverted)}명 · 누적 ${number.format(record.totalConverted)}명`:''}`})]));
+  if(control){
+   const button=make('button',{type:'button',class:'jump-button',text:record?'동화 OFF':'동화 ON','aria-label':`${s.name} ${label} 문화 동화 ${record?'중단':'시작'}`});
+   button.addEventListener('click',()=>{
+    const result=e1ChangePolicy(w,n.id,'ASSIMILATION',{settlementId:s.id,cultureId:id},!record,'PLAYER');
+    showToast(result.ok?`${s.name} · ${label}: 동화 ${record?'OFF':'ON'}`:result.reason);renderNationOverview();
+   });row.append(button);
+  }
+  section.append(row);
+ }
+ if(rows.length>80)section.append(make('p',{class:'muted-line',text:`동화 대상 ${rows.length}개 집단 중 80개만 표시` }));
+ section.append(make('p',{class:'scope-note',text:'문화 인구 이외의 민간 인구, 군대·훈련·예비병은 동화가 변경하지 않습니다. 정책 집행은 문화적 반발을 유발할 수 있고, 기존 사회 불만·정치운동은 인구와 함께 승계합니다.'}));
+ return section;
+}
+// -- end V0.6E4 assimilation --
+
 // V0.6E2 — Facility Production Focus V1
 // Per-building opt-in: 5 producing types and barracks, excluding houses and forts.
 // Fees are paid at the end of a quarter, benefits are used in the NEXT quarter.
@@ -10766,6 +10975,8 @@ function e2aOnControllerChange(w,n,controller){
  if(!state)return;
  state.controllerSeen=controller;
  if(controller==='AI'){state.graceUntilDay=w.dayIndex+120;state.nextReviewDay=Math.max(state.nextReviewDay,Math.ceil(state.graceUntilDay/120)*120);}
+ const fiscal=n.governance?.fiscalAI;if(fiscal){fiscal.controllerSeen=controller;
+  if(controller==='AI'){fiscal.graceUntilDay=w.dayIndex+120;fiscal.nextReviewDay=Math.max(fiscal.nextReviewDay,Math.ceil(fiscal.graceUntilDay/120)*120);}}
 }
 function e2aLog(w,n,action,b,reason,detail={}){
  const s=n.governance.policyAI;
@@ -11087,11 +11298,498 @@ function e2GovernancePanel(w,n){
   list.append(r);
  }
  section.append(list);
- section.append(make('div',{class:'muted-line',text:'예정: 조세·공공서비스·구휼·치안 E3 / 동화 E4 / 학살 E5 / 정책 AI 통합 E6'}));
+ section.append(make('div',{class:'muted-line',text:'구휼·치안 E3A 및 동화 E4는 상단 국가 정책에서 운영합니다. 향후: 학살 E5 / 정책 AI 통합 E6'}));
  return section;
 }
 // -- end V0.6E2 facility production focus --
 
+
+// V0.6E3A — paid-only social protection (no free food, land, recruits, or RNG).
+const E3A_SOCIAL_KEYS=Object.freeze(['relief','security']);
+const E3A_SOCIAL_TIERS=Object.freeze(['OFF','ON']);
+const E3A_EFFECTS=Object.freeze({relief:{economy:-12},security:{safety:-10}});
+function e3aNewSocialFinance(){return {lastQuarterDay:null,billed:0,paid:0,unpaid:0,totalPaid:0,totalUnpaid:0,
+  reliefBilled:0,reliefPaid:0,securityBilled:0,securityPaid:0};}
+function e3aSocialDue(pop,kind){
+  if(pop<=0)return 0;
+  return Math.max(1,Math.ceil(pop*(kind==='relief'?.035:.028)));
+}
+function e3aMigrateWorld(w){
+  for(const n of w.nations){
+    const gov=n.governance;
+    if(!gov)continue;
+    gov.national.relief=E3A_SOCIAL_TIERS.includes(gov.national.relief)?gov.national.relief:'OFF';
+    gov.national.security=E3A_SOCIAL_TIERS.includes(gov.national.security)?gov.national.security:'OFF';
+    gov.socialFinance??=e3aNewSocialFinance();
+    const fiscal=gov.fiscalAI;
+    if(fiscal){fiscal.lastChanged??={tax:null,publicServices:null};
+      for(const key of E3A_SOCIAL_KEYS)fiscal.lastChanged[key]??=null;}
+  }
+}
+function e3aGrievanceDelta(w,n,key){
+  const gov=n?.governance;if(!gov)return 0;
+  const fin=gov.socialFinance;
+  if(!fin||fin.lastQuarterDay!==w.dayIndex)return 0;
+  if(key==='economy'&&gov.national.relief==='ON'&&fin.reliefBilled>0&&fin.reliefPaid===fin.reliefBilled)return E3A_EFFECTS.relief.economy;
+  if(key==='safety'&&gov.national.security==='ON'&&fin.securityBilled>0&&fin.securityPaid===fin.securityBilled)return E3A_EFFECTS.security.safety;
+  return 0;
+}
+function e3aSetSocial(w,nationId,kind,tier,actor='PLAYER'){
+  const field=kind==='RELIEF'?'relief':kind==='SECURITY'?'security':null;
+  const n=w.nations[nationId];
+  if(!n?.active||!field||!E3A_SOCIAL_TIERS.includes(tier)||!['AI','PLAYER'].includes(actor))return {ok:false,reason:'사회 정책 종류·수준 또는 국가 오류'};
+  if(n.controller!==actor)return {ok:false,reason:'국가 통제권 없음'};
+  const previous=n.governance.national[field];
+  if(previous===tier)return {ok:false,reason:'이미 선택된 정책'};
+  n.governance.national[field]=tier;
+  e1History(w,n,'STOP',kind,'nation',previous,actor);
+  e1History(w,n,'START',kind,'nation',tier,actor);
+  if(actor==='PLAYER'&&n.governance.fiscalAI)n.governance.fiscalAI.lastChanged[field]=w.dayIndex;
+  w.changeSeq++;
+  return {ok:true,kind,old:previous,level:tier};
+}
+function e3aValidate(w,fail){
+ const int=x=>Number.isSafeInteger(x)&&x>=0;
+ for(const n of w.nations){
+  const g=n.governance,f=g?.socialFinance;
+  if(!g||E3A_SOCIAL_KEYS.some(k=>!E3A_SOCIAL_TIERS.includes(g.national[k])))fail('E3A social policies');
+  if(!f||['billed','paid','unpaid','totalPaid','totalUnpaid','reliefBilled','reliefPaid','securityBilled','securityPaid'].some(k=>!int(f[k]))||
+    f.billed!==f.paid+f.unpaid||f.billed!==f.reliefBilled+f.securityBilled||f.paid!==f.reliefPaid+f.securityPaid||
+    f.reliefPaid>f.reliefBilled||f.securityPaid>f.securityBilled||
+    (f.reliefPaid!==0&&f.reliefPaid!==f.reliefBilled)||(f.securityPaid!==0&&f.securityPaid!==f.securityBilled)||
+    !(f.lastQuarterDay===null||int(f.lastQuarterDay)&&f.lastQuarterDay<=w.dayIndex&&f.lastQuarterDay%30===0))fail('E3A social finance');
+  if(f.lastQuarterDay!==null){
+    if(f.billed>n.civilFinance?.billedLastQuarter)fail('E3A invoice exceeds civil');
+    if(f.paid>n.civilFinance?.paidLastQuarter)fail('E3A payment exceeds civil');
+  }
+ }
+}
+// -- end V0.6E3A paid social policy primitives --
+
+// V0.6E3 — Fiscal & Public Services V1.
+// Policy selection is deterministic, has no AP charges, and uses existing civil Gold invoices.
+const E3_TAX_RATES=Object.freeze({LOW:.90,NORMAL:1,HIGH:1.12});
+const E3_SERVICE_RATES=Object.freeze({LOW:.75,NORMAL:1,HIGH:1.5});
+const E3_TAX_GRIEVANCES=Object.freeze({LOW:-6,NORMAL:0,HIGH:10});
+const E3_SERVICE_GRIEVANCES=Object.freeze({LOW:{governance:8,safety:4},NORMAL:{governance:0,safety:0},HIGH:{governance:-10,safety:-4}});
+const E3_FISCAL_HISTORY_MAX=24,E3_FISCAL_PERIOD=120,E3_FISCAL_COOLDOWN=240;
+function e3NewServiceFinance(){return {lastQuarterDay:null,billed:0,paid:0,unpaid:0,totalPaid:0,totalUnpaid:0};}
+function e3NewFiscalAI(day=0){return {schema:1,nextReviewDay:Math.max(120,Math.ceil((day+120)/120)*120),graceUntilDay:day+120,
+  controllerSeen:'AI',lastReviewDay:null,assessments:0,emergencies:0,changes:0,lastReason:'NOT_EVALUATED',lastChanged:{tax:null,publicServices:null,relief:null,security:null},history:[]};}
+function e3MigrateWorld(w){
+ w.e3FiscalAIEnabled=true;
+ for(const n of w.nations){n.governance.serviceFinance??=e3NewServiceFinance();n.governance.fiscalAI??=e3NewFiscalAI(w.dayIndex);}
+}
+function e3ServiceDue(base,level){return Math.floor(base*(E3_SERVICE_RATES[level]??1));}
+function e3TaxGold(base,level){return Math.floor(base*(E3_TAX_RATES[level]??1));}
+function e3ServiceFunded(w,n){
+ const f=n.governance?.serviceFinance;
+ return !!f&&f.lastQuarterDay===w.dayIndex&&f.paid===f.billed&&f.billed>0;
+}
+function e3GrievanceDelta(w,n,key){
+ if(!n?.governance)return 0;
+ if(key==='economy')return E3_TAX_GRIEVANCES[n.governance.national.tax]||0;
+ if(key!=='governance'&&key!=='safety')return 0;
+ const tier=n.governance.national.publicServices;
+ // No additional punitive duplicate when civil upkeep is in arrears. D1B accounts for it already.
+ if(tier==='LOW'){
+  const f=n.governance.serviceFinance;
+  // Even when a small settlement rounds the reduced bill to zero, reduced service
+  // remains a deliberate choice with a social cost. Do not duplicate civil arrears.
+  if(!f||f.lastQuarterDay!==w.dayIndex||f.unpaid>0||f.billed===0&&(n.civilFinance?.unpaidLastQuarter||0)>0)return 0;
+ }else if(!e3ServiceFunded(w,n))return 0;
+ return E3_SERVICE_GRIEVANCES[tier]?.[key]||0;
+}
+function e3SetNational(w,nationId,kind,tier,actor='PLAYER'){
+ const n=w.nations[nationId],field=kind==='TAX'?'tax':kind==='PUBLIC_SERVICES'?'publicServices':null;
+ if(!n?.active||!field||!Object.hasOwn(E3_TAX_RATES,tier)||!['AI','PLAYER'].includes(actor))return {ok:false,reason:'정책 종류·수준 또는 국가 오류'};
+ if(n.controller!==actor)return {ok:false,reason:'국가 통제권 없음'};
+ const gov=n.governance,previous=gov.national[field];
+ if(previous===tier)return {ok:false,reason:'이미 선택된 정책 수준'};
+ gov.national[field]=tier;
+ e1History(w,n,'STOP',kind,'nation',previous,actor);
+ e1History(w,n,'START',kind,'nation',tier,actor);
+ if(actor==='PLAYER'&&gov.fiscalAI){gov.fiscalAI.lastChanged[field]=w.dayIndex;}
+ w.changeSeq++;
+ return {ok:true,kind,old:previous,level:tier};
+}
+/** Counterfactual budget: evaluate the bill AFTER changing policy, never current cost. */
+function e3aBudget(w,n,q,policy){
+ const population=w.settlements.reduce((sum,t)=>sum+(t.ownerId===n.id?t.population:0),0);
+ const settlements=w.settlements.filter(t=>t.ownerId===n.id);
+ const owned=w.tiles.filter(t=>t.ownerId===n.id);
+ const dev=settlements.reduce((sum,t)=>sum+t.development,0);
+ const taxable=(6+population*.34+dev*.18+owned.length*.15)*(1+techBonus(w,n.id,'goldIncome'));
+ const current=n.governance.national;
+ const income=q.goldIncome+e3TaxGold(taxable,policy.tax)-e3TaxGold(taxable,current.tax);
+ const civil=q.civil.total-q.civil.services-(q.civil.relief||0)-(q.civil.security||0)+
+   e3ServiceDue(Math.floor(population*.06),policy.publicServices)+
+   (policy.relief==='ON'?e3aSocialDue(population,'relief'):0)+
+   (policy.security==='ON'?e3aSocialDue(population,'security'):0);
+ const essential=Math.max(1,q.upkeep+civil);
+ return {income,civil,essential,net:income-essential,buffer:n.gold/essential};
+}
+function e3AIAssess(w,n,emergency=false){
+ const s=n.governance?.fiscalAI;
+ if(!s||n.controller!=='AI'||w.dayIndex<s.graceUntilDay)return;
+ // Use today's state; previous invoices are evidence of arrears, not a forecast.
+ const q=projectedQuarter(w,n),last=n.lastQuarter||{},current=n.governance.national;
+ const h=w.socialHistory?.byNation?.[n.id]||[];
+ const social=h[h.length-1]?.values||{economy:0,governance:0,safety:0};
+ const plan={tax:current.tax,publicServices:current.publicServices,relief:current.relief,security:current.security};
+ const initial=e3aBudget(w,n,q,plan);
+ const needsMoney=last.civilUnpaid>0||n.military.unpaidQuarters>0||n.military.operationArrears>0||initial.buffer<3;
+ const canChange=field=>emergency||s.lastChanged[field]===null||w.dayIndex-s.lastChanged[field]>=E3_FISCAL_COOLDOWN;
+ // Financial crisis overrides cool-down only to raise tax, lower services and disable social measures.
+ if(canChange('tax')){
+   if(needsMoney||initial.net<0&&initial.buffer<6)plan.tax='HIGH';
+   else if(!emergency){
+     const low=e3aBudget(w,n,q,{...plan,tax:'LOW'});
+     const keepLow=current.tax==='LOW'&&low.net>=-low.essential*.03&&low.buffer>10;
+     plan.tax=keepLow||social.economy>190&&low.net>low.essential*.12&&low.buffer>18?'LOW':'NORMAL';
+   }
+ }
+ if(canChange('publicServices')){
+   const now=e3aBudget(w,n,q,plan);
+   if(needsMoney||now.net< -now.essential*.08&&now.buffer<6)plan.publicServices='LOW';
+   else if(!emergency){
+     const high=e3aBudget(w,n,q,{...plan,publicServices:'HIGH'});
+     const keepHigh=current.publicServices==='HIGH'&&high.net>=-high.essential*.08&&high.buffer>5&&
+       (social.governance>50||social.safety>105);
+     const enterHigh=(social.governance>100||social.safety>190)&&high.net>high.essential*.13&&high.buffer>12;
+     const normal=e3aBudget(w,n,q,{...plan,publicServices:'NORMAL'});
+     const stayLow=current.publicServices==='LOW'&&(normal.net< -normal.essential*.015||normal.buffer<4);
+     plan.publicServices=keepHigh||enterHigh?'HIGH':stayLow?'LOW':'NORMAL';
+   }
+ }
+ for(const field of E3A_SOCIAL_KEYS){
+   if(!canChange(field))continue;
+   if(emergency){if(needsMoney)plan[field]='OFF';continue;}
+   const isOn=current[field]==='ON';
+   const highNeed=field==='relief'?social.economy>175||n.foodPressure<.85&&social.economy>105:
+     social.safety>195||militaryAtWar(w,n.id)&&social.safety>145;
+   const keepNeed=field==='relief'?social.economy>105||n.foodPressure<.7:
+     social.safety>125||militaryAtWar(w,n.id)&&social.safety>110;
+   const proposed=e3aBudget(w,n,q,{...plan,[field]:'ON'});
+   const affordable=proposed.net>(isOn?-proposed.essential*.035:proposed.essential*.065)&&proposed.buffer>(isOn?5:9);
+   plan[field]=!needsMoney&&affordable&&(isOn?keepNeed:highNeed)?'ON':'OFF';
+ }
+ s.assessments++;if(emergency)s.emergencies++;
+ s.lastReviewDay=w.dayIndex;
+ let changes=0;
+ for(const [kind,field] of [['TAX','tax'],['PUBLIC_SERVICES','publicServices'],['RELIEF','relief'],['SECURITY','security']]){
+  const want=plan[field],old=n.governance.national[field];
+  if(want===old)continue;
+  if(emergency&&!(field==='tax'&&want==='HIGH'||field==='publicServices'&&want==='LOW'||E3A_SOCIAL_KEYS.includes(field)&&want==='OFF'))continue;
+  if(!canChange(field))continue;
+  const result=E3A_SOCIAL_KEYS.includes(field)?e3aSetSocial(w,n.id,kind,want,'AI'):e3SetNational(w,n.id,kind,want,'AI');
+  if(!result.ok)continue;
+  s.lastChanged[field]=w.dayIndex;changes++;s.changes++;
+  s.history.push({dayIndex:w.dayIndex,kind,from:old,to:want,reason:needsMoney?'FISCAL_CRISIS':
+    field==='tax'?want==='LOW'?'ECONOMIC_GRIEVANCE':'FISCAL_BALANCE':
+    field==='publicServices'?want==='HIGH'?'SERVICE_DEMAND':'BUDGET_ADJUSTMENT':
+    want==='ON'?'SOCIAL_NEED':'SOCIAL_RECOVERY_OR_BUDGET'});
+  if(s.history.length>E3_FISCAL_HISTORY_MAX)s.history.shift();
+ }
+ s.lastReason=changes?'POLICY_CHANGED':emergency?'EMERGENCY_HOLD':'POLICY_HELD';
+ return changes;
+}
+function e3FiscalAIQuarter(w){
+ if(w.e3FiscalAIEnabled!==true)return;
+ for(const n of w.nations){
+  if(!n.active)continue;
+  const s=n.governance?.fiscalAI;if(!s)continue;
+  if(s.controllerSeen!==n.controller){
+   s.controllerSeen=n.controller;
+   if(n.controller==='AI'){s.graceUntilDay=w.dayIndex+120;s.nextReviewDay=Math.max(s.nextReviewDay,Math.ceil(s.graceUntilDay/120)*120);}
+  }
+  if(n.controller!=='AI'||w.dayIndex<s.graceUntilDay)continue;
+  if(w.dayIndex>=s.nextReviewDay&&w.dayIndex%120===0){e3AIAssess(w,n);s.nextReviewDay=w.dayIndex+E3_FISCAL_PERIOD;}
+  else if(w.dayIndex%30===0){
+   const q=n.lastQuarter||{},essential=(q.upkeep||0)+(q.civil?.total||0);
+   if(q.civilUnpaid>0||n.military.unpaidQuarters>0||n.gold<Math.max(150,essential*3))e3AIAssess(w,n,true);
+  }
+ }
+}
+function e3Validate(w,fail){
+ const integer=x=>Number.isSafeInteger(x)&&x>=0;
+ if(typeof w.e3FiscalAIEnabled!=='boolean')fail('E3 fiscal AI enabled flag');
+ for(const n of w.nations){
+  const g=n.governance,f=g?.serviceFinance,s=g?.fiscalAI;
+  if(!g||!Object.hasOwn(E3_TAX_RATES,g.national.tax)||!Object.hasOwn(E3_SERVICE_RATES,g.national.publicServices))fail('E3 national policy');
+  if(!f||['billed','paid','unpaid','totalPaid','totalUnpaid'].some(k=>!integer(f[k]))||
+    f.billed!==f.paid+f.unpaid||!(f.lastQuarterDay===null||integer(f.lastQuarterDay)&&f.lastQuarterDay<=w.dayIndex&&f.lastQuarterDay%30===0))fail('E3 service finance');
+  if(f.lastQuarterDay!==null&&n.civilFinance&&f.billed>n.civilFinance.billedLastQuarter)fail('E3 service invoice exceeds civil');
+  if(!s||s.schema!==1||!integer(s.nextReviewDay)||s.nextReviewDay%120!==0||!integer(s.graceUntilDay)||
+    !['AI','PLAYER'].includes(s.controllerSeen)||!(s.lastReviewDay===null||integer(s.lastReviewDay)&&s.lastReviewDay<=w.dayIndex)||
+    ['assessments','emergencies','changes'].some(k=>!integer(s[k]))||!s.lastChanged||
+    ['tax','publicServices','relief','security'].some(k=>!(s.lastChanged[k]===null||integer(s.lastChanged[k])&&s.lastChanged[k]<=w.dayIndex))||
+    !Array.isArray(s.history)||s.history.length>E3_FISCAL_HISTORY_MAX||s.history.some(h=>!integer(h.dayIndex)||h.dayIndex>w.dayIndex||
+      !['TAX','PUBLIC_SERVICES','RELIEF','SECURITY'].includes(h.kind)||
+      !(h.kind==='RELIEF'||h.kind==='SECURITY'?E3A_SOCIAL_TIERS.includes(h.from)&&E3A_SOCIAL_TIERS.includes(h.to):
+       Object.hasOwn(E3_TAX_RATES,h.from)&&Object.hasOwn(E3_TAX_RATES,h.to))||typeof h.reason!=='string')||
+    typeof s.lastReason!=='string')fail('E3 fiscal AI state');
+ }
+}
+function e3FiscalPanel(w,n){
+ const section=make('section',{class:'overview-section','aria-label':'E3A 조세 공공서비스 구휼 치안'},[
+  make('h3',{text:'E3A · 재정과 사회 안정 정책'}),
+  make('div',{class:'muted-line',text:'조세 LOW ×0.90 / NORMAL ×1.00 / HIGH ×1.12 · 공공서비스 LOW ×0.75 / NORMAL ×1.00 / HIGH ×1.50'}),
+  make('div',{class:'muted-line',text:'구휼: 경제 불만 −12 / 치안: 안전 불만 −10 (분기별, 운영비 완납 시에만 적용). 사회 정책은 기본 민간 유지비 이후 결제하며 식량·병력을 생성하지 않습니다. 정책 변경 AP 비용 0.'})
+ ]);
+ const g=n.governance,f=g.serviceFinance,q=projectedQuarter(w,n);
+ section.append(make('div',{class:'muted-line',text:`예상 분기 세입 ${number.format(q.goldIncome)} G · 서비스 청구 ${number.format(q.civil.services)} G · 최근 실제 지급 ${number.format(f.paid)}/${number.format(f.billed)} G · 누적 미납 ${number.format(f.totalUnpaid)} G`}));
+ for(const [kind,field,label] of [['TAX','tax','조세'],['PUBLIC_SERVICES','publicServices','공공서비스']]){
+  const bar=make('div',{style:{display:'flex',flexWrap:'wrap',gap:'7px',alignItems:'center',margin:'9px 0'}});
+  bar.append(make('strong',{text:`${label} · ${g.national[field]}`}));
+  for(const tier of ['LOW','NORMAL','HIGH']){
+   const b=make('button',{class:'jump-button',type:'button',text:tier,'aria-label':`${label} ${tier}로 변경`});
+   b.disabled=n.controller!=='PLAYER'||!n.active||g.national[field]===tier;
+   b.addEventListener('click',()=>{const result=e3SetNational(w,n.id,kind,tier,'PLAYER');showToast(result.ok?`${n.name} ${label} ${tier}`:result.reason);renderNationOverview();});
+   bar.append(b);
+  }
+  section.append(bar);
+ }
+ const social=g.socialFinance;
+ section.append(make('div',{class:'muted-line',text:`구휼 청구·지급 ${number.format(social.reliefBilled)}/${number.format(social.reliefPaid)} G · 치안 청구·지급 ${number.format(social.securityBilled)}/${number.format(social.securityPaid)} G · 누적 사회 정책 미납 ${number.format(social.totalUnpaid)} G` }));
+ for(const [kind,field,label] of [['RELIEF','relief','구휼'],['SECURITY','security','치안']]){
+  const bar=make('div',{style:{display:'flex',flexWrap:'wrap',gap:'7px',alignItems:'center',margin:'9px 0'}});
+  bar.append(make('strong',{text:`${label} · ${g.national[field]}`}));
+  for(const tier of E3A_SOCIAL_TIERS){
+   const btn=make('button',{class:'jump-button',type:'button',text:tier,'aria-label':`${label} ${tier} 전환`});
+   btn.disabled=n.controller!=='PLAYER'||!n.active||g.national[field]===tier;
+   btn.addEventListener('click',()=>{const r=e3aSetSocial(w,n.id,kind,tier,'PLAYER');showToast(r.ok?`${n.name} ${label} ${tier}`:r.reason);renderNationOverview();});
+   bar.append(btn);
+  }
+  section.append(bar);
+ }
+ const s=g.fiscalAI;
+ section.append(make('div',{class:'muted-line',text:`재정 AI ${w.e3FiscalAIEnabled?'ON':'OFF'} · 평가 ${s.assessments}회 · 변경 ${s.changes}회 · 다음 ${s.nextReviewDay}일 · ${s.lastReason}`}));
+ for(const h of s.history.slice(-5).reverse())section.append(make('div',{class:'muted-line',text:`${h.dayIndex}일 · ${h.kind} ${h.from} → ${h.to} · ${h.reason}`}));
+ return section;
+}
+// Majority culture uses the currently owned civilian population, not founding cultural identity.
+// A tie or an empty population is explicitly ineligible for subject integration.
+function e3MajorityCulture(w,nationId){
+ const counts=new Map();
+ for(const town of w.settlements)if(town.ownerId===nationId)
+  for(const [id,count] of Object.entries(town.culturePopulation||{}))if(count>0)counts.set(id,(counts.get(id)||0)+count);
+ let best=null,max=0,tie=false;
+ for(const [id,count] of counts){if(count>max){best=id;max=count;tie=false;}else if(count===max)tie=true;}
+ return tie||!max?null:best;
+}
+// -- end V0.6E3 module --
+
+// V0.6E2B — cultural affinity and voluntary reunification; no RNG calls.
+const E2B_SAME_CULTURE_BONUS=8;
+const E2B_DIFFERENT_CULTURE_PENALTY=-3;
+const E2B_OFFER_TTL=240;
+const E2B_COOLDOWN=5*DAYS_PER_YEAR;
+const E2B_HISTORY_WINDOW=80;
+function e2bCulturalModifier(w,a,b){
+ if(a===b)return 0;
+ const x=w.nations[a],y=w.nations[b];
+ if(!x?.primaryCultureId||!y?.primaryCultureId)return 0;
+ return x.primaryCultureId===y.primaryCultureId?E2B_SAME_CULTURE_BONUS:E2B_DIFFERENT_CULTURE_PENALTY;
+}
+function e2bNewState(){return {schema:1,offers:[],cooldowns:{},history:[],reunified:0};}
+function e2bState(w){return w.diplomacy.reunification??(w.diplomacy.reunification=e2bNewState());}
+function e2bRecord(w,kind,sourceId,targetId,extra={}){
+ const s=e2bState(w);
+ s.history.push({dayIndex:w.dayIndex,kind,sourceId,targetId,...extra});
+ if(s.history.length>E2B_HISTORY_WINDOW)s.history.splice(0,s.history.length-E2B_HISTORY_WINDOW);
+}
+function e2bPending(w,sourceId){return e2bState(w).offers.find(o=>o.sourceId===sourceId&&o.expiresDay>w.dayIndex)||null;}
+function e2bAssessment(w,sourceId){
+ const source=w.nations[sourceId],r=source?.rebelOrigin,subject=source?.active?v06bSubjectOf(w,sourceId):null;
+ const route=subject?'SUBJECT':'REUNIFICATION',targetId=subject?subject.overlordId:r?.claimNationId,target=w.nations[targetId],blocks=[];
+ if(!source?.active||!target?.active||targetId===sourceId||route==='REUNIFICATION'&&
+   (r?.type!=='REUNIFICATION'||r.status!=='INDEPENDENT'))blocks.push('NOT_INDEPENDENT_REUNIFICATION');
+ if(route==='SUBJECT'){
+   const a=e3MajorityCulture(w,sourceId),b=e3MajorityCulture(w,targetId);
+   if(!a||!b||a!==b)blocks.push('MAJORITY_CULTURE_MISMATCH');
+   if(subject.status==='REBELLION')blocks.push('SUBJECT_REBELLION');
+ }else if(target?.primaryCultureId!==source?.primaryCultureId)blocks.push('CULTURE_MISMATCH');
+ if(source?.active&&target?.active){
+  if(warOfNation(w,sourceId)||warOfNation(w,targetId))blocks.push('ACTIVE_WAR');
+  if((route!=='SUBJECT'&&v06bSubjectOf(w,sourceId))||v06bSubjectOf(w,targetId)||v06bSubjectsOf(w,sourceId).length)blocks.push('SUBJECT_TREATY');
+  if(w.diplomacy.alliances.some(t=>(t.a===sourceId||t.b===sourceId)&&t.endsDay>w.dayIndex))blocks.push('SOURCE_ALLIANCE');
+  if((w.armies||[]).some(a=>a.nationId===sourceId&&(
+    !['READY','REGROUP'].includes(a.status)||a.engagementId!==null||a.assignedWarId!==null||
+    a.repatriation?.active||a.seaTransit||a.order||a.operation||a.retreatPath?.length)))blocks.push('ARMY_IN_TRANSIT');
+  const stores=['knowledge',...RESOURCE_KEYS];
+  if(stores.some(k=>(k==='knowledge'?(source.knowledge||0)+(target.knowledge||0):
+    (source.resources[k]||0)+(target.resources[k]||0))>1000000))blocks.push('STOCK_CAP');
+  if(!Number.isSafeInteger((source.gold||0)+(target.gold||0)))blocks.push('GOLD_OVERFLOW');
+  if(!w.settlements.some(s=>s.ownerId===sourceId))blocks.push('NO_SETTLEMENT');
+ }
+ if(route!=='SUBJECT'&&r&&w.dayIndex<(r.endedDay??r.formedDay)+DAYS_PER_YEAR)blocks.push('RECENT_SECESSION');
+ const cooldown=e2bState(w).cooldowns[sourceId]||0;
+ if(w.dayIndex<cooldown)blocks.push('COOLDOWN');
+ const relation=target?relationOf(w,sourceId,target.id):0;
+ return {sourceId,targetId,route,relation,eligible:blocks.length===0,blocks};
+}
+function e2bOffer(w,sourceId,actor='PLAYER'){
+ const a=e2bAssessment(w,sourceId),s=e2bState(w);
+ if(!a.eligible||e2bPending(w,sourceId))return {ok:false,reason:a.blocks.join(',')||'이미 제안 중'};
+ // A player may seek reconciliation across mild hostility. War blocks remain absolute.
+ if(a.relation< -15)return {ok:false,reason:'현재 우호도가 지나치게 낮음'};
+ if(actor==='AI'&&w.nations[sourceId].controller!=='AI')return {ok:false,reason:'플레이어 조종 국가'};
+ if(actor==='PLAYER'&&w.nations[sourceId].controller!=='PLAYER')return {ok:false,reason:'직접 조종 필요'};
+ s.offers.push({sourceId,targetId:a.targetId,route:a.route,formedDay:w.dayIndex,expiresDay:w.dayIndex+E2B_OFFER_TTL});
+ e2bRecord(w,'OFFER',sourceId,a.targetId,{relation:a.relation,actor});
+ const msg=`${w.nations[sourceId].name}이(가) ${w.nations[a.targetId].name}에 평화적 재통합을 제안했습니다.`;
+ event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[sourceId,a.targetId]);w.changeSeq++;
+ return {ok:true};
+}
+function e2bAIPropose(w,a){
+ const x=w.nations[a.sourceId],y=w.nations[a.targetId];
+ const cooperation=w.aiProfiles[x.aiProfileId]?.diplomacy?.cooperation??50;
+ // Strategic independence remains a legitimate outcome. Low relation blocks offers.
+ return a.eligible&&a.relation>=5&&cooperation>=25&&
+    (a.relation*.6+cooperation*.25)>=15;
+}
+function e2bAIConsent(w,a){
+ if(!a.eligible)return false;
+ const src=w.nations[a.sourceId],dest=w.nations[a.targetId];
+ const p=w.aiProfiles[dest.aiProfileId],cooperation=p?.diplomacy?.cooperation??50;
+ const popSrc=w.settlements.filter(s=>s.ownerId===src.id).reduce((t,s)=>t+s.population,0);
+ const popDest=w.settlements.filter(s=>s.ownerId===dest.id).reduce((t,s)=>t+s.population,0);
+ const burden=popSrc>popDest*1.5?9:0;
+ // Not automatically accepted merely because of shared culture.
+ return a.relation>=8&&a.relation*.65+cooperation*.32-burden>=20;
+}
+function e2bIntegrate(w,sourceId,targetId){
+ const assessment=e2bAssessment(w,sourceId);
+ if(!assessment.eligible||assessment.targetId!==targetId)return {ok:false,reason:assessment.blocks.join(',')||'대상 불일치'};
+ const src=w.nations[sourceId],dst=w.nations[targetId],s=e2bState(w);
+ const prior={gold:src.gold,knowledge:src.knowledge,resources:{...src.resources},settlements:src.settlementIds.length,
+   armies:w.armies.filter(a=>a.nationId===src.id).length,men:nationManpower(w,src.id),
+   reserves:src.military.reserveReady,trainees:pendingManpower(src)};
+ const settlements=w.settlements.filter(q=>q.ownerId===src.id).slice();
+ w.e2bPeacefulTransfer=true;
+ try{for(const town of settlements)transferCore(w,town.id,dst.id);}
+ finally{delete w.e2bPeacefulTransfer;}
+ // Detached sovereign land is not part of any settlement; transfer it without minting tiles.
+ for(const tile of w.tiles)if(tile.ownerId===src.id){
+   if(tile.settlementId!==null)throw Error('E2B stray settlement ownership');
+   e2OnDetachedTile(w,src.id,tile.id);tile.ownerId=dst.id;tile.occupiedBy=null;tile.occupiedWarId=null;
+ }
+ dst.gold+=src.gold;src.gold=0;
+ dst.knowledge+=src.knowledge;src.knowledge=0;
+ for(const key of RESOURCE_KEYS){dst.resources[key]+=src.resources[key];src.resources[key]=0;}
+ dst.researchLevel=Math.max(dst.researchLevel,src.researchLevel);
+ const acquired=new Set(dst.technology.unlocked);
+ for(const tech of src.technology.unlocked)acquired.add(tech);
+ dst.technology.unlocked=[...new Set(TECHNOLOGIES.filter(t=>acquired.has(t.id)).map(t=>t.id))];
+ // A newly inherited discovery can finish the recipient's current project; prevent
+ // a completed technology from remaining queued as active or paused research.
+ if(dst.technology.currentResearch&&acquired.has(dst.technology.currentResearch)){dst.technology.currentResearch=null;dst.technology.progress=0;}
+ if(dst.technology.pausedResearch&&acquired.has(dst.technology.pausedResearch.id))dst.technology.pausedResearch=null;
+ const reserve=src.military.reserveReady;
+ dst.military.reserveReady+=reserve;src.military.reserveReady=0;
+ d1CultureAdd(dst.military.reserveCulturePopulation,src.military.reserveCulturePopulation);
+ src.military.reserveCulturePopulation={};
+ dst.military.training.push(...src.military.training);src.military.training=[];
+ for(const a of w.armies)if(a.nationId===src.id){a.nationId=dst.id;
+   a.order=null;a.operation=null;a.needsOrders=false;a.repatriation=null;a.assignedWarId=null;a.engagementId=null;}
+ const oldLeader=w.characters.find(c=>c.id===src.leaderId);
+ if(oldLeader){
+  w.pastLeaders.push({id:oldLeader.id,nationId:src.id,name:oldLeader.name,age:oldLeader.age,
+   reignStartDay:oldLeader.reignStartDay,endDay:w.dayIndex,reunified:true});
+  if(w.pastLeaders.length>180)w.pastLeaders.splice(0,w.pastLeaders.length-180);
+ }
+ w.characters=w.characters.filter(c=>c.id!==src.leaderId);
+ for(const c of w.characters)if(c.nationId===src.id)c.nationId=dst.id;
+ // The player must not lose control because their requesting country was absorbed.
+ if(src.controller==='PLAYER'){dst.controller='PLAYER';e2aOnControllerChange(w,dst,'PLAYER');
+  if(typeof app!=='undefined'&&app.selectedNationId===src.id)app.selectedNationId=dst.id;}
+ src.controller='AI';src.active=false;src.capitalId=null;src.leaderId=null;src.settlementIds=[];src.apUnits=0;
+ if(src.rebelOrigin){src.rebelOrigin.status='REUNIFIED';src.rebelOrigin.reunifiedIntoNationId=dst.id;src.rebelOrigin.reunifiedDay=w.dayIndex;}
+ for(const t of w.diplomacy.alliances.filter(t=>t.a===src.id||t.b===src.id).slice())e5EndAlliance(w,t,'REUNIFICATION');
+ for(const t of v06bTreaties(w).filter(t=>t.subjectId===src.id||t.overlordId===src.id).slice())v06bEndTreaty(w,t,'REUNIFICATION');
+ const d=w.diplomacy;
+ d.offers=d.offers.filter(o=>o.from!==src.id&&o.to!==src.id);
+ d.subjectOffers=d.subjectOffers.filter(o=>o.from!==src.id&&o.to!==src.id);
+ d.calls=d.calls.filter(c=>c.allyId!==src.id&&c.principalId!==src.id&&c.defenderId!==src.id);
+ c2CleanupNation(w,src.id);
+ s.offers=s.offers.filter(o=>o.sourceId!==src.id&&o.targetId!==src.id);
+ e5InvalidateBorders(w);e5InvalidateRelations(w);refreshApCaps(w);
+ s.reunified++;e2bRecord(w,'REUNIFIED',sourceId,targetId,{route:assessment.route,...prior});
+ const msg=`${src.name}이(가) ${dst.name}에 평화적으로 통합됐습니다. 정착지 ${prior.settlements}곳·군대 ${prior.armies}개·병력 ${prior.men}명 보존.`;
+ event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[sourceId,targetId],`e2b:reunified:${sourceId}`);
+ w.changeSeq++;
+ return {ok:true,...prior};
+}
+function e2bRespond(w,sourceId,accept,actor='PLAYER'){
+ const s=e2bState(w),offer=e2bPending(w,sourceId);
+ if(!offer)return {ok:false,reason:'유효한 제안이 없습니다.'};
+ const receiver=w.nations[offer.targetId];
+ if(receiver.controller!==actor)return {ok:false,reason:'제안 수신국의 통제권이 없습니다.'};
+ const a=e2bAssessment(w,sourceId);
+ if(accept&&(!a.eligible||a.targetId!==offer.targetId))return {ok:false,reason:a.blocks.join(',')||'통합 불가'};
+ s.offers=s.offers.filter(o=>o!==offer);
+ if(!accept){s.cooldowns[sourceId]=w.dayIndex+E2B_COOLDOWN;e2bRecord(w,'REJECTED',sourceId,offer.targetId,{actor});
+  const msg=`${receiver.name}이(가) ${w.nations[sourceId].name}의 재통합 제안을 거절했습니다.`;
+  event(w,msg,'diplomacy');recordHistoricalEvent(w,'diplomacy',msg,[sourceId,offer.targetId]);w.changeSeq++;return {ok:true,rejected:true};}
+ return e2bIntegrate(w,sourceId,offer.targetId);
+}
+function e2bQuarter(w){
+ const s=e2bState(w);
+ for(const o of s.offers.slice()){
+  if(o.expiresDay>w.dayIndex&&w.nations[o.sourceId]?.active&&w.nations[o.targetId]?.active)continue;
+  s.offers=s.offers.filter(x=>x!==o);s.cooldowns[o.sourceId]=w.dayIndex+E2B_COOLDOWN;
+  e2bRecord(w,'EXPIRED',o.sourceId,o.targetId);
+ }
+ for(const o of s.offers.slice()){
+  const a=e2bAssessment(w,o.sourceId);
+  if(w.nations[o.targetId]?.controller==='AI')e2bRespond(w,o.sourceId,e2bAIConsent(w,a),'AI');
+ }
+ // Autonomous proposals are sparse: one yearly consideration per active claimant.
+ if(w.dayIndex%DAYS_PER_YEAR!==0)return;
+ for(const n of w.nations.slice()){
+  if(!n.active||n.controller!=='AI'||!(n.rebelOrigin?.type==='REUNIFICATION'||v06bSubjectOf(w,n.id))||e2bPending(w,n.id))continue;
+  const a=e2bAssessment(w,n.id);
+  if(e2bAIPropose(w,a))e2bOffer(w,n.id,'AI');
+ }
+}
+function e2bValidate(w,fail){
+ const r=w.diplomacy.reunification;
+ if(!r||r.schema!==1||!Array.isArray(r.offers)||r.offers.length>w.nations.length||
+  !r.cooldowns||typeof r.cooldowns!=='object'||!Array.isArray(r.history)||r.history.length>E2B_HISTORY_WINDOW||
+  !Number.isSafeInteger(r.reunified)||r.reunified<0)fail('E2B 재통합 상태');
+ const seen=new Set();
+ for(const o of r.offers){if(!Number.isInteger(o.sourceId)||!(w.nations[o.sourceId]?.rebelOrigin||o.route==='SUBJECT')||
+  !w.nations[o.targetId]||o.sourceId===o.targetId||seen.has(o.sourceId)||
+  !Number.isSafeInteger(o.formedDay)||!Number.isSafeInteger(o.expiresDay)||o.formedDay>o.expiresDay||o.formedDay>w.dayIndex)fail('E2B 재통합 제안');seen.add(o.sourceId);}
+ for(const [id,day] of Object.entries(r.cooldowns))if(!w.nations[Number(id)]||!Number.isSafeInteger(day)||day<0)fail('E2B 재통합 쿨다운');
+ for(const h of r.history)if(!['OFFER','REJECTED','EXPIRED','REUNIFIED'].includes(h.kind)||!w.nations[h.sourceId]||!w.nations[h.targetId]||h.dayIndex>w.dayIndex)fail('E2B 재통합 이력');
+ for(const n of w.nations)if(n.rebelOrigin?.status==='REUNIFIED'&&
+  (n.active||!w.nations[n.rebelOrigin.reunifiedIntoNationId]||!Number.isSafeInteger(n.rebelOrigin.reunifiedDay)))fail('E2B 재통합 국가');
+}
+function e2bPanel(w,n,section){
+ const r=n.rebelOrigin,source=n.active&&(r?.type==='REUNIFICATION'||v06bSubjectOf(w,n.id))?n:null;
+ const applicants=w.nations.filter(x=>x.active&&(x.rebelOrigin?.claimNationId===n.id&&x.rebelOrigin.type==='REUNIFICATION'||v06bSubjectOf(w,x.id)?.overlordId===n.id));
+ if(!source&&!applicants.length)return;
+ section.append(make('h3',{text:'E3 · 평화적 재통합·종속국 통합'}));
+ if(source){
+  const a=e2bAssessment(w,n.id),offer=e2bPending(w,n.id),target=w.nations[a.targetId];
+  section.append(make('div',{class:'muted-line',text:`합류 대상 ${target?.name||'없음'} · ${a.route==='SUBJECT'?'종속국: 양국 주류 문화 일치 필수':'독립 재통합국'} · ${offer?'제안 대기 '+(offer.expiresDay-w.dayIndex)+'일':a.eligible?'조건 충족':'보류: '+a.blocks.join(' / ')} · 주류 문화 ${w.cultures.find(c=>c.id===e3MajorityCulture(w,n.id))?.name||e3MajorityCulture(w,n.id)||'동률/없음'}`}));
+  if(n.controller==='PLAYER'&&!offer){const button=make('button',{class:'jump-button',text:a.route==='SUBJECT'?'종속국 통합 제안':'재통합 제안',type:'button'});button.disabled=!a.eligible||a.relation< -15;
+   button.addEventListener('click',()=>{const x=e2bOffer(w,n.id,'PLAYER');showToast(x.ok?'평화적 통합 제안 전송':x.reason);if(x.ok){renderNationOverview();renderChronicle();}});section.append(button);}
+ }
+ for(const src of applicants){const offer=e2bPending(w,src.id),a=e2bAssessment(w,src.id);
+  if(offer&&offer.targetId===n.id){section.append(make('div',{class:'muted-line',text:`${src.name}의 재통합 제안 · ${offer.expiresDay-w.dayIndex}일 남음 · ${a.eligible?'통합 조건 충족':'통합 보류: '+a.blocks.join(' / ')}`}));
+   if(n.controller==='PLAYER'){const controls=make('div',{class:'comparison-controls'});
+    for(const [yes,label] of [[true,a.route==='SUBJECT'?'종속국 통합 수락':'재통합 수락'],[false,a.route==='SUBJECT'?'종속국 통합 거절':'재통합 거절']]){const b=make('button',{class:'jump-button',type:'button',text:label});b.disabled=yes&&!a.eligible;
+     b.addEventListener('click',()=>{if(yes&&!window.confirm(`${src.name}의 정착지·군대·자원을 ${n.name}에 합류시킬까요?`))return;
+       const x=e2bRespond(w,src.id,yes,'PLAYER');showToast(x.ok?yes?'재통합 완료':'제안 거절':x.reason);
+       if(x.ok){map.draw();updateStats();renderChronicle();refreshPlayerUI();} });controls.append(b);}section.append(controls);}
+  }
+ }
+ const logs=e2bState(w).history.filter(h=>h.sourceId===n.id||h.targetId===n.id).slice(-4).reverse();
+ for(const h of logs)section.append(make('div',{class:'muted-line',text:`${timeAt(h.dayIndex).year}년 · ${w.nations[h.sourceId]?.name} → ${w.nations[h.targetId]?.name} · ${h.kind}`}));
+}
 
 function runQuarter(world){
   refreshApCaps(world);
@@ -11102,6 +11800,7 @@ function runQuarter(world){
   buildGeopoliticalReports(world);
   b4aDecayFormations(world);
   b4aUpdateSurvival(world);
+  e4ApplyQuarter(world);
   d1bQuarter(world);
   d2aQuarter(world);
   d2bQuarter(world);
@@ -11249,6 +11948,8 @@ if(!apRecord)continue; // E4B: a valid minor action may proceed without a primar
     }
   }
   e2aQuarter(world);
+  e3FiscalAIQuarter(world);
+  e2bQuarter(world);
   refreshApCaps(world);
   processCivilizationEraQuarter(world);
 }
@@ -11296,6 +11997,7 @@ function advanceSimulation(world,days,entropySource=null){
     const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until);
     c3AdvanceTraining(world,jump);
     world.dayIndex+=jump;remaining-=jump;
+    d1cPruneCommanderHistory(world); // H1: exact 360-day retention, even on non-quarter days.
     processFortProjects(world);
     completeRearming(world);
     const quarterBoundary=world.dayIndex%DAYS_PER_QUARTER===0;
@@ -11542,7 +12244,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,nations,settlements,trade:initialTrade(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
-    e2aPolicyAIEnabled:true,nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
+    e2aPolicyAIEnabled:true,e3FiscalAIEnabled:true,nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
   for(const n of nations){makeLeader(world,n.id);n.survival=b4aNewSurvival(world,n.id);}
   refreshApCaps(world);
   d1InitializeCultureWorld(world);
@@ -11551,6 +12253,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   d1dInitializeWorld(world);
   d2aInitWorld(world);
   d2bInitWorld(world);
+  world.diplomacy.reunification=e2bNewState();
   return world;
 }
 function advanceDays(world,days=1,entropySource=null){if(days>0)world.setupLocked=true;return advanceSimulation(world,days,entropySource);}
@@ -11807,6 +12510,10 @@ function validateWorld(w){
   d2cValidate(w,fail);
   e1Validate(w,fail);
   e2aValidate(w,fail);
+  e2bValidate(w,fail);
+  e3Validate(w,fail);
+  e3aValidate(w,fail);
+  e4Validate(w,fail);
   return true;
 }
 function validateTradeLegacyForMigration(w){
@@ -11817,12 +12524,19 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- if(parsed?.schema!=='vilob-light-v03d'||!['V0.6E1','V0.6E2',VERSION].includes(parsed?.version))
-   throw Error('V0.6E1·V0.6E2 또는 V0.6E2A 세이브만 불러올 수 있습니다.');
- if(parsed.version!==VERSION){parsed.version=VERSION;e2aMigrateWorld(parsed);}
- // D1D1 accepts the directly preceding D1D format; no retrospective inference.
- // The bounded AI experience itself remains unchanged and expires on the normal tick.
- // D2A: no older save migration per agreed scope.
+ const accepted=['V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A',VERSION];
+ if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
+   throw Error('지원하지 않는 저장 버전입니다 (E1~E3A 또는 E4 허용).');
+ if(parsed.version!==VERSION){
+   const was=parsed.version;parsed.version=VERSION;
+   if(!['V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1'].includes(was))e2aMigrateWorld(parsed);
+   parsed.diplomacy.reunification??=e2bNewState();
+   if(!['V0.6E3','V0.6E3H1','V0.6E3A'].includes(was))e3MigrateWorld(parsed);
+   if(was!=='V0.6E3A')e3aMigrateWorld(parsed);
+   e4MigrateWorld(parsed);
+ }
+ // H1: tolerate stale saved commander histories, retaining the strict daily limit.
+ d1cPruneCommanderHistory(parsed);
  validateWorld(parsed);return parsed;
 }
 function serializeWorld(world){validateWorld(world);return JSON.stringify(world,null,2);}
@@ -13559,7 +14273,8 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06e2a-world';
+const SAVE_KEY='vilob-light-v06e4-world';
+const LEGACY_SAVE_KEYS=['vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -14248,6 +14963,7 @@ function renderNationOverview(){
   for(const t of subjects)diplomacy.append(make('div',{class:'muted-line',text:`C2 종속국 ${w.nations[t.subjectId].name} · 독립 압력 ${t.independencePressure.toFixed(1)}/100 · ${t.status==='REBELLION'?'봉기 중':'평시'}` }));
   for(const t of subjects)diplomacy.append(make('div',{class:'muted-line',text:`종속국 ${w.nations[t.subjectId].name}: 지난 분기 ${number.format(t.lastPaid)} G 수령 · 누적 ${number.format(t.totalPaid)} G · ${Math.ceil((t.endsDay-w.dayIndex)/DAYS_PER_YEAR)}년 후 50년 관계 재평가` }));
   for(const t of subjects)diplomacy.append(make('div',{class:'muted-line',text:`C4 ${w.nations[t.subjectId].name} 보호 실적 · 방어 요청 수락 ${t.protectionHelp||0} · 실제 교전 지원 ${t.protectionBattleAid||0} · 방어전 패배 ${t.protectionDefeats||0}` }));
+  e2bPanel(w,n,diplomacy);
   const independenceOffers=(w.diplomacy.independenceOffers||[]).filter(o=>o.to===n.id&&o.expiresDay>w.dayIndex);
   for(const o of independenceOffers)diplomacy.append(make('div',{class:'muted-line',text:`독립 외교 제안: ${w.nations[o.from].name} · ${o.kind==='FRONT'?'공동전선':o.kind==='BACKING'?'독립국의 지원 제안':'독립 지원 요청'} · ${o.expiresDay-w.dayIndex}일 남음`}));
   for(const front of w.diplomacy.independenceFronts||[])if(front.a===n.id||front.b===n.id)diplomacy.append(make('div',{class:'muted-line',text:`독립 공동전선: ${w.nations[front.a===n.id?front.b:front.a].name} · 만료까지 ${front.expiresDay-w.dayIndex}일`}));
@@ -14271,7 +14987,7 @@ function renderNationOverview(){
     const signed=x=>(x>0?'+':'')+x;
     const age=alliance?` · 연속 동맹 ${(e5TreatyAge(w,n.id,other.id)/DAYS_PER_YEAR).toFixed(1)}년`:'';
     const stability=e5bRestingDetails(w,n.id,other.id);
-    const parts=[`기본 ${signed(breakdown.base)}`,`국경 마찰 ${signed(breakdown.border)}`,`동맹 신뢰 ${signed(breakdown.trust)}`];
+    const parts=[`기본 ${signed(breakdown.base)}`,`문화 관계 ${signed(breakdown.culture)}`,`국경 마찰 ${signed(breakdown.border)}`,`동맹 신뢰 ${signed(breakdown.trust)}`];
     if(breakdown.capital)parts.push(`옛 수도 갈등 ${signed(breakdown.capital)}`);
     if(breakdown.betrayal)parts.push(`배신의 불신 ${signed(breakdown.betrayal)}`);
     if(breakdown.tension)parts.push(`제3국 동맹 긴장 ${signed(breakdown.tension)}`);
@@ -15127,10 +15843,10 @@ $('saveBtn').addEventListener('click',()=>{
 });
 $('loadBtn').addEventListener('click',()=>{
   try{
-    const keys=[SAVE_KEY];
+    const keys=[SAVE_KEY,...LEGACY_SAVE_KEYS];
     const key=keys.find(k=>localStorage.getItem(k)),raw=key?localStorage.getItem(key):null;
     if(!raw){showToast('저장된 월드가 없습니다.');return;}
-    setWorld(deserializeWorld(raw));showToast('저장된 E1 세계를 불러왔습니다.');
+    setWorld(deserializeWorld(raw));showToast('저장된 세계를 불러왔습니다.');
   }catch(error){showToast('불러오기 실패: '+error.message);}
 });
 document.addEventListener('keydown',e=>{
@@ -15215,7 +15931,7 @@ d2aWireMapControls(map);
 d2bWireControls(map);
 
 // 브라우저 테스트 및 외부 진단용: 현재 시뮬레이션 데이터를 직접 바꾸지 않는 최소 API
-window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getAutoSpeed:()=>({...app.autoSpeed}),getActiveTab:()=>app.activeTab,getCultureAudit:()=>d1CultureAudit(app.world)});
+window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getAutoSpeed:()=>({...app.autoSpeed}),getActiveTab:()=>app.activeTab,getCultureAudit:()=>d1CultureAudit(app.world),getAssimilationAudit:()=>e4Audit(app.world)});
 setWorld(createWorld('vilob-light-01',39,21,{profiles:persistentProfiles}));
 requestAnimationFrame(animate);
 
