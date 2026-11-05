@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.6E1</title>
+<title>VILOB Light · V0.6E2</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -831,7 +831,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.6E1'; // E1: governance policy foundation, gameplay-neutral
+const VERSION = 'V0.6E2'; // E2: paid facility focus, E1 governance foundation
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2707,8 +2707,8 @@ function v04e2BarracksEventsCsv(w){
 function v04eBarracksEffects(w,id){
  const info=v04e1BarracksInventory(w,id),selected=v04eBarracksCandidates(w,id),operational=selected.filter(b=>b.barracksPaidQuarter===v04eQuarterDay(w));
  const stats={...info,eligible:selected.length,paid:operational.length,training:0,slots:0,mobilization:0,upkeep:0};
- for(const b of operational){const d=V04E_BARRACKS[b.level];stats.training+=d.training;stats.slots+=d.slots;stats.mobilization+=d.mobilization;stats.upkeep+=d.upkeep;}
- stats.training=Math.min(480,stats.training);stats.mobilization=Math.min(.03,stats.mobilization);
+ for(const b of operational){const d=V04E_BARRACKS[b.level];stats.training+=d.training*(e2FocusActive(w,id,b)?E2_FOCUS_FACTOR:1);stats.slots+=d.slots;stats.mobilization+=d.mobilization;stats.upkeep+=d.upkeep;}
+ stats.training=Math.min(480,Math.floor(stats.training));stats.mobilization=Math.min(.03,stats.mobilization);
  return stats;
 }
 function militaryCapacity(w,id){
@@ -2908,6 +2908,7 @@ function detachCededTile(w,tileId,recipientId){
   }
   const detachedBarracks=w.buildings.filter(b=>b.tileId===tileId&&b.typeId==='barracks');
   const previousOwner=t.ownerId;
+  e2OnDetachedTile(w,previousOwner,tileId);
   t.ownerId=recipientId;t.settlementId=null;t.occupiedBy=null;e5InvalidateBorders(w);
   v04e2RegisterBarracksEvent(w,'DETACH',[previousOwner,recipientId],oldId,detachedBarracks);
   for(const d of w.defenses||[])if(d.tileId===tileId){d.settlementId=null;delete d.repair;}
@@ -3382,8 +3383,8 @@ function localProductivityReport(w,nationId,roadInfo=null){
     // multiplying an already-rounded tile yield on each facility would drift with
     // the number of buildings and create artificial production per build.
     const total={food:0,wood:0,stone:0,iron:0};let academy=0;
-    for(const {base,underAttack} of groups.get(local.id)||[]){
-      const penalty=underAttack?.5:1;
+    for(const {b,base,underAttack} of groups.get(local.id)||[]){
+      const penalty=(underAttack?.5:1)*(e2FocusActive(w,nationId,b)?E2_FOCUS_FACTOR:1);
       for(const k of RESOURCE_KEYS)total[k]+=base.produced[k]*penalty;
       academy+=base.knowledge*penalty;
     }
@@ -10379,7 +10380,7 @@ function d2bInspectorPanel(w,s){
 }
 function d2bNationPanel(w,n){
  const list=w.uprisings.active.filter(f=>f.authorityNationId===n.id),sum=list.reduce((a,f)=>a+d2bSize(f),0),section=make('section',{class:'overview-section d2b-panel'});
- section.append(make('h3',{text:'⚔ V0.6E1 · 국가 정책 기반 · 반란군 편제'}),make('div',{class:'muted-line',text:`활동 중인 봉기 ${list.length}세력 · 반란군 ${number.format(sum)}명 · 국가군과 별도 소속·실제 편제 전투력 적용`}));
+ section.append(make('h3',{text:'⚔ V0.6E2 · 시설 생산 집중 · 반란군 편제'}),make('div',{class:'muted-line',text:`활동 중인 봉기 ${list.length}세력 · 반란군 ${number.format(sum)}명 · 국가군과 별도 소속·실제 편제 전투력 적용`}));
  for(const f of list)for(const d of f.militia)if(d.men>0)section.append(d2bUprisingCard(w,f,d,true));
  if(n.rebelOrigin)section.append(make('div',{class:'muted-line',text:`⚑ 봉기에서 성립 · 봉기 #${n.rebelOrigin.uprisingId} · 과거 통치국 ${w.nations[n.rebelOrigin.originNationId]?.name||'미상'} · ${n.rebelOrigin.status} · 참여 문화 ${n.rebelOrigin.cultureId}`}));
  if(!list.length)section.append(make('div',{class:'muted-line',text:'현재 활동 중인 무장 봉기가 없습니다.'}));
@@ -10590,7 +10591,7 @@ function d2cValidate(w,fail){
 // The live-world policy engine is sparse; work is O(active policies), not O(all structures).
 const E1_SCHEMA=1,E1_HISTORY_MAX=48,E1_ELIGIBLE_FACILITIES=Object.freeze(['farm','lumber','quarry','mine','academy','barracks']);
 const E1_DEFINITIONS={
- FACILITY_FOCUS:{scope:'facility',label:'시설 생산 집중',release:'E2',enabled:false,gold:0,apUnits:0},
+ FACILITY_FOCUS:{scope:'facility',label:'시설 생산 집중',release:'E2',enabled:true,gold:0,apUnits:0},
  TAX:{scope:'nation',label:'조세',release:'E3',enabled:false,gold:0,apUnits:0},
  PUBLIC_SERVICES:{scope:'nation',label:'공공서비스',release:'E3',enabled:false,gold:0,apUnits:0},
  RELIEF:{scope:'nation',label:'구휼',release:'E3',enabled:false,gold:0,apUnits:0},
@@ -10627,7 +10628,7 @@ function e1FacilityOwned(w,nationId,buildingId){
 }
 function e1FacilityValid(w,nationId,buildingId){
  const b=e1Building(w,buildingId);
- return Boolean(b&&E1_ELIGIBLE_FACILITIES.includes(b.typeId)&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===nationId);
+ return Boolean(b&&E1_ELIGIBLE_FACILITIES.includes(b.typeId)&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===nationId&&w.tiles[b.tileId]?.occupiedBy===null);
 }
 function e1CultureValid(w,nationId,target){
  const s=w.settlements.find(s=>s.id===target.settlementId);
@@ -10638,7 +10639,7 @@ function e1CanChange(w,nationId,policyId,target,enable){
  if(!n?.active||!n.governance||typeof enable!=='boolean'||!definition?.enabled)return {ok:false,reason:'미구현 정책 또는 비활성 국가'};
  const scope=definition.scope,key=e1Key(scope,target);if(key===null)return {ok:false,reason:'유효하지 않은 정책 대상'};
  if(scope==='nation')return {ok:false,reason:'E1 국가 정책은 중립 상태로 고정'};
- if(scope==='facility'&&!e1FacilityValid(w,nationId,Number(key)))return {ok:false,reason:'소유·가동 시설이 아니거나 정책 대상 제외'};
+ if(scope==='facility'&&enable&&!e1FacilityValid(w,nationId,Number(key)))return {ok:false,reason:'소유·가동 시설이 아니거나 정책 대상 제외'};
  if(scope==='culture'&&!e1CultureValid(w,nationId,target))return {ok:false,reason:'대상 문화집단 없음'};
  const bucket=scope==='facility'?n.governance.facilities:n.governance.cultures,old=bucket[key];
  if(enable&&old)return {ok:false,reason:'이미 활성화된 정책'};
@@ -10698,9 +10699,9 @@ function e1SettleQuarter(w,n){
       e1PrunePolicy(w,n,scope,key,'NO_LONGER_ELIGIBLE');continue;
    }
    // Incomplete/upgrading/disconnected buildings retain intent, but receive no funding.
-   if(!e1CheckActive(w,n,scope,key,e)){e.paidQuarterDay=null;continue;}
+   if(!e1CheckActive(w,n,scope,key,e)||scope==='facility'&&e.policyId===E2_FOCUS_POLICY&&!e2FocusBillable(w,n,e1Building(w,Number(key)))){e.paidQuarterDay=null;continue;}
    fin.activeCount++;
-   const gold=Math.max(0,Math.floor(def.gold)),apUnits=Math.max(0,Math.floor(def.apUnits));
+   const gold=e.policyId===E2_FOCUS_POLICY?e2FocusQuarterCost(e1Building(w,Number(key))):Math.max(0,Math.floor(def.gold)),apUnits=Math.max(0,Math.floor(def.apUnits));
    fin.billedGold+=gold;fin.billedAPUnits+=apUnits;
    const price={gold,apUnits,knowledge:0,resources:{}};
    const paid=payCost(n,price,'civil');
@@ -10739,19 +10740,128 @@ function e1Validate(w,fail){
  }
  return true;
 }
-function e1GovernancePanel(w,n){
+function e1GovernancePanel(w,n){return e2GovernancePanel(w,n);}
+// -- end V0.6E1 policy foundation --
+// V0.6E2 — Facility Production Focus V1
+// Per-building opt-in: 5 producing types and barracks, excluding houses and forts.
+// Fees are paid at the end of a quarter, benefits are used in the NEXT quarter.
+const E2_FOCUS_POLICY='FACILITY_FOCUS';
+const E2_FOCUS_FACTOR=1.30;
+const E2_FOCUS_LABELS=Object.freeze({farm:'농장',lumber:'벌목장',quarry:'채석장',mine:'광산',academy:'학술원',barracks:'병영'});
+// Civil upkeep is exactly the same schedule as civilUpkeep().
+function e2FocusQuarterCost(b){
+ if(!b||!Object.hasOwn(E2_FOCUS_LABELS,b.typeId))return 0;
+ if(b.typeId==='barracks')return Math.ceil(V04E_BARRACKS[b.level].upkeep*0.5);
+ const base=b.level<=3?3+2*b.level:b.level===4?16:25;
+ return base*5;
+}
+function e2FocusBillable(w,n,b){
+ if(!b||!e1FacilityValid(w,n.id,b.id))return false;
+ if(b.typeId!=='barracks')return true;
+ // No extra focus fee or bonus for a barracks that failed its original operating bill,
+ // or is outside the three actually selected barracks.
+ return b.barracksPaidQuarter===v04eQuarterDay(w) && v04eBarracksCandidates(w,n.id).some(x=>x.id===b.id);
+}
+function e2FocusActive(w,nationId,b){
+ const n=w.nations[nationId];
+ const e=n?.governance?.facilities?.[b?.id];
+ if(e?.policyId!==E2_FOCUS_POLICY||!b||b.status!=='ACTIVE'||b.disconnected||w.tiles[b.tileId]?.ownerId!==nationId||w.tiles[b.tileId]?.occupiedBy!==null)return false;
+ // During the exact quarter boundary, local production is calculated BEFORE the current invoice.
+ // After the invoice is paid, UI/train forecast can use the newly funded next period.
+ const currentQuarter=Math.floor(w.dayIndex/30)*30;
+ const funded=e.paidQuarterDay===currentQuarter || (w.dayIndex%30===0&&e.paidQuarterDay===currentQuarter-30);
+ if(!funded)return false;
+ if(b.typeId==='barracks')return b.barracksPaidQuarter===v04eQuarterDay(w) && v04eBarracksCandidates(w,nationId).some(x=>x.id===b.id);
+ return true;
+}
+function e2OnDetachedTile(w,previousOwner,tileId){
+ const n=w.nations[previousOwner],facilities=n?.governance?.facilities;
+ if(!facilities||!Object.keys(facilities).length)return;
+ for(const key of Object.keys(facilities))if(e1Building(w,Number(key))?.tileId===tileId)e1PrunePolicy(w,n,'facility',key,'TILE_TRANSFER');
+}
+function e2GovernancePanel(w,n){
  const g=n.governance,f=g.finance;
- const section=make('section',{class:'overview-section', 'aria-label':'E1 국가 정책 관리'},[
-  make('h3',{text:'E1 · 국가 정책 관리'}),
-  make('div',{class:'muted-line',text:'정책 기반 구축 완료 · 실제 정책 선택·효과는 E2~E5에서 순차 개방 · AI 정책 판단은 E6 예정'}),
-  make('div',{class:'muted-line',text:`국가 기본 정책: 조세 보통 · 공공서비스 보통 · 치안 보통 · 활성 시설 ${Object.keys(g.facilities).length}개 / 문화집단 ${Object.keys(g.cultures).length}개`}),
-  make('div',{class:'muted-line',text:`최근 정책 유지비 ${number.format(f.paidGold)} / ${number.format(f.billedGold)} Gold · AP ${apDisplay(f.paidAPUnits)} / ${apDisplay(f.billedAPUnits)} · 누적 정책 지출 ${number.format(f.totalPaidGold)} Gold`})]);
- const items=[['시설 생산 집중','E2 · 농장·벌목장·채석장·광산·학술원·병영 (주택·요새 제외)'],
-  ['조세·공공서비스·구휼·치안','E3'],['동화','E4 · 정착지별 대상 문화 지정'],['학살','E5 · 정착지별 대상 문화 지정']];
- for(const [title,note] of items)section.append(make('div',{class:'muted-line',text:`○ ${title} — 미개방 · ${note}`}));
+ const section=make('section',{class:'overview-section','aria-label':'E2 시설 생산 집중'},[
+  make('h3',{text:'E2 · 시설 생산 집중'}),
+  make('div',{class:'muted-line',text:'농장·벌목장·채석장·광산·학술원: 산출량 ×1.30 / 병영: 훈련 보너스 ×1.30(기존 국가 상한 480 적용)'}),
+  make('div',{class:'muted-line',text:'30일마다 추가 Gold 유지비를 지급합니다. 지급한 다음 분기에만 효과가 적용됩니다. 주택·요새 제외 · AI 자동 사용 E6 예정.'}),
+  make('div',{class:'muted-line',text:`활성 시설 ${Object.keys(g.facilities).length}개 · 최근 지급 ${number.format(f.paidGold)}/${number.format(f.billedGold)} G · 미납 ${number.format(f.unpaidGold)} G · 누적 ${number.format(f.totalPaidGold)} G`})
+ ]);
+ const settlements=w.settlements.filter(s=>s.ownerId===n.id);
+ const facilityTypes=new Set(Object.keys(E2_FOCUS_LABELS));
+ const all=w.buildings.filter(b=>facilityTypes.has(b.typeId)&&w.tiles[b.tileId]?.ownerId===n.id);
+ const byTown=new Map();
+ for(const b of all){
+  const sid=b.settlementId;
+  if(!byTown.has(sid))byTown.set(sid,[]);
+  byTown.get(sid).push(b);
+ }
+ const validTowns=settlements.filter(s=>byTown.get(s.id)?.length).sort((a,b)=>a.id-b.id);
+ const controller=n.active&&n.controller==='PLAYER';
+ const focusRecords=g.facilities;
+ if(!validTowns.length){section.append(make('p',{class:'muted-line',text:'소유한 정책 대상 시설이 없습니다.'}));return section;}
+ if(!controller)section.append(make('div',{class:'muted-line',text:'관찰 중 · 정책 변경은 직접 조종 중인 국가에서만 가능합니다.'}));
+ const idKey='e2FocusedSettlementId';
+ const previously=app[idKey]?.[n.id];
+ const selected=validTowns.some(x=>x.id===previously)?previously:validTowns[0].id;
+ const row=make('div',{style:{display:'flex',gap:'8px',alignItems:'center',flexWrap:'wrap',margin:'10px 0'}});
+ row.append(make('label',{text:'정착지 선택',for:'e2-town-selector'}));
+ const chooser=make('select',{id:'e2-town-selector','aria-label':'시설 집중 정착지 선택',style:{maxWidth:'100%',minWidth:'165px',padding:'5px'}});
+ for(const s of validTowns){const opt=make('option',{value:String(s.id),text:`${s.name} · ${byTown.get(s.id).length}개`});opt.selected=s.id===selected;chooser.append(opt);}
+ chooser.addEventListener('change',()=>{app[idKey]??={};app[idKey][n.id]=Number(chooser.value);renderNationOverview();});
+ row.append(chooser);section.append(row);
+ const selectedBuildings=(byTown.get(selected)||[]).sort((a,b)=>a.id-b.id);
+ const eligible=selectedBuildings.filter(b=>e1FacilityValid(w,n.id,b.id));
+ const active=selectedBuildings.filter(b=>focusRecords[b.id]);
+ const cost=active.reduce((sum,b)=>sum+(e2FocusBillable(w,n,b)?e2FocusQuarterCost(b):0),0);
+ section.append(make('div',{class:'muted-line',text:`선택 정착지: 대상 ${selectedBuildings.length}개 · 활성 ${active.length}개 · 예상 추가 청구 ${number.format(cost)} G/분기 (현재 가동 기준)`}));
+ function changeMany(items,enabled){
+  if(!controller)return;
+  let changed=0;for(const b of items){const should=!!focusRecords[b.id];if(should===enabled)continue;
+   if(e1ChangePolicy(w,n.id,E2_FOCUS_POLICY,b.id,enabled).ok)changed++;
+  }
+  showToast(`${n.name} 생산 집중: ${changed}개 시설 ${enabled?'활성화':'해제'}`);
+  renderNationOverview();
+ }
+ if(controller){
+  const bulk=make('div',{style:{display:'flex',gap:'6px',flexWrap:'wrap',margin:'8px 0'}});
+  for(const [label,enabled] of [['정착지 모두 켜기',true],['정착지 모두 끄기',false]]){
+   const button=make('button',{type:'button',class:'jump-button',text:label});
+   button.addEventListener('click',()=>changeMany(enabled?eligible:selectedBuildings,enabled));bulk.append(button);
+  }
+  section.append(bulk);
+ }
+ const typeList=make('div',{style:{display:'flex',flexWrap:'wrap',gap:'6px',marginBottom:'8px'}});
+ if(controller)for(const typeId of Object.keys(E2_FOCUS_LABELS)){
+  const items=selectedBuildings.filter(b=>b.typeId===typeId);if(!items.length)continue;
+  for(const enabled of [true,false]){
+   const button=make('button',{type:'button',class:'jump-button',text:`${E2_FOCUS_LABELS[typeId]} ${enabled?'일괄 ON':'일괄 OFF'}`});
+   button.addEventListener('click',()=>changeMany(enabled?items.filter(b=>e1FacilityValid(w,n.id,b.id)):items,enabled));typeList.append(button);
+  }
+ }
+ section.append(typeList);
+ const list=make('div',{style:{display:'grid',gap:'5px'}});
+ for(const b of selectedBuildings){
+  const rec=focusRecords[b.id],valid=e1FacilityValid(w,n.id,b.id),operating=e2FocusBillable(w,n,b),working=e2FocusActive(w,n.id,b);
+  const r=make('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:'8px',padding:'6px 8px',border:'1px solid var(--line, #51606a)',borderRadius:'7px',flexWrap:'wrap'}});
+  const info=make('div',{},[
+   make('div',{text:`${E2_FOCUS_LABELS[b.typeId]} Lv.${b.level} · #${b.id} · ${number.format(e2FocusQuarterCost(b))} G/분기`}),
+   make('small',{class:'muted-line',text:!valid?'현재 비가동':rec?(working?'집중 가동 중':operating?'다음 분기 적용 대기 / 미납':'집중 중단 · 기본 운영 상태 확인'):'집중 OFF'})
+  ]);r.append(info);
+  if(controller){
+   const btn=make('button',{type:'button',class:'jump-button',text:rec?'집중 OFF':'집중 ON','aria-label':`${E2_FOCUS_LABELS[b.typeId]} ${b.id} 생산 집중 ${rec?'해제':'활성화'}`});
+   btn.disabled=!rec&&!valid;
+   btn.addEventListener('click',()=>{const res=e1ChangePolicy(w,n.id,E2_FOCUS_POLICY,b.id,!rec);showToast(res.ok?`${E2_FOCUS_LABELS[b.typeId]} #${b.id} 생산 집중 ${rec?'해제':'활성화'}`:res.reason);renderNationOverview();});
+   r.append(btn);
+  }else r.append(make('span',{class:'muted-line',text:rec?'ON':'OFF'}));
+  list.append(r);
+ }
+ section.append(list);
+ section.append(make('div',{class:'muted-line',text:'예정: 조세·공공서비스·구휼·치안 E3 / 동화 E4 / 학살 E5 / AI 자동 정책 선택 E6'}));
  return section;
 }
-// -- end V0.6E1 policy foundation --
+// -- end V0.6E2 facility production focus --
+
 
 function runQuarter(world){
   refreshApCaps(world);
@@ -11475,8 +11585,9 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- if(parsed?.schema!=='vilob-light-v03d'||parsed?.version!==VERSION)
-   throw Error('V0.6E1 세이브만 불러올 수 있습니다. 새 세계에서 시작하세요.');
+ if(parsed?.schema!=='vilob-light-v03d'||!['V0.6E1',VERSION].includes(parsed?.version))
+   throw Error('V0.6E1 또는 V0.6E2 세이브만 불러올 수 있습니다.');
+ if(parsed.version==='V0.6E1')parsed.version=VERSION;
  // D1D1 accepts the directly preceding D1D format; no retrospective inference.
  // The bounded AI experience itself remains unchanged and expires on the normal tick.
  // D2A: no older save migration per agreed scope.
@@ -13216,7 +13327,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v06e1-world';
+const SAVE_KEY='vilob-light-v06e2-world';
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -14001,7 +14112,8 @@ function renderNationOverview(){
   const tabs=[['overview','개요·경제'],['governance','정책'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사'],['adaptation','AI 적응']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={overview:[grid,leadership,trading,recoverySection,procurement],governance:[e1GovernancePanel(w,n)],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places]};
+  const panels={overview:[grid,leadership,trading,recoverySection,procurement],governance:[],strategy:[strategic],research:[research],diplomacy:[diplomacy],settlements:[places]};
+  if(app.nationSubtab==='governance')panels.governance=[e1GovernancePanel(w,n)];
   if(app.nationSubtab==='culture')panels.culture=[d1bNationPanel(w,n),d2aNationPanel(w,n),d2bNationPanel(w,n),d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
   if(app.nationSubtab==='adaptation')panels.adaptation=[d1dNationPanel(w,n)];
