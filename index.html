@@ -833,7 +833,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7C'; // Early Modern I: print workshop, professional craft, matchlocks and B3 army visualization
+const VERSION = 'V0.7C1'; // Early Modern I: print workshop, professional craft, matchlocks and B3 army visualization
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -13761,12 +13761,12 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const accepted=['V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const accepted=['V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
-   throw Error('지원하지 않는 저장 버전입니다 (E1~V0.7C 호환).');
+   throw Error('지원하지 않는 저장 버전입니다 (E1~V0.7C1 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -14442,59 +14442,87 @@ function v07cArmyVisual(armies){
  return {types,type,rank,era,total,morale:total?morale/total:null,commander,members};
 }
 function v07cMoraleColor(m){return m===null?'#7d91a1':m>=70?'#2ed17d':m>=40?'#f0d45d':m>=15?'#f2933d':'#e34a52';}
-function v07cDrawWeaponIcon(ctx,type){
- ctx.save();ctx.strokeStyle='#f5f9fc';ctx.fillStyle='#f5f9fc';ctx.lineWidth=3.4;ctx.lineCap='round';ctx.lineJoin='round';
- const line=(x,y,X,Y)=>{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.stroke();};
- const poly=(coords,fill=true)=>{ctx.beginPath();ctx.moveTo(coords[0],coords[1]);for(let i=2;i<coords.length;i+=2)ctx.lineTo(coords[i],coords[i+1]);ctx.closePath();fill?ctx.fill():ctx.stroke();};
- // Coordinates are in a common 64x64 emblem space, consistently downscaled.
- switch(type){
- case 'levy': // L2: short club + round shield, no implication of actual armament inventory.
-  line(18,50,42,22);poly([34,21,36,11,46,10,55,12,55,20,43,30]);ctx.beginPath();ctx.arc(29,42,12,0,Math.PI*2);ctx.fillStyle='#163852';ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(29,42,3,0,Math.PI*2);ctx.fillStyle='#f5f9fc';ctx.fill();break;
- case 'spearman':line(15,52,47,15);poly([45,16,50,5,56,8,50,21]);break;
- case 'pikeman':line(10,56,52,9);line(17,52,46,12);poly([48,10,54,2,61,5,53,18]);break;
- case 'swordsman':line(22,47,45,12);line(14,39,32,51);poly([42,14,47,3,52,12,47,19]);break;
- case 'heavy_infantry':ctx.beginPath();ctx.moveTo(31,9);ctx.lineTo(52,17);ctx.lineTo(47,43);ctx.lineTo(31,57);ctx.lineTo(15,43);ctx.lineTo(10,17);ctx.closePath();ctx.stroke();line(20,32,31,23);line(31,23,43,32);break;
- case 'archer':ctx.beginPath();ctx.arc(30,32,21,-Math.PI/2,Math.PI/2);ctx.stroke();line(30,11,30,53);line(19,37,47,27);poly([48,27,42,24,44,32]);break;
- case 'longbowman':ctx.beginPath();ctx.moveTo(21,6);ctx.quadraticCurveTo(49,31,21,58);ctx.stroke();line(21,6,21,58);line(8,31,52,31);poly([53,31,45,26,45,36]);break;
- case 'crossbowman':line(11,37,54,37);line(30,25,37,54);ctx.beginPath();ctx.moveTo(12,18);ctx.quadraticCurveTo(32,8,55,18);ctx.stroke();line(12,18,32,37);line(55,18,32,37);break;
- case 'matchlock': // G2: diagonal early-modern arquebus, wood stock, serpentine, ember.
-  ctx.save();ctx.translate(32,32);ctx.rotate(-23*Math.PI/180);ctx.translate(-32,-32);
-  line(6,35,60,35);ctx.lineWidth=2;line(40,31,59,31);
-  poly([7,34,21,31,27,36,21,43,10,47,4,45,12,38]);
-  ctx.lineWidth=2.3;ctx.beginPath();ctx.moveTo(31,36);ctx.quadraticCurveTo(36,41,40,34);ctx.lineTo(38,29);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(40,29);ctx.quadraticCurveTo(36,25,41,22);ctx.stroke();
-  ctx.fillStyle='#F9A85B';ctx.beginPath();ctx.arc(42,20,3.3,0,Math.PI*2);ctx.fill();ctx.restore();break;
- default: // mixed
-  line(14,50,47,15);line(14,17,48,50);ctx.beginPath();ctx.arc(32,32,18,0,Math.PI*2);ctx.stroke();
+// V0.7C1: original B3-M4 design-lab vector paths, with chosen L2/G2 revisions.
+// Every weapon path below is copied from the approved SVG design, not redrawn as simple lines.
+// Render-time geometry is cacheable, does not mutate world state or use RNG.
+const V07C1_ICON_PATHS=Object.freeze({"levy":[["path","line","M18 50 L42 22"],["path","fill","M34 21 Q36 11 46 10 Q56 10 55 18 Q54 25 43 30 Z"],["path","accent","M19 43 L24 46"],["circle","disk",29.0,42.0,12.0],["circle","pint",29.0,42.0,3.0]],"spearman":[["path","line","M15 52 L46 16"],["path","fill","M50 7 L43 24 L37 18 Z"],["path","light","M22 45 L37 28"],["path","line","M14 51 L21 54"]],"swordsman":[["path","fill","M49 8 L52 11 L30 40 L25 35 Z"],["path","line","M19 30 L34 45 M25 36 L15 49"],["path","light","M18 52 L12 46"]],"pikeman":[["path","line","M20 54 L20 14 M43 54 L43 12"],["path","fill","M20 5 L26 18 L14 18 Z M43 3 L49 16 L37 16 Z"],["path","light","M18 38 L22 38 M41 38 L45 38"]],"heavy_infantry":[["path","line","M20 23 Q22 7 32 9 Q44 7 46 23 L44 31 L20 31 Z"],["path","light","M23 21 L41 21"],["path","fill","M14 31 Q32 26 50 31 L47 48 L32 58 L17 48 Z"],["path","accent","M32 34 L32 50 M24 41 L40 41"]],"archer":[["path","line","M41 14 Q16 32 41 50 M41 14 L41 50"],["path","light","M13 31 L54 31"],["path","fill","M54 31 L44 27 L44 35 Z"]],"longbowman":[["path","line","M45 4 Q8 32 45 60 M45 4 L45 60"],["path","light","M12 32 L56 32"],["path","fill","M56 32 L45 27 L45 37 Z"],["path","accent","M41 7 L46 9 M41 55 L46 57"]],"crossbowman":[["path","line","M8 24 Q32 7 56 24 M8 24 Q32 31 56 24 M32 24 L32 56 M26 48 L38 48"],["path","light","M8 24 L56 24 M32 22 L32 40"],["path","fill","M32 12 L27 21 L37 21 Z"]],"matchlock":[["path","line","M6 35 H60"],["path","accent","M40 31 H59"],["path","fill","M7 34 L21 31 L27 36 L21 43 L10 47 L4 45 L12 38 Z"],["path","line","M31 36 Q36 41 40 34 L38 29"],["path","accent","M40 29 Q36 25 41 22"],["circle","ember",42.0,20.0,2.8]],"mixed":[["path","line","M14 53 L46 12 M50 52 L18 17"],["path","fill","M51 6 L42 20 L36 14 Z M13 10 L25 19 L19 25 Z"],["path","light","M16 47 L21 52 M45 47 L50 52"],["path","accent","M32 25 L32 42"]]});
+const V07C1_PATH_CACHE=new Map();
+function v07c1GetIcon(type){
+ const t=Object.hasOwn(V07C1_ICON_PATHS,type)?type:'mixed';
+ let items=V07C1_PATH_CACHE.get(t);
+ if(items)return items;
+ items=V07C1_ICON_PATHS[t].map(raw=>raw[0]==='path'
+   ?{kind:'path',style:raw[1],path:new Path2D(raw[2])}
+   :{kind:'circle',style:raw[1],x:raw[2],y:raw[3],r:raw[4]});
+ V07C1_PATH_CACHE.set(t,items);return items;
+}
+function v07cDrawWeaponIcon(ctx,type,compact=false){
+ const ink='#fff9e9',detail='#ffda8c';
+ ctx.save();
+ ctx.lineCap='round';ctx.lineJoin='round';ctx.miterLimit=2;
+ // Approved G2 diagonal matchlock: rotate the ENTIRE original grouped vector -23 degrees.
+ if(type==='matchlock'){ctx.translate(32,32);ctx.rotate(-23*Math.PI/180);ctx.translate(-32,-32);}
+ for(const item of v07c1GetIcon(type)){
+  const role=item.style;
+  // At very small zoom suppress only low-information filigree; weapon silhouettes remain exact.
+  if(compact&&role==='accent')continue;
+  if(item.kind==='circle'){
+   ctx.beginPath();ctx.arc(item.x,item.y,item.r,0,Math.PI*2);
+   if(role==='disk'){ctx.fillStyle='#254861';ctx.fill();ctx.strokeStyle=ink;ctx.lineWidth=2.6;ctx.stroke();}
+   else if(role==='pint'){ctx.fillStyle=detail;ctx.fill();}
+   else if(role==='ember'){ctx.fillStyle='#ffad51';ctx.fill();ctx.lineWidth=1;ctx.strokeStyle='#ffc77a';ctx.stroke();}
+  }else if(role==='fill'){
+   ctx.fillStyle=ink;ctx.fill(item.path);ctx.strokeStyle=ink;ctx.lineWidth=1;ctx.stroke(item.path);
+  }else{
+   ctx.strokeStyle=role==='line'?ink:detail;
+   ctx.lineWidth=role==='line'?4.2:1.8;
+   ctx.stroke(item.path);
+  }
  }
  ctx.restore();
 }
 function v07cDrawArmySeal(ctx,rect,group,visual,nation,compact=false){
- const cx=rect.x+rect.w/2, cy=rect.y+(compact?18:21),r=compact?13:16;
+ // B3 emblem, M4 morale bar and the source-designed weapon glyph.
+ const cx=rect.x+rect.w/2, cy=rect.y+(compact?23:30),r=compact?15:20;
  ctx.save();
- ctx.lineWidth=3.5;ctx.strokeStyle=nation.color;ctx.fillStyle='rgba(9,26,42,.97)';
- ctx.beginPath();ctx.arc(cx,cy,r+2,0,Math.PI*2);ctx.fill();ctx.stroke();
- ctx.strokeStyle='#dce9f4';ctx.lineWidth=1.3;ctx.beginPath();ctx.arc(cx,cy,r-2,0,Math.PI*2);ctx.stroke();
- ctx.save();ctx.translate(cx-r*.94,cy-r*.94);ctx.scale(r*1.88/64,r*1.88/64);v07cDrawWeaponIcon(ctx,visual.type);ctx.restore();
- // M4 selected morale scheme: vertical right bar with dark unfilled track.
- const bx=cx+r+5,by=cy-r*.83,bh=r*1.75,bw=5;
- ctx.fillStyle='#1b394c';ctx.strokeStyle='#7795a8';ctx.lineWidth=.8;
- ctx.beginPath();ctx.roundRect(bx,by,bw,bh,2);ctx.fill();ctx.stroke();
+ ctx.fillStyle=nation.color;ctx.globalAlpha=.16;
+ ctx.beginPath();ctx.arc(cx,cy,r+3,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+ ctx.lineWidth=compact?3:4;ctx.strokeStyle=nation.color;
+ ctx.beginPath();ctx.arc(cx,cy,r+2,0,Math.PI*2);ctx.stroke();
+ ctx.fillStyle='#10293d';ctx.beginPath();ctx.arc(cx,cy,r-3,0,Math.PI*2);ctx.fill();
+ ctx.lineWidth=1.6;ctx.strokeStyle='#f7f8f2';ctx.stroke();
+ ctx.strokeStyle='#47738a';ctx.lineWidth=.65;
+ ctx.beginPath();ctx.arc(cx,cy,r-6,0,Math.PI*2);ctx.stroke();
+ // High fidelity at ordinary/detail zoom: 37px icon. Compact: 27px for the map overview.
+ const iconWidth=compact?27:37;
+ ctx.save();ctx.translate(cx-iconWidth/2,cy-iconWidth/2);
+ ctx.scale(iconWidth/64,iconWidth/64);v07cDrawWeaponIcon(ctx,visual.type,compact);ctx.restore();
+ // M4 right-hand morale bar. Color communicates state, fill height reflects exact morale.
+ const bx=cx+r+5,by=cy-r*.83,bh=r*1.75,bw=compact?5:6;
+ ctx.fillStyle='#203d50';ctx.strokeStyle='#7f9baf';ctx.lineWidth=.9;
+ ctx.beginPath();ctx.roundRect(bx,by,bw,bh,2.5);ctx.fill();ctx.stroke();
  if(visual.morale!==null){const fill=Math.max(0,Math.min(bh,bh*visual.morale/100));
-  ctx.fillStyle=v07cMoraleColor(visual.morale);ctx.fillRect(bx+1,by+bh-fill,bw-2,fill);
+  ctx.fillStyle=v07cMoraleColor(visual.morale);
+  if(fill>0){ctx.beginPath();ctx.roundRect(bx+1,by+bh-fill,bw-2,fill,Math.min(1,fill/2));ctx.fill();}
  }
- // Preserve independent equipment-era vs formation rank; upper-left era mini-tab.
- if(!compact){ctx.fillStyle='#0b2d43';ctx.strokeStyle='#7392a8';ctx.lineWidth=.8;
-  ctx.beginPath();ctx.roundRect(cx-r-7,cy-r-10,25,12,4);ctx.fill();ctx.stroke();
-  ctx.fillStyle='#f0f4fb';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 8px system-ui,sans-serif';ctx.fillText(visual.era,cx-r+5,cy-r-4);
+ if(!compact){
+  ctx.fillStyle='#12354d';ctx.strokeStyle='#55839a';ctx.lineWidth=1.1;
+  ctx.beginPath();ctx.roundRect(cx-r-7,cy-r-10,31,15,4);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#f2f7ff';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font='800 9px system-ui,sans-serif';ctx.fillText(visual.era,cx-r+8.5,cy-r-2.5);
  }
- if(visual.commander){ctx.fillStyle='#ffe28b';ctx.font='700 13px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('★',cx+r-1,cy-r-8);}
+ if(visual.commander){ctx.fillStyle='#ffdf75';ctx.strokeStyle='#413315';ctx.lineWidth=.7;
+  const sx=cx+r-1,sy=cy-r-5,star=[];
+  for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?4:8;star.push([sx+Math.cos(a)*rr,sy+Math.sin(a)*rr]);}
+  ctx.beginPath();ctx.moveTo(...star[0]);for(const xy of star.slice(1))ctx.lineTo(...xy);ctx.closePath();ctx.fill();ctx.stroke();
+ }
+ const armies=group.members.reduce((n,m)=>n+m.armyGroups.length,0);
  const men=group.amount>=1000?(group.amount/1000).toFixed(1)+'k':String(group.amount);
- ctx.fillStyle='#0a2337';ctx.strokeStyle='#5d879f';ctx.lineWidth=.9;
- const text=men+(group.members.reduce((n,m)=>n+m.armyGroups.length,0)>1?' ×'+group.members.reduce((n,m)=>n+m.armyGroups.length,0):'');
+ const text=men+(armies>1?' ×'+armies:'');
  ctx.font='700 10px system-ui,sans-serif';const tw=ctx.measureText(text).width+10;
+ ctx.fillStyle='#0a2337';ctx.strokeStyle='#5d879f';ctx.lineWidth=.9;
  ctx.beginPath();ctx.roundRect(cx-tw/2,cy+r+3,tw,15,5);ctx.fill();ctx.stroke();
- ctx.fillStyle='#f8fbff';ctx.textBaseline='middle';ctx.fillText(text,cx,cy+r+10.3);
+ ctx.fillStyle='#f8fbff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,cx,cy+r+10.3);
  ctx.restore();
 }
 
@@ -15458,7 +15486,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
         const troops=g.amount>=1000?(g.amount/1000).toFixed(1)+'k':String(g.amount);
         const visual=v07cArmyVisual(g.members.flatMap(m=>m.armyGroups));
         const compact=this.armyLabelMode==='compact'||overview;
-        const badgeWidth=compact?47:54,badgeHeight=compact?51:62;
+        const badgeWidth=compact?57:65,badgeHeight=compact?61:75;
         const rect=b4cFindLabelSpot({x:g.x,y:g.y},badgeWidth,badgeHeight,used,w,h);
         if(!rect){
           // Crowded camera: keep tiny per-faction anchor rather than mislabel others.
