@@ -833,7 +833,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7D'; // Early Modern II, workshop networks, sustained ranged fire
+const VERSION = 'V0.7D1'; // Battle indicators + weighted formation-level markers (UI only)
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -13937,12 +13937,12 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const accepted=['V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const accepted=['V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
-   throw Error('지원하지 않는 저장 버전입니다 (E1~V0.7D 호환).');
+   throw Error('지원하지 않는 저장 버전입니다 (E1~V0.7D1 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -14598,27 +14598,90 @@ function b4cTypeSymbol(type){return ['archer','longbowman','crossbowman'].includ
 // No world writes, no RNG, and never conflate equipment era with formation XP.
 const V07C_EQUIPMENT_RANK=Object.freeze({basic_arms:0,spear:0,bow:0,sword:2,pike:2,longbow:1,crossbow:2,steel_blade:3,matchlock:5});
 const V07C_ARMOR_RANK=Object.freeze({none:0,light:0,medium:1,heavy:2,plate:3});
+// V0.7D1: visual-only rank and weighted formation level.
+// The featured weapon icon and era tab MUST resolve from the same 10%-eligible unit type.
 function v07cArmyVisual(armies){
- const types={},rankTotals=[0,0,0,0,0,0],members=[];
- let total=0,morale=0,commander=false;
+ const candidates=new Map(),members=[];
+ let total=0,morale=0,levelWeighted=0;
  for(const army of armies){
   const count=manpower(army);if(count<=0)continue;
   total+=count;morale+=count*(Number.isFinite(army.morale)?Math.max(0,Math.min(100,army.morale)):0);
-  commander ||= army.commanderId!==null&&army.commanderId!==undefined;
-  members.push(army.id);
+  levelWeighted+=count*(b4aRankIndex(army)+1);members.push(army.id);
   for(const u of army.units){if(u.manpower<=0)continue;
-   types[u.typeId]=(types[u.typeId]||0)+u.manpower;
    const rank=Math.min(5,Math.max(V07C_EQUIPMENT_RANK[u.weaponId]??0,V07C_ARMOR_RANK[u.armorId]??0));
-   rankTotals[rank]+=u.manpower;
+   const entry=candidates.get(u.typeId)||{men:0,rank:0};entry.men+=u.manpower;entry.rank=Math.max(entry.rank,rank);candidates.set(u.typeId,entry);
   }
  }
- const entries=Object.entries(types).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
- const type=entries.length&&entries[0][1]/Math.max(1,total)>=.40?entries[0][0]:'mixed';
- // At least 30% of live men at a higher tier; no era jump for a token elite squad.
- let rank=0,acc=0;
- for(let i=5;i>=0;i--){acc+=rankTotals[i];if(acc>=total*.30){rank=i;break;}}
+ const featured=[...candidates.entries()].filter(([,v])=>v.men>=total*.10)
+   .sort((a,b)=>b[1].rank-a[1].rank||b[1].men-a[1].men||a[0].localeCompare(b[0]))[0];
+ const type=featured?.[0]||'mixed',rank=featured?.[1].rank??0;
  const era=rank>=5?'E I':rank===4?'M IV':rank===3?'M III':rank===2?'M II':rank===1?'M I':'A';
- return {types,type,rank,era,total,morale:total?morale/total:null,commander,members};
+ return {types:Object.fromEntries([...candidates].map(([k,v])=>[k,v.men])),type,rank,era,total,
+   morale:total?morale/total:null,averageLevel:total?levelWeighted/total:null,members};
+}
+// Pure UI snapshot: active participants can be on the neighboring ATTACKER origin tile.
+// The shared battle marker is pinned to the real engagement tile, not averaged army positions.
+function v07d1BattleGroups(w){
+ if(!(w.engagements||[]).length)return [];
+ const armies=new Map(w.armies.filter(a=>manpower(a)>0).map(a=>[a.id,a]));
+ const tiles=new Map();
+ for(const e of w.engagements||[]){
+  const sides={};const ids=new Set();const countries=new Set();
+  for(const side of ['attackers','defenders']){
+   const data=Array.isArray(e[side])?e[side].map(v=>v.armyId):[side==='attackers'?e.attackerArmyId:e.defenderArmyId];
+   sides[side]=[];
+   for(const id of data){if(ids.has(id))continue;
+    const army=armies.get(id);if(!army||army.engagementId!==e.id||army.status!=='ENGAGED')continue;
+    ids.add(id);countries.add(army.nationId);
+    const member=Array.isArray(e[side])?e[side].find(m=>m.armyId===id):null;
+    sides[side].push({army,member});
+   }
+  }
+  if(countries.size<2)continue;
+  let entry=tiles.get(e.tileId);if(!entry){entry={tileId:e.tileId,engagements:[],nationIds:new Set(),armies:new Set()};tiles.set(e.tileId,entry);}
+  entry.engagements.push({id:e.id,round:e.round??0,sides});
+  for(const n of countries)entry.nationIds.add(n);
+  for(const id of ids)entry.armies.add(id);
+ }
+ return [...tiles.values()].sort((a,b)=>a.tileId-b.tileId);
+}
+// B: orange halo and crossed swords at 9 o'clock. Follows marker-local 82% scaling.
+function v07d1DrawEngagedRing(ctx,cx,cy,r){
+ ctx.save();ctx.strokeStyle='#ffb66b';ctx.lineWidth=2.5;
+ ctx.beginPath();ctx.arc(cx,cy,r+5,0,Math.PI*2);ctx.stroke();
+ const x=cx-r-6,y=cy;
+ ctx.fillStyle='#a64a22';ctx.strokeStyle='#ffdc9f';ctx.lineWidth=1.2;
+ ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();ctx.stroke();
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='bold 12px system-ui,sans-serif';ctx.fillStyle='#fff5d9';ctx.fillText('⚔',x,y+.3);
+ ctx.restore();
+}
+// C: draw ABOVE regular army pins and territory overlays; screen-space and tile-pinned.
+function v07d1DrawSharedBattle(ctx,x,y,battle,nations,overview=false){
+ const ids=[...battle.nationIds].sort((a,b)=>a-b);
+ const r=overview?9:20;
+ ctx.save();ctx.shadowColor='#e75c25';ctx.shadowBlur=overview?3:6;
+ ctx.fillStyle='#10293d';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+ ctx.lineWidth=overview?2.6:4;
+ // Two nations receive equal half-rings; 3+ coalition nations retain every actual color.
+ for(let i=0;i<ids.length;i++){
+  const start=Math.PI/2+i*Math.PI*2/ids.length;
+  ctx.strokeStyle=nations[ids[i]]?.color||'#6ecbda';ctx.beginPath();
+  ctx.arc(x,y,r,start,start+Math.PI*2/ids.length);ctx.stroke();
+ }
+ ctx.strokeStyle='#ffbd6b';ctx.lineWidth=overview?1.25:1.6;
+ ctx.beginPath();ctx.arc(x,y,r+4,0,Math.PI*2);ctx.stroke();
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#ffebc7';
+ ctx.font=overview?'bold 14px system-ui,sans-serif':'bold 24px system-ui,sans-serif';ctx.fillText('⚔',x,y+.5);
+ if(!overview){
+  ctx.strokeStyle='rgba(12,32,48,.98)';ctx.lineWidth=3;
+  ctx.font='800 10px system-ui,sans-serif';ctx.strokeText('전투 중',x,y-r-13);ctx.fillText('전투 중',x,y-r-13);
+  const text=`${ids.length}국 · ${battle.armies.size}편제${battle.engagements.length>1?' · '+battle.engagements.length+'교전':''}`;
+  ctx.font='800 9px system-ui,sans-serif';const tw=Math.max(61,ctx.measureText(text).width+11);
+  ctx.fillStyle='#122e42';ctx.strokeStyle='#a98051';ctx.lineWidth=1;
+  ctx.beginPath();ctx.roundRect(x-tw/2,y+r+7,tw,17,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#ffeac8';ctx.fillText(text,x,y+r+15.5);
+ }
+ ctx.restore();return {x:x-(overview?14:34),y:y-(overview?15:41),w:overview?28:68,h:overview?30:93};
 }
 function v07cMoraleColor(m){return m===null?'#7d91a1':m>=70?'#2ed17d':m>=40?'#f0d45d':m>=15?'#f2933d':'#e34a52';}
 // V0.7C1: original B3-M4 design-lab vector paths, with chosen L2/G2 revisions.
@@ -14690,11 +14753,14 @@ function v07cDrawArmySeal(ctx,rect,group,visual,nation,compact=false){
   ctx.fillStyle='#f2f7ff';ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.font='800 9px system-ui,sans-serif';ctx.fillText(visual.era,cx-r+8.5,cy-r-2.5);
  }
- if(visual.commander){ctx.fillStyle='#ffdf75';ctx.strokeStyle='#413315';ctx.lineWidth=.7;
-  const sx=cx+r-1,sy=cy-r-5,star=[];
-  for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?4:8;star.push([sx+Math.cos(a)*rr,sy+Math.sin(a)*rr]);}
-  ctx.beginPath();ctx.moveTo(...star[0]);for(const xy of star.slice(1))ctx.lineTo(...xy);ctx.closePath();ctx.fill();ctx.stroke();
+ // B-style 1-decimal troop-weighted formation level replaces ubiquitous commander star.
+ if(visual.averageLevel!==null){
+  const sx=cx+r-1,sy=cy-r-5,label=visual.averageLevel.toFixed(1);
+  ctx.fillStyle='#0e283b';ctx.strokeStyle='#edc979';ctx.lineWidth=1.25;
+  ctx.beginPath();ctx.roundRect(sx-13,sy-8,27,16,5);ctx.fill();ctx.stroke();
+  ctx.font='800 10px system-ui,sans-serif';ctx.fillStyle='#ffedbe';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(label,sx+.5,sy+.2);
  }
+ if(visual.engaged)v07d1DrawEngagedRing(ctx,cx,cy,r);
  const armies=group.members.reduce((n,m)=>n+m.armyGroups.length,0);
  const men=group.amount>=1000?(group.amount/1000).toFixed(1)+'k':String(group.amount);
  const text=men+(armies>1?' ×'+armies:'');
@@ -15130,6 +15196,8 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     this.pointers.delete(e.pointerId);
     if(this.pointers.size===0){
       if(wasDrag&&!wasDrag.moved){
+        const battle=(this.battleHitBoxes||[]).slice().reverse().find(g=>p.x>=g.rect.x&&p.x<=g.rect.x+g.rect.w&&p.y>=g.rect.y&&p.y<=g.rect.y+g.rect.h);
+        if(battle){this.onSelect?.(battle.battle.tileId);this.openBattleCluster(battle.battle,p);this.drag=null;this.pinch=null;return;}
         const label=(this.armyHitBoxes||[]).slice().reverse().find(g=>p.x>=g.rect.x&&p.x<=g.rect.x+g.rect.w&&p.y>=g.rect.y&&p.y<=g.rect.y+g.rect.h);
         if(label&&(label.group.members.length>1||label.group.members.some(m=>m.armyGroups.length>1))){this.openArmyCluster(label.group,p);}
         else {this.closeArmyCluster();const id=label?label.group.members[0].tid:this.hit(p.x,p.y);if(id!==null){this.onSelect?.(id);if(label){const a=label.group.members.flatMap(m=>m.armyGroups);if(a.length===1)this.focusArmy(a[0].id);}}}
@@ -15484,7 +15552,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     const world=this.world,ts=world.tiles,size=world.size,height=world.height??size;
     const {scale,originX,originY}=this.mapGeometry();
     if(scale<22){
-      this.armyHitBoxes=[];
+      this.armyHitBoxes=[];this.battleHitBoxes=[];
       this.scale=scale;this.originX=originX;this.originY=originY;
       this.drawStrategicAtlas(ctx,scale,originX,originY,w,h);
       this.drawRiverOverlay(ctx,scale,originX,originY,w,h);
@@ -15497,6 +15565,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
       d2bDrawOverlay.call(this,ctx,scale,originX,originY,w,h,'pins');
       d1cDrawMapWarnings.call(this,ctx,scale,originX,originY,w,h);
       this.drawC6ArmyObjective(ctx,scale,originX,originY);
+      this.drawBattleOverlays(ctx,scale,originX,originY,w,h,true);
       const p=document.getElementById('fortressDetail');if(p)p.hidden=true;
       return;
     }
@@ -15604,9 +15673,47 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     d2aDrawOverlay.call(this,ctx,scale,originX,originY,w,h,'pins');
     d2bDrawOverlay.call(this,ctx,scale,originX,originY,w,h,'pins');
     d1cDrawMapWarnings.call(this,ctx,scale,originX,originY,w,h);
+    this.drawBattleOverlays(ctx,scale,originX,originY,w,h,false);
     this.updateDefensePopover();
   }
 
+  // UI-only combat overlay, always drawn last so no army icon can obscure it.
+  drawBattleOverlays(ctx,scale,ox,oy,w,h,overview){
+    const hits=[];
+    for(const battle of v07d1BattleGroups(this.world)){
+      const tile=this.world.tiles[battle.tileId];if(!tile)continue;
+      const x=ox+(tile.x+.5)*scale,y=oy+(tile.y+.5)*scale;
+      if(x< -70||x>w+70||y< -80||y>h+80)continue;
+      const rect=v07d1DrawSharedBattle(ctx,x,y,battle,this.world.nations,overview);
+      hits.push({rect,battle});
+    }
+    this.battleHitBoxes=hits;
+  }
+  // Select a shared marker to inspect each REAL engagement and its two live sides.
+  openBattleCluster(battle,point){
+    const panel=document.getElementById('mapArmyClusterPanel');if(!panel)return;
+    panel.replaceChildren();
+    const title=document.createElement('strong');title.textContent=`⚔ 진행 중 전투 · ${battle.nationIds.size}국 · ${battle.armies.size}편제`;
+    panel.append(title);
+    const rows=document.createElement('div');rows.className='b4c-cluster-rows';
+    for(const e of battle.engagements){
+      const heading=document.createElement('strong');heading.textContent=`교전 #${e.id} · ${e.round}라운드`;rows.append(heading);
+      for(const [side,label] of [['attackers','공격'],['defenders','방어']]){
+        for(const {army,member} of e.sides[side]){
+          const btn=document.createElement('button');btn.type='button';
+          const front=deployedManpower(army,'front'),initial=member?.initialFront??front;
+          const stable=!member?.frontBroken&&front>Math.max(1,Math.floor(Math.max(1,initial)*.4));
+          btn.textContent=`${label} · ${this.world.nations[army.nationId]?.name||army.nationId} · 제${army.id+1}군 · ${manpower(army)}명 · 전열 ${front}명 (${stable?'유지':'붕괴'})`;
+          btn.addEventListener('click',()=>{this.closeArmyCluster();this.onSelect?.(army.tileId);this.focusArmy(army.id);});
+          rows.append(btn);
+        }
+      }
+    }
+    panel.append(rows);panel.hidden=false;
+    const cw=this.width,ch=this.height,pw=panel.offsetWidth,ph=panel.offsetHeight;
+    panel.style.left=`${Math.max(8,Math.min(Math.max(8,cw-pw-8),point.x+8))}px`;
+    panel.style.top=`${Math.max(8,Math.min(Math.max(8,ch-ph-8),point.y+15))}px`;
+  }
   closeArmyCluster(){
     const panel=document.getElementById('mapArmyClusterPanel');
     if(panel){panel.hidden=true;panel.replaceChildren();}
@@ -15659,6 +15766,7 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
     }else this.b4cOptionalNames=[];
     if(this.armyLabelMode!=='off'){
       const clusters=b4cArmyClusters(visuals.armyBadges,ts,scale,ox,oy,this.selectedId,this.zoom);
+      const liveEngagementIds=new Set(world.engagements.map(e=>e.id));
       clusters.sort((a,b)=>Number(b.selected)-Number(a.selected)||b.amount-a.amount||a.nationId-b.nationId);
       const overview=scale<31||this.zoom<.80;
       const detailed=this.armyLabelMode==='detail'||(this.armyLabelMode==='auto'&&this.zoom>=2.2);
@@ -15669,7 +15777,9 @@ resetView(){this.closeArmyCluster();this.zoom=1;this.offset={x:0,y:0};this.draw(
         const xp=Math.round(g.weightedXP/Math.max(1,g.amount));
         const rank=['I','II','III','IV','V','VI'][b4aRankIndex({formationExperience:{xp}})];
         const troops=g.amount>=1000?(g.amount/1000).toFixed(1)+'k':String(g.amount);
-        const visual=v07cArmyVisual(g.members.flatMap(m=>m.armyGroups));
+        const groupArmies=g.members.flatMap(m=>m.armyGroups);
+        const visual=v07cArmyVisual(groupArmies);
+        visual.engaged=groupArmies.some(a=>manpower(a)>0&&a.status==='ENGAGED'&&liveEngagementIds.has(a.engagementId));
         const compact=this.armyLabelMode==='compact'||overview;
         const marker=v07c2MarkerGeometry(g.x,g.y,compact,scale);
         const rect=marker.hitRect;
