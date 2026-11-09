@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.7E3B</title>
+<title>VILOB Light · V0.7E3C</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -339,6 +339,7 @@ body.atlas-mode.atlas-tabs-collapsed .bottom-tabs{
 
 /* V0.2A — nation technology and war-first military view */
 .military-primary,.military-secondary,.army-roster-collapsible{margin-bottom:14px}
+.e3c-audit-root{margin:14px 0}.e3c-audit-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0 14px}.e3c-audit-controls select{min-width:145px;max-width:100%;padding:7px;background:var(--panel,#17252f);border:1px solid var(--line,#51606a);color:inherit;border-radius:6px}.e3c-audit-content{display:grid;gap:9px}.e3c-audit-content .overview-section{margin:0}.e3c-formation-record{display:flex;gap:8px;flex-wrap:wrap;margin:7px 0}.e3c-formation-record span{display:inline-block;padding:5px 8px;border:1px solid var(--line,#51606a);border-radius:6px;font-size:12px}.e3c-formation-record strong{font-variant-numeric:tabular-nums}
 .army-roster-collapsible{padding:0!important;overflow:hidden}
 .army-roster-collapsible summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;color:#e8edf4}
 .army-roster-collapsible summary::-webkit-details-marker{display:none}
@@ -782,8 +783,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button type="button" id="tileInspectorClose" aria-label="타일 정보 닫기" title="정보 숨기기">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section id="playerControlPanel" class="player-control-panel player-top-panel" aria-label="플레이어 국가 조종"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
 <section class="sidebar-card military-economy-card"><div class="card-heading"><div><div class="eyebrow">MOBILIZATION &amp; WAR FINANCE</div><h2>국가 군사 경제</h2></div></div><div id="militaryEconomySummary" class="military-economy-summary"></div></section>
 <section class="sidebar-card military-economy-card" aria-label="E2 군사 동원 진단"><div class="card-heading"><div><div class="eyebrow">E2 MOBILIZATION DIAGNOSTICS</div><h2>AI 군사 동원 병목</h2></div></div><div id="militaryMobilizationDiagnostics" class="military-economy-summary"></div><div class="file-actions"><button class="text-button" type="button" id="mobilizationCsvBtn">↓ 최근 12분기 CSV</button><button class="text-button" type="button" id="barracksEventsCsvBtn">↓ 병영 소유권 이벤트 CSV</button></div><p class="scope-note">저장 이관 이전의 충원 시도와 시설 이동은 추정하지 않습니다. AI 군사 행동 진단은 국가당 최근 12분기만 보존합니다.</p></section>
-<section class="sidebar-card military-economy-card" aria-label="E3 AP 분기 회계"><div class="card-heading"><div><div class="eyebrow">E3 ACTION POINT BUDGET</div><h2>분기 AP 회계 · 행동 배분</h2></div></div><div id="apBudgetDiagnostics" class="military-economy-summary"></div><div class="file-actions"><button class="text-button" type="button" id="apBudgetCsvBtn">↓ 국가별 최근 12분기 AP CSV</button></div><p class="scope-note">AP 단위는 0.1씩 정수로 보관합니다. 회복·지출·상한 낭비는 실제 계측값이며 이전 세이브의 과거 내역은 생성하지 않습니다. 분기 기록은 12개까지만 보관합니다.</p></section>
-<section class="sidebar-card war-card military-primary"><div class="card-heading"><div><div class="eyebrow">MILITARY ALLIANCES</div><h2>🛡 군사 동맹 · 방어 요청</h2></div><span class="small-label" id="allianceCount">0건</span></div><div class="military-list" id="allianceList"></div></section>
+<details class="sidebar-card army-roster-collapsible war-card military-primary" id="e3cAllianceCard"><summary><span><span class="eyebrow">MILITARY ALLIANCES</span><strong>🛡 군사 동맹 · 방어 요청</strong><small id="allianceCount">0건</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="military-list army-roster-content" id="allianceList"></div></details>
 <section class="sidebar-card war-card military-primary"><div class="card-heading"><div><div class="eyebrow">ACTIVE WARS</div><h2>⚔ 진행 중인 전쟁</h2></div><span class="small-label" id="warCount">0건</span></div><div class="military-list" id="warList"></div></section>
 <details class="sidebar-card occupation-collapsible" id="occupationListCard"><summary class="occupation-summary"><span><span class="eyebrow">ACTIVE OCCUPATIONS</span><strong>⚑ 점령 진행 현황</strong> <small id="occupationCount">0건</small></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-list occupation-scroll" id="occupationList"></div></details>
 <details class="sidebar-card engagement-collapsible" id="engagementListCard"><summary class="occupation-summary"><span><span class="eyebrow">ACTIVE ENGAGEMENTS</span><strong>⚔ 진행 중인 교전</strong> <small id="engagementCount">0건</small></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-list occupation-scroll" id="engagementList"></div></details>
@@ -791,10 +791,10 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div id="warHistoryList" class="military-list"></div><nav id="warHistoryPager" class="war-history-pager" aria-label="종전 기록 페이지"></nav></section>
-</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="기존 세계 하천 추가"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" id="riverApplyBtn" type="button" disabled>이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="V0.7D3 전투 관측"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input type="checkbox" id="combatObservationEnabled"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 4,096행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 64개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button type="button" class="text-button" id="combatObservationCsv" disabled>↓ 전투 관측 CSV</button><button type="button" class="text-button" id="combatObservationJson" disabled>↓ 전투 관측 JSON</button><button type="button" class="text-button" id="combatObservationClear" disabled>기록 비우기</button></div><div class="scope-note" role="status" id="combatObservationStatus">관측 OFF</div></section><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="기존 세계 하천 추가"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" id="riverApplyBtn" type="button" disabled>이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="V0.7D3 전투 관측"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input type="checkbox" id="combatObservationEnabled"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 256개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button type="button" class="text-button" id="combatObservationCsv" disabled>↓ 전투 관측 CSV</button><button type="button" class="text-button" id="combatObservationJson" disabled>↓ 전투 관측 JSON</button><button type="button" class="text-button" id="combatObservationClear" disabled>기록 비우기</button></div><div class="scope-note" role="status" id="combatObservationStatus">관측 OFF</div></section><details class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard" aria-label="세계 정책·재정 감사 통합 도구"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select id="e3cAuditNation" aria-label="정책 감사 국가 선택"></select></div><div id="e3cPolicyAuditContent" class="e3c-audit-content"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
-<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3B · 전투 라운드 무결성 안정화</h2></div><span class="small-label">0.7E3B</span></div>
+<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3C · UI·편제 전적·전투 관측 개선</h2></div><span class="small-label">0.7E3C</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E3 · 근세 연구 처리 소프트캡(학술원 25레벨까지 +4, 이후 +1) · Lv.3 공방 AI 비용 기준 · 정밀 생산 원료 예측</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E2 · 근세 IV·전장포·포문 및 탄약 회계·후방 포격</span></div>
 <div class="milestone"><span class="tick">✓</span><span>19×19 / 39×21 시드 지도·7 / 12개국·SIM 계측</span></div>
@@ -835,7 +835,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7E3B'; // Early Modern III-IV research softcap and workshop AI planning
+const VERSION = 'V0.7E3C'; // UI consolidation, formation battle records, bounded observation history
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -4545,7 +4545,7 @@ function settlementMergeAssessment(world,a,b){
 
 // V0.7D3: bounded opt-in combat observation, grouped by completed round / local clash.
 // All state is stored in this WeakMap; nothing is serialized with World or consumes RNG.
-const V07D2_TRACE_LIMIT=4096, V07D3_SUMMARY_LIMIT=64;
+const V07D2_TRACE_LIMIT=16384, V07D3_SUMMARY_LIMIT=256;
 const v07d2Traces=new WeakMap();
 // The original D2 prefix is preserved byte-for-byte for existing CSV clients.
 const V07D2_TRACE_COLUMNS=Object.freeze(['sequence','dayIndex','kind','scope','semantics','warId','engagementId','uprisingId','localArmyId','round','phase','side','armyId','nationId','front','rear','reserve','frontAfter','rearAfter','reserveAfter','frontStable','frontBroken','rangedMen','matchlockMen','fireEligible','matchlockFired','power','ammoPolicy','ammoReady','ammoReason','goldBefore','goldAfter','goldSpent','ironBefore','ironAfter','ironSpent','menBefore','menAfter','casualties','moraleBefore','moraleAfter','active','endReason']);
@@ -4601,7 +4601,7 @@ function v07d3CommitGroup(w,g,complete=true){
   s.omittedGroups++;s.omittedRows+=g.omitted;
   g.encounter&&(g.encounter.detailOmitted=true);
   g.rows=[{sequence:++s.written,dayIndex:g.dayIndex,...g.context,kind:'DETAIL_OMITTED',detailOmittedRows:g.omitted,
-    detailOmittedReason:'GROUP_EXCEEDS_4096',accountingScope:'METADATA_ONLY'}];
+    detailOmittedReason:'GROUP_EXCEEDS_16384',accountingScope:'METADATA_ONLY'}];
  }
  if(!g.rows.length)return;
  for(const r of g.rows){r.groupId=g.id;r.groupKind=g.kind;r.groupComplete=g.complete;r.encounterCoverage=g.coverage;r.observedFromDay=s.startedDay;}
@@ -4880,6 +4880,92 @@ function e3bValidatePhaseRecords(records){
   }else if(!Array.isArray(r.xpParticipation)||r.xpParticipation.some(x=>!Array.isArray(x)||x.length!==2||!Number.isInteger(x[0])||!Number.isFinite(x[1])))
    throw Error('E3B infantry XP participation contract');
  }
+}
+// V0.7E3C — one bounded combat record per national Army/formation.
+// No per-soldier simulation, no RNG and no per-tick scans.
+// Existing E3B saves start with ZERO verifiable historical results, not invented wins/kills.
+function e3cNewFormationRecord(fromDay=0){return {schema:1,fromDay,wins:0,losses:0,enemyKillsCredited:0,ownBattleDeaths:0,warIds:[]};}
+function e3cEnsureFormationRecord(a,fromDay=0){
+ if(!a.combatRecord)a.combatRecord=e3cNewFormationRecord(fromDay);
+ return a.combatRecord;
+}
+function e3cMigrateFormationRecords(w){
+ for(const a of w.armies){
+  // On old saves, only a forward-observation baseline is warranted.
+  // Fresh worlds and newly raised formations can report from their creation day.
+  if(!a.combatRecord)e3cEnsureFormationRecord(a,w.dayIndex===0?(a.c6CreatedDay??0):w.dayIndex);
+ }
+}
+function e3cRecordWar(a,warId,day){
+ const r=e3cEnsureFormationRecord(a,day);
+ if(Number.isSafeInteger(warId)&&warId>=0&&!r.warIds.includes(warId))r.warIds.push(warId);
+ return r;
+}
+// Stable largest-remainder attribution: total credited kills = real opponents' casualties.
+// In a coalition, credited kills represent the relative combat contribution, NOT
+// a proof of which unit inflicted each individual fatal blow.
+function e3cAttributeKills(kills,members,weights){
+ const participants=members.filter(a=>a).sort((a,b)=>a.id-b.id);
+ const result=new Map(participants.map(a=>[a.id,0]));
+ if(!participants.length||kills<=0)return result;
+ const list=participants.map(a=>({id:a.id,weight:Math.max(0,weights?.get(a.id)||0)}));
+ let sum=list.reduce((s,x)=>s+x.weight,0);
+ if(sum<=0){for(const x of list)x.weight=1;sum=list.length;}
+ const values=list.map(x=>({...x,amount:Math.floor(kills*x.weight/sum),fraction:(kills*x.weight/sum)%1}));
+ let remaining=kills-values.reduce((s,x)=>s+x.amount,0);
+ values.sort((a,b)=>b.fraction-a.fraction||a.id-b.id);
+ for(let i=0;i<remaining;i++)values[i%values.length].amount++;
+ for(const x of values)result.set(x.id,x.amount);
+ return result;
+}
+function e3cRecordRound(w,e,membersBySide,lossByArmy,weights={}){
+ // Preserve *all* actual participants, including formations that later retreat.
+ // Engagement side arrays themselves hold only currently engaged armies.
+ e.e3cParticipants??={attackers:[],defenders:[]};
+ for(const side of ['attackers','defenders']){
+  const members=(membersBySide[side]||[]).map(x=>typeof x==='object'&&x.id!==undefined?x:w.armies.find(a=>a.id===x)).filter(Boolean);
+  for(const a of members)if(!e.e3cParticipants[side].includes(a.id))e.e3cParticipants[side].push(a.id);
+  const enemies=(membersBySide[side==='attackers'?'defenders':'attackers']||[])
+    .map(x=>typeof x==='object'&&x.id!==undefined?x:w.armies.find(a=>a.id===x)).filter(Boolean);
+  const opponentDeaths=enemies.reduce((sum,a)=>sum+Math.max(0,lossByArmy[a.id]||0),0);
+  const kills=e3cAttributeKills(opponentDeaths,members,weights[side]);
+  for(const a of members){
+   const r=e3cRecordWar(a,e.warId,w.dayIndex);
+   r.enemyKillsCredited+=kills.get(a.id)||0;
+   r.ownBattleDeaths+=Math.max(0,lossByArmy[a.id]||0);
+  }
+ }
+}
+function e3cRecordPursuit(w,winner,loser,killed,warId){
+ if(!killed)return;
+ if(winner)e3cRecordWar(winner,warId,w.dayIndex).enemyKillsCredited+=killed;
+ if(loser)e3cRecordWar(loser,warId,w.dayIndex).ownBattleDeaths+=killed;
+}
+function e3cRecordOutcome(w,e,winnerSide){
+ for(const side of ['attackers','defenders']){
+  const ids=new Set([...(e.e3cParticipants?.[side]||[]),(e[side]||[]).map(m=>m.armyId)].flat());
+  ids.add(side==='attackers'?e.attackerArmyId:e.defenderArmyId);
+  for(const id of ids){
+   // A formation eliminated during the final round may already have moved to
+   // the bounded C6 end-of-life ledger. Preserve its last result if retained.
+   const a=w.armies.find(v=>v.id===id)||w.c6ArmyHistory?.entries?.find(v=>v.id===id&&v.combatRecord);
+   if(!a)continue;
+   const r=e3cRecordWar(a,e.warId,w.dayIndex);
+   if(side===winnerSide)r.wins++;else r.losses++;
+  }
+ }
+}
+function e3cValidateFormationRecords(w){
+ const valid=(a,r)=>{
+  if(!r)return true; // legacy/test fixtures created outside the migration adapter.
+  if(r.schema!==1||!Number.isSafeInteger(r.fromDay)||r.fromDay<0||r.fromDay>w.dayIndex||
+    ['wins','losses','enemyKillsCredited','ownBattleDeaths'].some(k=>!Number.isSafeInteger(r[k])||r[k]<0)||
+    !Array.isArray(r.warIds)||r.warIds.length>10000||
+    r.warIds.some(id=>!Number.isSafeInteger(id)||id<0)||new Set(r.warIds).size!==r.warIds.length)return false;
+  return true;
+ };
+ return w.armies.every(a=>valid(a,a.combatRecord))&&
+   (w.c6ArmyHistory?.entries||[]).every(h=>valid(h,h.combatRecord));
 }
 // --- src/sim/combat.js ---
 /** V0.1D: cohort-based persistent combat, line assignment and reserves. No soldier Persons. */
@@ -5328,7 +5414,7 @@ function h1ResolveMulti(w,e){
   e.round++;
   const terrain=w.tiles[e.tileId].terrain,phases=e.round===1?['OPENING','CONTACT','MELEE']:['SUSTAINED','MELEE'];
   let lossA=0,lossB=0;
-  const roundLosses={},phaseRecords=[];
+  const roundLosses={},phaseRecords=[],e3cWeights={attackers:new Map(),defenders:new Map()};
   for(const phase of phases){
     let reinforces=[0,0],collapsed=[0,0];
     for(let si=0;si<2;si++)for(const m of h1Live(w,e,sides[si])){
@@ -5342,7 +5428,7 @@ function h1ResolveMulti(w,e){
       for(const m of h1Live(w,e,'defenders'))ammoB.set(m.armyId,v07cVolleyCheck(w,h1Army(w,m.armyId),allocB,e.warId));
     }
     e3bMark('AFTER_AMMO',w,e);
-    const sidePower=(side,alloc,defense,ammo)=>h1Live(w,e,side).reduce((v,m)=>v+h1Power(w,h1Army(w,m.armyId),phase,defense,terrain,m.frontBroken,alloc,ammo.get(m.armyId)!==false),0);
+    const sidePower=(side,alloc,defense,ammo)=>h1Live(w,e,side).reduce((v,m)=>{const value=h1Power(w,h1Army(w,m.armyId),phase,defense,terrain,m.frontBroken,alloc,ammo.get(m.armyId)!==false);e3cWeights[side].set(m.armyId,(e3cWeights[side].get(m.armyId)||0)+value);return v+value;},0);
     const powerA=sidePower('attackers',allocA,false,ammoA),powerB=sidePower('defenders',allocB,true,ammoB);
     const totalA=h1Live(w,e,'attackers').reduce((v,m)=>v+manpower(h1Army(w,m.armyId)),0);
     const totalB=h1Live(w,e,'defenders').reduce((v,m)=>v+manpower(h1Army(w,m.armyId)),0);
@@ -5384,6 +5470,7 @@ function h1ResolveMulti(w,e){
     e3bMark('AFTER_ARTILLERY_LOSS',w,e);
     phaseRecords.push(artillery);lossA+=artillery.aLost;lossB+=artillery.bLost;
     for(const [id,lost] of Object.entries(artillery.lossByArmy))roundLosses[id]=(roundLosses[id]||0)+lost;
+    for(const f of artillery.firing)e3cWeights[f.side].set(f.armyId,(e3cWeights[f.side].get(f.armyId)||0)+(f.power||0));
   }
   const fortOwner=w.tiles[e.tileId]?.ownerId;
   if(fortOwner!==null){
@@ -5403,6 +5490,7 @@ function h1ResolveMulti(w,e){
     war.battleCasualties[a.nationId]=(war.battleCasualties[a.nationId]||0)+lost;
   }
   e3bValidatePhaseRecords(phaseRecords);
+  e3cRecordRound(w,e,{attackers:initialMembers[0].map(m=>h1Army(w,m.armyId)).filter(Boolean),defenders:initialMembers[1].map(m=>h1Army(w,m.armyId)).filter(Boolean)},roundLosses,e3cWeights);
   e3bMark('BEFORE_XP',w,e);
   // Formation XP: one award per real round and surviving participating army, not per phase.
   const xpMen=new Map();
@@ -5452,6 +5540,7 @@ function h1FinishMulti(w,e,winnerSide,withdrawn=false,conditions=[]){
     war.battleWins[winnerNationId]=(war.battleWins[winnerNationId]||0)+1;
     war.score+=warSide(war,winnerNationId)==='attackers'?2:-2;
   }
+  e3cRecordOutcome(w,e,winnerSide);
   const leadWinner=h1Army(w,winners[0]?.armyId);
   const pursuits=(e.pursuits||[]).slice();
   let prisoners=0;
@@ -5580,6 +5669,7 @@ function resolvePursuitLoss(world,e,winner,loser){
   const desired=Math.min(survivors,Math.round(survivors*rate));
   if(!desired)return {...empty,advantage:+advantage.toFixed(3),rate:+rate.toFixed(4),reason:'BELOW_ONE'};
   const losses=applyLosses(loser,desired,'PURSUIT',world.dayIndex,world);
+  e3cRecordPursuit(world,winner,loser,losses,e.warId);
   const war=world.wars.find(w=>w.id===e.warId);
   if(war&&losses){
     war.casualties??={};war.battleCasualties??={};war.pursuitCasualties??={};
@@ -5592,6 +5682,7 @@ function resolvePursuitLoss(world,e,winner,loser){
 function endEngagement(world,e,winner,loser,withdrawn=false,conditions=[]){
   const war=world.wars.find(w=>w.id===e.warId);
   if(war){war.lastBattleDay=world.dayIndex;war.battleCount++;war.battleWins??={};war.battleWins[winner.nationId]=(war.battleWins[winner.nationId]||0)+1;war.score+=warSide(war,winner.nationId)==='attackers'?2:-2;}
+  e3cRecordOutcome(world,e,winner.id===e.attackerArmyId?'attackers':'defenders');
   const winN=world.nations[winner.nationId],lossN=world.nations[loser.nationId];
   winner.engagementId=null;winner.status='READY';winner.morale=battleClamp(winner.morale+8,0,100);winner.nextMoveDay=world.dayIndex+8;
   const initial=loser.id===e.attackerArmyId?e.initialManpowerA:e.initialManpowerB;
@@ -5712,6 +5803,7 @@ function resolveEngagementRoundD1(world,e){
   e.history.push(rec);if(e.history.length>12)e.history.shift();
   const war=world.wars.find(w=>w.id===e.warId);
   if(war){war.battleCasualties??={};for(const [id,loss] of [[a.nationId,lossA],[b.nationId,lossB]]){war.casualties[id]=(war.casualties[id]||0)+loss;war.battleCasualties[id]=(war.battleCasualties[id]||0)+loss;}}
+  e3cRecordRound(world,e,{attackers:[a],defenders:[b]},{[a.id]:lossA,[b.id]:lossB});
   e3bMark('BEFORE_XP',world,e);
   // The two combatants participate once in this resolved round (even if defeated).
   b4aRecordCombat(world,a,e.id,e.round,Math.max(0,phaseRecords.reduce((x,r)=>x+(r.aFront||0)+(r.aRear||0),0)),lossA);
@@ -7241,7 +7333,8 @@ function c6RecordArmyEnd(w,a,reason){
   const exp=a.formationExperience||{};
   const row={id:a.id,nationId:a.nationId,createdDay:Number.isSafeInteger(a.c6CreatedDay)?a.c6CreatedDay:null,
     endedDay:w.dayIndex,reason,survivors:manpower(a),xp:Math.max(0,Math.floor(exp.xp||0)),
-    combatRounds:Math.max(0,Math.floor(exp.combatRounds||0)),trainingSessions:Math.max(0,Math.floor(exp.trainingSessions||0))};
+    combatRounds:Math.max(0,Math.floor(exp.combatRounds||0)),trainingSessions:Math.max(0,Math.floor(exp.trainingSessions||0)),
+    ...(a.combatRecord?{combatRecord:structuredClone(a.combatRecord)}:{})};
   ledger.entries.push(row);
   ledger.byReason[reason]=(ledger.byReason[reason]||0)+1;
   if(ledger.entries.length>C6_ARMY_HISTORY_LIMIT){ledger.entries.shift();ledger.dropped++;}
@@ -12197,7 +12290,26 @@ function e1Validate(w,fail){
  }
  return true;
 }
-function e1GovernancePanel(w,n){const wrapper=make('div');wrapper.append(v06f4aAuditPanel(w),v06e7cAuditPanel(w,n),v06e7aPanel(w,n),v06e6PolicyPanel(w,n),e3FiscalPanel(w,n),e4AssimilationPanel(w,n),v06e5PolicyPanel(w,n),e2GovernancePanel(w,n));return wrapper;}
+function e1GovernancePanel(w,n){const wrapper=make('div');wrapper.append(v06e6PolicyPanel(w,n),e3FiscalPanel(w,n),e4AssimilationPanel(w,n),v06e5PolicyPanel(w,n),e2GovernancePanel(w,n));return wrapper;}
+// E3C: diagnostic-only records for policies moved out of nation policy controls.
+function e3cUnifiedPolicyTelemetry(w,n){
+ const section=make('section',{class:'overview-section','aria-label':'E6 E3A E4 E5 E2 E2A 통합 정책 진단'},[
+   make('h3',{text:'E6 · E3A · E4 · E5 · E2 / E2A 통합 상태'}),
+   make('p',{class:'muted-line',text:'국가 정책의 실제 조작은 국가 > 정책에서 진행합니다. 이 화면은 계측 상태만 확인합니다.'})]);
+ const u=n.governance.unifiedAI,f=n.governance.fiscalAI,q=n.governance.serviceFinance,
+   e2=n.governance.policyAI,viol=n.governance.violenceFinance,assim=n.governance.assimilationFinance;
+ const text=(name,value)=>section.append(make('div',{class:'muted-line',text:name+' · '+value}));
+ text('E6 정책 AI',`평가 ${u.assessments}회 · 변경 ${u.changes}회 · 마지막 ${u.lastReason}`);
+ for(const h of (u.history||[]).slice(-5).reverse())text('E6 이력',`${h.dayIndex}일 · ${h.action} · ${h.key||'-'} · ${h.reason}`);
+ text('E3A 재정 AI',`평가 ${f.assessments}회 · 변경 ${f.changes}회 · ${f.lastReason} · 복원 보류 ${f.e7b.blockedRestores}회`);
+ for(const h of (f.history||[]).slice(-5).reverse())text('E3A 이력',`${h.dayIndex}일 · ${h.kind} · ${h.from}→${h.to} · ${h.reason}`);
+ text('E3A 정책 지급',`서비스 ${q.paid}/${q.billed} G · 미납 ${q.totalUnpaid} G`);
+ text('E4 문화 동화',`최근 전환 ${assim.converted}명 · 총 전환 ${assim.totalConverted}명 · 누적 지급 ${assim.totalPaid} G`);
+ text('E5 국가폭력',`최근 사망 ${viol.killed}명 · 누적 ${viol.totalKilled}명 · 누적 지급 ${viol.totalPaid} G`);
+ text('E2 생산 집중',`활성 시설 ${Object.keys(n.governance.facilities).length}개 · 최근 비용 ${n.governance.finance.paidGold}/${n.governance.finance.billedGold} G`);
+ if(e2){section.append(e2aGovernanceSummary(w,n));}
+ return section;
+}
 // -- end V0.6E1 policy foundation --
 
 // V0.6E4 — deterministic, conservation-only cultural assimilation V1.
@@ -12651,7 +12763,7 @@ function v06e7aPanel(w,n){
  const actions=make('div',{style:{display:'flex',gap:'8px',flexWrap:'wrap',margin:'9px 0'}});
  for(const mode of ['OFF','LIGHT','DETAIL']){
   const button=make('button',{type:'button',class:'jump-button',text:`${mode}${d.mode===mode?' ✓':''}`,'aria-label':`E7A ${mode}`});
-  button.addEventListener('click',()=>{v06e7aSetMode(w,mode);renderNationOverview();showToast(`E7A1 진단 ${mode}`);});actions.append(button);
+  button.addEventListener('click',()=>{v06e7aSetMode(w,mode);e3cRefreshPolicyAudit();showToast(`E7A1 진단 ${mode}`);});actions.append(button);
  }
  for(const [type,label] of [['json','진단 JSON'],['csv','분기 CSV']]){
   const button=make('button',{type:'button',class:'jump-button',text:label});
@@ -13006,7 +13118,7 @@ function v06e6PolicyPanel(w,n){
   make('h3',{text:'E6 · 통합 국가 정책 AI'}),
   make('div',{class:'muted-line',text:`통합 AI ${p.enabled?'ON':'OFF'} · AI 국가폭력 ${p.allowAIViolence?'허용':'차단(기본값)'} · 다음 정책 선택 ${Math.ceil((w.dayIndex+1)/120)*120}일`}),
   make('div',{class:'muted-line',text:`예상 분기 수입 ${number.format(f.income)}G · 필수+정책 유지비 ${number.format(f.essential)}G (E1 정책 ${number.format(f.dues)}G) · 예상 잔액 변화 ${number.format(f.net)}G · 국고 완충 ${f.buffer.toFixed(1)}분기`}),
-  make('div',{class:'muted-line',text:`국가 AI 평가 ${number.format(ai.assessments)}회 · 정책 변경 ${number.format(ai.changes)}회 · ${ai.lastReason}`})
+  make('div',{class:'muted-line',text:`${n.name} 통합 정책 AI: ${p.enabled?'운영 중':'중지'} · 다음 정책 검토 ${Math.ceil((w.dayIndex+1)/120)*120}일`})
  ]);
  // One world-level setting, available without taking control of a nation.
  const opts=make('div',{style:{display:'flex',gap:'8px',flexWrap:'wrap',margin:'9px 0'}});
@@ -13021,7 +13133,7 @@ function v06e6PolicyPanel(w,n){
  section.append(opts);
  const prefs=w.aiProfiles[n.aiProfileId]?.policy;
  section.append(make('div',{class:'muted-line',text:`${n.name} 정책 성향: 동화 ${prefs?.assimilationPreference??45}/100 · 국가폭력 ${prefs?.stateViolencePreference??0}/100 · 변경: AI 에디터`}));
- for(const h of ai.history.slice(-4).reverse())section.append(make('div',{class:'muted-line',text:`${h.dayIndex}일 · ${h.action} · ${h.key||'-'} · ${h.reason}`}));
+ // E6 AI decision history is available in the dedicated World audit.
  return section;
 }
 // -- end V0.6E6 Unified National Policy AI --
@@ -13310,7 +13422,7 @@ function e2GovernancePanel(w,n){
   make('div',{class:'muted-line',text:'30일마다 추가 Gold 유지비를 지급합니다. 지급한 다음 분기에만 효과가 적용됩니다. 주택·요새 제외 · AI 시설 운영 E2A.'}),
   make('div',{class:'muted-line',text:`활성 시설 ${Object.keys(g.facilities).length}개 · 최근 지급 ${number.format(f.paidGold)}/${number.format(f.billedGold)} G · 미납 ${number.format(f.unpaidGold)} G · 누적 ${number.format(f.totalPaidGold)} G`})
  ]);
- const aiPanel=e2aGovernanceSummary(w,n);if(aiPanel)section.append(aiPanel);
+ // E2A observation-only diagnostics live in World > integrated policy audit.
  const settlements=w.settlements.filter(s=>s.ownerId===n.id);
  const facilityTypes=new Set(Object.keys(E2_FOCUS_LABELS));
  const all=w.buildings.filter(b=>facilityTypes.has(b.typeId)&&w.tiles[b.tileId]?.ownerId===n.id);
@@ -13713,13 +13825,13 @@ function e3FiscalPanel(w,n){
  const s=g.fiscalAI;
  const stable=s.e7b;
  const stabilityBar=make('div',{style:{display:'flex',gap:'8px',alignItems:'center',flexWrap:'wrap',margin:'8px 0'}});
- stabilityBar.append(make('span',{class:'muted-line',text:`E7B 재정 복원 안정화 ${w.e7bFiscalStabilityEnabled?'ON':'OFF'} · ${stable.phase} · 정상 ${stable.healthyQuarters}/2분기 · 복원 보류 ${stable.blockedRestores}회 · 단계 복원 ${stable.stagedRestores}회`}));
+ stabilityBar.append(make('span',{class:'muted-line',text:`E7B 재정 복원 안정화 ${w.e7bFiscalStabilityEnabled?'ON':'OFF'} · 현재 ${stable.phase}`}));
  const toggle=make('button',{type:'button',class:'jump-button',text:w.e7bFiscalStabilityEnabled?'E7B 안정화 끄기':'E7B 안정화 켜기','aria-label':'E7B 재정 복원 안정화 전환'});
  toggle.addEventListener('click',()=>{e7bSetEnabled(w,!w.e7bFiscalStabilityEnabled);renderNationOverview();showToast(`E7B 재정 안정화 ${w.e7bFiscalStabilityEnabled?'ON':'OFF'}`);});stabilityBar.append(toggle);
  section.append(stabilityBar);
  section.append(make('div',{class:'muted-line',text:'E7B: 재정 위기에 즉시 대응, 2분기 연속 회복을 확인한 뒤 기존 240일 변경 제한 및 분기별 단계 복원을 적용. 문화·군사 정책 계수는 변경하지 않음.'}));
- section.append(make('div',{class:'muted-line',text:`재정 AI ${w.e3FiscalAIEnabled?'ON':'OFF'} · 평가 ${s.assessments}회 · 변경 ${s.changes}회 · 다음 ${s.nextReviewDay}일 · ${s.lastReason}`}));
- for(const h of s.history.slice(-5).reverse())section.append(make('div',{class:'muted-line',text:`${h.dayIndex}일 · ${h.kind} ${h.from} → ${h.to} · ${h.reason}`}));
+ section.append(make('div',{class:'muted-line',text:`재정 AI ${w.e3FiscalAIEnabled?'ON':'OFF'} · 다음 판단 ${s.nextReviewDay}일`}));
+ // Fiscal AI action history is restricted to consolidated audit tools.
  return section;
 }
 // Majority culture uses the currently owned civilian population, not founding cultural identity.
@@ -14490,6 +14602,7 @@ function validateWorld(w){
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
   if(!validateHistoricalChronicle(w))fail('장기 역사 기록');
   if(!c6ValidateArmyHistory(w))fail('C6 편제 수명주기 기록');
+  if(!e3cValidateFormationRecords(w))fail('E3C 편제 전투 기록');
   if(!c6ValidateStrategyStats(w))fail('C6 전선·경로 진단');
   for(const n of w.nations||[]){
     const s=n.constructionProcurement;
@@ -14761,12 +14874,12 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const accepted=['V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const accepted=['V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (E2~V0.7D2 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -14794,6 +14907,7 @@ function deserializeWorld(json){
  for(const b of parsed.buildings||[])if(b.typeId==='workshop'){b.workshopMode??='standard';b.lastOperatedDay??=null;}
  for(const a of parsed.armies||[])a.deployment.back??=[];
  parsed.e2Artillery??={produced:0,destroyed:0,stocks:{}};
+ e3cMigrateFormationRecords(parsed);
  // H1: tolerate stale saved commander histories, retaining the strict daily limit.
  d1cPruneCommanderHistory(parsed);
  validateWorld(parsed);return parsed;
@@ -17016,7 +17130,7 @@ function v07d2UpdateObservationUI(){
   const s=v07d2ObservationStatus(app.world),toggle=document.getElementById('combatObservationEnabled');
   toggle.checked=s.enabled;
   target.textContent=`${s.enabled?'관측 중':'관측 OFF'} · ${s.retained.toLocaleString('ko-KR')}/${s.limit.toLocaleString('ko-KR')}행 · ${s.retainedGroups}묶음 `+
-    `· 교체 ${s.droppedGroups}묶음/${s.dropped}행 · 초대형 생략 ${s.omittedGroups}건 · 완료 요약 ${s.completed}/64`+
+    `· 교체 ${s.droppedGroups}묶음/${s.dropped}행 · 초대형 생략 ${s.omittedGroups}건 · 완료 요약 ${s.completed}/${V07D3_SUMMARY_LIMIT}`+
     ` · 관측 시작 day ${s.startedDay??'—'} · 최신 day ${s.lastDay??'—'}`+(s.offGaps?` · OFF 구간 ${s.offGaps}회`: '');
   for(const id of ['combatObservationCsv','combatObservationJson','combatObservationClear'])document.getElementById(id).disabled=!s.retained;
 }
@@ -17069,7 +17183,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v07c-world';
+const SAVE_KEY='vilob-light-v07e3c-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -17081,7 +17195,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -17397,16 +17511,6 @@ function renderWarfare(){
     const failures=recent.filter(r=>r.deficit>0&&r.reason!=='TARGET_MET').length;
     diagTarget.append(make('div',{class:'scope-note',text:`보존 ${recent.length}/${V04E2_DIAG_WINDOW}분기 · 목표 미달 평가 ${failures}분기 · 군사 AI 행동만 계측` }));
   }
-  const apTarget=$('apBudgetDiagnostics');
-  if(apTarget){const n=w.nations[app.selectedNationId]||w.nations[0],r=v04e3ApReport(n);
-    const items=r?[['계측 시점',`${Math.floor(r.dayIndex/120)+1}년 ${Math.floor((r.dayIndex%120)/30)+1}분기`],['분기 시작 / 현재 AP',`${apDisplay(r.opening)} / ${apDisplay(n.apUnits)} AP`],
-      ['회복 요청 / 실제 회복',`${apDisplay(r.offered)} / ${apDisplay(r.received)} AP`],['상한 낭비',`${apDisplay(r.wasted)} AP`],
-      ['내정 / 군사 / 연구 지출',`${apDisplay(r.spent.civil)} / ${apDisplay(r.spent.military)} / ${apDisplay(r.spent.research)} AP`],
-      ['군사 우선 확보 계획',`${apDisplay(r.reserved)} AP (미사용분 반환)`],['주요 / 보조 내정',`${r.main} / ${r.auxiliary}회`],
-      ['주요 내정 연기 / 미실행',`${r.mainDeferred} / ${r.mainMissed}회`],['내정 후보 적법 / 실행 가능',`${r.mainCandidates||0} / ${r.mainExecutable||0}건`],['보조 내정 후보 / 거절',`${r.auxCandidates||0} / ${r.auxBlocked||0}건`],['최상위 미실행 후보',`${r.bestBlockedReason||'NONE'} · ${r.bestBlockedAction||'-'}`],['군사 AP 부족 거절',`${r.blockedAP}회`]]:
-      [['진단 시작 전','새 세계 또는 다음 분기부터 계측합니다.']];
-    apTarget.replaceChildren(...items.map(([label,value])=>make('div',{class:'economy-item'},[make('small',{text:label}),make('strong',{text:value})])));
-  }
   const allies=$('allianceList');
   if(allies){const treaties=w.diplomacy.alliances.map(a=>make('div',{class:'war-row'},[
        make('strong',{text:`${w.nations[a.a].name} ↔ ${w.nations[a.b].name}`}),
@@ -17555,7 +17659,8 @@ function makeNationMilitaryPanel(w,n){
   ]);
   for(const h of history)ledger.append(make('div',{class:'army-detail'},[
     make('strong',{text:`제${h.id+1}군 · ${labels[h.reason]||h.reason} · ${Math.floor(h.endedDay/120)+1}년`}),
-    make('small',{text:`창설 ${h.createdDay===null?'과거 기록 없음':`${Math.floor(h.createdDay/120)+1}년`} · 마지막 ${h.xp}XP / 교전 ${h.combatRounds}라운드 · 생존 ${h.survivors}명`})
+    make('small',{text:`창설 ${h.createdDay===null?'과거 기록 없음':`${Math.floor(h.createdDay/120)+1}년`} · 마지막 ${h.xp}XP / 교전 ${h.combatRounds}라운드 · 생존 ${h.survivors}명`}),
+    ...(h.combatRecord?[make('small',{text:`전적 기록 시작 ${Math.floor(h.combatRecord.fromDay/120)+1}년 · ${h.combatRecord.wins}승 ${h.combatRecord.losses}패 · 적 전투 사망 기여 ${h.combatRecord.enemyKillsCredited}명 / 아군 전투 사망 ${h.combatRecord.ownBattleDeaths}명 · 참전 ${h.combatRecord.warIds.length}전쟁`})]:[])
   ]));
   if(!history.length)ledger.append(make('div',{class:'war-empty',text:'기록된 편제 소멸이 없습니다.'}));
   box.append(d1cNationPanel(w,n));
@@ -17564,6 +17669,15 @@ function makeNationMilitaryPanel(w,n){
   const roster=make('div',{class:'military-list'});
   for(const a of sorted){
     const cmd=w.characters.find(c=>c.id===a.commanderId),card=make('div',{class:'army-detail'});
+    const rec=a.combatRecord,won=rec?.wins||0,lost=rec?.losses||0,
+      rated=won+lost?`${(100*won/(won+lost)).toFixed(1)}%`:'—',
+      since=rec?.fromDay??w.dayIndex,
+      created=Number.isSafeInteger(a.c6CreatedDay)?`${timeAt(a.c6CreatedDay).year}년 ${timeAt(a.c6CreatedDay).quarter}분기`:'이전 기록 없음';
+    const service=make('div',{class:'e3c-formation-record','aria-label':'편제 생성 시기 및 교전 전적'},[
+      ...[['창설',created],['승리 / 패배',`${won}승 / ${lost}패`],['승률',rated],
+      ['적 전투 사망 기여',`${number.format(rec?.enemyKillsCredited||0)}명`],
+      ['편제 아군 전투 사망',`${number.format(rec?.ownBattleDeaths||0)}명`],
+      ['참가 전쟁',`${rec?.warIds?.length||0}건`]].map(([label,value])=>make('span',{},[make('small',{text:label+' · '}),make('strong',{text:value})]))]);
     card.append(make('strong',{text:`⚔ ${n.name} 제${a.id+1}군 · ${manpower(a)}명`}),
       make('small',{text:`군대 장비 ${v07cArmyVisual([a]).era} · 대표 병종 ${UNIT_TYPES[v07cArmyVisual([a]).type]?.label||'혼성군'} · 국가 ${civilizationLabel(w.nations[a.nationId])} · 편제 숙련도 ${['I','II','III','IV','V','VI'][b4aRankIndex(a)]} · ${b4aRankLabel(a)} · ${a.formationExperience?.xp||0}XP · 전투력 +${(b4aPowerBonus(a)*100).toFixed(1)}%`}),
       make('small',{text:`전투력 ${getArmyBasePower(w,a)} · 사기 ${Math.round(a.morale)} · 장비 ${v07cArmyVisual([a]).era} · 주력 ${UNIT_TYPES[v07cArmyVisual([a]).type]?.label||'혼성군'} · 지휘관 ${cmd?.name||'없음'}`}),
@@ -17580,6 +17694,7 @@ function makeNationMilitaryPanel(w,n){
       if(Number.isInteger(to))card.append(make('small',{text:`현재 작전 목표 (${to%w.size}, ${Math.floor(to/w.size)}) · 지도 점선은 방향만 표시하며 실제 이동 경로가 아닙니다.`}));
     }
     if(a.f3fRout&&!armyOffensiveReady(w,a))card.append(make('small',{text:`패전 후 출동 제한 · 사기 ${Math.round(a.morale)}/${F3F_RALLY_MORALE}`}));
+    card.append(service,make('small',{class:'muted-line',text:`전적 집계 ${timeAt(since).year}년 ${timeAt(since).quarter}분기 이후 · 합동전 적 사망은 전투 기여도 비례 배분(추정 기여), 패주 손실 포함 · 기존 세이브 과거 전적은 소급하지 않음`}));
     const groups=make('div',{class:'military-meta'}),roles={front:'전열',rear:'후열',back:'후방',reserve:'예비'};
     const byGroup=new Map(Object.entries(a.deployment).flatMap(([role,ids])=>ids.map(id=>[id,roles[role]||role])));
     for(const u of a.units.filter(u=>u.manpower))groups.append(make('span',{class:'unit-pill',text:`${UNIT_TYPES[u.typeId]?.label||u.typeId} (${byGroup.get(u.id)||'미배치'}) ${u.manpower}명 · 준비 ${c3ReadyMen(u)}명 / 훈련 ${c3PendingMen(u)}명 · 전문훈련 ${u.training??100}% · ${u.trainingRequirementDays||0}일 필요 · ${u.trainingBatches?.length?`현재 배치 잔여 ${Math.max(0,(u.trainingRequirementDays||0)-Math.max(...u.trainingBatches.map(b=>b.days)))}일`:'완료'} · ${WEAPONS[u.weaponId]?.label||u.weaponId||'기본 무기'} · ${ARMORS[u.armorId]?.label||u.armorId||'무갑'}`}));
@@ -17621,6 +17736,8 @@ function renderNationOverview(){
   const samePanel=app.lastNationPanelId===n.id&&app.lastNationPanelSubtab===app.nationSubtab;
   const neighborScroll=samePanel?box.querySelector('.strategy-neighbors')?.scrollTop??0:0;
   const tabScroll=box.querySelector('.nation-subtabs')?.scrollLeft??0;
+  const expanded=samePanel?[...box.querySelectorAll('.nation-subtab-content details')].map((el,i)=>[el.id||String(i),el.open]):[];
+  const expandedByKey=new Map(expanded);
   const settlements=w.settlements.filter(s=>s.ownerId===n.id),armies=w.armies.filter(a=>a.nationId===n.id),
     leader=w.characters.find(c=>c.id===n.leaderId),pop=settlements.reduce((x,s)=>x+s.population,0),
     territory=w.tiles.filter(t=>t.ownerId===n.id).length,econ=projectedQuarter(w,n),
@@ -17909,6 +18026,9 @@ function renderNationOverview(){
     tabBar.append(btn);
   }
   box.replaceChildren(top,jump,tabBar,content);
+  for(const [i,el] of [...content.querySelectorAll('details')].entries()){
+    const key=el.id||String(i);if(expandedByKey.has(key))el.open=expandedByKey.get(key);
+  }
   const neighbors=box.querySelector('.strategy-neighbors');
   if(neighbors)neighbors.scrollTop=neighborScroll;
   const tabStrip=box.querySelector('.nation-subtabs');
@@ -18404,13 +18524,31 @@ function renderChronicle(){
   $('recentActivityList').replaceChildren(...recent.map(e=>{const t=timeAt(e.dayIndex);return make('div',{class:'recent-activity-item',text:`${t.year}년 ${t.quarter}분기 ${t.day}일 · ${e.text}`});}));
 }
 
+
+// E3C: on-demand audit console. Never rebuild this content during SIM ticks.
+function e3cRefreshPolicyAudit(){
+ const card=$('e3cPolicyAuditCard'),target=$('e3cPolicyAuditContent'),select=$('e3cAuditNation');
+ if(!card?.open||!app.world||!target)return;
+ const w=app.world,id=Number(select.value),n=w.nations[id]||w.nations.find(x=>x.active)||w.nations[0];
+ target.replaceChildren(v06f4aAuditPanel(w),v06e7cAuditPanel(w,n),v06e7aPanel(w,n),e3cUnifiedPolicyTelemetry(w,n));
+}
+function e3cSyncPolicyAuditNation(){
+ const select=$('e3cAuditNation');if(!select||!app.world)return;
+ const old=Number(select.value);const chosen=app.world.nations.some(n=>n.id===old)?old:app.selectedNationId;
+ select.replaceChildren(...app.world.nations.map(n=>make('option',{value:String(n.id),text:n.name+(n.active?'':' · 멸망')})));
+ select.value=String(chosen);
+ if($('e3cPolicyAuditCard').open)e3cRefreshPolicyAudit();
+}
+$('e3cPolicyAuditCard').addEventListener('toggle',()=>e3cRefreshPolicyAudit());
+$('e3cAuditNation').addEventListener('change',()=>e3cRefreshPolicyAudit());
+
 function setWorld(world){
   pendingRiverPreview=null;map.riverPreviewSegments=null;document.getElementById('riverApplyBtn').disabled=true;document.getElementById('riverStatus').textContent=`현재 하천 ${(world.riverSegments||[]).length}구간 · 이전 세이브에 자동 추가하지 않습니다.`;
   D1C_OPEN_ARMIES.clear();
   v07d2ClearObservation(world);v07d2SetObservation(world,false);
   app.lastNationPanelId=null;app.lastNationPanelSubtab=null;app.v04cStatsCache=null;
   $('cultureAuditResult').textContent='검사 전 · 현재 세계의 문화 인구 회계를 확인할 수 있습니다.';
-  app.running=false;app.accumulator=0;app.lastFrame=null;app.world=world;app.simMeter=createSimMeter();
+  app.running=false;app.accumulator=0;app.lastFrame=null;app.world=world;e3cMigrateFormationRecords(world);app.simMeter=createSimMeter();
   app.autoSpeed.mode='MAX';app.autoSpeed.highCount=0;app.autoSpeed.lowCount=0;app.autoSpeed.lastSwitchAt=-Infinity;
   app.autoUiDirty=false;app.autoLastUiAt=0;updateAutoSpeedButton();
   app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;app.chroniclePage=1;app.chronicleKind='all';app.chronicleNation='all';
@@ -18425,7 +18563,7 @@ function setWorld(world){
   refreshRngControls();
   $('warHistoryList').dataset.historyKey='';
   editorState.draft=null;editorState.draftSource=null;
-  v07d2UpdateObservationUI();
+  v07d2UpdateObservationUI();e3cSyncPolicyAuditNation();
   updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();if(app.activeTab==='world')d2RenderWorldCultures();
   $('coordinateLabel').textContent='X — · Y —';
 }
@@ -18666,7 +18804,6 @@ $('newWorldBtn').addEventListener('click',()=>{
 });
 $('worldSizeSelect').addEventListener('change',()=>{const [w,h]=$('worldSizeSelect').value.split('x').map(Number);$('newNationCount').value=String(c1DefaultNationCount(w,h));c1RefreshWorldControls();renderAIEditor();});
 $('seedInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('newWorldBtn').click();});
-$('apBudgetCsvBtn').addEventListener('click',()=>{try{download(`vilob-e4-ap-budget-y${timeAt(app.world.dayIndex).year}.csv`,v04e3ApCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('AP CSV 실패: '+e.message);}});
 $('mobilizationCsvBtn').addEventListener('click',()=>{try{download(`vilob-e2-mobilization-y${timeAt(app.world.dayIndex).year}.csv`,v04e2MobilizationCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('동원 진단 CSV 실패: '+e.message);}});
 $('barracksEventsCsvBtn').addEventListener('click',()=>{try{download(`vilob-e2-barracks-events-y${timeAt(app.world.dayIndex).year}.csv`,v04e2BarracksEventsCsv(app.world),'text/csv;charset=utf-8');}catch(e){showToast('병영 진단 CSV 실패: '+e.message);}});
 $('warAuditJsonBtn').addEventListener('click',()=>{try{download(`vilob-e4-war-audit-y${timeAt(app.world.dayIndex).year}.json`,JSON.stringify(warAuditReport(app.world),null,2),'application/json');}catch(e){showToast('진단 JSON 실패: '+e.message);}});
