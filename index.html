@@ -820,7 +820,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 </section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div id="e3eMarketBody" aria-live="off"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="기존 세계 하천 추가"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" id="riverApplyBtn" type="button" disabled>이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="V0.7D3 전투 관측"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input type="checkbox" id="combatObservationEnabled"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 최대 1,024개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button type="button" class="text-button" id="combatObservationCsv" disabled>↓ 전투 관측 CSV</button><button type="button" class="text-button" id="combatObservationJson" disabled>↓ 전투 관측 JSON</button><button type="button" class="text-button" id="combatObservationSummary" disabled>↓ 요약 JSON (경량)</button><button type="button" class="text-button" id="combatObservationGzip" disabled>↓ 상세 JSON.gz (압축)</button><button type="button" class="text-button" id="combatObservationClear" disabled>기록 비우기</button></div><div class="scope-note" role="status" id="combatObservationStatus">관측 OFF</div></section><details class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard" aria-label="세계 정책·재정 감사 통합 도구"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select id="e3cAuditNation" aria-label="정책 감사 국가 선택"></select></div><div id="e3cPolicyAuditContent" class="e3c-audit-content"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
-<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card" aria-label="E3E2 세계 인구와 식량 균형"><div class="card-heading"><div><div class="eyebrow">POPULATION &amp; FOOD · E3E2</div><h2>세계 인구·식량 균형</h2></div><span class="small-label">최근 4분기·1년</span></div><div id="e3e2WorldDemography" class="world-era-list"></div><div class="file-actions"><button class="text-button" type="button" id="e3e2WorldJson">↓ 인구·식량 JSON</button><button class="text-button" type="button" id="e3e2WorldCsv">↓ 인구·식량 CSV</button></div><p class="scope-note">이관 시 과거 분기는 소급 생성하지 않습니다. 기아 사망은 4개 실측 분기와 2분기 연속 부족 이후 연말에 발생합니다.</p></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3D · 편제별 병종 아이콘·훈장·전적 시각화</h2></div><span class="small-label">0.7E3D</span></div>
+<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card" aria-label="E3E2 세계 인구와 식량 균형"><div class="card-heading"><div><div class="eyebrow">POPULATION &amp; FOOD · E3E2</div><h2>세계 인구·식량 균형</h2></div><span class="small-label">최근 4분기·1년</span></div><div id="e3e2WorldDemography" class="world-era-list"></div><div class="file-actions"><button class="text-button" type="button" id="e3e2WorldJson">↓ 인구·식량 JSON</button><button class="text-button" type="button" id="e3e2WorldCsv">↓ 인구·식량 CSV</button></div><p class="scope-note">이관 시 과거 분기는 소급 생성하지 않습니다. 기아 사망은 4개 실측 분기와 2분기 연속 부족 이후 연말에 발생합니다.</p></section><section class="sidebar-card" aria-label="E3E3 자원 생산·물류"><div class="card-heading"><div><div class="eyebrow">RESOURCE SUPPLY · E3E3</div><h2>목재 회복·국제 물류</h2></div><span class="small-label">최근 4분기</span></div><div id="e3e3WorldSupply" class="world-era-list"></div><div class="file-actions"><button class="text-button" type="button" id="e3e3SupplyJson">↓ 자원·물류 JSON</button><button class="text-button" type="button" id="e3e3SupplyCsv">↓ 자원·물류 CSV</button></div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">직접 육상 교역과 유상 간접 국제시장 거래를 지원합니다. 교역로·외교 관계·안전 재고·분기 운송 한도를 고려합니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3D · 편제별 병종 아이콘·훈장·전적 시각화</h2></div><span class="small-label">0.7E3D</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E3 · 근세 연구 처리 소프트캡(학술원 25레벨까지 +4, 이후 +1) · Lv.3 공방 AI 비용 기준 · 정밀 생산 원료 예측</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E2 · 근세 IV·전장포·포문 및 탄약 회계·후방 포격</span></div>
 <div class="milestone"><span class="tick">✓</span><span>19×19 / 39×21 시드 지도·7 / 12개국·SIM 계측</span></div>
@@ -861,7 +861,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7E3E2'; // Demographic food equilibrium: birth, ordinary mortality, chronic hunger
+const VERSION = 'V0.7F1'; // Resource supply recovery, paid redevelopment and transport capacity
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1211,6 +1211,8 @@ function decodeProfilesJson(json){
 // --- src/sim/technology.js ---
 /** V0.2A: nation-level research. No individual researchers, resources or RNG. */
 const TECHNOLOGIES=Object.freeze([
+  {id:'coal_extraction',name:'석탄 채굴법',branch:'resources',tier:7,cost:11800,requires:['deep_mining','large_machine_assembly'],effects:{}},
+  {id:'steam_engineering',name:'실용 증기기관',branch:'resources',tier:7,cost:13400,requires:['power_transmission','large_machine_assembly','scientific_instrumentation'],effects:{}},
   {id:'basic_farming',name:'기초 농법',branch:'agriculture',tier:1,cost:160,requires:[],effects:{farmFood:.10}},
   {id:'crop_rotation',name:'윤작법',branch:'agriculture',tier:2,cost:420,requires:['basic_farming'],effects:{farmFood:.12,passiveFood:.05}},
   {id:'intensive_farming',name:'집약 농업',branch:'agriculture',tier:3,cost:1060,requires:['crop_rotation'],effects:{farmFood:.18}},
@@ -1293,13 +1295,14 @@ const TECHNOLOGIES=Object.freeze([
   {id:'military_freight_standardization',name:'군수 운송 표준화',branch:'roads',tier:15,cost:11600,requires:['large_machine_assembly','interregional_trade_network'],effects:{},unlocks:['artillery:supply']},
 ]);
 const G_TECH_IDS=new Set(["soil_management", "seed_selection", "irrigation_networks", "multiple_cropping", "agricultural_logistics", "precision_cultivation", "precision_quarrying", "deep_mining", "ore_refining", "steelmaking", "alloy_processing", "materials_recycling", "urban_redevelopment", "structural_reinforcement", "adaptive_zoning", "construction_management", "demolition_salvage", "high_density_housing", "topographic_survey", "mountain_engineering", "trunk_route_planning", "rock_cutting", "supply_depots", "advanced_transport", "advanced_blades", "pike_drills", "longbow_craft", "crossbow_engineering", "heavy_armor_forging", "elite_infantry", "improved_farm_tools", "guild_organization", "basic_mechanical_power", "craft_standardization", "commercial_transport", "gunpowder_manufacturing", "movable_type_printing", "mixed_use_construction"]);
+const V07F1_TECH_IDS=new Set(['coal_extraction','steam_engineering']);
 const TECHNOLOGY_BY_ID=Object.freeze(Object.fromEntries(TECHNOLOGIES.map(t=>[t.id,t])));
 const V07D_MODERN2_TECH_IDS=new Set(['precision_metalworking','power_transmission','commercial_credit','scholarly_print_network','mechanical_components']);
 const V07D_MODERN1_TECH_IDS=new Set(['publishing_organization','commercial_accounting','professional_workshops','matchlock_crafting','empirical_research','workshop_concentration']);
 const V07E1_MODERN3_TECH_IDS=new Set(['precision_workshop_methods','interregional_trade_network','scientific_instrumentation','flintlock_mechanism','large_machine_assembly']);
 const V07E2_MODERN4_TECH_IDS=new Set(['field_artillery_casting','artillery_drill_manual','military_freight_standardization']);
 const V07C_MODERN_TECH_IDS=new Set([...V07D_MODERN1_TECH_IDS,...V07D_MODERN2_TECH_IDS,...V07E1_MODERN3_TECH_IDS,...V07E2_MODERN4_TECH_IDS]);
-const ERA_TECHNOLOGIES=Object.freeze(Object.fromEntries(TECHNOLOGIES.map(t=>[t.id,V07C_MODERN_TECH_IDS.has(t.id)?'early_modern':G_TECH_IDS.has(t.id)?'medieval':'ancient'])));
+const ERA_TECHNOLOGIES=Object.freeze(Object.fromEntries(TECHNOLOGIES.map(t=>[t.id,V07F1_TECH_IDS.has(t.id)?'early_modern':V07C_MODERN_TECH_IDS.has(t.id)?'early_modern':G_TECH_IDS.has(t.id)?'medieval':'ancient'])));
 
 // V0.7A: independent medieval progression; historic tier remains research difficulty.
 const MEDIEVAL_STAGE_TECH_IDS=Object.freeze({
@@ -1311,12 +1314,13 @@ const MEDIEVAL_STAGE_TECH_IDS=Object.freeze({
 const TECHNOLOGY_STAGE=Object.freeze(Object.fromEntries(Object.entries(MEDIEVAL_STAGE_TECH_IDS).flatMap(([stage,ids])=>ids.map(id=>[id,Number(stage)]))));
 const MEDIEVAL_STAGE_CORE=Object.freeze({1:'ore_refining',2:'construction_management',3:'advanced_transport'}); // IV -> early modern remains locked
 const MEDIEVAL_STAGE_LABELS=Object.freeze({0:'고대',1:'중세 I',2:'중세 II',3:'중세 III',4:'중세 IV'});
-function civilizationLabel(n){return n?.civilization?.era==='medieval'?(MEDIEVAL_STAGE_LABELS[n.civilization.stage]||'중세'):n?.civilization?.era==='early_modern'?'근세 '+({1:'I',2:'II',3:'III',4:'IV'}[n.civilization.stage]||'I'):CIVILIZATION_ERAS[n?.civilization?.era]?.label||'고대';}
+function civilizationLabel(n){if(n?.civilization?.era==='industrial_modern')return '산업 근대 I';return n?.civilization?.era==='medieval'?(MEDIEVAL_STAGE_LABELS[n.civilization.stage]||'중세'):n?.civilization?.era==='early_modern'?'근세 '+({1:'I',2:'II',3:'III',4:'IV'}[n.civilization.stage]||'I'):CIVILIZATION_ERAS[n?.civilization?.era]?.label||'고대';}
 function medievalNextCore(n){const stage=n?.civilization?.era==='medieval'?n.civilization.stage:0;return MEDIEVAL_STAGE_CORE[stage]||null;}
 
 const V04D_EXCHANGE_COST=60, V04D_EXCHANGE_BONUS=0.25;
 function techEraAllowed(n,techId){
  const era=ERA_TECHNOLOGIES[techId],order=CIVILIZATION_ERAS[n.civilization?.era]?.order??0;
+ if(V07F1_TECH_IDS.has(techId))return order>2||(order===2&&(n.civilization.stage||1)>=4);
  if(era==='early_modern'){
    if(order>2)return true;if(order!==2)return false;
    const stage=n.civilization.stage||1;
@@ -1356,7 +1360,7 @@ function validateTechnologyState(state){
   const paused=state.pausedResearch;
   if(paused!==null&&paused!==undefined){
     const p=TECHNOLOGY_BY_ID[paused.id];
-    if(!p||known.has(paused.id)||!(G_TECH_IDS.has(paused.id)||V07C_MODERN_TECH_IDS.has(paused.id))||
+    if(!p||known.has(paused.id)||!(G_TECH_IDS.has(paused.id)||V07C_MODERN_TECH_IDS.has(paused.id)||V07F1_TECH_IDS.has(paused.id))||
        !p.requires.every(x=>known.has(x))||!Number.isSafeInteger(paused.progress)||paused.progress<0||paused.progress>=p.cost)return false;
   }
   if(state.currentResearch===null)return state.progress===0;
@@ -1370,7 +1374,7 @@ function researchCapacity(w,nationId){
     .reduce((sum,b)=>sum+b.level,0);
   const legacy=Math.min(70,10+Math.floor(n.researchLevel/8)+academies*4);
   const current=TECHNOLOGY_BY_ID[n.technology?.currentResearch];
-  const modernResearch=!!current&&V07C_MODERN_TECH_IDS.has(current.id);
+  const modernResearch=!!current&&(V07C_MODERN_TECH_IDS.has(current.id)||V07F1_TECH_IDS.has(current.id));
   const raw=current&&(G_TECH_IDS.has(current.id)||modernResearch)?Math.min(92,Math.max(legacy,30+Math.floor(n.researchLevel/8)+2*academies)):legacy;
   // E3: only an ACTUAL early-modern research project gets academy softcap.
   // No change to ancient/medieval or idle research display; no new Knowledge is created.
@@ -1534,6 +1538,9 @@ function d1dValidate(w,fail){
 
 function chooseAIResearch(w,nationId){
   const n=w.nations[nationId],p=n&&d1dEffectiveProfile(w,nationId);if(!n||!p||n.technology?.currentResearch)return null;
+  if(n.civilization?.era==='early_modern'&&n.civilization.stage===4){
+    for(const id of ['coal_extraction','steam_engineering'])if(researchLegal(w,nationId,id))return id;
+  }
   const wars=w.wars.some(x=>x.attackerId===nationId||x.defenderId===nationId);
   const pop=w.settlements.filter(s=>s.ownerId===nationId).reduce((sum,s)=>sum+s.population,0);
   const foodThreat=n.foodPressure<.95||n.resources.food<Math.max(25,pop*.22);
@@ -1604,7 +1611,7 @@ const CIVILIZATION_ERAS=Object.freeze({
   ancient:Object.freeze({id:'ancient',label:'고대',order:0}),
   medieval:Object.freeze({id:'medieval',label:'중세',order:1}),
   early_modern:Object.freeze({id:'early_modern',label:'근세',order:2}),
-  industrial_modern:Object.freeze({id:'industrial_modern',label:'산업 근대',order:3,planned:true}),
+  industrial_modern:Object.freeze({id:'industrial_modern',label:'산업 근대',order:3}),
   future:Object.freeze({id:'future',label:'미래',order:4,planned:true})
 });
 const MEDIEVAL_TECH_IDS=Object.freeze(['regional_governance']);
@@ -1632,7 +1639,7 @@ function migratedCivilization(w,n){
 }
 function validCivilization(c,day){
   if(!c||!CIVILIZATION_ERAS[c.era]||CIVILIZATION_ERAS[c.era].planned)return false;
-  if(!(c.era==='ancient'?c.stage===0:c.era==='medieval'&&Number.isSafeInteger(c.stage)&&c.stage>=1&&c.stage<=4||c.era==='early_modern'&&Number.isSafeInteger(c.stage)&&c.stage>=1&&c.stage<=4))return false;
+  if(!(c.era==='ancient'?c.stage===0:c.era==='medieval'&&Number.isSafeInteger(c.stage)&&c.stage>=1&&c.stage<=4||c.era==='early_modern'&&Number.isSafeInteger(c.stage)&&c.stage>=1&&c.stage<=4||c.era==='industrial_modern'&&c.stage===1))return false;
   const validDay=value=>value===null||(Number.isSafeInteger(value)&&value>=0&&value<=day&&value%30===0);
   return validDay(c.eraReachedDay)&&validDay(c.stageReachedDay);
 }
@@ -1732,6 +1739,7 @@ function processCivilizationEraQuarter(w){
     recordHistoricalEvent(w,'era',text,[n.id],`era:${n.id}:early_modern_4`);
     if(w.events.length>180)w.events.splice(0,w.events.length-180);w.changeSeq++;
   }
+  f1PromoteIndustrial(w);
 }
 // --- src/sim/territory.js ---
 /** V0.1B1 Territorial Cohesion: one small, stateless territorial scan per nation.
@@ -3118,6 +3126,7 @@ const BUILDINGS=Object.freeze({
   farm:{label:'농장',symbol:'✿',terrains:['plain','grass','forest'],days:30,ap:1,gold:28,materials:{wood:6,stone:1},produces:{food:76}},
   lumber:{label:'벌목장',symbol:'♣',terrains:['forest','grass'],days:30,ap:1,gold:25,materials:{wood:3,stone:1},produces:{wood:24}},
   quarry:{label:'채석장',symbol:'◆',terrains:['rock','mountain'],days:60,ap:1,gold:36,materials:{wood:7,stone:0},produces:{stone:18}},
+  coal_pit:{label:'탄광',symbol:'⛏',terrains:['rock','mountain','forest','grass','plain'],days:90,ap:2,gold:650,materials:{wood:22,stone:18,iron:6}},
   mine:{label:'광산',symbol:'⚒',terrains:['rock','mountain'],days:60,ap:1,gold:45,materials:{wood:10,stone:6},produces:{iron:9}},
   fort:{label:'요새',symbol:'♜',terrains:['plain','grass','forest','rock','mountain'],days:180,ap:3,gold:350,materials:{wood:50,stone:60},defense:25,firepower:60},
   academy:{label:'학술원',symbol:'✧',terrains:['plain','grass','forest','rock','mountain'],days:60,ap:1,gold:50,materials:{wood:10,stone:8},knowledge:7},
@@ -3152,6 +3161,7 @@ const G2_ADVANCED_COST=Object.freeze({
  academy:[null,null,null,null,{gold:750,wood:145,stone:100,apUnits:35,days:180},{gold:1800,wood:345,stone:240,apUnits:50,days:270}]
 });
 function g2LevelUnlocked(w,nationId,typeId,nextLevel){
+  if(typeId==='coal_pit')return false;
   if(typeId==='workshop')return nextLevel===2&&hasTech(w,nationId,'professional_workshops')||nextLevel===3&&hasTech(w,nationId,'precision_metalworking');
   if(typeId==='barracks')return nextLevel>=2&&nextLevel<=5&&(nextLevel<=3||hasTech(w,nationId,nextLevel===4?'tactical_advances':'steelmaking'));
   if(nextLevel<=3)return true;
@@ -3290,6 +3300,7 @@ function buildingSiteLegal(world,nationId,action,siteUsage=null){
   const s=world.settlements.find(s=>s.id===action.settlementId&&s.ownerId===nationId);
   const tile=world.tiles[action.targetTileId],type=BUILDINGS[action.buildingType];
   if(action.buildingType==='workshop'&&!hasTech(world,nationId,'guild_organization'))return false;
+  if(action.buildingType==='coal_pit'&&!hasTech(world,nationId,'coal_extraction'))return false;
   if(action.buildingType==='barracks'&&(!hasTech(world,nationId,'military_drills')||!v04e1BarracksSlotAvailable(world,nationId,action.settlementId)))return false;
   return Boolean((action.buildingType==='fort'?(action.settlementId===null||action.settlementId===undefined||s?.tileIds.includes(tile?.id)):s?.tileIds.includes(tile?.id))&&tile&&type&&tile.ownerId===nationId&&
     tile.occupiedBy===null&&type.terrains.includes(tile.terrain)&&
@@ -3339,9 +3350,11 @@ function redevelopmentLegal(w,nationId,action){
   if(militaryRetrofit&&(!hasTech(w,nationId,'military_drills')||!v04e1BarracksSlotAvailable(w,nationId,w.buildings.find(b=>b.id===action.buildingId)?.settlementId)))return false;
   const b=w.buildings.find(x=>x.id===action.buildingId),type=BUILDINGS[action.buildingType];
   if(action.buildingType==='workshop'&&!hasTech(w,nationId,'guild_organization'))return false;
+  if(action.buildingType==='coal_pit'&&!hasTech(w,nationId,'coal_extraction'))return false;
   if(!b||b.disconnected||b.status!=='ACTIVE'||!type||b.typeId===action.buildingType||action.buildingType==='fort')return false;
   const tile=w.tiles[b.tileId],s=w.settlements.find(s=>s.id===b.settlementId);
   if(!tile||!s||s.ownerId!==nationId||tile.ownerId!==nationId||tile.occupiedBy!==null||!type.terrains.includes(tile.terrain))return false;
+  if(action.buildingType==='lumber'&&b.typeId==='farm'&&!e3e3FarmRetrofitSafe(w,w.nations[nationId],s,b))return false;
   if(b.typeId==='house'){
     const old=settlementHousing(w,s),housingLost=(facilityOutput(b,tile.terrain)?.capacity||0)*(1+techBonus(w,nationId,'housing'));
     if(s.population>old-Math.ceil(housingLost))return false;
@@ -3371,11 +3384,12 @@ function completeBuildings(world){
         b.hp=Math.max(0,fortMaxHP(b)-(oldMax-oldHp));
       }
     }
-    if(b.status==='REDEVELOPING'){b.typeId=b.redevelopTo;b.level=1;b.lastRedevelopedDay=world.dayIndex;delete b.redevelopTo;delete b.redevelopFrom;}
+    if(b.status==='REDEVELOPING'){if(b.typeId==='workshop'){delete b.powerDevices;delete b.powerProject;delete b.lastPower;}b.typeId=b.redevelopTo;if(b.typeId==='workshop')b.powerDevices={mechanical:false,waterwheel:false,steam:false};b.level=1;b.lastRedevelopedDay=world.dayIndex;delete b.redevelopTo;delete b.redevelopFrom;}
     b.status='ACTIVE';changed=true;
     const s=world.settlements.find(s=>s.id===b.settlementId);
     world.events.push({dayIndex:world.dayIndex,text:`${s?.name||(b.typeId==='fort'?'국경 방어거점':'정착지')}: ${BUILDINGS[b.typeId].label} ${b.level}단계 완공`,kind:'building'});
   }
+  f1AdvancePowerProjects(world);
   if(changed){if(world.events.length>180)world.events.splice(0,world.events.length-180);world.changeSeq++;}
 }
 function buildingBonuses(world,nationId,roadInfo=null){
@@ -3683,7 +3697,7 @@ function roadEconomyBonus(w,nationId){
  */
 const LOCAL_WORKERS_PER_PERSON=.45;
 const LOCAL_MIN_WORKERS=6;
-const LOCAL_LABOR_DEMAND=Object.freeze({farm:16,lumber:12,quarry:16,mine:20,academy:14,workshop:22});
+const LOCAL_LABOR_DEMAND=Object.freeze({farm:16,lumber:12,quarry:16,mine:20,academy:14,workshop:22,coal_pit:20});
 function localProductivityReport(w,nationId,roadInfo=null){
   const towns=new Map();
   const produced={food:0,wood:0,stone:0,iron:0};let knowledge=0,foodConditionalBonus=0;
@@ -3712,7 +3726,9 @@ function localProductivityReport(w,nationId,roadInfo=null){
     const base=facilityOutput(b,tile.terrain);if(!base)continue;
     if(!groups.has(b.settlementId))groups.set(b.settlementId,[]);
     groups.get(b.settlementId).push({b,base,terrain:tile.terrain,underAttack:occupied.has(b.tileId)});
-    local.demand+=(LOCAL_LABOR_DEMAND[b.typeId]||0)*g2LevelLabor(b.level);
+    const rawDemand=(LOCAL_LABOR_DEMAND[b.typeId]||0)*g2LevelLabor(b.level);
+    const saving=b.typeId==='workshop'?f1LaborSavings(w,b,w.nations[nationId],rawDemand):0;
+    local.demand+=rawDemand-saving;local.powerLaborSaved=(local.powerLaborSaved||0)+saving;
     if(LOCAL_LABOR_DEMAND[b.typeId])local.activeFacilities++;
   }
   for(const local of towns.values()){
@@ -3774,7 +3790,7 @@ function refreshApCaps(w){
   for(const n of w.nations){n.apMaxUnits=g1ApCapFor(w,n.id,counts);n.apUnits=Math.min(n.apUnits,n.apMaxUnits);}
 }
 function newEconomy(){return {constructionProcurement:{plan:null,history:[]},economicRecovery:{history:[]},apLedger:{history:[]},civilFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0},gold:140,apUnits:50,apMaxUnits:AP_MAX_UNITS,knowledge:0,researchLevel:0,
-  resources:{food:130,wood:30,stone:20,iron:3},foodPressure:1,demographyE3E2:e3e2NewDemography(),
+  resources:{food:130,wood:30,stone:20,iron:3,coal:0},foodPressure:1,f1Industry:f1NewIndustry(),demographyE3E2:e3e2NewDemography(),e3e3Supply:e3e3NewSupply(),
   lastQuarter:{goldIncome:0,upkeep:0,goldNet:0,apRecovery:0,knowledgeIncome:0,produced:{food:0,wood:0,stone:0,iron:0},foodConsumed:0}};}
 function technicalBuildingPrice(w,nationId,base,recycle=false){
   if(!base)return null;const discount=Math.min(.65,techBonus(w,nationId,'materialDiscount')+(recycle?techBonus(w,nationId,'recycledBuildMaterials'):0));
@@ -3801,6 +3817,7 @@ function getActionPrice(world,nationId,action,territory=null){
     case 'INVEST_KNOWLEDGE':return make(1,30,{},12);
     case 'START_RESEARCH':return researchLegal(world,nationId,action.technologyId)?make(.3):null;
     case 'SET_WORKSHOP_MODE':return make(.1);
+    case 'INSTALL_WORKSHOP_POWER':return f1PowerInstallPrice(world,nationId,action);
     case 'TRADE_BUY':case 'TRADE_SELL':return make(0);
     case 'TRAIN_RESERVES':return make(.5,Math.ceil(action.amount*.85));
     case 'TRAIN_FORMATION':{const a=world.armies.find(a=>a.id===action.armyId&&a.nationId===nationId);return a?make(.5,Math.max(30,Math.ceil(manpower(a)*.35))):null;}
@@ -3973,20 +3990,22 @@ function v07bWorkshopQuarter(world,projections){
       n.civilization.stage>=3&&hasTech(world,n.id,'precision_workshop_methods');
     const wood=precision?16:4*inputLevel,iron=precision?9:2*inputLevel;
     if(n.resources.wood<wood||n.resources.iron<iron)continue;
+    const choice=f1ChoosePower(world,b,n,local,riverbank.has(b.id));
+    const power=1+choice.pu/100;
     n.resources.wood-=wood;n.resources.iron-=iron;
-    const hasPower=hasTech(world,n.id,'basic_mechanical_power');
-    const watermill=hasPower&&riverbank.has(b.id);
-    const factors=v07dWorkshopPowerFactors(world,n.id);
-    const power=hasPower?(watermill?factors.watermill:factors.alternative):1;
+    if(choice.source==='STEAM'){n.resources.coal-=3;n.gold-=12;}
+    f1RecordWorkshopPower(world,n,b,choice,local);
     // Use the existing settlement labor/development/roads utilization, with one floor.
     const gold=Math.max(0,Math.floor(72*inputLevel*local.multiplier*power*(1+techBonus(world,n.id,'workshopGold'))*(precision?1.20:1)));
     n.gold+=gold;r.operated++;r.woodUsed+=wood;r.ironUsed+=iron;r.gold+=gold;
     b.lastOperatedDay=world.dayIndex;if(precision){r.precisionOperated++;r.precisionGold+=gold;}
-    if(watermill)r.watermills++;else if(hasPower)r.alternativePower++;
+    if(choice.source==='WATERWHEEL')r.watermills++;else if(choice.source==='MECHANICAL')r.alternativePower++;
   }
   return results;
 }
 function runEconomyQuarter(world){
+  const e3e3WoodStarts=e3e3StartEconomyQuarter(world);
+  f1StartEconomyQuarter(world);
   finishTrainingQuarter(world);
   const projections=new Map(world.nations.filter(n=>n.active).map(n=>[n.id,projectedQuarter(world,n)]));
   for(const n of world.nations){
@@ -3996,6 +4015,7 @@ function runEconomyQuarter(world){
     n.apUnits=Math.min(n.apMaxUnits,n.apUnits+q.apRecovery);
     n.gold+=q.goldIncome;
     for(const key of RESOURCE_KEYS)n.resources[key]=Math.min(1000000,n.resources[key]+q.produced[key]);
+    f1RunCoalQuarter(world,n,q);
   }
   // Reserve physical materials for craft production BEFORE international trade.
   const workshopResults=v07bWorkshopQuarter(world,projections);
@@ -4111,11 +4131,13 @@ function runEconomyQuarter(world){
     // Transient town Maps are not persisted in the national quarterly ledger.
     const {regionalEconomy:localReport,...accounting}=q;
     const workshop=workshopResults.get(n.id);
-    n.lastQuarter={...accounting,workshop,printing,knowledgeIncome:q.knowledgeIncome+printing.knowledge,goldIncome:q.goldIncome+(workshop?.gold||0),goldNet:q.goldIncome+(workshop?.gold||0)-paid-civilPaid-printing.goldUsed+n.trade.quarterExportValue-n.trade.quarterImportValue,upkeepPaid:paid,civilPaid,civilUnpaid:finance.unpaidLastQuarter,tradeImportValue:n.trade.quarterImportValue,tradeExportValue:n.trade.quarterExportValue};
+    n.lastQuarter={...accounting,workshop,f1:f1EnsureIndustry(n).lastQuarter,printing,knowledgeIncome:q.knowledgeIncome+printing.knowledge,goldIncome:q.goldIncome+(workshop?.gold||0),goldNet:q.goldIncome+(workshop?.gold||0)-paid-civilPaid-printing.goldUsed-(f1EnsureIndustry(n).lastQuarter.steamOperatingGold||0)-(f1EnsureIndustry(n).lastQuarter.coalSites||0)*12+n.trade.quarterExportValue-n.trade.quarterImportValue,upkeepPaid:paid,civilPaid,civilUnpaid:finance.unpaidLastQuarter,tradeImportValue:n.trade.quarterImportValue,tradeExportValue:n.trade.quarterExportValue};
     e1SettleQuarter(world,n);
   }
   // F3 diagnostics run after real deliveries, consumption and upkeep.
   updateTradeDependency(world,projections);
+  f1FinishEconomyQuarter(world);
+  e3e3FinishEconomyQuarter(world,e3e3WoodStarts);
   world.changeSeq++;
 }
 
@@ -4124,8 +4146,8 @@ function runEconomyQuarter(world){
 /** V0.3A1: conservation-only, quarter-based bilateral overland trade. */
 
 
-const TRADE_GOODS=Object.freeze({food:{label:'식량',price:1,freight:1},wood:{label:'목재',price:3,freight:1},stone:{label:'석재',price:4,freight:2},iron:{label:'철',price:9,freight:4}});
-const GOODS=Object.keys(TRADE_GOODS);
+const TRADE_GOODS=Object.freeze({food:{label:'식량',price:1,freight:1},wood:{label:'목재',price:3,freight:1},stone:{label:'석재',price:4,freight:2},iron:{label:'철',price:9,freight:4},coal:{label:'석탄',price:6,freight:3}});
+const GOODS=['food','wood','stone','iron']; // Legacy dependency/production schema stays four-core-resource only.
 const MAX_EVENTS=160;
 const tradeClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 /** F3 uses only recorded real flows. A legacy F2 save has no fabricated history. */
@@ -4256,6 +4278,7 @@ function safeStock(w,n,good){
   if(good==='food')return Math.ceil(Math.max(60,population*.38*2)*(1+(50-risk)/250));
   if(good==='wood')return Math.ceil(Math.max(18,population*.015)*(1+(development-50)/200));
   if(good==='stone')return Math.ceil(Math.max(14,population*.012)*(1+(development-50)/200));
+  if(good==='coal')return hasTech(w,n.id,'coal_extraction')||hasTech(w,n.id,'steam_engineering')?Math.max(12,Math.ceil(w.buildings.filter(b=>b.typeId==='workshop'&&w.tiles[b.tileId]?.ownerId===n.id&&b.powerDevices?.steam).length*6)):0;
   if(good==='iron')return Math.ceil(Math.max(5,population*.007)*(1+(investment-50)/160));
   return 0;
 }
@@ -4496,17 +4519,19 @@ function validateTrade(w){
 const E3E_MARKET_HISTORY_LIMIT=48, E3E_MARKET_FILLS_LIMIT=120;
 const E3E_MARKET_FEE_RATE=10; // percentage charged separately to buyers and sellers
 const E3E_MARKET_PRICE_STEP=150; // 15% of current price at full one-sided order imbalance
-const E3E_GOOD_INDEX=['food','wood','stone','iron'];
+const E3E_GOOD_INDEX=['food','wood','stone','iron','coal'];
 // E3E1: indirect brokered physical trade, no synthetic resource or pathfinder.
 const E3E1_INDIRECT_FREIGHT_LIMIT=3000, E3E1_INDIRECT_FEE_RATE=15;
 function e3eInitialMarket(){
  const prices={};for(const good of E3E_GOOD_INDEX)prices[good]=TRADE_GOODS[good].price*1000;
- return {schema:2,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
+ return {schema:2,coalIntroducedDay:0,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
   totals:{volume:0,baseGold:0,buyerPaid:0,sellerReceived:0,feesSink:0,trades:0,directVolume:0,indirectVolume:0,indirectFeeGold:0,directTrades:0,indirectTrades:0},
   lastOrders:[],lastNation:[],lastBlocks:{},lastQuarter:null};
 }
 function e3eMigrateMarket(w){
  const m=w.market??(w.market=e3eInitialMarket());
+ m.coalIntroducedDay??=Math.floor(w.dayIndex/30)*30+30;
+ m.prices.coal??=e3eBaseMilli('coal');
  if(m.schema===1){m.schema=2;
   for(const f of m.fills){f.mode??='DIRECT';f.indirectFeeGold??=0;f.baseFeeGold??=f.feeGold;}
   for(const f of w.trade?.history||[])if(f.market===true){f.mode??='DIRECT';f.indirectFeeGold??=0;f.baseFeeGold??=f.feeGold;}
@@ -4541,7 +4566,7 @@ function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',ind
   used=t.used[r.key]||0;
   if(used+freight>r.capacity)return null;
  }else if(mode==='INDIRECT'){
-  if(!indirectUsage||indirectUsage.import[buyer]+freight>E3E1_INDIRECT_FREIGHT_LIMIT||indirectUsage.export[seller]+freight>E3E1_INDIRECT_FREIGHT_LIMIT)return null;
+  if(!indirectUsage||indirectUsage.import[buyer]+freight>e3e3IndirectLimit(w,buyer)||indirectUsage.export[seller]+freight>e3e3IndirectLimit(w,seller))return null;
  }else return null;
  from.resources[good]-=qty;to.resources[good]+=qty;to.gold-=s.buyerPaid;from.gold+=s.sellerReceived;
  if(mode==='DIRECT')t.used[r.key]=used+freight;
@@ -4566,7 +4591,7 @@ function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',ind
 }
 function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloor,mode='DIRECT',indirectUsage=null){
  const freightRemaining=mode==='DIRECT'?(r?Math.max(0,r.capacity-(ensureTrade(w).used[r.key]||0)):0):
-  Math.max(0,Math.min(E3E1_INDIRECT_FREIGHT_LIMIT-(indirectUsage?.import[buyer]||0),E3E1_INDIRECT_FREIGHT_LIMIT-(indirectUsage?.export[seller]||0)));
+  Math.max(0,Math.min(e3e3IndirectLimit(w,buyer)-(indirectUsage?.import[buyer]||0),e3e3IndirectLimit(w,seller)-(indirectUsage?.export[seller]||0)));
  let hi=Math.max(0,Math.min(10000,Math.floor(max),Math.ceil(freightRemaining/Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,buyer,'tradeFreightDiscount')))),
    w.nations[seller].resources[good]-sellerFloor));
  let lo=0;
@@ -4578,7 +4603,7 @@ function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloo
 }
 function e3eTargets(w,n,projections){
  const q=projections?.get(n.id)||projectedQuarter(w,n);
- const target={food:Math.max(safeStock(w,n,'food'),2*q.foodConsumed),wood:safeStock(w,n,'wood'),stone:safeStock(w,n,'stone'),iron:safeStock(w,n,'iron')};
+ const target={food:Math.max(safeStock(w,n,'food'),2*q.foodConsumed),wood:safeStock(w,n,'wood'),stone:safeStock(w,n,'stone'),iron:safeStock(w,n,'iron'),coal:safeStock(w,n,'coal')};
  const intent=v05bTradeIntent(w,n);
  if(intent)for(const g of V05B_BUILD_GOODS)target[g]=Math.max(target[g],intent.price.resources[g]||0);
  return {target,intent,upkeep:(q.upkeep||0)+(q.civil?.total||0)};
@@ -4598,7 +4623,7 @@ function e3eRunMarketQuarter(w,projections=null){
  const report={dayIndex:current,pricesBefore:{...market.prices},pricesAfter:{},goods:{},totalVolume:0,totalGold:0,feesSink:0,trades:0,availableRoutes:routes.length,
   eligiblePairs:pairs.length,directVolume:0,indirectVolume:0,directTrades:0,indirectTrades:0,indirectFeeGold:0};
  const nationRecords=new Map(eligible.map(n=>[n.id,{id:n.id,bought:{},sold:{},directBought:{},directSold:{},indirectBought:{},indirectSold:{},buyerPaid:0,sellerReceived:0,fees:0,
-  indirectFeeGold:0,indirectImportFreight:0,indirectExportFreight:0}]));
+  indirectFeeGold:0,indirectImportFreight:0,indirectExportFreight:0,indirectImportCap:e3e3IndirectLimit(w,n.id),indirectExportCap:e3e3IndirectLimit(w,n.id)}]));
  const finalOrders=[],blocks={},goodContexts=[];
  for(const good of E3E_GOOD_INDEX){
   const priceMilli=market.prices[good],orders=[],byId=new Map();
@@ -4635,7 +4660,7 @@ function e3eRunMarketQuarter(w,projections=null){
   for(const r of requests){
    const freightFactor=Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,r.buyer,'tradeFreightDiscount')));
    const directFreight=r.route?Math.max(0,r.route.capacity-(w.trade.used[r.route.key]||0)):0;
-   const indirectFreight=Math.max(0,Math.min(E3E1_INDIRECT_FREIGHT_LIMIT-usage.import[r.buyer],E3E1_INDIRECT_FREIGHT_LIMIT-usage.export[r.seller]));
+   const indirectFreight=Math.max(0,Math.min(e3e3IndirectLimit(w,r.buyer)-usage.import[r.buyer],e3e3IndirectLimit(w,r.seller)-usage.export[r.seller]));
    const possible=Math.max(0,Math.floor((directFreight+indirectFreight)/freightFactor));
    const bo=byId.get(`${r.buyer}:BUY`),so=byId.get(`${r.seller}:SELL`);
    const quantity=Math.min(possible,bo.requested,so.requested);
@@ -4684,10 +4709,25 @@ function e3eRunMarketQuarter(w,projections=null){
     const allowed=opposites.filter(x=>e3eMarketEligible(w,x.nationId,o.nationId));
     const compatible=allowed.filter(x=>o.side==='BUY'?priceMilli<=o.limitPriceMilli&&priceMilli>=x.limitPriceMilli:priceMilli>=o.limitPriceMilli&&priceMilli<=x.limitPriceMilli);
     const n=w.nations[o.nationId],isBuy=o.side==='BUY',freightLimit=isBuy?usage.import[n.id]:usage.export[n.id];
+    const possible=compatible.filter(x=>x.requested>x.filled);
+    const theirCapacity=possible.filter(x=>{
+     const other=w.nations[x.nationId];if(isBuy)return other.resources[good]>Math.max(safeStock(w,other,good),needs.get(other.id).target[good]);
+     return other.gold>=e3ePayment(1,priceMilli,'INDIRECT').buyerPaid;
+    });
+    const routeOpen=theirCapacity.some(x=>{
+      const r=routeMap.get(pairKey(n.id,x.nationId));return r&&(w.trade.used[r.key]||0)<r.capacity;
+    });
+    const indirectOtherOpen=theirCapacity.some(x=>{
+      const cap=e3e3IndirectLimit(w,x.nationId),used=isBuy?usage.export[x.nationId]:usage.import[x.nationId];return used<cap;
+    });
     const reason=!opposites.length?(isBuy?'NO_SELLER_SURPLUS':'NO_BUYER'):!allowed.length?'DIPLOMATIC_BLOCK':!compatible.length?'LIMIT_PRICE':
-     freightLimit>=E3E1_INDIRECT_FREIGHT_LIMIT?(isBuy?'INDIRECT_IMPORT_CAP':'INDIRECT_EXPORT_CAP'):
      isBuy&&n.gold<e3ePayment(1,priceMilli,'INDIRECT').buyerPaid?'GOLD':
-     !isBuy&&n.resources[good]<=Math.max(safeStock(w,n,good),needs.get(n.id).target[good])?'SAFE_STOCK':'FREIGHT_OR_COUNTERPARTY_CAP';
+     !isBuy&&n.resources[good]<=Math.max(safeStock(w,n,good),needs.get(n.id).target[good])?'SAFE_STOCK':
+     !possible.length?(isBuy?'NO_SELLER_SURPLUS':'NO_BUYER'):
+     !theirCapacity.length?(isBuy?'NO_SELLER_SURPLUS':'GOLD'):
+     freightLimit>=e3e3IndirectLimit(w,n.id)?(isBuy?'INDIRECT_IMPORT_CAP':'INDIRECT_EXPORT_CAP'):
+     !indirectOtherOpen?(isBuy?'INDIRECT_EXPORT_CAP':'INDIRECT_IMPORT_CAP'):
+     !routeOpen?'NO_MATCHING_COUNTERPARTY':'DIRECT_FREIGHT_CAP';
     o.blockReason=reason;blocks[reason]=(blocks[reason]||0)+o.unfilled;
    }
    finalOrders.push(o);
@@ -4733,12 +4773,12 @@ function e3eMarketCsv(w){const m=e3eEnsureMarket(w),head=['dayIndex','good','pri
  return '\ufeff'+rows.join('\n');
 }
 function e3eValidateMarket(w){const m=w.market,integer=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
- if(!m||m.schema!==2||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
+ if(!m||m.schema!==2||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!integer(m.coalIntroducedDay)||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
  if(E3E_GOOD_INDEX.some(g=>!integer(m.prices[g],1)||m.prices[g]!==e3eBoundPrice(g,m.prices[g])))return false;
  if(['volume','baseGold','buyerPaid','sellerReceived','feesSink','trades','directVolume','indirectVolume','directTrades','indirectTrades','indirectFeeGold'].some(k=>!integer(m.totals[k]))||(m.totals.buyerPaid!==m.totals.sellerReceived+m.totals.feesSink||m.totals.volume!==m.totals.directVolume+m.totals.indirectVolume||m.totals.trades!==m.totals.directTrades+m.totals.indirectTrades))return false;
  let day=-1;
  for(const q of m.quarters){if(!integer(q.dayIndex)||!integer(q.directVolume)||!integer(q.indirectVolume)||q.directVolume+q.indirectVolume!==q.totalVolume||!integer(q.directTrades)||!integer(q.indirectTrades)||q.directTrades+q.indirectTrades!==q.trades||!integer(q.indirectFeeGold)||q.dayIndex<=day||q.dayIndex>w.dayIndex||q.dayIndex%DAYS_PER_QUARTER!==0||!q.goods||!integer(q.availableRoutes)||!integer(q.trades)||!integer(q.totalVolume)||!integer(q.totalGold)||!integer(q.feesSink))return false;
-   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink||!integer(x.directVolume)||!integer(x.indirectVolume)||x.directVolume+x.indirectVolume!==x.volume||!integer(x.indirectFeeGold))return false;}
+   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(g==='coal'&&!x&&q.dayIndex<m.coalIntroducedDay)continue;if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink||!integer(x.directVolume)||!integer(x.indirectVolume)||x.directVolume+x.indirectVolume!==x.volume||!integer(x.indirectFeeGold))return false;}
    day=q.dayIndex;
  }
  if(m.quarterDay!==null&&day!==m.quarterDay)return false;
@@ -4747,6 +4787,316 @@ function e3eValidateMarket(w){const m=w.market,integer=(x,min=0)=>Number.isSafeI
  for(const o of m.lastOrders)if(!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.requested,1)||!integer(o.filled)||o.filled>o.requested||!integer(o.unfilled)||o.filled+o.unfilled!==o.requested||!integer(o.limitPriceMilli,1))return false;
  return true;
 }
+// V0.7F1: physical coal, attached mechanical power and explicit labor demand savings.
+// Quarterly-only accounting; no RNG, energy storage, nationwide wireless network, or new labor entities.
+const F1_POWER_PU=Object.freeze({MECHANICAL:18,WATERWHEEL:32,STEAM:65});
+const F1_POWER_INSTALL=Object.freeze({
+ MECHANICAL:{apUnits:10,gold:120,resources:{wood:8,iron:4},days:60},
+ WATERWHEEL:{apUnits:15,gold:180,resources:{wood:16,iron:6},days:90},
+ STEAM:{apUnits:35,gold:1200,resources:{wood:40,stone:24,iron:45},days:120}
+});
+const F1_POWER_SOURCES=['MECHANICAL','WATERWHEEL','STEAM'];
+const F1_HISTORY_WINDOW=48;
+let f1QuarterPlan=null,f1QuarterPlanDay=-1,f1ReservedSteamGold=null;
+function f1EmptyQuarter(day){return {dayIndex:day,coalProduced:0,coalConsumed:0,coalImported:0,coalExported:0,coalStart:0,coalEnd:0,coalOtherSpent:0,powerProduced:0,powerUsed:0,powerUnused:0,laborSaved:0,steamSites:0,steamOperatingGold:0,coalSites:0};}
+function f1NewIndustry(){return {schema:1,coalMinedEver:false,steamOperatedEver:false,lastQuarter:f1EmptyQuarter(0),history:[]};}
+function f1EnsureIndustry(n){return n.f1Industry||(n.f1Industry=f1NewIndustry());}
+function f1Devices(b){return b.powerDevices||{mechanical:false,waterwheel:false,steam:false};}
+function f1PowerInstallDays(source){return F1_POWER_INSTALL[source]?.days||0;}
+function f1PowerInstallLegal(w,nationId,action){
+ const b=w.buildings.find(x=>x.id===action.buildingId),s=b&&w.settlements.find(x=>x.id===b.settlementId),t=b&&w.tiles[b.tileId],source=action.source;
+ if(!F1_POWER_INSTALL[source]||!b||b.typeId!=='workshop'||b.status!=='ACTIVE'||b.disconnected||b.powerProject||s?.ownerId!==nationId||t?.ownerId!==nationId||t.occupiedBy!==null||w.occupations.some(o=>o.tileId===t.id))return false;
+ if(f1Devices(b)[source.toLowerCase()])return false;
+ if(source==='STEAM')return b.level>=3&&hasTech(w,nationId,'steam_engineering');
+ if(!hasTech(w,nationId,'basic_mechanical_power'))return false;
+ return source==='MECHANICAL'||riverAdjacentTileInfo(w,b.tileId).riverbank;
+}
+function f1PowerInstallPrice(w,nationId,action){
+ if(!f1PowerInstallLegal(w,nationId,action))return null;
+ const price=F1_POWER_INSTALL[action.source];return {apUnits:price.apUnits,gold:price.gold,knowledge:0,resources:{...price.resources}};
+}
+function f1AdvancePowerProjects(w){
+ for(const b of w.buildings){
+  const pr=b.powerProject;if(!pr||pr.completeDay>w.dayIndex||b.status!=='ACTIVE'||b.disconnected)continue;
+  const t=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId);
+  if(t?.ownerId!==s?.ownerId||t.occupiedBy!==null)continue;
+  b.powerDevices??={mechanical:false,waterwheel:false,steam:false};b.powerDevices[pr.source.toLowerCase()]=true;
+  delete b.powerProject;w.events.push({dayIndex:w.dayIndex,text:`${s.name}: ${b.id}번 공방 ${pr.source} 동력원 설치 완료`,kind:'building'});
+  w.changeSeq++;
+ }
+ if(w.events.length>180)w.events.splice(0,w.events.length-180);
+}
+function f1MigrateWorld(w,native=false){
+ for(const n of w.nations){n.resources.coal??=0;if(!native)n.f1Industry=f1NewIndustry();else f1EnsureIndustry(n);}
+ if(!native){
+  for(const b of w.buildings){if(b.typeId!=='workshop')continue;
+   const t=w.tiles[b.tileId],owner=t?.ownerId;
+   const has=owner!==null&&hasTech(w,owner,'basic_mechanical_power');
+   const water=has&&riverAdjacentTileInfo(w,b.tileId).riverbank;
+   b.powerDevices={mechanical:has&&!water,waterwheel:water,steam:false};
+   if(has)b.powerMigration='LEGACY_IMPLICIT_POWER';
+  }
+  w.market.coalIntroducedDay=Math.floor(w.dayIndex/30)*30+30;
+  w.market.prices.coal??=e3eBaseMilli('coal');
+ }
+}
+function f1PowerBase(w,b,n){
+ const dev=f1Devices(b),has=hasTech(w,n.id,'basic_mechanical_power'),upgraded=hasTech(w,n.id,'power_transmission');
+ if(!has)return {source:'NONE',pu:0};
+ const mechanical=dev.mechanical?{source:'MECHANICAL',pu:upgraded?18:12}:{source:'NONE',pu:0};
+ const water=dev.waterwheel&&riverAdjacentTileInfo(w,b.tileId).riverbank?{source:'WATERWHEEL',pu:upgraded?32:20}:null;
+ return water&&water.pu>mechanical.pu?water:mechanical;
+}
+function f1ChoosePower(w,b,n,local=null,riverbankHint=null){
+ const planned=f1QuarterPlanDay===w.dayIndex?f1QuarterPlan?.get(b.id):null;
+ if(planned)return planned;
+ return f1ChoosePowerUnplanned(w,b,n,local,riverbankHint);
+}
+function f1ChoosePowerUnplanned(w,b,n,local=null,riverbankHint=null){
+ const fallback=f1PowerBase(w,b,n),dev=f1Devices(b);
+ if(!dev.steam||b.level<3||!hasTech(w,n.id,'steam_engineering')||n.resources.coal<3||n.gold<12)return fallback;
+ // Conservative revenue test: never consume fuel just to lower the national treasury.
+ const multiplier=(local?.multiplier||1)*(1+techBonus(w,n.id,'workshopGold'))*(b.workshopMode==='precision'?1.20:1);
+ const extra=Math.floor(72*3*multiplier*1.65)-Math.floor(72*3*multiplier*(1+fallback.pu/100));
+ const coalValue=(w.market?.prices?.coal||6000)/1000;
+ if(extra<=12+3*coalValue)return fallback;
+ return {source:'STEAM',pu:65};
+}
+function f1LaborSavings(w,b,n,raw){
+ const selected=f1ChoosePower(w,b,n,{multiplier:1});
+ if(selected.source==='STEAM')return Math.max(0,raw-(Math.ceil(raw*.75)+4));
+ if(selected.source==='WATERWHEEL')return Math.max(0,raw-(Math.ceil(raw*.9)+2));
+ return 0;
+}
+function f1StartEconomyQuarter(w){
+ for(const n of w.nations){if(!n.active)continue;const industry=f1EnsureIndustry(n);industry.lastQuarter=f1EmptyQuarter(w.dayIndex);industry.lastQuarter.coalStart=n.resources.coal||0;}
+ // Reserve an exact per-site power choice BEFORE calculating settlement labor demand.
+ // The source may not consume newly mined or imported coal in this same quarter.
+ f1QuarterPlan=new Map();f1ReservedSteamGold=new Map();f1QuarterPlanDay=w.dayIndex;
+ const stock=new Map(w.nations.filter(n=>n.active).map(n=>[n.id,{coal:n.resources.coal,gold:n.gold}]));
+ const occupied=new Set((w.occupations||[]).map(x=>x.tileId));
+ for(const b of w.buildings.filter(b=>b.typeId==='workshop'&&b.status==='ACTIVE'&&!b.disconnected).sort((a,b)=>a.id-b.id)){
+  const tile=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId),n=s?.ownerId===tile?.ownerId?w.nations[s.ownerId]:null;
+  if(!n?.active||!stock.has(n.id))continue;
+  const shadow=stock.get(n.id),candidateN={...n,gold:shadow.gold,resources:{...n.resources,coal:shadow.coal}};
+  const candidate=f1ChoosePowerUnplanned(w,b,candidateN,{multiplier:1});
+  if(candidate.source==='STEAM'&&(tile.occupiedBy!==null||occupied.has(tile.id)||!s.population))continue;
+  f1QuarterPlan.set(b.id,candidate);
+  if(candidate.source==='STEAM'){shadow.coal-=3;shadow.gold-=12;f1ReservedSteamGold.set(n.id,(f1ReservedSteamGold.get(n.id)||0)+12);}
+ }
+}
+function f1RunCoalQuarter(w,n,q){
+ if(!hasTech(w,n.id,'coal_extraction'))return;
+ const r=f1EnsureIndustry(n).lastQuarter;
+ const active=w.buildings.filter(b=>b.typeId==='coal_pit'&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id).sort((a,b)=>a.id-b.id);
+ const occupied=new Set((w.occupations||[]).map(o=>o.tileId));
+ for(const b of active){const t=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId);
+  const local=q.regionalEconomy.towns.get(b.settlementId);
+  if(!s||s.ownerId!==n.id||s.population<1||t.occupiedBy!==null||occupied.has(t.id)||!local?.workers||(!local.roadNetwork&&t.roadLevel===0&&w.tiles[s.coreTileId]?.roadLevel===0)||n.gold<12+(f1ReservedSteamGold?.get(n.id)||0))continue;
+  const base=['rock','mountain'].includes(t.terrain)?12:8,amount=Math.max(0,Math.floor(base*local.multiplier));
+  if(amount<1||n.resources.coal+amount>1000000)continue;
+  n.gold-=12;n.resources.coal+=amount;b.lastCoalMinedDay=w.dayIndex;
+  r.coalProduced+=amount;r.coalSites++;f1EnsureIndustry(n).coalMinedEver=true;
+ }
+}
+function f1RecordWorkshopPower(w,n,b,choice,local){
+ const q=f1EnsureIndustry(n).lastQuarter;
+ const delivered=Math.min(65,choice.pu);
+ q.powerProduced+=choice.pu;q.powerUsed+=delivered;q.powerUnused+=choice.pu-delivered;
+ q.laborSaved+=(choice.source==='STEAM'?Math.max(0,22*b.level-(Math.ceil(22*b.level*.75)+4)):
+  choice.source==='WATERWHEEL'?Math.max(0,22*b.level-(Math.ceil(22*b.level*.9)+2)):0);
+ if(choice.source==='STEAM'){q.coalConsumed+=3;q.steamSites++;q.steamOperatingGold+=12;f1EnsureIndustry(n).steamOperatedEver=true;}
+ b.lastPower={dayIndex:w.dayIndex,source:choice.source,supplied:choice.pu,used:delivered,unused:choice.pu-delivered,demand:65};
+}
+function f1FinishEconomyQuarter(w){
+ for(const n of w.nations){if(!n.active)continue;
+  const i=f1EnsureIndustry(n),r=i.lastQuarter,m=(w.market.lastNation||[]).find(x=>x.id===n.id);
+  r.coalImported=m?.bought?.coal||0;r.coalExported=m?.sold?.coal||0;r.coalEnd=n.resources.coal;
+  r.coalOtherSpent=r.coalStart+r.coalProduced+r.coalImported-r.coalExported-r.coalConsumed-r.coalEnd;
+  i.history.push({...r});if(i.history.length>F1_HISTORY_WINDOW)i.history.shift();
+ }
+ f1QuarterPlan=null;f1QuarterPlanDay=-1;f1ReservedSteamGold=null;
+}
+function f1PromoteIndustrial(w){
+ for(const n of w.nations){if(!n.active||n.civilization.era!=='early_modern'||n.civilization.stage!==4)continue;
+  const f=f1EnsureIndustry(n);
+  if(!hasTech(w,n.id,'coal_extraction')||!hasTech(w,n.id,'steam_engineering')||!f.coalMinedEver||!f.steamOperatedEver)continue;
+  n.civilization={era:'industrial_modern',eraReachedDay:w.dayIndex,stage:1,stageReachedDay:w.dayIndex};
+  const text=`${n.name}: 자국 석탄 채굴과 증기 공방 실증으로 산업 근대 I에 진입했습니다.`;
+  w.events.push({dayIndex:w.dayIndex,text,kind:'era'});recordHistoricalEvent(w,'era',text,[n.id],`era:${n.id}:industrial_modern`);
+  if(w.events.length>180)w.events.splice(0,w.events.length-180);w.changeSeq++;
+ }
+}
+function f1IndustryAIQuarter(w){
+ // Each nation's industrial decision attempts at most one action per year.
+ if(w.dayIndex%120!==0)return;
+ for(const n of w.nations){if(!n.active||n.controller!=='AI'||n.civilization?.era!=='early_modern'&&n.civilization?.era!=='industrial_modern')continue;
+  if(n.civilization.era==='early_modern'&&n.civilization.stage<4)continue;
+  if(n.gold<350||n.resources.food<Math.max(60,(n.lastQuarter?.foodConsumed||0)*2))continue;
+  const owned=w.buildings.filter(b=>b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id);
+  if(hasTech(w,n.id,'coal_extraction')){
+   const pits=owned.filter(b=>b.typeId==='coal_pit');
+   if(pits.length<Math.max(1,Math.min(3,Math.ceil(owned.filter(b=>b.typeId==='workshop').length/2)))){
+    let action=null;
+    for(const s of w.settlements.filter(s=>s.ownerId===n.id)){
+     for(const tid of s.tileIds){const t=w.tiles[tid];if(!BUILDINGS.coal_pit.terrains.includes(t.terrain))continue;
+      const a={type:'BUILD_FACILITY',buildingType:'coal_pit',settlementId:s.id,targetTileId:tid};
+      if(canExecuteNationAction(w,n.id,a)){action=a;break;}
+     }if(action)break;
+    }
+    if(!action){for(const b of owned){if(!['quarry','mine','academy'].includes(b.typeId))continue;
+      const a={type:'REDEVELOP_FACILITY',buildingType:'coal_pit',buildingId:b.id};if(canExecuteNationAction(w,n.id,a)){action=a;break;}
+    }}
+    if(action){executeNationAction(w,n.id,action);continue;}
+   }
+  }
+  // Install a real device. Existing converted workshops already possess their historical equipment.
+  for(const b of owned.filter(b=>b.typeId==='workshop').sort((a,b)=>b.level-a.level||a.id-b.id)){
+   const devices=f1Devices(b);let type=null;
+   if(b.level>=3&&hasTech(w,n.id,'steam_engineering')&&!devices.steam&&n.resources.coal>=6&&n.gold>=1800)type='STEAM';
+   else if(hasTech(w,n.id,'basic_mechanical_power')&&!devices.mechanical&&!devices.waterwheel){type=riverAdjacentTileInfo(w,b.tileId).riverbank?'WATERWHEEL':'MECHANICAL';}
+   if(!type)continue;
+   const a={type:'INSTALL_WORKSHOP_POWER',buildingId:b.id,source:type};if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);break;}
+  }
+ }
+}
+function f1ValidWorkshopPower(w,b){
+ const d=b.powerDevices;
+ if(!d||typeof d!=='object'||['mechanical','waterwheel','steam'].some(x=>typeof d[x]!=='boolean'))return false;
+ if(b.powerProject&&(!F1_POWER_INSTALL[b.powerProject.source]||!Number.isSafeInteger(b.powerProject.completeDay)||b.powerProject.completeDay>w.dayIndex+1200||d[b.powerProject.source.toLowerCase()]))return false;
+ if(b.lastPower&&(b.lastPower.dayIndex>w.dayIndex||b.lastPower.dayIndex%30!==0||!['NONE',...F1_POWER_SOURCES].includes(b.lastPower.source)||!Number.isSafeInteger(b.lastPower.supplied)||b.lastPower.used>b.lastPower.supplied||b.lastPower.supplied>b.lastPower.demand||b.lastPower.used+b.lastPower.unused!==b.lastPower.supplied))return false;
+ return true;
+}
+function f1ValidateWorld(w){
+ for(const n of w.nations){const r=n.f1Industry;if(!r||r.schema!==1||!Array.isArray(r.history)||r.history.length>F1_HISTORY_WINDOW||typeof r.coalMinedEver!=='boolean'||typeof r.steamOperatedEver!=='boolean'||!r.lastQuarter)return false;
+  for(const q of [...r.history,r.lastQuarter]){
+   if(!Number.isSafeInteger(q.dayIndex)||q.dayIndex>w.dayIndex||q.dayIndex%30!==0)return false;
+   for(const k of ['coalProduced','coalConsumed','coalImported','coalExported','coalStart','coalEnd','coalOtherSpent','powerProduced','powerUsed','powerUnused','laborSaved','steamSites','steamOperatingGold','coalSites'])if(!Number.isSafeInteger(q[k])||q[k]<0)return false;
+   if(q.powerProduced!==q.powerUsed+q.powerUnused||q.coalConsumed!==q.steamSites*3||q.steamOperatingGold!==q.steamSites*12||q.coalStart+q.coalProduced+q.coalImported!==q.coalConsumed+q.coalExported+q.coalEnd+q.coalOtherSpent)return false;
+  }
+ }
+ if(w.buildings.some(b=>b.typeId==='coal_pit'&&b.level!==1))return false;
+ return true;
+}
+function f1IndustrySummary(w){return {version:VERSION,dayIndex:w.dayIndex,nations:w.nations.map(n=>({id:n.id,name:n.name,era:civilizationLabel(n),coal:n.resources.coal,coalMinedEver:f1EnsureIndustry(n).coalMinedEver,steamOperatedEver:f1EnsureIndustry(n).steamOperatedEver,lastQuarter:f1EnsureIndustry(n).lastQuarter,workshops:w.buildings.filter(b=>b.typeId==='workshop'&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>({id:b.id,powerDevices:b.powerDevices,project:b.powerProject||null,lastPower:b.lastPower||null}))}))};}
+function f1IndustryCsv(w){const keys=['dayIndex','coalStart','coalProduced','coalImported','coalExported','coalConsumed','coalEnd','coalOtherSpent','powerProduced','powerUsed','powerUnused','laborSaved','steamSites','steamOperatingGold','coalSites'];const rows=[['nationId','nation',...keys]];for(const n of w.nations)for(const h of f1EnsureIndustry(n).history)rows.push([n.id,n.name,...keys.map(k=>h[k])]);return '\ufeff'+rows.map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');}
+// V0.7E3E3 — paid wood-supply recovery and per-quarter logistics audit.
+// Observability is deterministic and bounded. Historical shortage data are NEVER inferred.
+const E3E3_SUPPLY_WINDOW=12;
+function e3e3NewSupply(){return {schema:1,history:[],pendingConstructionWood:0,lastRecovery:null};}
+function e3e3EnsureSupply(n){return n.e3e3Supply||(n.e3e3Supply=e3e3NewSupply());}
+function e3e3MigrateWorld(w){for(const n of w.nations)e3e3EnsureSupply(n);}
+function e3e3IndirectLimit(w,id){
+ return 3000+(hasTech(w,id,'advanced_transport')?500:0)+(hasTech(w,id,'commercial_transport')?500:0)+(hasTech(w,id,'trunk_route_planning')?500:0);
+}
+function e3e3WoodSignal(w,n,q=null){
+ const report=q||n.lastQuarter||projectedQuarter(w,n),s=e3e3EnsureSupply(n),hist=s.history.slice(-4),stock=n.resources.wood||0;
+ const produced=report.produced?.wood||0;
+ const recentUse=hist.length?hist.reduce((v,h)=>v+h.woodCraftUsed+h.woodPrintingUsed+h.woodBuildingUsed,0)/hist.length:
+  (n.lastQuarter?.workshop?.woodUsed||0)+(n.lastQuarter?.printing?.woodUsed||0);
+ const needs=Math.max(12,Math.ceil(recentUse));
+ const trend=hist.length>=2?(hist.at(-1).woodEnd-hist[0].woodStart)/hist.length:produced-needs;
+ const low=stock<Math.max(120,Math.ceil(needs*2));
+ const declining=hist.length>=3&&hist.filter(h=>h.woodEnd<h.woodStart).length>=2&&trend<0&&stock+4*trend<Math.max(120,needs*2);
+ const deficit=produced<needs*.85;
+ const woodMarket=w.market?.lastQuarter?.goods?.wood;
+ const marketOpportunity=Boolean(woodMarket&&w.market.prices.wood>=e3eBaseMilli('wood')*2.5&&
+  woodMarket.requestedBuy>Math.max(500,woodMarket.requestedSell*2)&&
+  (report.produced.food||0)>(report.foodConsumed||0)*1.12&&stock<2000&&produced<80);
+ const needed=low||(declining&&deficit)||marketOpportunity;
+ return {needed,low,declining,marketOpportunity,stock,produced,estimatedUse:needs,trend:Math.round(trend*100)/100,
+   forecastFourQuarters:Math.max(0,Math.round(stock+4*trend)),observedQuarters:hist.length,
+   confidence:hist.length===4?'MEASURED_4Q':hist.length?'PARTIAL':'INSUFFICIENT_HISTORY'};
+}
+function e3e3FarmRetrofitSafe(w,n,s,b,q=null){
+ if(!s||!b||b.typeId!=='farm'||b.status!=='ACTIVE'||b.disconnected||!BUILDINGS.lumber.terrains.includes(w.tiles[b.tileId]?.terrain))return false;
+ const forecast=q||projectedQuarter(w,n),consumed=forecast.foodConsumed||0;
+ if(consumed<1||n.foodPressure<.98||n.resources.food<consumed*2)return false;
+ const cover=n.demographyE3E2?.coverageQuarters||[];
+ if(cover.length===4&&cover.some(e=>e.coverage<.98))return false;
+ const tile=w.tiles[b.tileId],base=facilityOutput(b,tile.terrain)?.produced?.food||0,local=forecast.regionalEconomy?.towns?.get(s.id);
+ if(!local)return false;
+ // Conservatively estimate the lost effective food output, including local productivity.
+ const factor=Math.max(1,local.multiplier||1)*(1+techBonus(w,n.id,'farmFood')+
+   (tile.terrain==='forest'?techBonus(w,n.id,'forestFarmBonus'):0)+
+   (tile.terrain==='grass'?techBonus(w,n.id,'grassFarmBonus'):0)+
+   (local.roadNetwork?techBonus(w,n.id,'connectedFarmBonus'):0));
+ const loss=Math.ceil(base*factor*1.10);
+ if(forecast.produced.food-loss<consumed*1.05)return false;
+ // Never remove the last operational farm, or degrade an already food-short town.
+ const localFarms=w.buildings.filter(x=>x.settlementId===s.id&&x.typeId==='farm'&&x.status==='ACTIVE'&&!x.disconnected&&w.tiles[x.tileId]?.ownerId===n.id).length;
+ if(localFarms<=1||local.produced.food-loss<Math.max(s.population*.38,local.produced.food*.60))return false;
+ return true;
+}
+function e3e3WoodRetrofits(w,n,q,byTown,counts){
+ const signal=e3e3WoodSignal(w,n,q),out=[];
+ const diag={dayIndex:w.dayIndex,...signal,legalSites:0,candidateCount:0,state:'SUFFICIENT',projectedWood:q.produced.wood||0};
+ if(!signal.needed){e3e3EnsureSupply(n).lastRecovery=diag;return out;}
+ if(!hasTech(w,n.id,'urban_redevelopment')){diag.state='TECH_MISSING';e3e3EnsureSupply(n).lastRecovery=diag;return out;}
+ let terrain=0;
+ for(const s of w.settlements){if(s.ownerId!==n.id)continue;
+  const choices=[];
+  for(const b of byTown.get(s.id)||[]){
+   const t=w.tiles[b.tileId];if(!t||!BUILDINGS.lumber.terrains.includes(t.terrain))continue;
+   terrain++;
+   if(b.status!=='ACTIVE'||b.disconnected||t.occupiedBy!==null||w.dayIndex-(b.lastRedevelopedDay??-99999)<360||b.typeId==='lumber')continue;
+   if(b.typeId==='farm'&&!e3e3FarmRetrofitSafe(w,n,s,b,q))continue;
+   if(b.typeId==='house'&&s.population>settlementHousing(w,s)*.65)continue;
+   if(['academy','quarry','mine'].includes(b.typeId)&&!v07c3SurplusConversionSafe(w,n,s,b,'lumber',q,counts))continue;
+   if(!['farm','house','academy','quarry','mine'].includes(b.typeId))continue;
+   const action={type:'REDEVELOP_FACILITY',buildingId:b.id,buildingType:'lumber'};
+   if(!redevelopmentLegal(w,n.id,action))continue;
+   diag.legalSites++;
+   const priority={academy:1,quarry:2,mine:3,house:4,farm:5}[b.typeId];
+   const labor=q.regionalEconomy.towns.get(s.id)?.utilization||1;
+   const utility=(signal.low?3.4:2.9)*Math.min(1.1,Math.max(.65,labor)) + (b.typeId==='farm'?-.25:.15);
+   choices.push({action,utility,facility:'lumber',e3e3WoodRecovery:true,conversionFrom:b.typeId,priority});
+  }
+  choices.sort((a,b)=>a.priority-b.priority||a.action.buildingId-b.action.buildingId);
+  if(choices.length)out.push(choices[0]);
+  if(out.length>=6)break;
+ }
+ diag.candidateCount=out.length;
+ diag.state=!terrain?'NO_DOMESTIC_SITE':out.length?'RECOVERY_AVAILABLE':'NO_LEGAL_CANDIDATE';
+ // A physical site may be legally convertible even if the nation cannot pay yet.
+ if(out.length&&!out.some(c=>canExecuteNationAction(w,n.id,c.action)))diag.state='COST_OR_AP_BLOCKED';
+ e3e3EnsureSupply(n).lastRecovery=diag;
+ return out;
+}
+function e3e3RecordConstructionWood(n,action,price){
+ if(!['BUILD_FACILITY','UPGRADE_FACILITY','REDEVELOP_FACILITY','FOUND_SETTLEMENT','EXPAND_SETTLEMENT','DEVELOP_SETTLEMENT','BUILD_ROAD','UPGRADE_ROAD'].includes(action.type))return;
+ e3e3EnsureSupply(n).pendingConstructionWood+=(price.resources?.wood||0);
+}
+function e3e3StartEconomyQuarter(w){
+ const state=new Map();for(const n of w.nations)if(n.active){const s=e3e3EnsureSupply(n);state.set(n.id,{start:n.resources.wood,building:s.pendingConstructionWood});s.pendingConstructionWood=0;}return state;
+}
+function e3e3FinishEconomyQuarter(w,starts){
+ const reports=w.market?.lastNation||[];
+ for(const n of w.nations){if(!n.active)continue;
+  const x=starts.get(n.id);if(!x)continue;
+  const m=reports.find(x=>x.id===n.id),q=n.lastQuarter||{},s=e3e3EnsureSupply(n);
+  const entry={dayIndex:w.dayIndex,woodStart:x.start,woodProduced:q.produced?.wood||0,woodImported:m?.bought?.wood||0,woodExported:m?.sold?.wood||0,
+   woodCraftUsed:q.workshop?.woodUsed||0,woodPrintingUsed:q.printing?.woodUsed||0,woodBuildingUsed:x.building,woodEnd:n.resources.wood,
+   importCap:e3e3IndirectLimit(w,n.id),importUsed:m?.indirectImportFreight||0,exportCap:e3e3IndirectLimit(w,n.id),exportUsed:m?.indirectExportFreight||0};
+  // Strict current-quarter balance; between-quarter project spend is reported separately.
+  entry.unattributed=Math.max(0,entry.woodStart+entry.woodProduced+entry.woodImported-entry.woodExported-entry.woodCraftUsed-entry.woodPrintingUsed-entry.woodEnd);
+  s.history.push(entry);if(s.history.length>E3E3_SUPPLY_WINDOW)s.history.shift();
+ }
+}
+function e3e3ValidateSupply(w){
+ for(const n of w.nations){const s=n.e3e3Supply;
+  if(!s||s.schema!==1||!Array.isArray(s.history)||s.history.length>E3E3_SUPPLY_WINDOW||!Number.isSafeInteger(s.pendingConstructionWood)||s.pendingConstructionWood<0)return false;
+  for(const h of s.history){if(h.dayIndex>w.dayIndex||!Number.isInteger(h.dayIndex))return false;
+   for(const k of ['woodStart','woodProduced','woodImported','woodExported','woodCraftUsed','woodPrintingUsed','woodBuildingUsed','woodEnd','unattributed','importCap','importUsed','exportCap','exportUsed'])if(!Number.isSafeInteger(h[k])||h[k]<0)return false;
+   if(h.importUsed>h.importCap||h.exportUsed>h.exportCap)return false;
+  }
+ }
+ return true;
+}
+function e3e3SupplySummary(w){return {schema:1,dayIndex:w.dayIndex,nations:w.nations.filter(n=>n.active).map(n=>({id:n.id,name:n.name,wood:n.resources.wood,woodAlert:e3e3WoodSignal(w,n),recovery:e3e3EnsureSupply(n).lastRecovery,quarters:e3e3EnsureSupply(n).history.slice(-4),transportCap:e3e3IndirectLimit(w,n.id)}))};}
+function e3e3SupplyCsv(w){const columns=['nationId','nation','dayIndex','woodStart','woodProduced','woodImported','woodExported','woodCraftUsed','woodPrintingUsed','woodBuildingUsed','woodEnd','unattributed','importCap','importUsed','exportCap','exportUsed'];
+ const rows=[columns];for(const n of w.nations)for(const h of n.e3e3Supply?.history||[])rows.push([n.id,n.name,...columns.slice(2).map(k=>h[k]??'')]);
+ return '\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');}
 // V0.7E3E2 — nation-level quarterly food observations and annual settlement demography.
 // Deterministic, no RNG. World state, not optional observation telemetry.
 const E3E2_DEMOGRAPHY_SCHEMA=1;
@@ -10668,7 +11018,7 @@ function b4aValidate(w,fail){
 
 
 
-const costs=Object.freeze({SET_WORKSHOP_MODE:1,REDEVELOP_FACILITY:1,CLAIM_TILE:18,FOUND_SETTLEMENT:40,DEVELOP_SETTLEMENT:22,EXPAND_SETTLEMENT:16,INVEST_KNOWLEDGE:28,MERGE_SETTLEMENTS:15,TRADE_BUY:0,TRADE_SELL:0,BUILD_FACILITY:1,UPGRADE_FACILITY:1,REPAIR_FORT:1,BUILD_ROAD:1,UPGRADE_ROAD:1,START_RESEARCH:1});
+const costs=Object.freeze({INSTALL_WORKSHOP_POWER:1,SET_WORKSHOP_MODE:1,REDEVELOP_FACILITY:1,CLAIM_TILE:18,FOUND_SETTLEMENT:40,DEVELOP_SETTLEMENT:22,EXPAND_SETTLEMENT:16,INVEST_KNOWLEDGE:28,MERGE_SETTLEMENTS:15,TRADE_BUY:0,TRADE_SELL:0,BUILD_FACILITY:1,UPGRADE_FACILITY:1,REPAIR_FORT:1,BUILD_ROAD:1,UPGRADE_ROAD:1,START_RESEARCH:1});
 const limit=(v,a,b)=>Math.max(a,Math.min(b,v));
 const distance=(a,b,size)=>{const p=pointOf(a,size),q=pointOf(b,size);return Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
 const findSettlement=(world,id)=>world.settlements.find(s=>s.id===id);
@@ -10692,6 +11042,7 @@ function isNationActionLegal(world,nationId,action,metrics=null){
       return Boolean(q&&q.maxQuantity>=action.amount);
     }
     case 'START_RESEARCH':return researchLegal(world,nationId,action.technologyId);
+    case 'INSTALL_WORKSHOP_POWER':return f1PowerInstallLegal(world,nationId,action);
     case 'SET_WORKSHOP_MODE':{
       const b=world.buildings.find(v=>v.id===action.buildingId),mode=action.mode;
       return Boolean(b?.typeId==='workshop'&&b.level===3&&b.status==='ACTIVE'&&!b.disconnected&&
@@ -10746,10 +11097,12 @@ function executeNationAction(world,nationId,action){
   world.setupLocked=true;
   const price=getNationActionCost(world,nationId,action);
   payCost(n,price,v04e3ApCategory(type));
+  e3e3RecordConstructionWood(n,action,price);
   n.actionStats[type]=(n.actionStats[type]||0)+1;
   const tile=world.tiles[action.targetTileId],s=findSettlement(world,action.settlementId);
   switch(type){
     case 'START_RESEARCH':{n.technology.currentResearch=action.technologyId;n.technology.progress=0;delta.technologyId=action.technologyId;break;}
+    case 'INSTALL_WORKSHOP_POWER':{const b=world.buildings.find(v=>v.id===action.buildingId);b.powerProject={source:action.source,completeDay:world.dayIndex+f1PowerInstallDays(action.source)};delta.buildingId=b.id;delta.completeDay=b.powerProject.completeDay;break;}
     case 'SET_WORKSHOP_MODE':{const b=world.buildings.find(b=>b.id===action.buildingId);b.workshopMode=action.mode;delta.buildingId=b.id;delta.mode=b.workshopMode;break;}
     case 'BUILD_ROAD':case 'UPGRADE_ROAD':{
       const raw=roadPrice(action),discount=Math.min(.5,techBonus(world,nationId,'roadBuildCostDiscount'));
@@ -10768,7 +11121,7 @@ function executeNationAction(world,nationId,action){
     }
     case 'BUILD_FACILITY':{
       const definition=BUILDINGS[action.buildingType],id=world.nextBuildingId++;
-      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,...(action.buildingType==='fort'?{hp:fortMaxHP({level:1}),zeroHpSince:null}:{disconnected:false}),status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,v04dConstructionDays(world,nationId,action.buildingType,buildingDays(action.buildingType,1)))});
+      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,...(action.buildingType==='fort'?{hp:fortMaxHP({level:1}),zeroHpSince:null}:{disconnected:false,...(action.buildingType==='workshop'?{powerDevices:{mechanical:false,waterwheel:false,steam:false}}:{})}),status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,v04dConstructionDays(world,nationId,action.buildingType,buildingDays(action.buildingType,1)))});
       delta.buildingId=id;break;
     }
     case 'REPAIR_FORT':{
@@ -11490,7 +11843,7 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
   // No house removals; each desired replacement must improve real deficits.
   if(hasTech(world,n.id,'urban_redevelopment')){
     const foodGap=Math.max(0,poorFood),foodEmergency=foodGap>Math.max(10,q.foodConsumed*.04);
-    const resourceNeed=[['farm','food',foodEmergency],['lumber','wood',reserve.wood<15],['quarry','stone',reserve.stone<12],['mine','iron',reserve.iron<12]];
+    const resourceNeed=[['farm','food',foodEmergency],['lumber','wood',e3e3WoodSignal(world,n,q).needed],['quarry','stone',reserve.stone<12],['mine','iron',reserve.iron<12]];
     for(const s of world.settlements){if(s.ownerId!==n.id)continue;
       const local=q.regionalEconomy.towns.get(s.id);
       const academyCount=activeByTownType.get(s.id+':academy')||0;
@@ -11500,7 +11853,7 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
         if(b.typeId==='academy'&&academyCount<=1&&n.technology.unlocked.length<TECHNOLOGIES.length)continue;
         for(const [target,resource,needed] of resourceNeed){
           if(!needed||target===b.typeId||!BUILDINGS[target].terrains.includes(world.tiles[b.tileId].terrain))continue;
-          if(b.typeId==='farm'&&foodEmergency)continue;
+          if(b.typeId==='farm'&&(foodEmergency||(target==='lumber'&&!e3e3FarmRetrofitSafe(world,n,s,b,q))))continue;
           if(b.typeId==='house'){
             if(target!=='farm'||!foodEmergency)continue;
             if(s.population>settlementHousing(world,s)*.78)continue;
@@ -11515,6 +11868,9 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
       }
     }
   }
+
+  // E3E3: safety-gated, actually paid wood recovery in mature slot-saturated worlds.
+  candidates.push(...e3e3WoodRetrofits(world,n,q,byTown,v07c3Counts));
 
   // V0.7C3: in a genuine deficit, allow legal conversion of *redundant*
   // non-food production, without touching the last academy or the last local
@@ -11634,6 +11990,7 @@ function actionScore(world,n,p,leader,c,recovery=null){
     if(c.facility==='farm'&&(n.foodPressure<.85||n.resources.food<Math.max(10,q.foodConsumed||0)))score*=2.0;
     if(c.facility==='quarry'&&n.resources.stone<5)score*=1.45;
     if(c.facility==='lumber'&&n.resources.wood<7)score*=1.4;
+    if(c.e3e3WoodRecovery&&e3e3WoodSignal(world,n).needed)score*=1.35;
   }
   // F3: a severed historical import route only changes actual construction
   // priorities when the corresponding REAL domestic stock is low.
@@ -14567,6 +14924,7 @@ function runQuarter(world){
   // E3: reserve the real 1-AP precision-mode decision before other AI
   // development choices consume all recovered AP this quarter.
   v07e3WorkshopModeQuarter(world);
+  f1IndustryAIQuarter(world);
   const followUp=[];
   for(const n of world.nations){
     if(!n.active||n.controller!=='AI')continue;
@@ -15117,6 +15475,8 @@ function validateWorld(w){
   if(!Array.isArray(w.barracksEvents)||w.barracksEvents.length>V04E2_BARRACKS_EVENTS_MAX||w.barracksEvents.some(e=>!Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||!['SETTLEMENT_TRANSFER','DETACH','RECONNECT'].includes(e.kind)||!Array.isArray(e.buildingIds)||e.buildingIds.some(id=>!Number.isInteger(id))))fail('병영 소유권 이벤트');
   if(!validateTrade(w))fail('국제 교역 상태');
   if(!e3eValidateMarket(w))fail('E3E 국제 시장 회계');
+  if(!e3e3ValidateSupply(w))fail('E3E3 자원·물류 장부');
+  if(!f1ValidateWorld(w))fail('F1 석탄·동력·노동 회계');
   if(!validateStrategicReports(w))fail('AI 전략 진단');
   if(!c1ValidMapSize(w.size,w.height)||!Number.isSafeInteger(w.dayIndex)||w.dayIndex<0||typeof w.setupLocked!=='boolean'||w.dayIndex>0&&!w.setupLocked)fail('시간·크기·초기 설정 잠금');
   if(!Number.isInteger(w.rngState)||w.rngState<0||w.rngState>0xffffffff)fail('RNG');
@@ -15182,7 +15542,7 @@ function validateWorld(w){
       ['opening','cap','offered','received','wasted','blockedAP','main','auxiliary','mainDeferred','mainMissed','reserved'].some(k=>!Number.isSafeInteger(r[k])||r[k]<0)||
       !r.spent||['civil','military','research'].some(k=>!Number.isSafeInteger(r.spent[k])||r.spent[k]<0)||r.received+r.wasted!==r.offered))fail('AP 회계 진단');
     if(!n.civilFinance||['billedLastQuarter','paidLastQuarter','unpaidLastQuarter','totalPaid','totalUnpaid'].some(k=>!Number.isSafeInteger(n.civilFinance[k])||n.civilFinance[k]<0))fail('민간 운영비 회계');
-    if(!Number.isSafeInteger(n.apUnits)||n.apUnits<0||!Number.isSafeInteger(n.apMaxUnits)||n.apMaxUnits<0||n.apUnits>n.apMaxUnits||!Number.isSafeInteger(n.gold)||n.gold<0||!Number.isSafeInteger(n.knowledge)||n.knowledge<0||!Number.isFinite(n.researchLevel)||n.researchLevel<0||n.researchLevel>100||!validateTechnologyState(n.technology)||!n.resources||['food','wood','stone','iron'].some(k=>!Number.isSafeInteger(n.resources[k])||n.resources[k]<0)||!Number.isFinite(n.foodPressure)||n.foodPressure<0||n.foodPressure>1||!Array.isArray(n.settlementIds)||!n.truces||typeof n.truces!=='object')fail('국가 상태');
+    if(!Number.isSafeInteger(n.apUnits)||n.apUnits<0||!Number.isSafeInteger(n.apMaxUnits)||n.apMaxUnits<0||n.apUnits>n.apMaxUnits||!Number.isSafeInteger(n.gold)||n.gold<0||!Number.isSafeInteger(n.knowledge)||n.knowledge<0||!Number.isFinite(n.researchLevel)||n.researchLevel<0||n.researchLevel>100||!validateTechnologyState(n.technology)||!n.resources||['food','wood','stone','iron','coal'].some(k=>!Number.isSafeInteger(n.resources[k])||n.resources[k]<0)||!Number.isFinite(n.foodPressure)||n.foodPressure<0||n.foodPressure>1||!Array.isArray(n.settlementIds)||!n.truces||typeof n.truces!=='object')fail('국가 상태');
   }
   for(const n of w.nations){const candidate=v04eBarracksCandidates(w,n.id);
     if(candidate.length>3||new Set(candidate.map(b=>b.settlementId)).size!==candidate.length)fail('병영 운영 한도');}
@@ -15226,6 +15586,7 @@ function validateWorld(w){
         (b.repair&&(!Number.isInteger(b.repair.ownerId)||!Number.isInteger(b.repair.completeDay)||!Number.isInteger(b.repair.restoreHp)||b.repair.restoreHp<=0)))fail('요새 HP·수리');
     }else if(b.disconnected!==undefined&&typeof b.disconnected!=='boolean')fail('시설 연결 상태');
     if(b.typeId==='barracks'&&b.barracksPaidQuarter!==undefined&&(!Number.isSafeInteger(b.barracksPaidQuarter)||b.barracksPaidQuarter<-1||b.barracksPaidQuarter>w.dayIndex))fail('병영 지급시점');
+    if(b.typeId==='workshop'&&!f1ValidWorkshopPower(w,b))fail('F1 공방 동력 설비');
     if(b.typeId==='workshop'&&((b.workshopMode!==undefined&&!['standard','precision'].includes(b.workshopMode))||
         (b.lastOperatedDay!==undefined&&b.lastOperatedDay!==null&&(!Number.isSafeInteger(b.lastOperatedDay)||b.lastOperatedDay<0||b.lastOperatedDay>w.dayIndex||b.lastOperatedDay%30!==0))))fail('E1 공방 가동 상태');
     buildingIds.add(b.id);const key=(isDefense?'D:':'B:')+tile.id;
@@ -15369,13 +15730,14 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const e3e2NativeSave=parsed?.version==='V0.7E3E2';
- const accepted=['V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=parsed?.version==='V0.7F1';
+ const e3e2NativeSave=['V0.7E3E2','V0.7E3E3','V0.7F1'].includes(parsed?.version);
+ const accepted=['V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (E2~V0.7D2 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -15407,6 +15769,8 @@ function deserializeWorld(json){
  parsed.market??=e3eInitialMarket();
  e3eMigrateMarket(parsed);
  if(!e3e2NativeSave)e3e2MigrateWorld(parsed); // Older saves get an empty clock; native saves must pass strict validation.
+ e3e3MigrateWorld(parsed); // Forward-only recorded quarters; never infer historical supply.
+ f1MigrateWorld(parsed,f1NativeSave);
  e3cMigrateFormationRecords(parsed);
  // H1: tolerate stale saved commander histories, retaining the strict daily limit.
  d1cPruneCommanderHistory(parsed);
@@ -17343,7 +17707,7 @@ function bindTabs(onSwitch){
 const ACTIONS=[
  ['CLAIM_TILE','중립 타일 개척'],['FOUND_SETTLEMENT','정착지 설립'],['EXPAND_SETTLEMENT','정착지 확장'],
  ['DEVELOP_SETTLEMENT','정착지 개발'],['MERGE_SETTLEMENTS','정착지 병합'],['BUILD_FACILITY','시설 건설'],
- ['REDEVELOP_FACILITY','시설 재개발'],['SET_WORKSHOP_MODE','공방 생산 방식 전환'],['UPGRADE_FACILITY','시설 개량'],['REPAIR_FORT','요새 수리'],['BUILD_ROAD','도로 건설'],['UPGRADE_ROAD','도로 개량'],
+ ['REDEVELOP_FACILITY','시설 재개발'],['INSTALL_WORKSHOP_POWER','공방 동력 설비 설치'],['SET_WORKSHOP_MODE','공방 생산 방식 전환'],['UPGRADE_FACILITY','시설 개량'],['REPAIR_FORT','요새 수리'],['BUILD_ROAD','도로 건설'],['UPGRADE_ROAD','도로 개량'],
  ['INVEST_KNOWLEDGE','기초 연구 역량 투자'],['START_RESEARCH','기술 연구 시작'],
  ['TRAIN_RESERVES','예비병 훈련'],['TRAIN_FORMATION','편제 훈련'],['EMERGENCY_MUSTER','최후 거점 비상 소집'],['RECRUIT_ARMY','부대 징병'],['RAISE_ARTILLERY','전장포 제작·포병 편성'],['REINFORCE_ARMY','부대 증원'],['REARM_ARMY','부대 재무장'],['MOVE_ARMY','부대 이동'],
  ['LAND_ARMY','해안 상륙 (해상 수송)'],['DISBAND_ARMY','부대 해산'],['TRADE_BUY','자원 수입'],['TRADE_SELL','자원 수출'],['DECLARE_WAR','선전포고'],['BETRAY_ALLIANCE','장기 동맹 배신 선전포고'],['OFFER_PEACE','평화 제안'],
@@ -17377,7 +17741,7 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
  const actions=E('div','player-action-card');box.append(actions);
  actions.append(E('h3','','국가 행동 명령'),E('p','player-note','실제 국가 AP·Gold·자재를 소비합니다. 타일·부대·연구를 선택하고 실행하세요. 지도에서 타일을 선택한 뒤 국가 탭에 돌아올 수도 있습니다.'));
  const draft={type:'CLAIM_TILE',targetTileId:selectedTileId};
- const actionField=select(ACTIONS,draft.type,v=>{draft.type=v;delete draft.settlementId;delete draft.otherSettlementId;delete draft.buildingId;delete draft.armyId;delete draft.technologyId;delete draft.mode;delete draft.buildingType;delete draft.targetNationId;delete draft.unitType;delete draft.amount;delete draft.guns;delete draft.reparationRate;delete draft.subjectDemand;delete draft.resource;delete draft.warId;delete draft.accept;drawFields();});
+ const actionField=select(ACTIONS,draft.type,v=>{draft.type=v;delete draft.settlementId;delete draft.otherSettlementId;delete draft.buildingId;delete draft.armyId;delete draft.technologyId;delete draft.mode;delete draft.source;delete draft.buildingType;delete draft.targetNationId;delete draft.unitType;delete draft.amount;delete draft.guns;delete draft.reparationRate;delete draft.subjectDemand;delete draft.resource;delete draft.warId;delete draft.accept;drawFields();});
  actions.append(group('명령 유형',actionField));
  const fields=E('div','player-action-fields'),status=E('p','player-cost-preview'),run=E('button','player-main-button','명령 실행');run.type='button';
  actions.append(fields,status,run);
@@ -17398,7 +17762,7 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
  const nations=(filter)=>w.nations.filter(x=>x.id!==n.id&&x.active&&filter(x)).map(x=>[x.id,x.name]);
  function buildAction(){
    const a={type:draft.type};
-   for(const key of ['targetTileId','settlementId','otherSettlementId','buildingId','buildingType','technologyId','armyId','unitType','armorId','targetNationId','amount','reparationRate','subjectDemand','resource','warId','accept','mode','guns'])if(draft[key]!==undefined)a[key]=draft[key];
+   for(const key of ['targetTileId','settlementId','otherSettlementId','buildingId','buildingType','technologyId','armyId','unitType','armorId','targetNationId','amount','reparationRate','subjectDemand','resource','warId','accept','mode','source','guns'])if(draft[key]!==undefined)a[key]=draft[key];
    if(a.type==='RECRUIT_ARMY'){
      const typeId=draft.unitType||'levy';a.composition=[{typeId,position:unitBranch(typeId)==='ranged'?'rear':'front',amount:a.amount}];
    }
@@ -17428,12 +17792,16 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
    if(type==='EXPAND_SETTLEMENT')tileChoice(t=>t.ownerId===n.id&&t.settlementId===null);
    if(type==='MERGE_SETTLEMENTS')options('otherSettlementId','병합 대상',ownedSettlements().filter(([id])=>id!==draft.settlementId));
    if(type==='BUILD_FACILITY'){
-     options('buildingType','시설 종류',Object.entries(BUILDINGS).filter(([id])=>(id!=='workshop'||hasTech(w,n.id,'guild_organization'))&&(id!=='barracks'||hasTech(w,n.id,'military_drills')&&v04e1ReservedBarracks(w,n.id).length<3)).map(([id,b])=>[id,b.label]));
+     options('buildingType','시설 종류',Object.entries(BUILDINGS).filter(([id])=>(id!=='workshop'||hasTech(w,n.id,'guild_organization'))&&(id!=='barracks'||hasTech(w,n.id,'military_drills')&&v04e1ReservedBarracks(w,n.id).length<3)&&(id!=='coal_pit'||hasTech(w,n.id,'coal_extraction'))).map(([id,b])=>[id,b.label]));
      if(draft.buildingType==='fort'){draft.settlementId=undefined;tileChoice(t=>t.ownerId===n.id&&t.occupiedBy===null);}else{settlementChoice();tileChoice(t=>t.ownerId===n.id&&t.settlementId===draft.settlementId);}
    }
    if(type==='REDEVELOP_FACILITY'){
      options('buildingId','교체할 시설',w.buildings.filter(b=>b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>[b.id,`${BUILDINGS[b.typeId].label} Lv.${b.level} · (${w.tiles[b.tileId].x},${w.tiles[b.tileId].y})`]));
-     options('buildingType','신규 시설',Object.entries(BUILDINGS).filter(([id])=>id!=='fort'&&(id!=='workshop'||hasTech(w,n.id,'guild_organization'))&&(id!=='barracks'||hasTech(w,n.id,'military_drills')&&v04e1ReservedBarracks(w,n.id).length<3)).map(([id,b])=>[id,b.label]));
+     options('buildingType','신규 시설',Object.entries(BUILDINGS).filter(([id])=>id!=='fort'&&(id!=='workshop'||hasTech(w,n.id,'guild_organization'))&&(id!=='barracks'||hasTech(w,n.id,'military_drills')&&v04e1ReservedBarracks(w,n.id).length<3)&&(id!=='coal_pit'||hasTech(w,n.id,'coal_extraction'))).map(([id,b])=>[id,b.label]));
+   }
+   if(type==='INSTALL_WORKSHOP_POWER'){
+     options('buildingId','공방',w.buildings.filter(b=>b.typeId==='workshop'&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>[b.id,`공방 #${b.id} · Lv.${b.level} · 설치 ${Object.entries(f1Devices(b)).filter(([k,v])=>v).map(([k])=>k).join('/')||'없음'}`]));
+     options('source','동력원',[['MECHANICAL','기계 보조 (60일)'],['WATERWHEEL','수차 (90일 · 강변 필수)'],['STEAM','증기기관 (120일 · Lv.3)']]);
    }
    if(type==='SET_WORKSHOP_MODE'){
      options('buildingId','Lv.3 공방',w.buildings.filter(b=>b.typeId==='workshop'&&b.level===3&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>[b.id,`공방 #${b.id} · ${b.workshopMode==='precision'?'정밀':'표준'} · (${w.tiles[b.tileId].x}, ${w.tiles[b.tileId].y})`]));
@@ -17834,14 +18202,14 @@ function e3dBuildNationRoster(w,n,armies){
 }
 let e3dRefreshDetail=()=>{};
 // V0.7E3E — International market data view.  This UI NEVER updates simulation state.
-const E3E_MARKET_LABELS={food:'식량',wood:'목재',stone:'석재',iron:'철'};
+const E3E_MARKET_LABELS={food:'식량',wood:'목재',stone:'석재',iron:'철',coal:'석탄'};
 let e3eSelectedGood='food',e3eSelectedNation=null;
 function e3eMarketSparkline(quarters,good){
  const xmlns='http://www.w3.org/2000/svg',svg=document.createElementNS(xmlns,'svg');
  svg.setAttribute('viewBox','0 0 620 148');svg.setAttribute('role','img');svg.setAttribute('aria-label',`${E3E_MARKET_LABELS[good]} 최근 시장가격 변화`);
  svg.classList.add('e3e-market-plot');
  const values=quarters.map(q=>({day:q.dayIndex,p:(q.pricesBefore?.[good]??e3eBaseMilli(good))/1000}));
- if(quarters.length)values.push({day:quarters.at(-1).dayIndex+30,p:quarters.at(-1).pricesAfter[good]/1000});
+ if(quarters.length)values.push({day:quarters.at(-1).dayIndex+30,p:(quarters.at(-1).pricesAfter?.[good]??e3eBaseMilli(good))/1000});
  if(!values.length)return make('p',{class:'muted-line',text:'시장 관측은 첫 분기부터 시작됩니다.'});
  const mx=Math.max(...values.map(x=>x.p)),mn=Math.min(...values.map(x=>x.p)),low=Math.max(0,mn-(mx-mn||1)*.2),high=mx+(mx-mn||1)*.2;
  const scale=(i,v)=>[24+(values.length===1?0:i*(570/(values.length-1))),130-(v-low)/(high-low)*110];
@@ -17885,9 +18253,11 @@ function e3eRenderMarketPanel(){
  selector.addEventListener('change',()=>{e3eSelectedNation=Number(selector.value);e3eRenderMarketPanel();});
  const info=m.lastNation.find(x=>x.id===nation.id),nationBox=make('div',{class:'e3e-market-detail'});
  nationBox.append(make('div',{class:'e3e-market-subhead'},[make('h3',{text:'국가별 시장 거래'}),selector]));
- nationBox.append(make('p',{class:'muted-line',text:`${nation.name} · ${nation.controller==='PLAYER'?'플레이어 조종':'AI 자동 주문'} · 식량 ${number.format(nation.resources.food)} · 목재 ${number.format(nation.resources.wood)} · 석재 ${number.format(nation.resources.stone)} · 철 ${number.format(nation.resources.iron)} · 국고 ${number.format(nation.gold)} G`}));
+ nationBox.append(make('p',{class:'muted-line',text:`${nation.name} · ${nation.controller==='PLAYER'?'플레이어 조종':'AI 자동 주문'} · 식량 ${number.format(nation.resources.food)} · 목재 ${number.format(nation.resources.wood)} · 석재 ${number.format(nation.resources.stone)} · 철 ${number.format(nation.resources.iron)} · 석탄 ${number.format(nation.resources.coal||0)} · 국고 ${number.format(nation.gold)} G`}));
+ const woodStatus=e3e3WoodSignal(w,nation),woodRecovery=e3e3EnsureSupply(nation).lastRecovery;
+ nationBox.append(make('p',{class:'muted-line',text:`목재 공급 진단: ${woodStatus.needed?'회복 필요':'충분'} · 생산 ${number.format(woodStatus.produced)}/분기 · 예상 지출 ${number.format(woodStatus.estimatedUse)} · 4분기 예상 재고 ${number.format(woodStatus.forecastFourQuarters)} · ${woodRecovery?.state||'관측 중'} · 실제 관측 ${woodStatus.observedQuarters}/4분기` }));
  nationBox.append(make('div',{class:'e3e-market-grid'},[
-  ...[['금분기 매입량',Object.values(info?.bought||{}).reduce((a,b)=>a+b,0)],['금분기 매도량',Object.values(info?.sold||{}).reduce((a,b)=>a+b,0)],['금분기 구매 지출',info?.buyerPaid||0],['금분기 판매 수령',info?.sellerReceived||0],['간접 수입 화물',`${number.format(info?.indirectImportFreight||0)} / 3,000`],['간접 수출 화물',`${number.format(info?.indirectExportFreight||0)} / 3,000`],['간접 추가 수수료',info?.indirectFeeGold||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:typeof v==='string'?v:number.format(v)})]))]));
+  ...[['금분기 매입량',Object.values(info?.bought||{}).reduce((a,b)=>a+b,0)],['금분기 매도량',Object.values(info?.sold||{}).reduce((a,b)=>a+b,0)],['금분기 구매 지출',info?.buyerPaid||0],['금분기 판매 수령',info?.sellerReceived||0],['간접 수입 화물',`${number.format(info?.indirectImportFreight||0)} / ${number.format(e3e3IndirectLimit(w,nation.id))}`],['간접 수출 화물',`${number.format(info?.indirectExportFreight||0)} / ${number.format(e3e3IndirectLimit(w,nation.id))}`],['간접 추가 수수료',info?.indirectFeeGold||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:typeof v==='string'?v:number.format(v)})]))]));
  // Registered manual player orders are executed at the next economic quarter, not instantly.
  if(nation.controller==='PLAYER'&&nation.active){
    const action=make('div',{class:'e3e-market-detail'},[make('h3',{text:'플레이어 시장 지정가 주문'})]);
@@ -17920,7 +18290,7 @@ function e3eRenderMarketPanel(){
  const list=make('div',{class:'e3e-market-order-list'});
  for(const o of orders.slice(0,24))list.append(make('div',{class:'e3e-market-row'},[make('strong',{text:w.nations[o.nationId]?.name||'—'}),
   make('span',{text:o.side==='BUY'?'매수':'매도'}),make('span',{text:`요청 ${number.format(o.requested)} · 체결 ${number.format(o.filled)}`}),
-  make('span',{text:o.unfilled?`미체결 ${number.format(o.unfilled)} · ${({'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 없음','DIPLOMATIC_BLOCK':'외교 제한','LIMIT_PRICE':'지정가 불일치','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'구매 자금 부족','SAFE_STOCK':'안전 재고 보호','FREIGHT_OR_COUNTERPARTY_CAP':'운송·상대국 한도'})[o.blockReason]||'거래 제약'}`:'전량 체결'})]));
+  make('span',{text:o.unfilled?`미체결 ${number.format(o.unfilled)} · ${({'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 없음','DIPLOMATIC_BLOCK':'외교 제한','LIMIT_PRICE':'지정가 불일치','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'구매 자금 부족','SAFE_STOCK':'안전 재고 보호','FREIGHT_OR_COUNTERPARTY_CAP':'운송·상대국 한도','DIRECT_FREIGHT_CAP':'직접 운송 한도','NO_MATCHING_COUNTERPARTY':'잔여 거래 가능 상대 없음'})[o.blockReason]||'거래 제약'}`:'전량 체결'})]));
  if(!orders.length)list.append(make('p',{class:'muted-line',text:'이 품목에 접수된 주문이 없습니다.'}));table.append(list);
  const fills=m.fills.filter(x=>x.good===good).slice(-15).reverse(),recent=make('div',{class:'e3e-market-detail'},[make('h3',{text:'최근 체결 내역'})]);
  const fillList=make('div',{class:'e3e-market-order-list'});
@@ -17929,11 +18299,29 @@ function e3eRenderMarketPanel(){
   make('span',{text:`구매 ${number.format(f.buyerPaid)} / 판매 ${number.format(f.sellerReceived)} G · 기본 수수료 ${number.format(f.baseFeeGold??f.feeGold)}G + 간접 ${number.format(f.indirectFeeGold||0)}G`})]));
  if(!fills.length)fillList.append(make('p',{class:'muted-line',text:'체결 이력이 없습니다.'}));recent.append(fillList);
  const blockBox=make('div',{class:'e3e-market-detail'},[make('h3',{text:'이번 분기 미체결 주요 원인'})]);
- const reasons={'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 부족','DIPLOMATIC_BLOCK':'외교 제한','DIRECT_ROUTE_CAP':'직접 운송 한도','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'Gold 부족','LIMIT_PRICE':'지정가 불일치','SAFE_STOCK':'안전 재고','FREIGHT_OR_COUNTERPARTY_CAP':'운송·거래 상대국 한도'};
+ const reasons={'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 부족','DIPLOMATIC_BLOCK':'외교 제한','DIRECT_ROUTE_CAP':'직접 운송 한도','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'Gold 부족','LIMIT_PRICE':'지정가 불일치','SAFE_STOCK':'안전 재고','FREIGHT_OR_COUNTERPARTY_CAP':'운송·거래 상대국 한도','NO_MATCHING_COUNTERPARTY':'잔여 거래 가능 상대 없음'};
  const blockEntries=Object.entries(m.lastBlocks||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,7);
  blockBox.append(make('p',{class:'muted-line',text:blockEntries.length?blockEntries.map(([k,v])=>`${reasons[k]||k}: ${number.format(v)}개`).join(' · '):'최근 분기 미체결 기록이 없습니다.'}));
- const note=make('p',{class:'e3e-market-hint',text:'실제 육로 연결이 있으면 먼저 직접 거래하고, 주문 잔량은 비적대국 국제시장 중개로 간접 체결할 수 있습니다. 간접 거래의 구매 수수료는 25%(기본 10% + 추가 운송비 15%), 판매 수수료는 10%입니다. 국가별 간접 수입·수출은 각 분기 3,000 화물로 제한하며 실물 재고와 Gold를 이전합니다. 기존 세이브의 이전 거래는 직접 거래로만 보존됩니다.'});
- el.replaceChildren(top,modeSummary,prices,data,nationBox,table,recent,blockBox,note);
+ const note=make('p',{class:'e3e-market-hint',text:'실제 육로 연결이 있으면 먼저 직접 거래하고, 주문 잔량은 비적대국 국제시장 중개로 간접 체결할 수 있습니다. 간접 거래의 구매 수수료는 25%(기본 10% + 추가 운송비 15%), 판매 수수료는 10%입니다. 국가별 간접 수입·수출은 기본 3,000 화물이며 고도 수송망·상업 교통망·간선망 계획 기술별로 500씩 증가해 최대 4,500 화물입니다. 실물 재고와 Gold를 이전합니다. 기존 세이브의 이전 거래는 직접 거래로만 보존됩니다.'});
+ const industry=make('div',{class:'e3e-market-detail'});
+ const power=f1EnsureIndustry(nation),x=power.lastQuarter;
+ industry.append(make('h3',{text:'F1 · 산업 동력·노동력'}),make('p',{class:'muted-line',text:`석탄 재고 ${number.format(nation.resources.coal||0)} · 실제 채굴 ${number.format(x?.coalProduced||0)}/분기 · 연료 소모 ${number.format(x?.coalConsumed||0)}/분기 · 동력 ${number.format(x?.powerUsed||0)}/${number.format(x?.powerProduced||0)} PU · 동력 절감 노동 수요 ${number.format(x?.laborSaved||0)}명분 · 증기 가동 ${number.format(x?.steamSites||0)}개 · ${civilizationLabel(nation)}` }));
+ for(const [label,ext,content,mime] of [['동력·석탄 JSON','json',()=>JSON.stringify(f1IndustrySummary(w),null,2),'application/json'],['동력·석탄 CSV','csv',()=>f1IndustryCsv(w),'text/csv;charset=utf-8']]){
+  const b=make('button',{type:'button',class:'jump-button',text:label});
+  b.addEventListener('click',()=>download(`vilob-f1-industry-day${w.dayIndex}.${ext}`,content(),mime));industry.append(b);
+ }
+ el.replaceChildren(top,modeSummary,prices,data,nationBox,industry,table,recent,blockBox,note);
+}
+
+// V0.7E3E3 — quarter-only country wood and freight overview.
+function e3e3RenderWorldSupply(){
+ const el=document.getElementById('e3e3WorldSupply'),w=app.world;if(!el||!w)return;
+ const lines=[];
+ for(const n of w.nations.filter(n=>n.active)){
+  const a=e3e3WoodSignal(w,n),s=e3e3EnsureSupply(n),last=s.history.at(-1);
+  lines.push(make('div',{class:'muted-line',text:`${n.name}: 목재 ${number.format(n.resources.wood)} · ${a.needed?'공급 위험':'안정'} · 분기 생산 ${number.format(a.produced)} · ${s.lastRecovery?.state||'후보 관측 중'} · 석탄 ${number.format(n.resources.coal||0)} · 동력 ${number.format(n.f1Industry?.lastQuarter.powerUsed||0)} PU · 간접 ${number.format(last?.importUsed||0)}/${number.format(last?.importCap||e3e3IndirectLimit(w,n.id))} (수입), ${number.format(last?.exportUsed||0)}/${number.format(last?.exportCap||e3e3IndirectLimit(w,n.id))} (수출)`}));
+ }
+ el.replaceChildren(...lines);
 }
 // --- src/main.js ---
 
@@ -18521,7 +18909,7 @@ function renderNationOverview(){
   const marketLine=make('div',{class:'muted-line',text:`E3E1 시장 · 최근 분기 매입 ${number.format(Object.values(marketInfo?.bought||{}).reduce((a,b)=>a+b,0))}개 / 매도 ${number.format(Object.values(marketInfo?.sold||{}).reduce((a,b)=>a+b,0))}개 · 실제 지출 ${number.format(marketInfo?.buyerPaid||0)} / 수령 ${number.format(marketInfo?.sellerReceived||0)} G`});
   const marketJump=make('button',{class:'jump-button',type:'button',text:'◇ 국제 시장 보기'});marketJump.addEventListener('click',()=>{e3eSelectedNation=n.id;setActiveTab('market');});
   trading.append(marketLine,
-    make('div',{class:'muted-line',text:`간접 시장 · 수입 화물 ${number.format(marketInfo?.indirectImportFreight||0)}/3,000 · 수출 화물 ${number.format(marketInfo?.indirectExportFreight||0)}/3,000 · 추가 운송 수수료 ${number.format(marketInfo?.indirectFeeGold||0)} G`}),marketJump);
+    make('div',{class:'muted-line',text:`간접 시장 · 수입 화물 ${number.format(marketInfo?.indirectImportFreight||0)}/${number.format(e3e3IndirectLimit(w,n.id))} · 수출 화물 ${number.format(marketInfo?.indirectExportFreight||0)}/${number.format(e3e3IndirectLimit(w,n.id))} · 추가 운송 수수료 ${number.format(marketInfo?.indirectFeeGold||0)} G`}),marketJump);
   const dependency=tradeDependencyReport(w,n.id);
   if(dependency){
     const pressure=dependency.pressure;
@@ -18767,11 +19155,16 @@ function renderNationOverview(){
   const procurementDownload=make('button',{class:'jump-button',type:'button',text:'최근 12분기 건설 자원 조달 CSV'});
   procurementDownload.addEventListener('click',()=>download(`vilob-v05b-procurement-y${timeAt(w.dayIndex).year}.csv`,v05bProcurementCsv(w),'text/csv;charset=utf-8'));
   procurement.append(procurementDownload);
+  const e3e3Signal=e3e3WoodSignal(w,n),e3e3Wood=e3e3EnsureSupply(n),e3e3Last=e3e3Wood.history.at(-1);
+  const supplyPanel=make('section',{class:'overview-section'},[make('h3',{text:'V0.7E3E3 · 목재 공급·간접 운송'})]);
+  supplyPanel.append(make('div',{class:'muted-line',text:`목재 재고 ${number.format(n.resources.wood)} · 분기 생산 ${number.format(e3e3Signal.produced)} · 예상 소모 ${number.format(e3e3Signal.estimatedUse)} · 4분기 예상 잔량 ${number.format(e3e3Signal.forecastFourQuarters)} · ${e3e3Signal.needed?'공급 회복 필요':'공급 양호'}`}),
+   make('div',{class:'muted-line',text:`재개발: ${e3e3Wood.lastRecovery?.state||'진단 대기'} · 후보 ${e3e3Wood.lastRecovery?.candidateCount||0}개 · 관측 ${e3e3Signal.observedQuarters}/4분기 (${e3e3Signal.confidence})`}),
+   make('div',{class:'muted-line',text:`간접 수입 ${number.format(e3e3Last?.importUsed||0)}/${number.format(e3e3IndirectLimit(w,n.id))} 화물 · 간접 수출 ${number.format(e3e3Last?.exportUsed||0)}/${number.format(e3e3IndirectLimit(w,n.id))} 화물 · 최근 목재 구매 ${number.format(e3e3Last?.woodImported||0)} / 판매 ${number.format(e3e3Last?.woodExported||0)} · 건설 자재 지출 ${number.format(e3e3Last?.woodBuildingUsed||0)}` }));
   const demographyPanel=e3e2NationDemographyPanel(w,n);
   const tabs=[['overview','개요·경제'],['governance','정책'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사'],['adaptation','AI 적응']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={overview:[grid,leadership,demographyPanel,trading,c3development,recoverySection,procurement],governance:[],strategy:[strategic],research:[research,c3development],diplomacy:[diplomacy],settlements:[places]};
+  const panels={overview:[grid,leadership,demographyPanel,trading,supplyPanel,c3development,recoverySection,procurement],governance:[],strategy:[strategic],research:[research,c3development],diplomacy:[diplomacy],settlements:[places]};
   if(app.nationSubtab==='governance')panels.governance=[e1GovernancePanel(w,n)];
   if(app.nationSubtab==='culture')panels.culture=[d1bNationPanel(w,n),d2aNationPanel(w,n),d2bNationPanel(w,n),d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
@@ -19306,6 +19699,8 @@ function e3cSyncPolicyAuditNation(){
 }
 $('e3e2WorldJson').addEventListener('click',()=>{if(app.world)download(`vilob-e3e2-demography-day${app.world.dayIndex}.json`,JSON.stringify(e3e2ExportDemography(app.world),null,2),'application/json');});
 $('e3e2WorldCsv').addEventListener('click',()=>{if(app.world)download(`vilob-e3e2-demography-day${app.world.dayIndex}.csv`,e3e2DemographyCsv(app.world),'text/csv;charset=utf-8');});
+$('e3e3SupplyJson').addEventListener('click',()=>{if(app.world)download(`vilob-e3e3-resource-day${app.world.dayIndex}.json`,JSON.stringify(e3e3SupplySummary(app.world),null,2),'application/json');});
+$('e3e3SupplyCsv').addEventListener('click',()=>{if(app.world)download(`vilob-e3e3-resource-day${app.world.dayIndex}.csv`,e3e3SupplyCsv(app.world),'text/csv;charset=utf-8');});
 $('e3cPolicyAuditCard').addEventListener('toggle',()=>e3cRefreshPolicyAudit());
 $('e3cAuditNation').addEventListener('change',()=>e3cRefreshPolicyAudit());
 
@@ -19331,7 +19726,7 @@ function setWorld(world){
   $('warHistoryList').dataset.historyKey='';
   editorState.draft=null;editorState.draftSource=null;
   v07d2UpdateObservationUI();e3cSyncPolicyAuditNation();
-  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();e3e2RenderStatsDemography();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();if(app.activeTab==='world')d2RenderWorldCultures();
+  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();e3e2RenderStatsDemography();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();e3e3RenderWorldSupply();if(app.activeTab==='world')d2RenderWorldCultures();
   e3eRenderMarketPanel();
   $('coordinateLabel').textContent='X — · Y —';
 }
@@ -19379,7 +19774,7 @@ function refreshSimulationView(redraw){
     if(app.activeTab==='military'){renderWarfare();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();}
     if(app.activeTab==='market')e3eRenderMarketPanel();
     if(app.activeTab==='statistics')renderV04CStats();
-    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();d2RenderWorldCultures();}
+    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();e3e3RenderWorldSupply();d2RenderWorldCultures();}
     if(app.activeTab==='chronicle')renderChronicle();
   }
 }
@@ -19466,7 +19861,7 @@ navigation=bindTabs(tab=>{
   else if(tab==='military'){renderMilitaryRoster();renderWarfare();d2RenderMilitaryCultures();renderWarHistory();}
   else if(tab==='market')e3eRenderMarketPanel();
   else if(tab==='statistics'){v04cSyncStatsUI();renderV04CStats();}
-  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();d2RenderWorldCultures();}
+  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();e3e3RenderWorldSupply();d2RenderWorldCultures();}
   else if(tab==='chronicle'){renderChronicle();window.scrollTo(0,0);}
 });
 $('e3eMarketCsv').addEventListener('click',()=>{download('vilob-e3e1-market-prices-day'+app.world.dayIndex+'.csv',e3eMarketCsv(app.world),'text/csv;charset=utf-8');});
@@ -19752,7 +20147,7 @@ d2aWireMapControls(map);
 d2bWireControls(map);
 
 // 브라우저 테스트 및 외부 진단용: 현재 시뮬레이션 데이터를 직접 바꾸지 않는 최소 API
-window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getAutoSpeed:()=>({...app.autoSpeed}),getActiveTab:()=>app.activeTab,getCultureAudit:()=>d1CultureAudit(app.world),getAssimilationAudit:()=>e4Audit(app.world),getViolenceAudit:()=>v06e5Audit(app.world),getPolicyAIAudit:()=>v06e6Audit(app.world),getE7ADiagnostics:()=>v06e7aAudit(app.world),getF1SupplyStats:()=>({...f1SupplyGraphStats,enabled:f1SupplyGraphEnabled}),getF2RouteStats:()=>({...f2RouteStats,enabled:f2RoutePrefilterEnabled}),getF4AIntegrationAudit:()=>v06f4aIntegrationAudit(app.world),getF4BRouteStats:()=>({...f4bRouteStats,enabled:f4bRouteReuseEnabled}),getF4CSupplyMode:()=>({optimized:f4cFastSupplyEnabled}),getCombatObservation:()=>v07d2Observation(app.world),getMarket:()=>e3eMarketSummary(app.world)});
+window.VILOBLight=Object.freeze({version:VERSION,getSummary:()=>worldSummary(app.world),getSeed:()=>app.world.seed,getSelected:()=>app.selectedId,getSIM:()=>({...app.simMeter}),getAutoSpeed:()=>({...app.autoSpeed}),getActiveTab:()=>app.activeTab,getCultureAudit:()=>d1CultureAudit(app.world),getAssimilationAudit:()=>e4Audit(app.world),getViolenceAudit:()=>v06e5Audit(app.world),getPolicyAIAudit:()=>v06e6Audit(app.world),getE7ADiagnostics:()=>v06e7aAudit(app.world),getF1SupplyStats:()=>({...f1SupplyGraphStats,enabled:f1SupplyGraphEnabled}),getF2RouteStats:()=>({...f2RouteStats,enabled:f2RoutePrefilterEnabled}),getF4AIntegrationAudit:()=>v06f4aIntegrationAudit(app.world),getF4BRouteStats:()=>({...f4bRouteStats,enabled:f4bRouteReuseEnabled}),getF4CSupplyMode:()=>({optimized:f4cFastSupplyEnabled}),getCombatObservation:()=>v07d2Observation(app.world),getMarket:()=>e3eMarketSummary(app.world),getIndustry:()=>f1IndustrySummary(app.world)});
 setWorld(createWorld('vilob-light-01',39,21,{profiles:persistentProfiles}));
 v07d2WireObservationUI();
 requestAnimationFrame(animate);
