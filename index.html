@@ -817,10 +817,10 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span class="occupation-chevron" aria-hidden="true">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div id="warHistoryList" class="military-list"></div><nav id="warHistoryPager" class="war-history-pager" aria-label="종전 기록 페이지"></nav></section>
-</section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 기존 교역로가 없는 국가는 거래할 수 없습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V1</strong><small>정식 거래는 분기마다 · 통화 Gold · 구매/판매 양쪽 수수료 10%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div id="e3eMarketBody" aria-live="off"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="기존 세계 하천 추가"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" id="riverApplyBtn" type="button" disabled>이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="V0.7D3 전투 관측"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input type="checkbox" id="combatObservationEnabled"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 최대 1,024개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button type="button" class="text-button" id="combatObservationCsv" disabled>↓ 전투 관측 CSV</button><button type="button" class="text-button" id="combatObservationJson" disabled>↓ 전투 관측 JSON</button><button type="button" class="text-button" id="combatObservationSummary" disabled>↓ 요약 JSON (경량)</button><button type="button" class="text-button" id="combatObservationGzip" disabled>↓ 상세 JSON.gz (압축)</button><button type="button" class="text-button" id="combatObservationClear" disabled>기록 비우기</button></div><div class="scope-note" role="status" id="combatObservationStatus">관측 OFF</div></section><details class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard" aria-label="세계 정책·재정 감사 통합 도구"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select id="e3cAuditNation" aria-label="정책 감사 국가 선택"></select></div><div id="e3cPolicyAuditContent" class="e3c-audit-content"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div id="e3eMarketBody" aria-live="off"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select id="worldSizeSelect" aria-label="월드 크기"><option value="19x19">19 × 19 · 소형</option><option value="39x21" selected>39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" type="number" min="12" max="28" step="1" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" type="number" value="12" min="12" max="28" step="1"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,application/json" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div class="custom-map-launch" aria-label="기존 세계 하천 추가"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" id="riverApplyBtn" type="button" disabled>이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div class="custom-map-launch" aria-label="커스텀 맵 시작"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" target="_blank" rel="noopener noreferrer" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input type="file" id="customMapInput" accept=".json,application/json"/></label><button class="primary-button" type="button" id="customMapStartBtn" disabled>이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section class="below-card" aria-label="V0.7D3 전투 관측"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input type="checkbox" id="combatObservationEnabled"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 최대 1,024개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button type="button" class="text-button" id="combatObservationCsv" disabled>↓ 전투 관측 CSV</button><button type="button" class="text-button" id="combatObservationJson" disabled>↓ 전투 관측 JSON</button><button type="button" class="text-button" id="combatObservationSummary" disabled>↓ 요약 JSON (경량)</button><button type="button" class="text-button" id="combatObservationGzip" disabled>↓ 상세 JSON.gz (압축)</button><button type="button" class="text-button" id="combatObservationClear" disabled>기록 비우기</button></div><div class="scope-note" role="status" id="combatObservationStatus">관측 OFF</div></section><details class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard" aria-label="세계 정책·재정 감사 통합 도구"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span class="army-roster-chevron" aria-hidden="true">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select id="e3cAuditNation" aria-label="정책 감사 국가 선택"></select></div><div id="e3cPolicyAuditContent" class="e3c-audit-content"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section class="below-card d2-culture-world-card" aria-label="D1A2 세계 문화 분포"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div id="d2WorldCultureList" class="d2-culture-world-list"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section class="below-card" aria-label="D1A1 문화 인구 회계 진단"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button type="button" class="text-button" id="cultureAuditBtn">문화 구성·인원 검증</button><button type="button" class="text-button" id="cultureAuditJsonBtn">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section class="below-card rng-options" aria-label="RNG 정책 설정"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input id="rngFixedToggle" type="checkbox" checked> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select id="rngPeriodSelect" disabled><option value="120" selected>1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
-<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3D · 편제별 병종 아이콘·훈장·전적 시각화</h2></div><span class="small-label">0.7E3D</span></div>
+<div class="rng-description" id="rngPolicyStatus" aria-live="polite">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section class="sidebar-card" aria-label="E3E2 세계 인구와 식량 균형"><div class="card-heading"><div><div class="eyebrow">POPULATION &amp; FOOD · E3E2</div><h2>세계 인구·식량 균형</h2></div><span class="small-label">최근 4분기·1년</span></div><div id="e3e2WorldDemography" class="world-era-list"></div><div class="file-actions"><button class="text-button" type="button" id="e3e2WorldJson">↓ 인구·식량 JSON</button><button class="text-button" type="button" id="e3e2WorldCsv">↓ 인구·식량 CSV</button></div><p class="scope-note">이관 시 과거 분기는 소급 생성하지 않습니다. 기아 사망은 4개 실측 분기와 2분기 연속 부족 이후 연말에 발생합니다.</p></section><section class="sidebar-card era-world-card" aria-label="문명 시대 분포"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div id="worldEraList" class="world-era-list"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">육상 교역만 지원합니다. 교역로·관계·안전 재고·분기 운송 한도를 만족해야 거래할 수 있습니다.</p></section><section class="below-card ai-editor-card" id="aiEditorRoot" aria-label="AI 프로필 편집기"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3D · 편제별 병종 아이콘·훈장·전적 시각화</h2></div><span class="small-label">0.7E3D</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E3 · 근세 연구 처리 소프트캡(학술원 25레벨까지 +4, 이후 +1) · Lv.3 공방 AI 비용 기준 · 정밀 생산 원료 예측</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.7E2 · 근세 IV·전장포·포문 및 탄약 회계·후방 포격</span></div>
 <div class="milestone"><span class="tick">✓</span><span>19×19 / 39×21 시드 지도·7 / 12개국·SIM 계측</span></div>
@@ -840,7 +840,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
   <p class="chronicle-scope" id="chronicleScope"></p><div id="chronicleTimeline" class="chronicle-timeline" aria-live="polite"></div><nav id="chroniclePager" class="war-history-pager" aria-label="연대기 페이지"></nav>
 </section><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div id="recentActivityList" class="recent-activity-list"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD ANALYTICS · V0.4E5</div><h1>통계</h1><p>세계 전체의 규모와 문명 분포를 관찰하고, 국가별 규모·효율·발전 수준을 비교합니다.</p></div>
 <section class="sidebar-card v04c-summary-card" aria-label="세계 통계 요약"><div class="card-heading"><div><div class="eyebrow">WORLD SNAPSHOT</div><h2>세계 전체 현황</h2></div><span class="small-label" id="v04cStatsDate">현재 시점</span></div><div class="v04c-world-summary" id="v04cWorldSummary"></div><p class="scope-note">생존 국가 기준 · Gold·군사력은 현재 보유량 · 시계열 통계가 아닙니다.</p></section>
-<section class="sidebar-card v04c-era-stats-card" aria-label="시대별 통계"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION DISTRIBUTION</div><h2>시대별 세계 분포</h2></div><span class="small-label">현재 상태</span></div><div class="v04c-era-selector" id="v04cEraMetricControls" role="group" aria-label="문명 분포 단위"><button type="button" class="selected" data-era-metric="countries">국가 수</button><button type="button" data-era-metric="population">인구</button><button type="button" data-era-metric="territory">영토</button></div><div id="v04cEraSummary" class="v04c-era-summary"></div><p class="scope-note">멸망 국가는 제외 · 중세 I~IV와 근세 I 개별 집계 · 산업 근대 이후는 아직 진입 불가 · 인구는 현재 정착지 인구 기준입니다.</p></section>
+<section class="sidebar-card" aria-label="E3E2 국가별 인구 변화"><div class="card-heading"><div><div class="eyebrow">DEMOGRAPHY LEDGER · E3E2</div><h2>국가별 출생·일반 사망·기아 사망</h2></div><span class="small-label">최근 정산 연도</span></div><div id="e3e2StatsDemography" class="world-era-list"></div></section><section class="sidebar-card v04c-era-stats-card" aria-label="시대별 통계"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION DISTRIBUTION</div><h2>시대별 세계 분포</h2></div><span class="small-label">현재 상태</span></div><div class="v04c-era-selector" id="v04cEraMetricControls" role="group" aria-label="문명 분포 단위"><button type="button" class="selected" data-era-metric="countries">국가 수</button><button type="button" data-era-metric="population">인구</button><button type="button" data-era-metric="territory">영토</button></div><div id="v04cEraSummary" class="v04c-era-summary"></div><p class="scope-note">멸망 국가는 제외 · 중세 I~IV와 근세 I 개별 집계 · 산업 근대 이후는 아직 진입 불가 · 인구는 현재 정착지 인구 기준입니다.</p></section>
 <section class="sidebar-card comparison-card"><div class="card-heading"><div><div class="eyebrow">NATION COMPARISON</div><h2>국가별 상세 비교</h2></div><span class="small-label">현재 시점</span></div><div class="v04c-stat-categories" id="v04cStatCategories" role="group" aria-label="통계 분야"></div><div class="v04c-stat-toolbar"><label>비교 지표<select id="v04cMetricSelect" aria-label="통계 비교 지표"></select></label><label>정렬<select id="comparisonSort" aria-label="국가 통계 정렬"><option value="default">기본 순서</option><option value="desc">내림차순 ↓</option><option value="asc">오름차순 ↑</option></select></label><label>표시 국가<select id="v04cNationFilter" aria-label="통계 국가 선택"><option value="all">전체 국가</option><option value="active">생존 국가만</option></select></label><label>값 표시<select id="v04cValueMode" aria-label="통계 수치 표시 방식"><option value="absolute">실제 값</option><option value="share">전체 대비 비중</option></select></label></div><div id="v04cMetricInfo" class="v04c-metric-info"></div><div id="comparisonRows" class="comparison-rows" aria-live="polite"></div><p class="scope-note" id="v04cStatsScope">현재 세계 상태로 집계합니다.</p></section></section></main>
 <footer class="footer"><span>VILOB LIGHT · 독립 시뮬레이션 프로젝트</span><span>Core <span id="footerVersionLabel">V0.4E5</span> · 정적 웹 · PC / 모바일</span></footer>
 <nav aria-label="게임 주요 메뉴" class="bottom-tabs"><button id="atlasTabsToggle" class="atlas-tabs-toggle" type="button" aria-label="하단 탭 접기" aria-expanded="true" title="하단 탭 접기">›</button><button aria-current="page" class="bottom-tab active" data-tab="map" type="button"><span aria-hidden="true">▦</span>지도</button><button class="bottom-tab" data-tab="nation" type="button"><span aria-hidden="true">⚑</span>국가</button><button class="bottom-tab" data-tab="military" type="button"><span aria-hidden="true">⚔</span>군사</button><button class="bottom-tab" data-tab="market" type="button"><span aria-hidden="true">◇</span>시장</button><button class="bottom-tab" data-tab="world" type="button"><span aria-hidden="true">◎</span>세계</button><button class="bottom-tab" data-tab="statistics" type="button"><span aria-hidden="true">▥</span>통계</button><button class="bottom-tab" data-tab="chronicle" type="button"><span aria-hidden="true">▤</span>연대기</button></nav></div>
@@ -861,7 +861,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7E3E'; // International physical spot market V1: bounded prices, orders, matching, and Gold fees
+const VERSION = 'V0.7E3E2'; // Demographic food equilibrium: birth, ordinary mortality, chronic hunger
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3774,7 +3774,7 @@ function refreshApCaps(w){
   for(const n of w.nations){n.apMaxUnits=g1ApCapFor(w,n.id,counts);n.apUnits=Math.min(n.apUnits,n.apMaxUnits);}
 }
 function newEconomy(){return {constructionProcurement:{plan:null,history:[]},economicRecovery:{history:[]},apLedger:{history:[]},civilFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0},gold:140,apUnits:50,apMaxUnits:AP_MAX_UNITS,knowledge:0,researchLevel:0,
-  resources:{food:130,wood:30,stone:20,iron:3},foodPressure:1,
+  resources:{food:130,wood:30,stone:20,iron:3},foodPressure:1,demographyE3E2:e3e2NewDemography(),
   lastQuarter:{goldIncome:0,upkeep:0,goldNet:0,apRecovery:0,knowledgeIncome:0,produced:{food:0,wood:0,stone:0,iron:0},foodConsumed:0}};}
 function technicalBuildingPrice(w,nationId,base,recycle=false){
   if(!base)return null;const discount=Math.min(.65,techBonus(w,nationId,'materialDiscount')+(recycle?techBonus(w,nationId,'recycledBuildMaterials'):0));
@@ -4007,6 +4007,7 @@ function runEconomyQuarter(world){
     const foodAvailable=n.resources.food;
     n.resources.food=Math.max(0,foodAvailable-q.foodConsumed);
     n.foodPressure=q.foodConsumed===0?1:Math.min(1,foodAvailable/q.foodConsumed);
+    e3e2RecordFoodQuarter(n,world.dayIndex); // After international trade and real consumption; persisted regardless of observation mode.
     // Real military payroll; prolonged deficits cause deterministic desertion (never invent replacement soldiers).
     const paid=Math.min(n.gold,q.upkeep);n.gold-=paid;
     n.military.upkeepPaidLastQuarter=paid;n.military.desertedLastQuarter=0;
@@ -4142,11 +4143,12 @@ function dependencyQuarter(w){
   while(d.quarters.length>5)d.quarters.shift();
   return q;
 }
-function recordDependencyTrade(w,seller,buyer,good,quantity,gold){
+function recordDependencyTrade(w,seller,buyer,good,quantity,gold,mode='DIRECT'){
   const q=dependencyQuarter(w);
   let flow=q.flows.find(f=>f.seller===seller&&f.buyer===buyer&&f.good===good);
-  if(!flow){flow={seller,buyer,good,quantity:0,gold:0};q.flows.push(flow);}
+  if(!flow){flow={seller,buyer,good,quantity:0,gold:0,indirectQuantity:0,indirectGold:0};q.flows.push(flow);}
   flow.quantity+=quantity;flow.gold+=gold;
+  if(mode==='INDIRECT'){flow.indirectQuantity=(flow.indirectQuantity||0)+quantity;flow.indirectGold=(flow.indirectGold||0)+gold;}
 }
 function tradeDependencyReport(w,id){return w.trade?.dependency?.reports?.nations?.[id]||null;}
 const ratio2=value=>Math.round(Math.max(0,Math.min(1,value))*10000)/10000;
@@ -4165,7 +4167,7 @@ function updateTradeDependency(w,projections,recordProduction=true){
   const reports={dayIndex:w.dayIndex,nations:{}},routeAvailability=new Map();
   const allowed=(a,b)=>{
     const key=pairKey(a,b);
-    if(!routeAvailability.has(key))routeAvailability.set(key,Boolean(tradeRoute(w,a,b)));
+    if(!routeAvailability.has(key))routeAvailability.set(key,{direct:Boolean(tradeRoute(w,a,b)),indirect:e3eMarketEligible(w,a,b)});
     return routeAvailability.get(key);
   };
   for(const n of w.nations){
@@ -4186,7 +4188,9 @@ function updateTradeDependency(w,projections,recordProduction=true){
       let dominant=null,dominantVolume=0;
       for(const [seller,flow] of sources){
         if(flow.quantity>dominantVolume||(flow.quantity===dominantVolume&&(dominant===null||seller<dominant))){dominant=seller;dominantVolume=flow.quantity;}
-        if(!allowed(n.id,seller)){blockedImports+=flow.quantity;blockedValue+=flow.gold;blockedPartners.add(seller);}
+        const availability=allowed(n.id,seller),indirectQty=flow.indirectQuantity||0,indirectGold=flow.indirectGold||0;
+        const lostDirect=availability.direct?0:flow.quantity-indirectQty,lostIndirect=availability.indirect?0:indirectQty;
+        if(lostDirect+lostIndirect){blockedImports+=lostDirect+lostIndirect;blockedValue+=(availability.direct?0:flow.gold-indirectGold)+(availability.indirect?0:indirectGold);blockedPartners.add(seller);}
       }
       const reserve=safeStock(w,n,good),stock=n.resources[good];
       const shortage=ratio2((reserve-stock)/Math.max(1,reserve));
@@ -4467,7 +4471,7 @@ function validateTradeDependency(w){
     const seen=new Set();
     for(const f of q.flows){
       const key=[f.seller,f.buyer,f.good].join(':');
-      if(!w.nations[f.seller]||!w.nations[f.buyer]||f.seller===f.buyer||!TRADE_GOODS[f.good]||seen.has(key)||!Number.isSafeInteger(f.quantity)||f.quantity<1||!Number.isSafeInteger(f.gold)||f.gold<1)return false;
+      if(!w.nations[f.seller]||!w.nations[f.buyer]||f.seller===f.buyer||!TRADE_GOODS[f.good]||seen.has(key)||!Number.isSafeInteger(f.quantity)||f.quantity<1||!Number.isSafeInteger(f.gold)||f.gold<1||!Number.isSafeInteger(f.indirectQuantity??0)||(f.indirectQuantity||0)<0||(f.indirectQuantity||0)>f.quantity||!Number.isSafeInteger(f.indirectGold??0)||(f.indirectGold||0)<0||(f.indirectGold||0)>f.gold)return false;
       seen.add(key);
     }
     for(const [id,produced] of Object.entries(q.production))if(!/^\d+$/.test(id)||!w.nations[Number(id)]||!produced||GOODS.some(g=>!Number.isSafeInteger(produced[g])||produced[g]<0))return false;
@@ -4482,7 +4486,7 @@ function validateTradeDependency(w){
 function validateTrade(w){
   const t=w.trade;if(!t||!Number.isInteger(t.quarterDay)||t.quarterDay<0||t.quarterDay>w.dayIndex||!Number.isSafeInteger(t.nextId)||t.nextId<0||!Array.isArray(t.history)||t.history.length>MAX_EVENTS||!t.used||typeof t.used!=='object')return false;
   if(Object.entries(t.used).some(([key,value])=>!/^\d+:\d+$/.test(key)||!Number.isSafeInteger(value)||value<0))return false;
-  if(t.history.some(h=>!Number.isSafeInteger(h.id)||h.id<0||!Number.isSafeInteger(h.dayIndex)||h.dayIndex<0||h.dayIndex>w.dayIndex||!w.nations[h.seller]||!w.nations[h.buyer]||h.seller===h.buyer||!TRADE_GOODS[h.good]||!Number.isSafeInteger(h.quantity)||h.quantity<1||!Number.isSafeInteger(h.gold)||h.gold<1|| (h.market===true? !Number.isSafeInteger(h.priceMilli)||h.priceMilli<1||!Number.isSafeInteger(h.buyerPaid)||!Number.isSafeInteger(h.sellerReceived)||!Number.isSafeInteger(h.feeGold)||h.gold!==e3ePriceAmount(h.quantity,h.priceMilli)||h.buyerPaid!==h.sellerReceived+h.feeGold : h.gold!==h.quantity*h.unitPrice)))return false;
+  if(t.history.some(h=>!Number.isSafeInteger(h.id)||h.id<0||!Number.isSafeInteger(h.dayIndex)||h.dayIndex<0||h.dayIndex>w.dayIndex||!w.nations[h.seller]||!w.nations[h.buyer]||h.seller===h.buyer||!TRADE_GOODS[h.good]||!Number.isSafeInteger(h.quantity)||h.quantity<1||!Number.isSafeInteger(h.gold)||h.gold<1|| (h.market===true? !Number.isSafeInteger(h.priceMilli)||h.priceMilli<1||!Number.isSafeInteger(h.buyerPaid)||!Number.isSafeInteger(h.sellerReceived)||!Number.isSafeInteger(h.feeGold)||h.gold!==e3ePriceAmount(h.quantity,h.priceMilli)||h.buyerPaid!==h.sellerReceived+h.feeGold||h.mode==='INDIRECT'&&(h.routeDistance!==null||!Number.isSafeInteger(h.indirectFeeGold)||h.indirectFeeGold<0) : h.gold!==h.quantity*h.unitPrice)))return false;
   if(!validateTradeDependency(w))return false;
   return w.nations.every(n=>{const s=n.trade;return s&&['exports','imports','exportValue','importValue','quarterExports','quarterImports','quarterExportValue','quarterImportValue'].every(k=>Number.isSafeInteger(s[k])&&s[k]>=0);});
 }
@@ -4493,11 +4497,28 @@ const E3E_MARKET_HISTORY_LIMIT=48, E3E_MARKET_FILLS_LIMIT=120;
 const E3E_MARKET_FEE_RATE=10; // percentage charged separately to buyers and sellers
 const E3E_MARKET_PRICE_STEP=150; // 15% of current price at full one-sided order imbalance
 const E3E_GOOD_INDEX=['food','wood','stone','iron'];
+// E3E1: indirect brokered physical trade, no synthetic resource or pathfinder.
+const E3E1_INDIRECT_FREIGHT_LIMIT=3000, E3E1_INDIRECT_FEE_RATE=15;
 function e3eInitialMarket(){
  const prices={};for(const good of E3E_GOOD_INDEX)prices[good]=TRADE_GOODS[good].price*1000;
- return {schema:1,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
-  totals:{volume:0,baseGold:0,buyerPaid:0,sellerReceived:0,feesSink:0,trades:0},
+ return {schema:2,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
+  totals:{volume:0,baseGold:0,buyerPaid:0,sellerReceived:0,feesSink:0,trades:0,directVolume:0,indirectVolume:0,indirectFeeGold:0,directTrades:0,indirectTrades:0},
   lastOrders:[],lastNation:[],lastBlocks:{},lastQuarter:null};
+}
+function e3eMigrateMarket(w){
+ const m=w.market??(w.market=e3eInitialMarket());
+ if(m.schema===1){m.schema=2;
+  for(const f of m.fills){f.mode??='DIRECT';f.indirectFeeGold??=0;f.baseFeeGold??=f.feeGold;}
+  for(const f of w.trade?.history||[])if(f.market===true){f.mode??='DIRECT';f.indirectFeeGold??=0;f.baseFeeGold??=f.feeGold;}
+  for(const q of m.quarters){q.directVolume??=q.totalVolume;q.indirectVolume??=0;q.directTrades??=q.trades;q.indirectTrades??=0;q.indirectFeeGold??=0;
+   for(const g of E3E_GOOD_INDEX){const x=q.goods?.[g];if(x){x.directVolume??=x.volume;x.indirectVolume??=0;x.directTrades??=x.trades;x.indirectTrades??=0;x.indirectFeeGold??=0;}}}
+  if(m.lastQuarter){const q=m.lastQuarter;q.directVolume??=q.totalVolume;q.indirectVolume??=0;q.directTrades??=q.trades;q.indirectTrades??=0;q.indirectFeeGold??=0;
+   for(const g of E3E_GOOD_INDEX){const x=q.goods?.[g];if(x){x.directVolume??=x.volume;x.indirectVolume??=0;x.directTrades??=x.trades;x.indirectTrades??=0;x.indirectFeeGold??=0;}}}
+  for(const n of m.lastNation){n.directBought??=n.bought;n.directSold??=n.sold;n.indirectBought??={};n.indirectSold??={};n.indirectImportFreight??=0;n.indirectExportFreight??=0;n.indirectFeeGold??=0;}
+  m.totals.directVolume??=m.totals.volume;m.totals.indirectVolume??=0;m.totals.directTrades??=m.totals.trades;m.totals.indirectTrades??=0;m.totals.indirectFeeGold??=0;
+ }
+ for(const q of w.trade?.dependency?.quarters||[])for(const f of q.flows){f.indirectQuantity??=0;f.indirectGold??=0;}
+ return m;
 }
 function e3eEnsureMarket(w){if(!w.market)w.market=e3eInitialMarket();return w.market;}
 function e3eBaseMilli(good){return TRADE_GOODS[good].price*1000;}
@@ -4505,39 +4526,53 @@ function e3eBoundPrice(good,v){const b=e3eBaseMilli(good);return Math.max(Math.r
 function e3ePriceText(milli){return (milli/1000).toFixed(3);}
 function e3ePriceAmount(qty,priceMilli){return Math.max(1,Math.round(qty*priceMilli/1000));}
 function e3eFee(base){return Math.ceil(base*E3E_MARKET_FEE_RATE/100);}
-function e3ePayment(qty,priceMilli){const base=e3ePriceAmount(qty,priceMilli),fee=e3eFee(base);return {base,buyerPaid:base+fee,sellerReceived:base-fee,feeGold:2*fee};}
-function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli){
- const market=e3eEnsureMarket(w),from=w.nations[seller],to=w.nations[buyer],s=e3ePayment(qty,priceMilli);
- const freight=v07cFreightUnits(w,buyer,good,qty),t=ensureTrade(w),used=t.used[r.key]||0;
- if(qty<1||qty>10000||from.resources[good]<qty||to.gold<s.buyerPaid||!r||used+freight>r.capacity)return null;
+function e3ePayment(qty,priceMilli,mode='DIRECT'){
+ const base=e3ePriceAmount(qty,priceMilli),fee=e3eFee(base),indirectFeeGold=mode==='INDIRECT'?Math.ceil(base*E3E1_INDIRECT_FEE_RATE/100):0;
+ return {base,buyerPaid:base+fee+indirectFeeGold,sellerReceived:base-fee,feeGold:2*fee+indirectFeeGold,baseFeeGold:2*fee,indirectFeeGold};
+}
+function e3eMarketEligible(w,a,b){return a!==b&&Boolean(w.nations[a]?.active&&w.nations[b]?.active)&&!warAgainst(w,a,b)&&relationOf(w,a,b)>=-45;}
+function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',indirectUsage=null){
+ const market=e3eEnsureMarket(w),from=w.nations[seller],to=w.nations[buyer],s=e3ePayment(qty,priceMilli,mode);
+ if(!e3eMarketEligible(w,seller,buyer)||qty<1||qty>10000||from.resources[good]<qty||to.gold<s.buyerPaid)return null;
+ const freight=v07cFreightUnits(w,buyer,good,qty),t=ensureTrade(w);
+ let used=0;
+ if(mode==='DIRECT'){
+  if(!r)return null;
+  used=t.used[r.key]||0;
+  if(used+freight>r.capacity)return null;
+ }else if(mode==='INDIRECT'){
+  if(!indirectUsage||indirectUsage.import[buyer]+freight>E3E1_INDIRECT_FREIGHT_LIMIT||indirectUsage.export[seller]+freight>E3E1_INDIRECT_FREIGHT_LIMIT)return null;
+ }else return null;
  from.resources[good]-=qty;to.resources[good]+=qty;to.gold-=s.buyerPaid;from.gold+=s.sellerReceived;
- t.used[r.key]=used+freight;
- recordDependencyTrade(w,seller,buyer,good,qty,s.base);
+ if(mode==='DIRECT')t.used[r.key]=used+freight;
+ else{indirectUsage.import[buyer]+=freight;indirectUsage.export[seller]+=freight;}
+ recordDependencyTrade(w,seller,buyer,good,qty,s.base,mode);
  const fs=tradeStats(from),ts=tradeStats(to);
  fs.exports+=qty;fs.exportValue+=s.sellerReceived;fs.quarterExports+=qty;fs.quarterExportValue+=s.sellerReceived;
  ts.imports+=qty;ts.importValue+=s.buyerPaid;ts.quarterImports+=qty;ts.quarterImportValue+=s.buyerPaid;
  const tradeId=t.nextId++;
  t.history.push({id:tradeId,dayIndex:w.dayIndex,seller,buyer,good,quantity:qty,unitPrice:priceMilli/1000,gold:s.base,
-   market:true,priceMilli,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,routeDistance:r.distance});
+   market:true,mode,freightUsed:freight,priceMilli,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,
+   baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,routeDistance:mode==='DIRECT'?r.distance:null});
  if(t.history.length>MAX_EVENTS)t.history.splice(0,t.history.length-MAX_EVENTS);
- const e={id:market.nextFillId++,tradeId,dayIndex:w.dayIndex,seller,buyer,good,quantity:qty,priceMilli,
-  baseGold:s.base,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,routeDistance:r.distance};
+ const e={id:market.nextFillId++,tradeId,dayIndex:w.dayIndex,seller,buyer,good,quantity:qty,priceMilli,mode,freightUsed:freight,
+  baseGold:s.base,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,
+  baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,routeDistance:mode==='DIRECT'?r.distance:null};
  market.fills.push(e);if(market.fills.length>E3E_MARKET_FILLS_LIMIT)market.fills.shift();
- for(const [key,n] of [['volume',qty],['baseGold',s.base],['buyerPaid',s.buyerPaid],['sellerReceived',s.sellerReceived],['feesSink',s.feeGold],['trades',1]])market.totals[key]+=n;
- if(used===0)adjustRelation(w,seller,buyer,1);
+ for(const [key,n] of [['volume',qty],['baseGold',s.base],['buyerPaid',s.buyerPaid],['sellerReceived',s.sellerReceived],['feesSink',s.feeGold],['trades',1],
+  [mode==='DIRECT'?'directVolume':'indirectVolume',qty],[mode==='DIRECT'?'directTrades':'indirectTrades',1],['indirectFeeGold',s.indirectFeeGold]])market.totals[key]+=n;
+ if(mode==='DIRECT'&&used===0)adjustRelation(w,seller,buyer,1);
  w.changeSeq++;return e;
 }
-// Every limit is taken at the current quarter's market clearing price.
-// A logarithmic-looking quotient cannot stand in for actual counterparty stock.
-function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloor){
- const t=ensureTrade(w),remaining=Math.max(0,r.capacity-(t.used[r.key]||0));
- let hi=Math.max(0,Math.min(10000,Math.floor(max),
-   Math.floor((remaining/TRADE_GOODS[good].freight)/Math.max(.001,1-techBonus(w,buyer,'tradeFreightDiscount'))),
+function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloor,mode='DIRECT',indirectUsage=null){
+ const freightRemaining=mode==='DIRECT'?(r?Math.max(0,r.capacity-(ensureTrade(w).used[r.key]||0)):0):
+  Math.max(0,Math.min(E3E1_INDIRECT_FREIGHT_LIMIT-(indirectUsage?.import[buyer]||0),E3E1_INDIRECT_FREIGHT_LIMIT-(indirectUsage?.export[seller]||0)));
+ let hi=Math.max(0,Math.min(10000,Math.floor(max),Math.ceil(freightRemaining/Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,buyer,'tradeFreightDiscount')))),
    w.nations[seller].resources[good]-sellerFloor));
  let lo=0;
  while(lo<hi){const mid=Math.ceil((lo+hi)/2);
-   if(v07cFreightUnits(w,buyer,good,mid)<=remaining&&e3ePayment(mid,priceMilli).buyerPaid<=Math.max(0,w.nations[buyer].gold-buyerReserve))lo=mid;
-   else hi=mid-1;
+  if(v07cFreightUnits(w,buyer,good,mid)<=freightRemaining&&e3ePayment(mid,priceMilli,mode).buyerPaid<=Math.max(0,w.nations[buyer].gold-buyerReserve))lo=mid;
+  else hi=mid-1;
  }
  return lo;
 }
@@ -4548,110 +4583,131 @@ function e3eTargets(w,n,projections){
  if(intent)for(const g of V05B_BUILD_GOODS)target[g]=Math.max(target[g],intent.price.resources[g]||0);
  return {target,intent,upkeep:(q.upkeep||0)+(q.civil?.total||0)};
 }
-/** A nation must have a real, solvent, legally reachable trading partner.  All
- * inter-nation routes are discovered only once per unordered pair per quarter. */
 function e3eRunMarketQuarter(w,projections=null){
  refreshTradeQuarter(w);
- const market=e3eEnsureMarket(w),current=w.dayIndex,eligible=w.nations.filter(n=>n.active).sort((a,b)=>a.id-b.id),
-   needs=new Map(),routes=[];
+ const market=e3eEnsureMarket(w),current=w.dayIndex,eligible=w.nations.filter(n=>n.active).sort((a,b)=>a.id-b.id),needs=new Map(),routes=[],pairs=[],routeMap=new Map();
  for(const n of w.nations)if(n.constructionProcurement)n.constructionProcurement.lastTrade=null;
  for(const n of eligible)needs.set(n.id,n.controller==='AI'?e3eTargets(w,n,projections):{target:Object.fromEntries(E3E_GOOD_INDEX.map(g=>[g,safeStock(w,n,g)])),intent:null,upkeep:0});
  market.pendingOrders=market.pendingOrders.filter(o=>w.nations[o.nationId]?.active&&w.nations[o.nationId]?.controller==='PLAYER'&&o.expiresDay>=current&&o.remaining>0);
+ // Exactly one route probe per physically eligible pair in a quarter.
  for(let i=0;i<eligible.length;i++)for(let j=i+1;j<eligible.length;j++){
-   const a=eligible[i].id,b=eligible[j].id,route=tradeRoute(w,a,b);
-   if(route)routes.push({a,b,route});
+  const a=eligible[i].id,b=eligible[j].id;if(!e3eMarketEligible(w,a,b))continue;
+  pairs.push({a,b});const route=tradeRoute(w,a,b);if(route){routes.push({a,b,route});routeMap.set(pairKey(a,b),route);}
  }
- const report={dayIndex:current,pricesBefore:{...market.prices},pricesAfter:{},goods:{},totalVolume:0,totalGold:0,feesSink:0,trades:0,availableRoutes:routes.length};
- const nationRecords=new Map(eligible.map(n=>[n.id,{id:n.id,bought:{},sold:{},buyerPaid:0,sellerReceived:0,fees:0}]));
- const finalOrders=[],blocks={};
+ const usage={import:Array(w.nations.length).fill(0),export:Array(w.nations.length).fill(0)};
+ const report={dayIndex:current,pricesBefore:{...market.prices},pricesAfter:{},goods:{},totalVolume:0,totalGold:0,feesSink:0,trades:0,availableRoutes:routes.length,
+  eligiblePairs:pairs.length,directVolume:0,indirectVolume:0,directTrades:0,indirectTrades:0,indirectFeeGold:0};
+ const nationRecords=new Map(eligible.map(n=>[n.id,{id:n.id,bought:{},sold:{},directBought:{},directSold:{},indirectBought:{},indirectSold:{},buyerPaid:0,sellerReceived:0,fees:0,
+  indirectFeeGold:0,indirectImportFreight:0,indirectExportFreight:0}]));
+ const finalOrders=[],blocks={},goodContexts=[];
  for(const good of E3E_GOOD_INDEX){
-   const priceMilli=market.prices[good],orders=[],byId=new Map();
-   for(const n of eligible){
-     if(n.controller==='PLAYER'){
-       for(const pending of market.pendingOrders.filter(o=>o.nationId===n.id&&o.good===good)){
-         const max=pending.side==='SELL'?Math.max(0,n.resources[good]-safeStock(w,n,good)):n.gold>0?Math.floor(n.gold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
-         const qty=Math.min(pending.remaining,max,10000);if(!qty)continue;
-         const o={nationId:n.id,good,side:pending.side,requested:qty,filled:0,limitPriceMilli:pending.limitPriceMilli,pendingId:pending.id};
-         orders.push(o);byId.set(`${n.id}:${pending.side}`,o);
-       }
-       continue;
-     }
-     const x=needs.get(n.id),stock=n.resources[good],target=x.target[good];
-     const safe=safeStock(w,n,good),sellerFloor=Math.max(safe,target);
-     const goldReserve=Math.max(30,Math.floor(n.gold*.12),x.intent&&good!=='food'?x.intent.price.gold+x.upkeep:0);
-     const availableGold=Math.max(0,n.gold-goldReserve),lack=Math.max(0,target-stock),excess=Math.max(0,stock-sellerFloor);
-     const urgency=lack/Math.max(1,target),risk=w.aiProfiles[n.aiProfileId]?.behavior?.riskTolerance??50;
-     const cooperation=w.aiProfiles[n.aiProfileId]?.diplomacy?.cooperation??50;
-     // Price ceilings reflect urgency without giving away the entire treasury.
-     const maxPriceMilli=Math.max(priceMilli,Math.round(e3eBaseMilli(good)*(urgency>.6?3:1.5+(cooperation/300))));
-     const purchaseCap=availableGold>0?Math.floor(availableGold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
-     const want=Math.min(10000,lack,purchaseCap);
-     const ask=Math.min(10000,excess);
-     // Requested orders are recorded even without counterpart; only reachable
-     // funded demand and protected supply influence global price discovery.
-     if(want>0){const o={nationId:n.id,good,side:'BUY',requested:want,filled:0,limitPriceMilli:maxPriceMilli};orders.push(o);byId.set(`${n.id}:BUY`,o);}
-     if(ask>0){const o={nationId:n.id,good,side:'SELL',requested:ask,filled:0,limitPriceMilli:e3eBaseMilli(good)/2};orders.push(o);byId.set(`${n.id}:SELL`,o);}
+  const priceMilli=market.prices[good],orders=[],byId=new Map();
+  for(const n of eligible){
+   if(n.controller==='PLAYER'){
+    for(const pending of market.pendingOrders.filter(o=>o.nationId===n.id&&o.good===good)){
+     const max=pending.side==='SELL'?Math.max(0,n.resources[good]-safeStock(w,n,good)):n.gold>0?Math.floor(n.gold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
+     const qty=Math.min(pending.remaining,max,10000);if(!qty)continue;
+     const o={nationId:n.id,good,side:pending.side,requested:qty,filled:0,limitPriceMilli:pending.limitPriceMilli,pendingId:pending.id};
+     orders.push(o);byId.set(`${n.id}:${pending.side}`,o);
+    }
+    continue;
    }
-   const requests=[];
-   for(const {a,b,route} of routes)for(const [buyer,seller] of [[a,b],[b,a]]){
-     const bo=byId.get(`${buyer}:BUY`),so=byId.get(`${seller}:SELL`);
-     if(!bo||!so||priceMilli>bo.limitPriceMilli||priceMilli<so.limitPriceMilli||route.capacity<=(w.trade.used[route.key]||0))continue;
-     const need=needs.get(buyer).target[good]-w.nations[buyer].resources[good];
-     const urgency=need/Math.max(1,needs.get(buyer).target[good]);
-     requests.push({buyer,seller,route,urgency});
+   const x=needs.get(n.id),stock=n.resources[good],target=x.target[good],safe=safeStock(w,n,good),sellerFloor=Math.max(safe,target);
+   const goldReserve=Math.max(30,Math.floor(n.gold*.12),x.intent&&good!=='food'?x.intent.price.gold+x.upkeep:0);
+   const availableGold=Math.max(0,n.gold-goldReserve),lack=Math.max(0,target-stock),excess=Math.max(0,stock-sellerFloor);
+   const urgency=lack/Math.max(1,target),cooperation=w.aiProfiles[n.aiProfileId]?.diplomacy?.cooperation??50;
+   const maxPriceMilli=Math.max(priceMilli,Math.round(e3eBaseMilli(good)*(urgency>.6?3:1.5+(cooperation/300))));
+   const purchaseCap=availableGold>0?Math.floor(availableGold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
+   const want=Math.min(10000,lack,purchaseCap),ask=Math.min(10000,excess);
+   if(want>0){const o={nationId:n.id,good,side:'BUY',requested:want,filled:0,limitPriceMilli:maxPriceMilli};orders.push(o);byId.set(`${n.id}:BUY`,o);}
+   if(ask>0){const o={nationId:n.id,good,side:'SELL',requested:ask,filled:0,limitPriceMilli:e3eBaseMilli(good)/2};orders.push(o);byId.set(`${n.id}:SELL`,o);}
+  }
+  const requests=[];
+  for(const {a,b} of pairs)for(const [buyer,seller] of [[a,b],[b,a]]){
+   const bo=byId.get(`${buyer}:BUY`),so=byId.get(`${seller}:SELL`);
+   if(!bo||!so||priceMilli>bo.limitPriceMilli||priceMilli<so.limitPriceMilli)continue;
+   const need=needs.get(buyer).target[good]-w.nations[buyer].resources[good];
+   requests.push({buyer,seller,route:routeMap.get(pairKey(a,b))||null,urgency:need/Math.max(1,needs.get(buyer).target[good])});
+  }
+  requests.sort((a,b)=>b.urgency-a.urgency||a.buyer-b.buyer||a.seller-b.seller);
+  // No duplicated orders: one buyer or seller contributes only its capped quantity.
+  const validBuy=new Map(),validSell=new Map();
+  for(const r of requests){
+   const freightFactor=Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,r.buyer,'tradeFreightDiscount')));
+   const directFreight=r.route?Math.max(0,r.route.capacity-(w.trade.used[r.route.key]||0)):0;
+   const indirectFreight=Math.max(0,Math.min(E3E1_INDIRECT_FREIGHT_LIMIT-usage.import[r.buyer],E3E1_INDIRECT_FREIGHT_LIMIT-usage.export[r.seller]));
+   const possible=Math.max(0,Math.floor((directFreight+indirectFreight)/freightFactor));
+   const bo=byId.get(`${r.buyer}:BUY`),so=byId.get(`${r.seller}:SELL`);
+   const quantity=Math.min(possible,bo.requested,so.requested);
+   if(quantity>0){validBuy.set(r.buyer,Math.max(validBuy.get(r.buyer)||0,quantity));validSell.set(r.seller,Math.max(validSell.get(r.seller)||0,quantity));}
+  }
+  const demand=orders.filter(o=>o.side==='BUY').reduce((s,o)=>s+Math.min(o.requested,validBuy.get(o.nationId)||0),0);
+  const supply=orders.filter(o=>o.side==='SELL').reduce((s,o)=>s+Math.min(o.requested,validSell.get(o.nationId)||0),0);
+  const sums={volume:0,trades:0,buyerPaid:0,sellerReceived:0,feesSink:0,directVolume:0,indirectVolume:0,directTrades:0,indirectTrades:0,indirectFeeGold:0};
+  const settle=(r,mode)=>{
+   const buyer=w.nations[r.buyer],seller=w.nations[r.seller],bo=byId.get(`${r.buyer}:BUY`),so=byId.get(`${r.seller}:SELL`);
+   if(!bo||!so||bo.filled>=bo.requested||so.filled>=so.requested)return;
+   const budget=buyer.controller==='PLAYER'?0:Math.max(30,Math.floor(buyer.gold*.12),needs.get(buyer.id).intent&&good!=='food'?needs.get(buyer.id).intent.price.gold+needs.get(buyer.id).upkeep:0);
+   const floor=Math.max(safeStock(w,seller,good),needs.get(seller.id).target[good]);
+   const qty=e3eMaxFill(w,r.buyer,r.seller,good,Math.min(bo.requested-bo.filled,so.requested-so.filled),r.route,priceMilli,budget,floor,mode,usage);
+   if(!qty)return;
+   const before=buyer.resources[good],e=e3eConserveTrade(w,r.seller,r.buyer,good,qty,r.route,priceMilli,mode,usage);if(!e)return;
+   bo.filled+=qty;so.filled+=qty;
+   for(const [k,value] of [['volume',qty],['trades',1],['buyerPaid',e.buyerPaid],['sellerReceived',e.sellerReceived],['feesSink',e.feeGold],
+    [mode==='DIRECT'?'directVolume':'indirectVolume',qty],[mode==='DIRECT'?'directTrades':'indirectTrades',1],['indirectFeeGold',e.indirectFeeGold]])sums[k]+=value;
+   const bn=nationRecords.get(buyer.id),sn=nationRecords.get(seller.id),bx=mode==='DIRECT'?'directBought':'indirectBought',sx=mode==='DIRECT'?'directSold':'indirectSold';
+   bn.bought[good]=(bn.bought[good]||0)+qty;bn[bx][good]=(bn[bx][good]||0)+qty;bn.buyerPaid+=e.buyerPaid;bn.fees+=e.feeGold-e3eFee(e.baseGold);bn.indirectFeeGold+=e.indirectFeeGold;
+   sn.sold[good]=(sn.sold[good]||0)+qty;sn[sx][good]=(sn[sx][good]||0)+qty;sn.sellerReceived+=e.sellerReceived;sn.fees+=e3eFee(e.baseGold);
+   if(mode==='INDIRECT'){bn.indirectImportFreight+=e.freightUsed;sn.indirectExportFreight+=e.freightUsed;}
+   const intent=needs.get(buyer.id).intent;if(intent&&V05B_BUILD_GOODS.includes(good)){
+    const imported=Math.max(0,Math.min(qty,(intent.price.resources[good]||0)-before));intent.received[good]+=imported;
+    intent.gold+=imported?Math.round(e.buyerPaid*imported/qty):0;
    }
-   requests.sort((a,b)=>b.urgency-a.urgency||a.buyer-b.buyer||a.seller-b.seller);
-   // The pressure counts only orders actually connected by a legal route and
-   // compatible limit prices; a disconnected isolated nation cannot lift prices.
-   const validBuy=new Set(requests.map(x=>x.buyer)),validSell=new Set(requests.map(x=>x.seller));
-   const demand=orders.filter(o=>o.side==='BUY'&&validBuy.has(o.nationId)).reduce((s,o)=>s+o.requested,0);
-   const supply=orders.filter(o=>o.side==='SELL'&&validSell.has(o.nationId)).reduce((s,o)=>s+o.requested,0);
-   let vol=0,paid=0,received=0,fees=0,filled=0;
-   for(const r of requests){
-     const buyer=w.nations[r.buyer],seller=w.nations[r.seller],bo=byId.get(`${r.buyer}:BUY`),so=byId.get(`${r.seller}:SELL`);
-     if(!bo||!so)continue;
-     const budget=buyer.controller==='PLAYER'?0:Math.max(30,Math.floor(buyer.gold*.12),needs.get(buyer.id).intent&&good!=='food'?needs.get(buyer.id).intent.price.gold+needs.get(buyer.id).upkeep:0);
-     const floor=Math.max(safeStock(w,seller,good),needs.get(seller.id).target[good]);
-     const qty=e3eMaxFill(w,r.buyer,r.seller,good,Math.min(bo.requested-bo.filled,so.requested-so.filled),r.route,priceMilli,budget,floor);
-     if(!qty)continue;
-     const before=buyer.resources[good];const e=e3eConserveTrade(w,r.seller,r.buyer,good,qty,r.route,priceMilli);
-     if(!e)continue;
-     bo.filled+=qty;so.filled+=qty;vol+=qty;paid+=e.buyerPaid;received+=e.sellerReceived;fees+=e.feeGold;filled++;
-     const bn=nationRecords.get(buyer.id),sn=nationRecords.get(seller.id);
-     bn.bought[good]=(bn.bought[good]||0)+qty;bn.buyerPaid+=e.buyerPaid;bn.fees+=e.feeGold/2;
-     sn.sold[good]=(sn.sold[good]||0)+qty;sn.sellerReceived+=e.sellerReceived;sn.fees+=e.feeGold/2;
-     const intent=needs.get(buyer.id).intent;
-     if(intent&&V05B_BUILD_GOODS.includes(good)){
-       const imported=Math.max(0,Math.min(qty,(intent.price.resources[good]||0)-before));
-       intent.received[good]+=imported;
-       intent.gold+=imported?Math.round(e.buyerPaid*imported/qty):0;
-     }
-   }
-   const imbalance=demand+supply?(demand-supply)/(demand+supply):0;
-   const base=e3eBaseMilli(good),delta=Math.round(priceMilli*E3E_MARKET_PRICE_STEP*imbalance/1000);
-   const next=e3eBoundPrice(good,priceMilli+delta+Math.round(.03*(base-priceMilli)));
-   market.prices[good]=next;report.pricesAfter[good]=next;
-   report.goods[good]={priceMilli,nextPriceMilli:next,validDemand:demand,validSupply:supply,requestedBuy:orders.filter(o=>o.side==='BUY').reduce((s,o)=>s+o.requested,0),requestedSell:orders.filter(o=>o.side==='SELL').reduce((s,o)=>s+o.requested,0),volume:vol,trades:filled,buyerPaid:paid,sellerReceived:received,feesSink:fees,unfilledBuy:orders.filter(o=>o.side==='BUY').reduce((s,o)=>s+o.requested-o.filled,0),unfilledSell:orders.filter(o=>o.side==='SELL').reduce((s,o)=>s+o.requested-o.filled,0)};
-   for(const o of orders){o.unfilled=o.requested-o.filled;finalOrders.push(o);
-     if(o.pendingId!==undefined){const saved=market.pendingOrders.find(p=>p.id===o.pendingId);if(saved)saved.remaining-=o.filled;}
-   }
-   report.totalVolume+=vol;report.totalGold+=paid;report.feesSink+=fees;report.trades+=filled;
+  };
+  goodContexts.push({good,priceMilli,orders,requests,demand,supply,sums,settle});
  }
- for(const [id,x] of needs){const n=w.nations[id],intent=x.intent;
-   if(!intent)continue;
-   const missing=V05B_BUILD_GOODS.filter(g=>n.resources[g]<(intent.price.resources[g]||0));
-   if(!missing.length)intent.reason='FUNDED';
-   else if(Object.values(intent.received).some(x=>x>0))intent.reason='PARTIAL_IMPORT';
-   else if(!routes.some(r=>r.a===id||r.b===id))intent.reason='NO_ROUTE';
-   else if(!missing.some(g=>routes.some(r=>{if(r.a!==id&&r.b!==id)return false;
-     const other=w.nations[r.a===id?r.b:r.a];return other.resources[g]>(needs.get(other.id)?.target[g]||safeStock(w,other,g));})))intent.reason='NO_SELLER_SURPLUS';
-   else intent.reason='GOLD_OR_FREIGHT_LIMIT';
-   n.constructionProcurement.lastTrade={received:intent.received,gold:intent.gold,reason:intent.reason,dayIndex:current};
+ // All four goods settle over physical roads before any indirect brokered
+ // purchase is allowed to spend Gold or sell inventory (E3E1 direct-first contract).
+ for(const ctx of goodContexts)for(const r of ctx.requests)if(r.route)ctx.settle(r,'DIRECT');
+ for(const ctx of goodContexts)for(const r of ctx.requests)ctx.settle(r,'INDIRECT');
+ for(const ctx of goodContexts){
+  const {good,priceMilli,orders,requests,demand,supply,sums}=ctx;
+  const imbalance=demand+supply?(demand-supply)/(demand+supply):0,base=e3eBaseMilli(good);
+  const delta=Math.round(priceMilli*E3E_MARKET_PRICE_STEP*imbalance/1000),next=e3eBoundPrice(good,priceMilli+delta+Math.round(.03*(base-priceMilli)));
+  market.prices[good]=next;report.pricesAfter[good]=next;
+  report.goods[good]={priceMilli,nextPriceMilli:next,validDemand:demand,validSupply:supply,requestedBuy:orders.filter(o=>o.side==='BUY').reduce((s,o)=>s+o.requested,0),
+   requestedSell:orders.filter(o=>o.side==='SELL').reduce((s,o)=>s+o.requested,0),...sums,
+   unfilledBuy:orders.filter(o=>o.side==='BUY').reduce((s,o)=>s+o.requested-o.filled,0),
+   unfilledSell:orders.filter(o=>o.side==='SELL').reduce((s,o)=>s+o.requested-o.filled,0)};
+  for(const o of orders){o.unfilled=o.requested-o.filled;
+   if(o.unfilled){const opposites=orders.filter(x=>x.side!==(o.side)&&x.nationId!==o.nationId&&x.requested>0);
+    const allowed=opposites.filter(x=>e3eMarketEligible(w,x.nationId,o.nationId));
+    const compatible=allowed.filter(x=>o.side==='BUY'?priceMilli<=o.limitPriceMilli&&priceMilli>=x.limitPriceMilli:priceMilli>=o.limitPriceMilli&&priceMilli<=x.limitPriceMilli);
+    const n=w.nations[o.nationId],isBuy=o.side==='BUY',freightLimit=isBuy?usage.import[n.id]:usage.export[n.id];
+    const reason=!opposites.length?(isBuy?'NO_SELLER_SURPLUS':'NO_BUYER'):!allowed.length?'DIPLOMATIC_BLOCK':!compatible.length?'LIMIT_PRICE':
+     freightLimit>=E3E1_INDIRECT_FREIGHT_LIMIT?(isBuy?'INDIRECT_IMPORT_CAP':'INDIRECT_EXPORT_CAP'):
+     isBuy&&n.gold<e3ePayment(1,priceMilli,'INDIRECT').buyerPaid?'GOLD':
+     !isBuy&&n.resources[good]<=Math.max(safeStock(w,n,good),needs.get(n.id).target[good])?'SAFE_STOCK':'FREIGHT_OR_COUNTERPARTY_CAP';
+    o.blockReason=reason;blocks[reason]=(blocks[reason]||0)+o.unfilled;
+   }
+   finalOrders.push(o);
+   if(o.pendingId!==undefined){const saved=market.pendingOrders.find(p=>p.id===o.pendingId);if(saved)saved.remaining-=o.filled;}
+  }
+  for(const [k,v] of Object.entries(sums))if(k==='volume')report.totalVolume+=v;else if(k==='buyerPaid')report.totalGold+=v;else if(k==='feesSink')report.feesSink+=v;else if(k!=='sellerReceived')report[k]+=v;
+ }
+ for(const [id,x] of needs){const n=w.nations[id],intent=x.intent;if(!intent)continue;
+  const missing=V05B_BUILD_GOODS.filter(g=>n.resources[g]<(intent.price.resources[g]||0));
+  if(!missing.length)intent.reason='FUNDED';
+  else if(Object.values(intent.received).some(v=>v>0))intent.reason='PARTIAL_IMPORT';
+  else if(!pairs.some(r=>r.a===id||r.b===id))intent.reason='NO_ROUTE';
+  else if(!missing.some(g=>pairs.some(r=>{if(r.a!==id&&r.b!==id)return false;
+   const other=w.nations[r.a===id?r.b:r.a];return other.resources[g]>(needs.get(other.id)?.target[g]||safeStock(w,other,g));})))intent.reason='NO_SELLER_SURPLUS';
+  else intent.reason='GOLD_OR_FREIGHT_LIMIT';
+  n.constructionProcurement.lastTrade={received:intent.received,gold:intent.gold,reason:intent.reason,dayIndex:current};
  }
  market.pendingOrders=market.pendingOrders.filter(o=>o.remaining>0&&o.expiresDay>current);
  if(report.trades>0&&market.openedDay===null)market.openedDay=current;
- report.opened=market.openedDay!==null;
- market.quarterDay=current;market.lastQuarter=report;market.quarters.push(report);
+ report.opened=market.openedDay!==null;market.quarterDay=current;market.lastQuarter=report;market.quarters.push(report);
  if(market.quarters.length>E3E_MARKET_HISTORY_LIMIT)market.quarters.shift();
  market.lastOrders=finalOrders;market.lastNation=[...nationRecords.values()];market.lastBlocks=blocks;
  return report;
@@ -4671,25 +4727,189 @@ function e3eSetManualOrder(w,id,good,side,quantity,limitPriceMilli){
 }
 function e3eCancelManualOrder(w,id){const m=e3eEnsureMarket(w),i=m.pendingOrders.findIndex(o=>o.id===id&&w.nations[o.nationId]?.controller==='PLAYER');
  if(i<0)return false;m.pendingOrders.splice(i,1);w.changeSeq++;return true;}
-function e3eMarketSummary(w){const m=e3eEnsureMarket(w);return {openedDay:m.openedDay,quarterDay:m.quarterDay,prices:{...m.prices},lastQuarter:m.lastQuarter,totals:{...m.totals},lastOrders:m.lastOrders,lastNation:m.lastNation,pendingOrders:m.pendingOrders};}
-function e3eMarketCsv(w){const m=e3eEnsureMarket(w),head=['dayIndex','good','priceMilli','nextPriceMilli','validDemand','validSupply','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'];
+function e3eMarketSummary(w){const m=e3eEnsureMarket(w);return {openedDay:m.openedDay,quarterDay:m.quarterDay,prices:{...m.prices},lastQuarter:m.lastQuarter,totals:{...m.totals},lastOrders:m.lastOrders,lastNation:m.lastNation,lastBlocks:m.lastBlocks,pendingOrders:m.pendingOrders};}
+function e3eMarketCsv(w){const m=e3eEnsureMarket(w),head=['dayIndex','good','priceMilli','nextPriceMilli','validDemand','validSupply','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell','directVolume','indirectVolume','directTrades','indirectTrades','indirectFeeGold'];
  const rows=[head.join(',')];for(const q of m.quarters)for(const good of E3E_GOOD_INDEX){const x=q.goods[good];if(x)rows.push([q.dayIndex,good,...head.slice(2).map(k=>x[k]||0)].join(','));}
  return '\ufeff'+rows.join('\n');
 }
 function e3eValidateMarket(w){const m=w.market,integer=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
- if(!m||m.schema!==1||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
+ if(!m||m.schema!==2||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
  if(E3E_GOOD_INDEX.some(g=>!integer(m.prices[g],1)||m.prices[g]!==e3eBoundPrice(g,m.prices[g])))return false;
- if(['volume','baseGold','buyerPaid','sellerReceived','feesSink','trades'].some(k=>!integer(m.totals[k]))||m.totals.buyerPaid!==m.totals.sellerReceived+m.totals.feesSink)return false;
+ if(['volume','baseGold','buyerPaid','sellerReceived','feesSink','trades','directVolume','indirectVolume','directTrades','indirectTrades','indirectFeeGold'].some(k=>!integer(m.totals[k]))||(m.totals.buyerPaid!==m.totals.sellerReceived+m.totals.feesSink||m.totals.volume!==m.totals.directVolume+m.totals.indirectVolume||m.totals.trades!==m.totals.directTrades+m.totals.indirectTrades))return false;
  let day=-1;
- for(const q of m.quarters){if(!integer(q.dayIndex)||q.dayIndex<=day||q.dayIndex>w.dayIndex||q.dayIndex%DAYS_PER_QUARTER!==0||!q.goods||!integer(q.availableRoutes)||!integer(q.trades)||!integer(q.totalVolume)||!integer(q.totalGold)||!integer(q.feesSink))return false;
-   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink)return false;}
+ for(const q of m.quarters){if(!integer(q.dayIndex)||!integer(q.directVolume)||!integer(q.indirectVolume)||q.directVolume+q.indirectVolume!==q.totalVolume||!integer(q.directTrades)||!integer(q.indirectTrades)||q.directTrades+q.indirectTrades!==q.trades||!integer(q.indirectFeeGold)||q.dayIndex<=day||q.dayIndex>w.dayIndex||q.dayIndex%DAYS_PER_QUARTER!==0||!q.goods||!integer(q.availableRoutes)||!integer(q.trades)||!integer(q.totalVolume)||!integer(q.totalGold)||!integer(q.feesSink))return false;
+   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink||!integer(x.directVolume)||!integer(x.indirectVolume)||x.directVolume+x.indirectVolume!==x.volume||!integer(x.indirectFeeGold))return false;}
    day=q.dayIndex;
  }
  if(m.quarterDay!==null&&day!==m.quarterDay)return false;
- for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold)return false;
+ for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold||!['DIRECT','INDIRECT'].includes(e.mode)||!integer(e.indirectFeeGold)||!integer(e.baseFeeGold)||e.baseFeeGold+e.indirectFeeGold!==e.feeGold||e.mode==='INDIRECT'&&(e.routeDistance!==null||!integer(e.freightUsed,1)))return false;
  for(const o of m.pendingOrders)if(!integer(o.id)||!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.quantity,1)||o.quantity>10000||!integer(o.remaining,1)||o.remaining>o.quantity||!integer(o.placedDay)||!integer(o.expiresDay)||o.placedDay>w.dayIndex||o.expiresDay<o.placedDay||!integer(o.limitPriceMilli,1)||o.limitPriceMilli<e3eBaseMilli(o.good)/2||o.limitPriceMilli>e3eBaseMilli(o.good)*3)return false;
  for(const o of m.lastOrders)if(!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.requested,1)||!integer(o.filled)||o.filled>o.requested||!integer(o.unfilled)||o.filled+o.unfilled!==o.requested||!integer(o.limitPriceMilli,1))return false;
  return true;
+}
+// V0.7E3E2 — nation-level quarterly food observations and annual settlement demography.
+// Deterministic, no RNG. World state, not optional observation telemetry.
+const E3E2_DEMOGRAPHY_SCHEMA=1;
+const E3E2_FOOD_WINDOW=4;
+const E3E2_YEAR_WINDOW=20;
+const E3E2_BIRTH_POWER=8;
+const E3E2_HUNGER_START=.95;
+const E3E2_HUNGER_MAX=.20;
+function e3e2NewDemography(){return {schema:E3E2_DEMOGRAPHY_SCHEMA,coverageQuarters:[],lastYear:null,yearlyHistory:[]};}
+function e3e2MigrateWorld(w){
+  for(const n of w.nations)n.demographyE3E2??=e3e2NewDemography();
+}
+function e3e2RecordFoodQuarter(n,dayIndex){
+  const d=n.demographyE3E2??(n.demographyE3E2=e3e2NewDemography());
+  const h=d.coverageQuarters;
+  if(h.length&&h[h.length-1].dayIndex===dayIndex)h[h.length-1].coverage=n.foodPressure;
+  else h.push({dayIndex,coverage:n.foodPressure});
+  if(h.length>E3E2_FOOD_WINDOW)h.splice(0,h.length-E3E2_FOOD_WINDOW);
+}
+function e3e2RollingFood(n){
+  const h=n.demographyE3E2?.coverageQuarters||[];
+  return h.length?h.reduce((s,r)=>s+r.coverage,0)/h.length:1;
+}
+function e3e2StressStreak(n){
+  const h=n.demographyE3E2?.coverageQuarters||[];
+  let count=0;
+  for(let i=h.length-1;i>=0&&h[i].coverage<E3E2_HUNGER_START;i--)count++;
+  return count;
+}
+function e3e2HungerRate(n){
+  const h=n.demographyE3E2?.coverageQuarters||[];
+  const f=e3e2RollingFood(n);
+  if(h.length<E3E2_FOOD_WINDOW||e3e2StressStreak(n)<2)return 0;
+  return E3E2_HUNGER_MAX*Math.max(0,(E3E2_HUNGER_START-f)/E3E2_HUNGER_START);
+}
+const E3E2_LEDGER_KEYS=['startingPopulation','potentialBirths','realizedBirths','ordinaryDeaths','hungerDeaths','roundingAdjustment','housingAdjustment','endingPopulation'];
+function e3e2BeginYear(n,dayIndex){
+  return {dayIndex,startingPopulation:0,potentialBirths:0,realizedBirths:0,
+    ordinaryDeaths:0,hungerDeaths:0,roundingAdjustment:0,housingAdjustment:0,endingPopulation:0,
+    rollingCoverage:e3e2RollingFood(n),observedQuarters:n.demographyE3E2.coverageQuarters.length,
+    stressStreak:e3e2StressStreak(n),hungerRate:e3e2HungerRate(n)};
+}
+function e3e2SettlementPopulation(n,s,annual,crowding,maxPopulation){
+  const f=e3e2RollingFood(n),hungerRate=e3e2HungerRate(n),p=s.population;
+  const birthRate=Math.max(0,annual+.010)*Math.pow(f,E3E2_BIRTH_POWER);
+  const deathRate=.010+.19*crowding;
+  // Preserve the original formula and its float ordering at F=1, exactly.
+  const netRate=f===1?annual-.19*crowding:birthRate-deathRate-hungerRate;
+  const potentialBirths=Math.max(0,Math.round(p*birthRate));
+  // Clamp deaths against pre-year population so that a single year cannot account
+  // for more deaths than residents; the legacy 1-person settlement floor remains.
+  const ordinaryDeaths=Math.min(Math.max(0,p-1),Math.max(0,Math.round(p*deathRate)));
+  const hungerDeaths=Math.min(Math.max(0,p-1-ordinaryDeaths),Math.max(0,Math.round(p*hungerRate)));
+  const naturalPopulation=Math.round(p*(1+netRate));
+  const housingCap=Math.max(1,maxPopulation);
+  const endingPopulation=clampInt(p*(1+netRate),1,housingCap);
+  // Housing is a capacity limit, not an instruction to create and then discard babies.
+  // Actual births cannot exceed newly freed places following deaths.
+  const realizedBirths=Math.min(potentialBirths,Math.max(0,housingCap-(p-ordinaryDeaths-hungerDeaths)));
+  const roundingAdjustment=naturalPopulation-(p+potentialBirths-ordinaryDeaths-hungerDeaths);
+  const housingAdjustment=endingPopulation-(p+realizedBirths-ordinaryDeaths-hungerDeaths+roundingAdjustment);
+  return {startingPopulation:p,potentialBirths,realizedBirths,ordinaryDeaths,hungerDeaths,
+    roundingAdjustment,housingAdjustment,endingPopulation};
+}
+function e3e2AccumulateYear(year,settlement){
+  for(const k of E3E2_LEDGER_KEYS)year[k]+=settlement[k];
+}
+function e3e2YearError(r){
+  return r.startingPopulation+r.realizedBirths-r.ordinaryDeaths-r.hungerDeaths+r.roundingAdjustment+r.housingAdjustment-r.endingPopulation;
+}
+function e3e2FinishYear(n,year){
+  if(e3e2YearError(year)!==0)throw Error('E3E2 인구 장부의 변화량이 보존되지 않았습니다.');
+  const d=n.demographyE3E2;
+  d.lastYear=year;
+  d.yearlyHistory.push(year);
+  if(d.yearlyHistory.length>E3E2_YEAR_WINDOW)d.yearlyHistory.splice(0,d.yearlyHistory.length-E3E2_YEAR_WINDOW);
+}
+function e3e2ValidateYearRecord(r,day){
+  return Boolean(r&&Number.isInteger(r.dayIndex)&&r.dayIndex>0&&r.dayIndex%120===0&&r.dayIndex<=day&&
+    E3E2_LEDGER_KEYS.every(k=>Number.isSafeInteger(r[k])&&(k==='roundingAdjustment'||k==='housingAdjustment'||r[k]>=0))&&
+    r.realizedBirths<=r.potentialBirths&&e3e2YearError(r)===0&&
+    Number.isFinite(r.rollingCoverage)&&r.rollingCoverage>=0&&r.rollingCoverage<=1&&
+    Number.isInteger(r.observedQuarters)&&r.observedQuarters>=0&&r.observedQuarters<=4&&
+    Number.isInteger(r.stressStreak)&&r.stressStreak>=0&&r.stressStreak<=4&&
+    Number.isFinite(r.hungerRate)&&r.hungerRate>=0&&r.hungerRate<=E3E2_HUNGER_MAX);
+}
+function e3e2ValidateDemography(n,dayIndex){
+  const d=n.demographyE3E2;
+  if(!d||d.schema!==1||!Array.isArray(d.coverageQuarters)||d.coverageQuarters.length>4||
+     !Array.isArray(d.yearlyHistory)||d.yearlyHistory.length>20)return false;
+  let last=-1;
+  for(const r of d.coverageQuarters){
+    if(!r||!Number.isSafeInteger(r.dayIndex)||r.dayIndex%30!==0||r.dayIndex<=last||r.dayIndex>dayIndex||
+       !Number.isFinite(r.coverage)||r.coverage<0||r.coverage>1)return false;
+    last=r.dayIndex;
+  }
+  last=-1;
+  for(const r of d.yearlyHistory){
+    if(!e3e2ValidateYearRecord(r,dayIndex)||r.dayIndex<=last)return false;
+    last=r.dayIndex;
+  }
+  if(d.lastYear!==null&&(!e3e2ValidateYearRecord(d.lastYear,dayIndex)||!d.yearlyHistory.length||
+    JSON.stringify(d.lastYear)!==JSON.stringify(d.yearlyHistory[d.yearlyHistory.length-1])))return false;
+  if(d.lastYear===null&&d.yearlyHistory.length)return false;
+  return true;
+}
+function e3e2ExportDemography(w){
+  const nations=w.nations.filter(n=>n.active).map(n=>{
+    const d=n.demographyE3E2;
+    return {id:n.id,name:n.name,population:w.settlements.filter(s=>s.ownerId===n.id).reduce((a,s)=>a+s.population,0),
+      foodPressure:n.foodPressure,rollingCoverage:e3e2RollingFood(n),stressStreak:e3e2StressStreak(n),
+      observedQuarters:d.coverageQuarters.length,coverageQuarters:d.coverageQuarters.map(r=>({...r})),
+      lastYear:d.lastYear?{...d.lastYear}:null};
+  });
+  const annual=nations.reduce((s,n)=>{const r=n.lastYear;if(r){s.births+=r.realizedBirths;s.ordinaryDeaths+=r.ordinaryDeaths;
+    s.hungerDeaths+=r.hungerDeaths;s.netChange+=r.endingPopulation-r.startingPopulation;s.ledgerError+=e3e2YearError(r);}return s;},
+    {births:0,ordinaryDeaths:0,hungerDeaths:0,netChange:0,ledgerError:0});
+  return {schema:'vilob-light-e3e2-demography-v1',version:w.version,dayIndex:w.dayIndex,
+    population:nations.reduce((a,n)=>a+n.population,0),foodShortageNations:nations.filter(n=>n.rollingCoverage<.95).length,
+    annual,nations};
+}
+function e3e2DemographyCsv(w){
+  const cols=['dayIndex','nationId','nation','population','foodPressure','rollingCoverage','observedQuarters','stressStreak',
+    'lastYearDay','startingPopulation','potentialBirths','realizedBirths','ordinaryDeaths','hungerDeaths',
+    'roundingAdjustment','housingAdjustment','endingPopulation','annualNet','ledgerError'];
+  const rows=e3e2ExportDemography(w).nations.map(n=>{
+    const r=n.lastYear||{};
+    const values=[w.dayIndex,n.id,n.name,n.population,n.foodPressure,n.rollingCoverage,n.observedQuarters,n.stressStreak,
+      r.dayIndex??'',...E3E2_LEDGER_KEYS.map(k=>r[k]??''),r.dayIndex===undefined?'':r.endingPopulation-r.startingPopulation,r.dayIndex===undefined?'':e3e2YearError(r)];
+    return values.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',');
+  });
+  return '\uFEFF'+[cols.join(','),...rows].join('\n');
+}
+// UI helpers below are read-only and are not invoked by the simulation engine.
+function e3e2NationDemographyPanel(w,n){
+  const d=n.demographyE3E2,r=d.lastYear,f=e3e2RollingFood(n),stress=e3e2StressStreak(n);
+  const box=make('section',{class:'overview-section',id:'e3e2NationDemography'},[make('h3',{text:'E3E2 · 인구·식량 균형'}),
+    make('div',{class:'muted-line',text:`최근 ${d.coverageQuarters.length}/4분기 식량 충족 평균 ${(f*100).toFixed(1)}% · 95% 미만 연속 ${stress}분기 · 기아 사망 ${e3e2HungerRate(n)>0?'적용':'유예/해당 없음'}`})]);
+  if(r){box.append(make('div',{class:'economy-grid'},[
+    ['전년도 출생',r.realizedBirths],['일반 사망',r.ordinaryDeaths],['기아 사망',r.hungerDeaths],
+    ['연간 민간 순증감',r.endingPopulation-r.startingPopulation],['주거·최소인구 보정',r.housingAdjustment],['장부 오차',e3e2YearError(r)]
+  ].map(([title,value])=>make('div',{class:'economy-item'},[make('small',{text:title}),make('strong',{text:number.format(value)+'명'})]))));
+    box.append(make('div',{class:'muted-line',text:`최근 정산: ${timeAt(r.dayIndex).year}년 · 인구 변화는 정착지 연간 계산만 포함하며 전쟁·이주로 인한 변화는 제외됩니다.`}));
+  }else box.append(make('div',{class:'muted-line',text:'패치 적용 후 첫 연간 인구 정산 전입니다. 과거 인구 변화를 소급 생성하지 않습니다.'}));
+  return box;
+}
+function e3e2RenderWorldDemography(){
+  const root=document.getElementById('e3e2WorldDemography');if(!root||!app.world)return;
+  const data=e3e2ExportDemography(app.world),a=data.annual;
+  const lines=[`생존 인구 ${number.format(data.population)}명 · 최근 4분기 충족 95% 미만 ${data.foodShortageNations}개국`,
+    `최근 국가별 정산 합계 · 출생 ${number.format(a.births)} · 일반 사망 ${number.format(a.ordinaryDeaths)} · 기아 사망 ${number.format(a.hungerDeaths)}`,
+    `민간 순증감 ${number.format(a.netChange)}명 · 장부 오차 ${a.ledgerError}명 (국가별 마지막 정산 연도 기준)`];
+  root.replaceChildren(...lines.map(t=>make('div',{class:'muted-line',text:t})));
+}
+function e3e2RenderStatsDemography(){
+  if(app.activeTab!=='statistics')return;
+  const root=document.getElementById('e3e2StatsDemography');if(!root||!app.world)return;
+  const data=e3e2ExportDemography(app.world);
+  root.replaceChildren(...data.nations.map(n=>make('div',{class:'era-nation-row'},[
+    make('strong',{text:n.name}),make('span',{text:n.lastYear?
+      `출생 ${number.format(n.lastYear.realizedBirths)} · 일반 사망 ${number.format(n.lastYear.ordinaryDeaths)} · 기아 사망 ${number.format(n.lastYear.hungerDeaths)} · 순변화 ${number.format(n.lastYear.endingPopulation-n.lastYear.startingPopulation)}`:
+      `최근 충족 ${(n.rollingCoverage*100).toFixed(1)}% · 연간 장부 수집 전`})
+  ])));
 }
 // --- src/sim/settlement-footprint.js ---
 /** Settlement Footprint V2: a shared, name-independent, non-random rule set.
@@ -14538,15 +14758,18 @@ function runYear(world){
   for(const n of world.nations){
     if(!n.active)continue;
     const leader=getLeader(world,n);
+    const yearRecord=e3e2BeginYear(n,world.dayIndex);
     for(const s of world.settlements){
       if(s.ownerId!==n.id)continue;
       const maxPopulation=settlementHousing(world,s);
       const annual=.034+s.development/2000+n.researchLevel/3300+(leader?.administration||50)/8500-.029*s.population/maxPopulation;
       const crowding=Math.max(0,s.population/maxPopulation-.88);
-      const effectiveGrowth=annual*n.foodPressure-.045*(1-n.foodPressure)-crowding*.19;
-      const next=clampInt(s.population*(1+effectiveGrowth),1,Math.max(1,maxPopulation));
+      const result=e3e2SettlementPopulation(n,s,annual,crowding,maxPopulation);
+      e3e2AccumulateYear(yearRecord,result);
+      const next=result.endingPopulation;
       if(next!==s.population){d1CultureResize(s.culturePopulation,next,n.primaryCultureId);s.population=next;d1bSyncGroups(s,world);d2aSyncGroups(world,s);refreshSettlementLevel(s);world.changeSeq++;}
     }
+    e3e2FinishYear(n,yearRecord);
     if(leader){
       leader.age++;
       const mortality=leader.age<65?0:leader.age>=91?1:(leader.age-64)/150;
@@ -14941,6 +15164,7 @@ function validateWorld(w){
   for(const n of w.nations){
     if(!Number.isInteger(n.id)||nations.has(n.id)||!['AI','PLAYER'].includes(n.controller)||!w.aiProfiles[n.aiProfileId]||typeof n.active!=='boolean')fail('국가·컨트롤러');
     nations.set(n.id,n);
+    if(!e3e2ValidateDemography(n,w.dayIndex))fail('E3E2 인구·식량 장부');
     if(!validCivilization(n.civilization,w.dayIndex))fail('문명 시대 데이터');
     if(!validateKnowledgeExchange(n.knowledgeExchange,w,n))fail('지식 교류 회계');
     if(n.civilization.era==='ancient'&&n.technology?.currentResearch&&!techEraAllowed(n,n.technology.currentResearch))fail('시대별 연구 잠금');
@@ -15145,12 +15369,13 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const accepted=['V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const e3e2NativeSave=parsed?.version==='V0.7E3E2';
+ const accepted=['V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (E2~V0.7D2 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -15180,6 +15405,8 @@ function deserializeWorld(json){
  parsed.e2Artillery??={produced:0,destroyed:0,stocks:{}};
  // E3E: start price history at import, never invent past market transactions.
  parsed.market??=e3eInitialMarket();
+ e3eMigrateMarket(parsed);
+ if(!e3e2NativeSave)e3e2MigrateWorld(parsed); // Older saves get an empty clock; native saves must pass strict validation.
  e3cMigrateFormationRecords(parsed);
  // H1: tolerate stale saved commander histories, retaining the strict daily limit.
  d1cPruneCommanderHistory(parsed);
@@ -17634,10 +17861,13 @@ function e3eRenderMarketPanel(){
  const chosenNation=e3eSelectedNation===null?app.selectedNationId:e3eSelectedNation;
  const nation=w.nations[chosenNation]||w.nations[0],lq=m.lastQuarter;
  const top=make('div',{class:'e3e-market-overview'});
- top.append(make('div',{class:'e3e-market-stat'},[make('small',{text:'시장 상태'}),make('strong',{text:m.openedDay===null?'체결 전 · 개장 대기':'개장 · '+(timeAt(m.openedDay).year)+'년'}),make('small',{text:'실제 교역로가 연결된 국가끼리만 체결'})]),
+ top.append(make('div',{class:'e3e-market-stat'},[make('small',{text:'시장 상태'}),make('strong',{text:m.openedDay===null?'체결 전 · 개장 대기':'개장 · '+(timeAt(m.openedDay).year)+'년'}),make('small',{text:'직접 교역 우선 · 간접 중개 가능'})]),
    make('div',{class:'e3e-market-stat'},[make('small',{text:'최근 분기 체결'}),make('strong',{text:number.format(lq?.trades||0)+'건'}),make('small',{text:number.format(lq?.totalVolume||0)+'개 실물 이전'})]),
    make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 거래대금'}),make('strong',{text:number.format(m.totals.buyerPaid)+' G'}),make('small',{text:'실제 구매자 지출 · 수수료 포함'})]),
-   make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 공식 수수료 소멸'}),make('strong',{text:number.format(m.totals.feesSink)+' G'}),make('small',{text:'구매·판매 각 10% · Gold 소멸 장부'})]));
+   make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 공식 수수료 소멸'}),make('strong',{text:number.format(m.totals.feesSink)+' G'}),make('small',{text:'기본 각 10% + 간접 구매 추가 15%p'})]));
+ const modeSummary=make('div',{class:'e3e-market-detail'});
+ modeSummary.append(make('h3',{text:'이번 분기 직접 · 간접 거래'}),make('div',{class:'e3e-market-grid'},[
+  ...[['직접 거래량',lq?.directVolume||0],['간접 거래량',lq?.indirectVolume||0],['간접 거래 횟수',lq?.indirectTrades||0],['간접 추가 운송비',lq?.indirectFeeGold||0]].map(([label,value])=>make('div',{class:'e3e-market-mini'},[make('small',{text:label}),make('strong',{text:number.format(value)})]))]));
  const prices=make('div',{class:'e3e-market-prices'});
  for(const g of E3E_GOOD_INDEX){
    const prev=lq?.pricesBefore?.[g]||e3eBaseMilli(g),current=m.prices[g],pct=prev?(current/prev-1)*100:0;
@@ -17648,7 +17878,7 @@ function e3eRenderMarketPanel(){
  const q=lq?.goods?.[good],data=make('div',{class:'e3e-market-detail'});
  data.append(make('h3',{text:`${E3E_MARKET_LABELS[good]} · 국제 가격 추이`}),e3eMarketSparkline(m.quarters,good));
  data.append(make('div',{class:'e3e-market-grid'},[
-   ...[['유효 매수 주문',q?.validDemand||0],['유효 매도 주문',q?.validSupply||0],['실제 거래 수량',q?.volume||0],['미체결 매수',q?.unfilledBuy||0],['미체결 매도',q?.unfilledSell||0],['최근 분기 수수료',q?.feesSink||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
+   ...[['유효 매수 주문',q?.validDemand||0],['유효 매도 주문',q?.validSupply||0],['실제 거래 수량',q?.volume||0],['미체결 매수',q?.unfilledBuy||0],['미체결 매도',q?.unfilledSell||0],['최근 분기 수수료',q?.feesSink||0],['직접 체결량',q?.directVolume||0],['간접 체결량',q?.indirectVolume||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
  const selector=make('select',{id:'e3eMarketNationSelect','aria-label':'시장 국가 선택'});
  for(const n of w.nations)selector.append(make('option',{value:String(n.id),text:n.name+(n.active?'':' · 멸망')}));
  selector.value=String(nation.id);
@@ -17657,11 +17887,11 @@ function e3eRenderMarketPanel(){
  nationBox.append(make('div',{class:'e3e-market-subhead'},[make('h3',{text:'국가별 시장 거래'}),selector]));
  nationBox.append(make('p',{class:'muted-line',text:`${nation.name} · ${nation.controller==='PLAYER'?'플레이어 조종':'AI 자동 주문'} · 식량 ${number.format(nation.resources.food)} · 목재 ${number.format(nation.resources.wood)} · 석재 ${number.format(nation.resources.stone)} · 철 ${number.format(nation.resources.iron)} · 국고 ${number.format(nation.gold)} G`}));
  nationBox.append(make('div',{class:'e3e-market-grid'},[
-  ...[['금분기 매입량',Object.values(info?.bought||{}).reduce((a,b)=>a+b,0)],['금분기 매도량',Object.values(info?.sold||{}).reduce((a,b)=>a+b,0)],['금분기 구매 지출',info?.buyerPaid||0],['금분기 판매 수령',info?.sellerReceived||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
+  ...[['금분기 매입량',Object.values(info?.bought||{}).reduce((a,b)=>a+b,0)],['금분기 매도량',Object.values(info?.sold||{}).reduce((a,b)=>a+b,0)],['금분기 구매 지출',info?.buyerPaid||0],['금분기 판매 수령',info?.sellerReceived||0],['간접 수입 화물',`${number.format(info?.indirectImportFreight||0)} / 3,000`],['간접 수출 화물',`${number.format(info?.indirectExportFreight||0)} / 3,000`],['간접 추가 수수료',info?.indirectFeeGold||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:typeof v==='string'?v:number.format(v)})]))]));
  // Registered manual player orders are executed at the next economic quarter, not instantly.
  if(nation.controller==='PLAYER'&&nation.active){
    const action=make('div',{class:'e3e-market-detail'},[make('h3',{text:'플레이어 시장 지정가 주문'})]);
-   action.append(make('p',{class:'muted-line',text:'시장 주문은 30일 분기 결산에서 실제 상대국·교역로·재고·국고가 있을 때만 체결됩니다. 체결 전에는 자원/Gold를 차감하지 않으며, 4분기 뒤 만료됩니다.'}));
+   action.append(make('p',{class:'muted-line',text:'시장 주문은 30일 분기 결산에서 재고·국고·거래 가능한 상대국이 있을 때만 체결됩니다. 직접 교역을 먼저 시도하고 나머지는 추가 비용을 내는 간접 거래로 체결할 수 있습니다. 체결 전에는 자원/Gold가 차감되지 않으며, 4분기 뒤 만료됩니다.'}));
    const controls=make('div',{class:'e3e-market-order-form'});
    const direction=make('select',{id:'e3eMarketSide'});
    direction.append(make('option',{value:'BUY',text:'매수'}),make('option',{value:'SELL',text:'매도'}));
@@ -17672,6 +17902,8 @@ function e3eRenderMarketPanel(){
       const r=e3eSetManualOrder(app.world,nation.id,good,direction.value,Number(quantity.value),Math.round(Number(limit.value)*1000));
       showToast(r.reason);e3eRenderMarketPanel();
    });
+   const estimate=make('p',{class:'muted-line',text:'매수 시 수수료: 직접 +10%, 간접 +25% (기본 10% + 물류 15%). 지정가는 수수료 전 시장가격입니다.'});
+   action.append(estimate);
    controls.append(make('label',{},[make('small',{text:'방향'}),direction]),make('label',{},[make('small',{text:'수량 (개)'}),quantity]),make('label',{},[make('small',{text:'지정가 (G/개)'}),limit]),submit);
    action.append(controls);
    const pending=m.pendingOrders.filter(o=>o.nationId===nation.id);
@@ -17688,16 +17920,20 @@ function e3eRenderMarketPanel(){
  const list=make('div',{class:'e3e-market-order-list'});
  for(const o of orders.slice(0,24))list.append(make('div',{class:'e3e-market-row'},[make('strong',{text:w.nations[o.nationId]?.name||'—'}),
   make('span',{text:o.side==='BUY'?'매수':'매도'}),make('span',{text:`요청 ${number.format(o.requested)} · 체결 ${number.format(o.filled)}`}),
-  make('span',{text:o.unfilled?`미체결 ${number.format(o.unfilled)}`:'전량 체결'})]));
+  make('span',{text:o.unfilled?`미체결 ${number.format(o.unfilled)} · ${({'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 없음','DIPLOMATIC_BLOCK':'외교 제한','LIMIT_PRICE':'지정가 불일치','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'구매 자금 부족','SAFE_STOCK':'안전 재고 보호','FREIGHT_OR_COUNTERPARTY_CAP':'운송·상대국 한도'})[o.blockReason]||'거래 제약'}`:'전량 체결'})]));
  if(!orders.length)list.append(make('p',{class:'muted-line',text:'이 품목에 접수된 주문이 없습니다.'}));table.append(list);
  const fills=m.fills.filter(x=>x.good===good).slice(-15).reverse(),recent=make('div',{class:'e3e-market-detail'},[make('h3',{text:'최근 체결 내역'})]);
  const fillList=make('div',{class:'e3e-market-order-list'});
  for(const f of fills)fillList.append(make('div',{class:'e3e-market-row'},[make('strong',{text:`${w.nations[f.seller]?.name||'?'} → ${w.nations[f.buyer]?.name||'?'}`}),
-  make('span',{text:timeAt(f.dayIndex).year+'년'}),make('span',{text:`${number.format(f.quantity)}개 · ${e3ePriceText(f.priceMilli)} G/개`}),
-  make('span',{text:`구매 ${number.format(f.buyerPaid)} / 판매 ${number.format(f.sellerReceived)} G`})]));
+  make('span',{text:timeAt(f.dayIndex).year+'년 · '+(f.mode==='INDIRECT'?'간접':'직접')}),make('span',{text:`${number.format(f.quantity)}개 · ${e3ePriceText(f.priceMilli)} G/개`}),
+  make('span',{text:`구매 ${number.format(f.buyerPaid)} / 판매 ${number.format(f.sellerReceived)} G · 기본 수수료 ${number.format(f.baseFeeGold??f.feeGold)}G + 간접 ${number.format(f.indirectFeeGold||0)}G`})]));
  if(!fills.length)fillList.append(make('p',{class:'muted-line',text:'체결 이력이 없습니다.'}));recent.append(fillList);
- const note=make('p',{class:'e3e-market-hint',text:'시세는 30일마다 유효한 공급·수요 주문량으로 변합니다. 시세가 있어도 육상 교역로·안전 재고·분기 운송량·금고 조건이 맞지 않으면 실제 자원은 이전되지 않습니다. Gold 수수료는 기록된 공식 소멸 비용이며, 세이브 이관 이전의 시장 실적은 추정하지 않습니다.'});
- el.replaceChildren(top,prices,data,nationBox,table,recent,note);
+ const blockBox=make('div',{class:'e3e-market-detail'},[make('h3',{text:'이번 분기 미체결 주요 원인'})]);
+ const reasons={'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 부족','DIPLOMATIC_BLOCK':'외교 제한','DIRECT_ROUTE_CAP':'직접 운송 한도','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'Gold 부족','LIMIT_PRICE':'지정가 불일치','SAFE_STOCK':'안전 재고','FREIGHT_OR_COUNTERPARTY_CAP':'운송·거래 상대국 한도'};
+ const blockEntries=Object.entries(m.lastBlocks||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).slice(0,7);
+ blockBox.append(make('p',{class:'muted-line',text:blockEntries.length?blockEntries.map(([k,v])=>`${reasons[k]||k}: ${number.format(v)}개`).join(' · '):'최근 분기 미체결 기록이 없습니다.'}));
+ const note=make('p',{class:'e3e-market-hint',text:'실제 육로 연결이 있으면 먼저 직접 거래하고, 주문 잔량은 비적대국 국제시장 중개로 간접 체결할 수 있습니다. 간접 거래의 구매 수수료는 25%(기본 10% + 추가 운송비 15%), 판매 수수료는 10%입니다. 국가별 간접 수입·수출은 각 분기 3,000 화물로 제한하며 실물 재고와 Gold를 이전합니다. 기존 세이브의 이전 거래는 직접 거래로만 보존됩니다.'});
+ el.replaceChildren(top,modeSummary,prices,data,nationBox,table,recent,blockBox,note);
 }
 // --- src/main.js ---
 
@@ -17929,7 +18165,7 @@ function issuePlayerAction(nationId,action){
   if(result.ok){c1RefreshWorldControls();map.draw();updateStats();renderChronicle();renderInspector();refreshPlayerUI();renderWorldTrade();}
   return result;
 }
-function refreshPlayerUI(){renderNationList();renderNationOverview();renderPlayerPanel();renderWarfare();renderMilitaryRoster();renderWarHistory();renderComparisons();}
+function refreshPlayerUI(){renderNationList();renderNationOverview();renderPlayerPanel();renderWarfare();renderMilitaryRoster();renderWarHistory();renderComparisons();e3e2RenderStatsDemography();}
 
 const C5_BACKING_REASONS={TRUST_NOT_READY:'지원 계약 신뢰 부족 (일반 관계 +15 또는 성숙 접촉 필요)',ILLEGAL:'전쟁·휴전·종주 관계 등 지원 불가',PROMISE_LIMIT:'지원 약속 상한',MILITARY_RISK:'지원국 군사력·승산 부족',PRESSURE_LOW:'독립 압력 부족',RELATION_OR_INTEREST:'관계·전략적 이해관계 부족',LOW_EXPECTED_GAIN:'지원 비용이 기대 이익보다 큼',STRATEGIC_SUPPORT:'지원 조건 충족'};
 function c5BackingReason(reason){return C5_BACKING_REASONS[reason]||reason||'관측 대기';}
@@ -18282,9 +18518,10 @@ function renderNationOverview(){
     make('h3',{text:'국제 교역'}),
     make('div',{class:'muted-line',text:`총 수출 ${number.format(trade.exportValue)} Gold · 총 수입 ${number.format(trade.importValue)} Gold · 최근 분기 수출 ${trade.quarterExportValue} / 수입 ${trade.quarterImportValue} Gold`}),
     make('div',{class:'muted-line',text:'거래 가능 국가: '+(w.nations.filter(other=>other.active&&other.id!==n.id&&tradeRoute(w,n.id,other.id)).map(v=>v.name).join(', ')||'현재 없음')})]);
-  const marketLine=make('div',{class:'muted-line',text:`E3E 시장 · 최근 분기 매입 ${number.format(Object.values(marketInfo?.bought||{}).reduce((a,b)=>a+b,0))}개 / 매도 ${number.format(Object.values(marketInfo?.sold||{}).reduce((a,b)=>a+b,0))}개 · 실제 지출 ${number.format(marketInfo?.buyerPaid||0)} / 수령 ${number.format(marketInfo?.sellerReceived||0)} G`});
+  const marketLine=make('div',{class:'muted-line',text:`E3E1 시장 · 최근 분기 매입 ${number.format(Object.values(marketInfo?.bought||{}).reduce((a,b)=>a+b,0))}개 / 매도 ${number.format(Object.values(marketInfo?.sold||{}).reduce((a,b)=>a+b,0))}개 · 실제 지출 ${number.format(marketInfo?.buyerPaid||0)} / 수령 ${number.format(marketInfo?.sellerReceived||0)} G`});
   const marketJump=make('button',{class:'jump-button',type:'button',text:'◇ 국제 시장 보기'});marketJump.addEventListener('click',()=>{e3eSelectedNation=n.id;setActiveTab('market');});
-  trading.append(marketLine,marketJump);
+  trading.append(marketLine,
+    make('div',{class:'muted-line',text:`간접 시장 · 수입 화물 ${number.format(marketInfo?.indirectImportFreight||0)}/3,000 · 수출 화물 ${number.format(marketInfo?.indirectExportFreight||0)}/3,000 · 추가 운송 수수료 ${number.format(marketInfo?.indirectFeeGold||0)} G`}),marketJump);
   const dependency=tradeDependencyReport(w,n.id);
   if(dependency){
     const pressure=dependency.pressure;
@@ -18530,10 +18767,11 @@ function renderNationOverview(){
   const procurementDownload=make('button',{class:'jump-button',type:'button',text:'최근 12분기 건설 자원 조달 CSV'});
   procurementDownload.addEventListener('click',()=>download(`vilob-v05b-procurement-y${timeAt(w.dayIndex).year}.csv`,v05bProcurementCsv(w),'text/csv;charset=utf-8'));
   procurement.append(procurementDownload);
+  const demographyPanel=e3e2NationDemographyPanel(w,n);
   const tabs=[['overview','개요·경제'],['governance','정책'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사'],['adaptation','AI 적응']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={overview:[grid,leadership,trading,c3development,recoverySection,procurement],governance:[],strategy:[strategic],research:[research,c3development],diplomacy:[diplomacy],settlements:[places]};
+  const panels={overview:[grid,leadership,demographyPanel,trading,c3development,recoverySection,procurement],governance:[],strategy:[strategic],research:[research,c3development],diplomacy:[diplomacy],settlements:[places]};
   if(app.nationSubtab==='governance')panels.governance=[e1GovernancePanel(w,n)];
   if(app.nationSubtab==='culture')panels.culture=[d1bNationPanel(w,n),d2aNationPanel(w,n),d2bNationPanel(w,n),d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
@@ -18873,14 +19111,14 @@ function renderV04CWorldStats(){
 function v04cInitStatsUI(){
   $('v04cStatCategories').replaceChildren(...V04C_STAT_GROUPS.map(g=>{
     const b=make('button',{type:'button',text:`${g.icon} ${g.title}`});b.dataset.statGroup=g.id;
-    b.addEventListener('click',()=>{app.v04cStatsGroup=g.id;app.comparisonMetric=g.metrics[0][0];v04cSyncStatsUI();renderComparisons();});return b;
+    b.addEventListener('click',()=>{app.v04cStatsGroup=g.id;app.comparisonMetric=g.metrics[0][0];v04cSyncStatsUI();renderComparisons();e3e2RenderStatsDemography();});return b;
   }));
   $('v04cEraMetricControls').querySelectorAll('[data-era-metric]').forEach(b=>b.addEventListener('click',()=>{
     app.v04cEraMetric=b.dataset.eraMetric;v04cSyncStatsUI();renderV04CWorldStats();
   }));
-  $('v04cMetricSelect').addEventListener('change',e=>{app.comparisonMetric=e.target.value;renderComparisons();});
-  $('v04cNationFilter').addEventListener('change',e=>{app.v04cNationFilter=e.target.value;renderComparisons();});
-  $('v04cValueMode').addEventListener('change',e=>{app.v04cValueMode=e.target.value;renderComparisons();});
+  $('v04cMetricSelect').addEventListener('change',e=>{app.comparisonMetric=e.target.value;renderComparisons();e3e2RenderStatsDemography();});
+  $('v04cNationFilter').addEventListener('change',e=>{app.v04cNationFilter=e.target.value;renderComparisons();e3e2RenderStatsDemography();});
+  $('v04cValueMode').addEventListener('change',e=>{app.v04cValueMode=e.target.value;renderComparisons();e3e2RenderStatsDemography();});
   v04cSyncStatsUI();
 }
 function v04cSyncStatsUI(){
@@ -18894,7 +19132,7 @@ function v04cSyncStatsUI(){
   select.replaceChildren(make('option',{value:'all',text:'전체 국가'}),make('option',{value:'active',text:'생존 국가만'}),...(app.world?.nations||[]).map(n=>make('option',{value:String(n.id),text:n.name+(!n.active?' (멸망)':'')})));
   select.value=previous;
 }
-function renderV04CStats(){if(!app.world||app.activeTab!=='statistics')return;renderV04CWorldStats();renderComparisons();}
+function renderV04CStats(){if(!app.world||app.activeTab!=='statistics')return;renderV04CWorldStats();renderComparisons();e3e2RenderStatsDemography();}
 function redrawNationPresentation(){
   map.draw();renderInspector();renderNationList();renderNationOverview();renderWarfare();renderV04CStats();renderMilitaryRoster();
 }
@@ -19066,6 +19304,8 @@ function e3cSyncPolicyAuditNation(){
  select.value=String(chosen);
  if($('e3cPolicyAuditCard').open)e3cRefreshPolicyAudit();
 }
+$('e3e2WorldJson').addEventListener('click',()=>{if(app.world)download(`vilob-e3e2-demography-day${app.world.dayIndex}.json`,JSON.stringify(e3e2ExportDemography(app.world),null,2),'application/json');});
+$('e3e2WorldCsv').addEventListener('click',()=>{if(app.world)download(`vilob-e3e2-demography-day${app.world.dayIndex}.csv`,e3e2DemographyCsv(app.world),'text/csv;charset=utf-8');});
 $('e3cPolicyAuditCard').addEventListener('toggle',()=>e3cRefreshPolicyAudit());
 $('e3cAuditNation').addEventListener('change',()=>e3cRefreshPolicyAudit());
 
@@ -19091,7 +19331,7 @@ function setWorld(world){
   $('warHistoryList').dataset.historyKey='';
   editorState.draft=null;editorState.draftSource=null;
   v07d2UpdateObservationUI();e3cSyncPolicyAuditNation();
-  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();if(app.activeTab==='world')d2RenderWorldCultures();
+  updatePlay();updateSimStatus();updateTime();updateStats();renderInspector();renderNationList();renderWarfare();renderChronicle();renderNationOverview();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();renderComparisons();e3e2RenderStatsDemography();renderPlayerPanel();renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();if(app.activeTab==='world')d2RenderWorldCultures();
   e3eRenderMarketPanel();
   $('coordinateLabel').textContent='X — · Y —';
 }
@@ -19139,7 +19379,7 @@ function refreshSimulationView(redraw){
     if(app.activeTab==='military'){renderWarfare();renderMilitaryRoster();d2RenderMilitaryCultures();renderWarHistory();}
     if(app.activeTab==='market')e3eRenderMarketPanel();
     if(app.activeTab==='statistics')renderV04CStats();
-    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();d2RenderWorldCultures();}
+    if(app.activeTab==='world'){renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();d2RenderWorldCultures();}
     if(app.activeTab==='chronicle')renderChronicle();
   }
 }
@@ -19226,14 +19466,14 @@ navigation=bindTabs(tab=>{
   else if(tab==='military'){renderMilitaryRoster();renderWarfare();d2RenderMilitaryCultures();renderWarHistory();}
   else if(tab==='market')e3eRenderMarketPanel();
   else if(tab==='statistics'){v04cSyncStatsUI();renderV04CStats();}
-  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();d2RenderWorldCultures();}
+  else if(tab==='world'){renderAIEditor();renderWorldTrade();renderWorldEras();e3e2RenderWorldDemography();d2RenderWorldCultures();}
   else if(tab==='chronicle'){renderChronicle();window.scrollTo(0,0);}
 });
-$('e3eMarketCsv').addEventListener('click',()=>{download('vilob-e3e-market-prices-day'+app.world.dayIndex+'.csv',e3eMarketCsv(app.world),'text/csv;charset=utf-8');});
-$('e3eMarketJson').addEventListener('click',()=>{download('vilob-e3e-market-summary-day'+app.world.dayIndex+'.json',JSON.stringify(e3eMarketSummary(app.world),null,2),'application/json');});
+$('e3eMarketCsv').addEventListener('click',()=>{download('vilob-e3e1-market-prices-day'+app.world.dayIndex+'.csv',e3eMarketCsv(app.world),'text/csv;charset=utf-8');});
+$('e3eMarketJson').addEventListener('click',()=>{download('vilob-e3e1-market-summary-day'+app.world.dayIndex+'.json',JSON.stringify(e3eMarketSummary(app.world),null,2),'application/json');});
 $('chronicleNationFilter').addEventListener('change',e=>{app.chronicleNation=e.target.value;app.chroniclePage=1;renderChronicle();});
 $('chronicleKindFilter').addEventListener('change',e=>{app.chronicleKind=e.target.value;app.chroniclePage=1;renderChronicle();});
-$('comparisonSort').addEventListener('change',e=>{app.comparisonSort=e.target.value;renderComparisons();});
+$('comparisonSort').addEventListener('change',e=>{app.comparisonSort=e.target.value;renderComparisons();e3e2RenderStatsDemography();});
 v04cInitStatsUI();
 $('playBtn').addEventListener('click',()=>setRunning(!app.running));
 $('autoSpeedBtn').addEventListener('click',()=>setAutoSpeed(!app.autoSpeed.enabled));
