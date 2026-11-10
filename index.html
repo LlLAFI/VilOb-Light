@@ -862,7 +862,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7F1A'; // Resource supply recovery, paid redevelopment and transport capacity
+const VERSION = 'V0.7F1B'; // Paid emergency forestry, safeguarded production wood, lumber continuity
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3382,6 +3382,9 @@ function redevelopmentLegal(w,nationId,action){
   const tile=w.tiles[b.tileId],s=w.settlements.find(s=>s.id===b.settlementId);
   if(!tile||!s||s.ownerId!==nationId||tile.ownerId!==nationId||tile.occupiedBy!==null||!type.terrains.includes(tile.terrain))return false;
   if(action.buildingType==='lumber'&&b.typeId==='farm'&&!e3e3FarmRetrofitSafe(w,w.nations[nationId],s,b))return false;
+  if(b.typeId==='lumber'&&b.status==='ACTIVE'&&!b.disconnected&&
+     !w.buildings.some(other=>other.id!==b.id&&other.typeId==='lumber'&&other.status==='ACTIVE'&&
+       !other.disconnected&&w.tiles[other.tileId]?.ownerId===nationId))return false;
   if(b.typeId==='house'){
     const old=settlementHousing(w,s),housingLost=(facilityOutput(b,tile.terrain)?.capacity||0)*(1+techBonus(w,nationId,'housing'));
     if(s.population>old-Math.ceil(housingLost))return false;
@@ -4017,6 +4020,9 @@ function v07bWorkshopQuarter(world,projections){
       n.civilization.stage>=3&&hasTech(world,n.id,'precision_workshop_methods');
     const wood=precision?16:4*inputLevel,iron=precision?9:2*inputLevel;
     if(n.resources.wood<wood||n.resources.iron<iron)continue;
+    if(n.resources.wood-wood<f1bWoodReserve(world,n)){
+      e3e3EnsureSupply(n).f1b.lastQuarter.workshopDeferred++;continue;
+    }
     const choice=f1ChoosePower(world,b,n,local,riverbank.has(b.id));
     const power=1+choice.pu/100;
     n.resources.wood-=wood;n.resources.iron-=iron;
@@ -4045,6 +4051,10 @@ function runEconomyQuarter(world){
     f1RunCoalQuarter(world,n,q);
   }
   // Reserve physical materials for craft production BEFORE international trade.
+  // Emergency forestry runs after normal physical production and before optional
+  // craft/trade. It cannot take land or labor already occupied by regular industry.
+  const f1bWoodResults=new Map(),f1bSites=f4d3SiteUsage(world);
+  for(const n of world.nations)if(n.active)f1bWoodResults.set(n.id,f1bForestQuarter(world,n,projections.get(n.id),f1bSites));
   const workshopResults=v07bWorkshopQuarter(world,projections);
   // All states receive current-quarter output before bilateral trade; consume only afterward.
   runTradeQuarter(world,projections);
@@ -4152,19 +4162,26 @@ function runEconomyQuarter(world){
       printing.sites++;
       const wood=2*b.level,gold=24*b.level,knowledge=Math.floor(12*b.level*(1+techBonus(world,n.id,'printingKnowledge')));
       if(n.resources.wood<wood||n.gold<gold)continue;
+      if(n.resources.wood-wood<f1bWoodReserve(world,n)){
+        e3e3EnsureSupply(n).f1b.lastQuarter.printingDeferred++;continue;
+      }
       n.resources.wood-=wood;n.gold-=gold;printing.operated++;printing.woodUsed+=wood;printing.goldUsed+=gold;printing.knowledge+=knowledge;
     }
     n.knowledge=Math.min(1000000,n.knowledge+q.knowledgeIncome+printing.knowledge);
     // Transient town Maps are not persisted in the national quarterly ledger.
     const {regionalEconomy:localReport,...accounting}=q;
     const workshop=workshopResults.get(n.id);
-    n.lastQuarter={...accounting,workshop,f1:f1EnsureIndustry(n).lastQuarter,printing,knowledgeIncome:q.knowledgeIncome+printing.knowledge,goldIncome:q.goldIncome+(workshop?.gold||0),goldNet:q.goldIncome+(workshop?.gold||0)-paid-civilPaid-printing.goldUsed-(f1EnsureIndustry(n).lastQuarter.steamOperatingGold||0)-(f1EnsureIndustry(n).lastQuarter.coalSites||0)*12+n.trade.quarterExportValue-n.trade.quarterImportValue,upkeepPaid:paid,civilPaid,civilUnpaid:finance.unpaidLastQuarter,tradeImportValue:n.trade.quarterImportValue,tradeExportValue:n.trade.quarterExportValue};
+    n.lastQuarter={...accounting,workshop,f1:f1EnsureIndustry(n).lastQuarter,woodRecoveryF1B:f1bWoodResults.get(n.id),printing,knowledgeIncome:q.knowledgeIncome+printing.knowledge,goldIncome:q.goldIncome+(workshop?.gold||0),goldNet:q.goldIncome+(workshop?.gold||0)-paid-civilPaid-printing.goldUsed-(f1bWoodResults.get(n.id)?.goldSpent||0)-(f1EnsureIndustry(n).lastQuarter.steamOperatingGold||0)-(f1EnsureIndustry(n).lastQuarter.coalSites||0)*12+n.trade.quarterExportValue-n.trade.quarterImportValue,upkeepPaid:paid,civilPaid,civilUnpaid:finance.unpaidLastQuarter,tradeImportValue:n.trade.quarterImportValue,tradeExportValue:n.trade.quarterExportValue};
     e1SettleQuarter(world,n);
   }
   // F3 diagnostics run after real deliveries, consumption and upkeep.
   updateTradeDependency(world,projections);
   f1FinishEconomyQuarter(world);
   e3e3FinishEconomyQuarter(world,e3e3WoodStarts);
+  for(const n of world.nations){if(!n.active)continue;
+    const state=e3e3EnsureSupply(n).f1b;
+    state.history.push({...state.lastQuarter});if(state.history.length>12)state.history.shift();
+  }
   world.changeSeq++;
 }
 
@@ -5010,9 +5027,89 @@ function f1IndustryCsv(w){const keys=['dayIndex','coalStart','coalProduced','coa
 // V0.7E3E3 — paid wood-supply recovery and per-quarter logistics audit.
 // Observability is deterministic and bounded. Historical shortage data are NEVER inferred.
 const E3E3_SUPPLY_WINDOW=12;
-function e3e3NewSupply(){return {schema:1,history:[],pendingConstructionWood:0,lastRecovery:null};}
-function e3e3EnsureSupply(n){return n.e3e3Supply||(n.e3e3Supply=e3e3NewSupply());}
+function e3e3NewSupply(){return {schema:1,history:[],pendingConstructionWood:0,lastRecovery:null,f1b:f1bNewWoodState()};}
+function e3e3EnsureSupply(n){
+ const state=n.e3e3Supply||(n.e3e3Supply=e3e3NewSupply());
+ state.f1b??=f1bNewWoodState();
+ return state;
+}
 function e3e3MigrateWorld(w){for(const n of w.nations)e3e3EnsureSupply(n);}
+// V0.7F1B — deterministic PAID forest work, no building slot or fictional lumber mill.
+// Emergency extraction only on a real, unoccupied, owned forest tile attached to a
+// living settlement with at least 12 *uncommitted* local worker capacity.
+const F1B_FOREST_WORKERS=12,F1B_FOREST_WOOD=24,F1B_FOREST_GOLD=30;
+const F1B_FOREST_MAX_SITES=3,F1B_FOREST_START=150,F1B_FOREST_STOP=360;
+const F1B_BUILD_WOOD_RESERVE=72,F1B_BUILD_WOOD_RESERVE_END=260;
+function f1bNewWoodState(){return {schema:1,active:false,lastQuarter:null,history:[]};}
+function f1bActiveLumberCount(w,n){
+ return w.buildings.filter(b=>b.typeId==='lumber'&&b.status==='ACTIVE'&&!b.disconnected&&
+   w.tiles[b.tileId]?.ownerId===n.id&&w.tiles[b.tileId]?.occupiedBy===null).length;
+}
+function f1bOpenLumberSite(w,n,siteUsage=null){
+ const used=(siteUsage||f4d3SiteUsage(w)).generalUsed,limit=generalTileSlotLimit(w,n.id);
+ return w.tiles.some(t=>t.ownerId===n.id&&t.settlementId!==null&&t.occupiedBy===null&&
+   BUILDINGS.lumber.terrains.includes(t.terrain)&&(used.get(t.id)||0)<limit);
+}
+function f1bWoodReserve(w,n){
+ // Existing high-stock industry continues normally. Construction takes priority
+ // only where replenishment is fragile; there is no wood creation in this guard.
+ return n.resources.wood<F1B_BUILD_WOOD_RESERVE_END&&f1bActiveLumberCount(w,n)===0?
+   F1B_BUILD_WOOD_RESERVE:0;
+}
+function f1bForestQuarter(w,n,q,siteUsage=null){
+ const state=e3e3EnsureSupply(n).f1b;
+ const snap={dayIndex:w.dayIndex,sites:0,produced:0,goldSpent:0,workersAssigned:0,
+   availableForest:0,blockedLabor:0,blockedGold:0,blockedOccupation:0,
+   protectedWood:f1bWoodReserve(w,n),workshopDeferred:0,printingDeferred:0,active:false};
+ const nationalLumber=f1bActiveLumberCount(w,n);
+ // Permanent specialized lumber sites remain the primary means of wood supply.
+ if(nationalLumber>0||q.produced.wood>=60||f1bOpenLumberSite(w,n,siteUsage)){
+   state.active=false;state.lastQuarter=snap;return snap;
+ }
+ if(n.resources.wood<F1B_FOREST_START)state.active=true;
+ if(n.resources.wood>=F1B_FOREST_STOP)state.active=false;
+ if(!state.active){state.lastQuarter=snap;return snap;}
+ snap.active=true;
+ const occupied=new Set((w.occupations||[]).map(o=>o.tileId));
+ const laborBudget=new Map();
+ for(const [id,local] of q.regionalEconomy.towns){
+   laborBudget.set(id,Math.max(0,Math.floor((local.workers-local.demand)/F1B_FOREST_WORKERS)));
+ }
+ // Iterate the exact tile order, never randomize sites or infer geological deposits.
+ for(const t of w.tiles){
+   if(snap.sites>=F1B_FOREST_MAX_SITES)break;
+   if(t.ownerId!==n.id||t.terrain!=='forest'||t.settlementId===null)continue;
+   const s=w.settlements.find(s=>s.id===t.settlementId&&s.ownerId===n.id&&s.population>0);
+   if(!s)continue;
+   snap.availableForest++;
+   if(t.occupiedBy!==null||occupied.has(t.id)){snap.blockedOccupation++;continue;}
+   const remaining=laborBudget.get(s.id)||0;
+   if(remaining<1){snap.blockedLabor++;continue;}
+   if(n.gold<F1B_FOREST_GOLD){snap.blockedGold++;continue;}
+   // Gold is actually destroyed. Labor is allocated only from residual capacity,
+   // so preexisting farms and academies keep their original workforce.
+   const wood=Math.min(F1B_FOREST_WOOD,1000000-n.resources.wood);
+   if(wood<=0)break;
+   n.gold-=F1B_FOREST_GOLD;n.resources.wood+=wood;
+   q.produced.wood+=wood;
+   laborBudget.set(s.id,remaining-1);
+   snap.sites++;snap.produced+=wood;snap.goldSpent+=F1B_FOREST_GOLD;
+   snap.workersAssigned+=F1B_FOREST_WORKERS;
+ }
+ state.lastQuarter=snap;
+ return snap;
+}
+function f1bValidateState(state,w){
+ if(!state||state.schema!==1||typeof state.active!=='boolean'||!Array.isArray(state.history)||state.history.length>12)return false;
+ const rows=state.lastQuarter?[...state.history,state.lastQuarter]:state.history;
+ for(const h of rows){
+  if(!Number.isSafeInteger(h.dayIndex)||h.dayIndex>w.dayIndex||h.dayIndex<0||typeof h.active!=='boolean')return false;
+  for(const key of ['sites','produced','goldSpent','workersAssigned','availableForest','blockedLabor','blockedGold','blockedOccupation','protectedWood','workshopDeferred','printingDeferred'])
+   if(!Number.isSafeInteger(h[key])||h[key]<0)return false;
+  if(h.sites>F1B_FOREST_MAX_SITES||h.produced>h.sites*F1B_FOREST_WOOD||h.goldSpent!==h.sites*F1B_FOREST_GOLD||h.workersAssigned!==h.sites*F1B_FOREST_WORKERS)return false;
+ }
+ return true;
+}
 function e3e3IndirectLimit(w,id){
  return 3000+(hasTech(w,id,'advanced_transport')?500:0)+(hasTech(w,id,'commercial_transport')?500:0)+(hasTech(w,id,'trunk_route_planning')?500:0);
 }
@@ -5104,6 +5201,9 @@ function e3e3FinishEconomyQuarter(w,starts){
   const m=reports.find(x=>x.id===n.id),q=n.lastQuarter||{},s=e3e3EnsureSupply(n);
   const entry={dayIndex:w.dayIndex,woodStart:x.start,woodProduced:q.produced?.wood||0,woodImported:m?.bought?.wood||0,woodExported:m?.sold?.wood||0,
    woodCraftUsed:q.workshop?.woodUsed||0,woodPrintingUsed:q.printing?.woodUsed||0,woodBuildingUsed:x.building,woodEnd:n.resources.wood,
+   woodEmergencyProduced:q.woodRecoveryF1B?.produced||0,woodEmergencyGold:q.woodRecoveryF1B?.goldSpent||0,
+   woodEmergencySites:q.woodRecoveryF1B?.sites||0,woodProtectedWorkshops:q.woodRecoveryF1B?.workshopDeferred||0,
+   woodProtectedPrinting:q.woodRecoveryF1B?.printingDeferred||0,
    importCap:e3e3IndirectLimit(w,n.id),importUsed:m?.indirectImportFreight||0,exportCap:e3e3IndirectLimit(w,n.id),exportUsed:m?.indirectExportFreight||0};
   // Strict current-quarter balance; between-quarter project spend is reported separately.
   entry.unattributed=Math.max(0,entry.woodStart+entry.woodProduced+entry.woodImported-entry.woodExported-entry.woodCraftUsed-entry.woodPrintingUsed-entry.woodEnd);
@@ -5112,16 +5212,19 @@ function e3e3FinishEconomyQuarter(w,starts){
 }
 function e3e3ValidateSupply(w){
  for(const n of w.nations){const s=n.e3e3Supply;
-  if(!s||s.schema!==1||!Array.isArray(s.history)||s.history.length>E3E3_SUPPLY_WINDOW||!Number.isSafeInteger(s.pendingConstructionWood)||s.pendingConstructionWood<0)return false;
+  if(!s||s.schema!==1||!Array.isArray(s.history)||s.history.length>E3E3_SUPPLY_WINDOW||!Number.isSafeInteger(s.pendingConstructionWood)||s.pendingConstructionWood<0||!f1bValidateState(s.f1b,w))return false;
   for(const h of s.history){if(h.dayIndex>w.dayIndex||!Number.isInteger(h.dayIndex))return false;
    for(const k of ['woodStart','woodProduced','woodImported','woodExported','woodCraftUsed','woodPrintingUsed','woodBuildingUsed','woodEnd','unattributed','importCap','importUsed','exportCap','exportUsed'])if(!Number.isSafeInteger(h[k])||h[k]<0)return false;
    if(h.importUsed>h.importCap||h.exportUsed>h.exportCap)return false;
+   for(const key of ['woodEmergencyProduced','woodEmergencyGold','woodEmergencySites','woodProtectedWorkshops','woodProtectedPrinting'])
+     if(h[key]!==undefined&&(!Number.isSafeInteger(h[key])||h[key]<0))return false;
+   if(h.woodEmergencyProduced!==undefined&&h.woodEmergencyProduced>h.woodProduced)return false;
   }
  }
  return true;
 }
-function e3e3SupplySummary(w){return {schema:1,dayIndex:w.dayIndex,nations:w.nations.filter(n=>n.active).map(n=>({id:n.id,name:n.name,wood:n.resources.wood,woodAlert:e3e3WoodSignal(w,n),recovery:e3e3EnsureSupply(n).lastRecovery,quarters:e3e3EnsureSupply(n).history.slice(-4),transportCap:e3e3IndirectLimit(w,n.id)}))};}
-function e3e3SupplyCsv(w){const columns=['nationId','nation','dayIndex','woodStart','woodProduced','woodImported','woodExported','woodCraftUsed','woodPrintingUsed','woodBuildingUsed','woodEnd','unattributed','importCap','importUsed','exportCap','exportUsed'];
+function e3e3SupplySummary(w){return {schema:1,dayIndex:w.dayIndex,nations:w.nations.filter(n=>n.active).map(n=>({id:n.id,name:n.name,wood:n.resources.wood,woodAlert:e3e3WoodSignal(w,n),recovery:e3e3EnsureSupply(n).lastRecovery,quarters:e3e3EnsureSupply(n).history.slice(-4),transportCap:e3e3IndirectLimit(w,n.id),emergencyForestry:e3e3EnsureSupply(n).f1b.lastQuarter}))};}
+function e3e3SupplyCsv(w){const columns=['nationId','nation','dayIndex','woodStart','woodProduced','woodImported','woodExported','woodCraftUsed','woodPrintingUsed','woodBuildingUsed','woodEnd','unattributed','importCap','importUsed','exportCap','exportUsed','woodEmergencyProduced','woodEmergencyGold','woodEmergencySites','woodProtectedWorkshops','woodProtectedPrinting'];
  const rows=[columns];for(const n of w.nations)for(const h of n.e3e3Supply?.history||[])rows.push([n.id,n.name,...columns.slice(2).map(k=>h[k]??'')]);
  return '\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n');}
 // V0.7E3E2 — nation-level quarterly food observations and annual settlement demography.
@@ -11711,6 +11814,7 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
     const threshold={wood:420,stone:550,iron:300}[good]||300;
     return stock<35?2.65:stock<threshold*.5?1.8:stock<threshold?1.2:stock>850?.30:.65;
   };
+  const f1bHasNationalLumber=f1bActiveLumberCount(world,n)>0;
   const strategy=strategicReport(world,n.id);
   for(const s of world.settlements){
     if(s.ownerId!==n.id)continue;
@@ -11728,7 +11832,8 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
         switch(kind){
           case 'house':utility=(.30+Math.min(2.2,Math.max(0,occupancy-.55)*3.4))*(foodSecurity&&occupancy>.91?1.85:1);break;
           case 'farm':utility=(.30+Math.min(2.5,poorFood/Math.max(15,q.foodConsumed)*2.8)+Math.max(0,1.8-foodCover)*.8)*(foodSurplus?.14:foodSecurity?.45:1);break;
-          case 'lumber':utility=(.32+Math.max(0,1-reserve.wood/80)*1.4+Math.max(0,10-q.produced.wood)*.045)*resourceUrgency('wood');break;
+          case 'lumber':utility=(.32+Math.max(0,1-reserve.wood/80)*1.4+Math.max(0,10-q.produced.wood)*.045)*resourceUrgency('wood');
+            if(!f1bHasNationalLumber)utility*=2.2;break;
           case 'quarry':utility=(.28+Math.max(0,1-reserve.stone/90)*1.15)*resourceUrgency('stone');break;
           case 'mine':utility=(.25+Math.max(0,1-reserve.iron/70)*1.1)*resourceUrgency('iron');break;
           case 'fort':utility=0;break; // F3D: produced only by strategicFortCandidates.
@@ -15757,14 +15862,14 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const f1NativeSave=['V0.7F1','V0.7F1A'].includes(parsed?.version);
- const e3e2NativeSave=['V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A'].includes(parsed?.version);
- const accepted=['V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=['V0.7F1','V0.7F1A','V0.7F1B'].includes(parsed?.version);
+ const e3e2NativeSave=['V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B'].includes(parsed?.version);
+ const accepted=['V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
-   throw Error('지원하지 않는 저장 버전입니다 (V0.7F1A~기존 지원 버전 호환).');
+   throw Error('지원하지 않는 저장 버전입니다 (V0.7F1B~기존 지원 버전 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -18430,7 +18535,7 @@ function e3e3RenderWorldSupply(){
  const lines=[];
  for(const n of w.nations.filter(n=>n.active)){
   const a=e3e3WoodSignal(w,n),s=e3e3EnsureSupply(n),last=s.history.at(-1);
-  lines.push(make('div',{class:'muted-line',text:`${n.name}: 목재 ${number.format(n.resources.wood)} · ${a.needed?'공급 위험':'안정'} · 분기 생산 ${number.format(a.produced)} · ${s.lastRecovery?.state||'후보 관측 중'} · 석탄 ${number.format(n.resources.coal||0)} · 동력 ${number.format(n.f1Industry?.lastQuarter.powerUsed||0)} PU · 간접 ${number.format(last?.importUsed||0)}/${number.format(last?.importCap||e3e3IndirectLimit(w,n.id))} (수입), ${number.format(last?.exportUsed||0)}/${number.format(last?.exportCap||e3e3IndirectLimit(w,n.id))} (수출)`}));
+  lines.push(make('div',{class:'muted-line',text:`${n.name}: 목재 ${number.format(n.resources.wood)} · ${a.needed?'공급 위험':'안정'} · 분기 생산 ${number.format(a.produced)} · ${s.lastRecovery?.state||'후보 관측 중'} · 응급 벌목 ${number.format(s.f1b?.lastQuarter?.produced||0)} (${s.f1b?.lastQuarter?.sites||0}곳) · 석탄 ${number.format(n.resources.coal||0)} · 동력 ${number.format(n.f1Industry?.lastQuarter.powerUsed||0)} PU · 간접 ${number.format(last?.importUsed||0)}/${number.format(last?.importCap||e3e3IndirectLimit(w,n.id))} (수입), ${number.format(last?.exportUsed||0)}/${number.format(last?.exportCap||e3e3IndirectLimit(w,n.id))} (수출)`}));
  }
  el.replaceChildren(...lines);
 }
@@ -18475,7 +18580,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v07f1a-world';
+const SAVE_KEY='vilob-light-v07f1b-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -18487,7 +18592,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -19276,7 +19381,7 @@ function renderNationOverview(){
   const e3e3Signal=e3e3WoodSignal(w,n),e3e3Wood=e3e3EnsureSupply(n),e3e3Last=e3e3Wood.history.at(-1);
   const supplyPanel=make('section',{class:'overview-section'},[make('h3',{text:'V0.7E3E3 · 목재 공급·간접 운송'})]);
   supplyPanel.append(make('div',{class:'muted-line',text:`목재 재고 ${number.format(n.resources.wood)} · 분기 생산 ${number.format(e3e3Signal.produced)} · 예상 소모 ${number.format(e3e3Signal.estimatedUse)} · 4분기 예상 잔량 ${number.format(e3e3Signal.forecastFourQuarters)} · ${e3e3Signal.needed?'공급 회복 필요':'공급 양호'}`}),
-   make('div',{class:'muted-line',text:`재개발: ${e3e3Wood.lastRecovery?.state||'진단 대기'} · 후보 ${e3e3Wood.lastRecovery?.candidateCount||0}개 · 관측 ${e3e3Signal.observedQuarters}/4분기 (${e3e3Signal.confidence})`}),
+   make('div',{class:'muted-line',text:`재개발: ${e3e3Wood.lastRecovery?.state||'진단 대기'} · 후보 ${e3e3Wood.lastRecovery?.candidateCount||0}개 · 관측 ${e3e3Signal.observedQuarters}/4분기 (${e3e3Signal.confidence}) · 임시 산림 작업 ${e3e3Wood.f1b?.lastQuarter?.sites||0}곳 / 목재 +${e3e3Wood.f1b?.lastQuarter?.produced||0} · 인쇄/공방 비축 보류 ${e3e3Wood.f1b?.lastQuarter?.printingDeferred||0}/${e3e3Wood.f1b?.lastQuarter?.workshopDeferred||0}`}),
    make('div',{class:'muted-line',text:`간접 수입 ${number.format(e3e3Last?.importUsed||0)}/${number.format(e3e3IndirectLimit(w,n.id))} 화물 · 간접 수출 ${number.format(e3e3Last?.exportUsed||0)}/${number.format(e3e3IndirectLimit(w,n.id))} 화물 · 최근 목재 구매 ${number.format(e3e3Last?.woodImported||0)} / 판매 ${number.format(e3e3Last?.woodExported||0)} · 건설 자재 지출 ${number.format(e3e3Last?.woodBuildingUsed||0)}` }));
   const demographyPanel=e3e2NationDemographyPanel(w,n);
   const tabs=[['overview','개요·경제'],['governance','정책'],['strategy','지정학 전략'],['research','기술'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사'],['adaptation','AI 적응']];
@@ -19493,7 +19598,7 @@ const V04C_STAGE_BUCKETS=Object.freeze([
   {id:'early_modern_1',label:'근세 I',color:V04C_ERA_COLORS.early_modern},
   {id:'early_modern_2',label:'근세 II',color:'#CAB77C'},
   {id:'early_modern_3',label:'근세 III',color:'#CBAE82'},{id:'early_modern_4',label:'근세 IV',color:'#D4B28E'},
-  {id:'industrial_modern',label:'산업 근대',color:V04C_ERA_COLORS.industrial_modern,planned:true},
+  {id:'industrial_modern',label:'산업 근대',color:V04C_ERA_COLORS.industrial_modern},
   {id:'future',label:'미래',color:V04C_ERA_COLORS.future,planned:true}
 ]);
 function v04cStageBucket(n){
@@ -19694,7 +19799,7 @@ function renderWorldEras(){
   const modern2=active.filter(n=>n.civilization.era==='early_modern'&&n.civilization.stage===2).length;
   const modern3=active.filter(n=>n.civilization.era==='early_modern'&&n.civilization.stage===3).length;
   const modern4=active.filter(n=>n.civilization.era==='early_modern'&&n.civilization.stage===4).length;
-  const note=make('p',{class:'scope-note',text:`기술 난도 Tier와 문명 단계는 별개입니다. 중세 I ${stageTotals[1]}개국 · II ${stageTotals[2]}개국 · III ${stageTotals[3]}개국 · IV ${stageTotals[4]}개국 · 근세 I ${modern1}개국 · 근세 II ${modern2}개국 · 근세 III ${modern3}개국 · 근세 IV ${modern4}개국. 산업 근대는 후속 버전에서 개방됩니다.`});
+  const note=make('p',{class:'scope-note',text:`기술 난도 Tier와 문명 단계는 별개입니다. 중세 I ${stageTotals[1]}개국 · II ${stageTotals[2]}개국 · III ${stageTotals[3]}개국 · IV ${stageTotals[4]}개국 · 근세 I ${modern1}개국 · 근세 II ${modern2}개국 · 근세 III ${modern3}개국 · 근세 IV ${modern4}개국. 산업 근대 I은 석탄 채굴과 증기 공방의 실제 가동 조건을 만족하면 진입합니다.`});
   const rows=active.map(n=>{
     const row=make('button',{class:'era-nation-row',type:'button'});
     row.append(make('span',{class:'nation-dot',style:{background:n.color}}),
