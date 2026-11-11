@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.7F2A2</title>
+<title>VILOB Light · V0.7F2A3</title>
 <style>
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #8bd6d0;outline-offset:3px}button:disabled{opacity:.48;cursor:default}button:hover:not(:disabled){filter:brightness(1.14)}.shell{max-width:1510px;margin:auto;padding:0 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:92px;border-bottom:1px solid #243346}.identity{display:flex;align-items:center;gap:12px;flex-shrink:0}.logo-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;background:linear-gradient(145deg,#2d716d,#1a3d53);color:#cef3dc;border:1px solid #438e82;border-radius:11px;font-size:25px;box-shadow:0 7px 22px #0004}.brand-name{font-size:20px;font-weight:850;letter-spacing:2.1px;line-height:1.25}.brand-name span{font-weight:550;color:#a7d9b6;letter-spacing:2.6px}.brand-caption{color:#8699ab;font-size:10px;letter-spacing:.6px;margin-top:4px}.brand-caption b{font-weight:650;color:#cbd9e2;margin-left:7px}.alpha{font-size:9px;color:#f0bd82;border:1px solid #7b5c41;padding:1px 5px;border-radius:4px;margin-left:4px}.time-controls{display:flex;align-items:center;gap:26px}.time-wrap{display:flex;flex-direction:column;text-align:right}.time-hint,.eyebrow{font-size:10px;letter-spacing:2px;font-weight:750;color:#83a4b4}.time-wrap strong{font-size:17px;white-space:nowrap;letter-spacing:.2px}.controls{display:flex;align-items:center;gap:7px}.controls button,.map-head-controls button,.zoom-buttons button,.seed-inputs button,.file-actions button,.file-actions label{border:1px solid #34485b;background:#1a2a3d;color:#dfeaf2;border-radius:8px}.action-button{height:38px;padding:0 13px;font-size:13px;font-weight:650}.action-button.play{background:#317868;border-color:#52a18a;color:white;min-width:86px}.speed-group{background:#152333;padding:3px;display:flex;border:1px solid #2c4255;border-radius:9px;gap:1px}.speed-group .speed{border:0;background:transparent;font-size:12px;padding:5px 9px;border-radius:5px;color:#a5b8c6}.speed-group .speed.active{background:#31536a;color:white}.content{display:grid;grid-template-columns:minmax(0,1fr) 342px;gap:20px;align-items:start;padding-top:28px}.stage{min-width:0}.status-tag{font-size:11px;padding:7px 10px;border:1px solid #2e5349;border-radius:20px;color:#a8d1b6;background:#18362e;white-space:nowrap}.status-dot{display:inline-block;background:#7cc9a0;width:7px;height:7px;border-radius:50%;margin-right:5px;box-shadow:0 0 8px #7ad19b88}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.stat{background:linear-gradient(130deg,#1a293a,#152333);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:baseline;justify-content:space-between;gap:4px}.stat span{font-size:11px;color:#a1afbf}.stat b{font-size:20px;font-variant-numeric:tabular-nums}.map-card,.sidebar-card,.below-card,.history-card{border:1px solid #2d4153;background:#121e2c;border-radius:13px;overflow:hidden;box-shadow:0 6px 25px rgba(0,0,0,.08)}.map-card-head{min-height:63px;padding:12px 19px;display:flex;justify-content:space-between;align-items:center;gap:12px}.head-title,.seed-heading{display:flex;align-items:center;gap:11px}.head-icon{display:grid;place-items:center;background:#284056;color:#b9d7d1;font-size:18px;width:36px;height:36px;border-radius:9px}.head-title strong,.seed-heading strong{display:block;font-size:13px;letter-spacing:.4px}.head-title small,.seed-heading small{display:block;color:#8d9fb1;font-size:11px;margin-top:1px}.map-head-controls{display:flex;align-items:center;gap:6px}.map-head-controls .chip{padding:5px 12px;font-size:12px;color:#9eb6c2}.map-head-controls .chip.selected{background:#2f5366;color:#dff6ee;border-color:#4e8792}.checkbox-row{color:#a9b8c3;font-size:12px;display:flex;align-items:center;gap:5px;margin-left:8px;white-space:nowrap}.checkbox-row input{accent-color:#6bb6aa}.canvas-area{height:auto;aspect-ratio:1/1;width:100%;position:relative;overflow:hidden;background:#0b1722;border-top:1px solid #344858;border-bottom:1px solid #344858;user-select:none}#worldCanvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#worldCanvas:active{cursor:grabbing}.zoom-buttons{position:absolute;right:13px;top:13px;display:grid;gap:5px}.zoom-buttons button{height:32px;width:32px;font-size:19px;border-radius:6px;background:#112536d9;color:#e8f3f6}.coordinate-badge{position:absolute;bottom:12px;right:13px;background:#112536d9;color:#c0d6df;padding:5px 10px;border-radius:5px;font-size:11px;font-variant-numeric:tabular-nums}.map-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:51px;padding:11px 17px}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a4b4c1}.legend-icon{width:11px;height:11px;display:inline-block;border:1px solid #9dadb9}.legend-icon.capital{border:2px solid #f6d697;background:#28313e;transform:rotate(45deg);width:9px;height:9px;margin:0 3px}.legend-icon.border{border:0;border-top:3px solid #080b12;width:15px}.legend-icon.neutral{background:#829d73}.legend-icon.water{background:#255067;border-color:#547c8b}.map-tip{font-size:10px;color:#7790a3;white-space:nowrap}.below-card{padding:16px 18px;margin-top:14px}.seed-heading{margin-bottom:13px}.seed-inputs{display:flex;gap:8px}.seed-inputs input{flex:1;min-width:0;color:#e2eef2;border:1px solid #405369;background:#0c1825;border-radius:7px;padding:9px 12px;outline:none;font-size:13px}.seed-inputs button{padding:8px 13px;font-size:12px;white-space:nowrap}.seed-inputs .primary-button{background:#286e68;border-color:#469890;color:#e9faf3;font-weight:700}.file-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.file-actions button,.file-actions label{background:transparent;border:1px solid #35495a;color:#9fb5c5;border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}.file-label input{display:none}.sidebar{display:flex;flex-direction:column;gap:16px;min-width:0}.sidebar-card{padding:20px}.card-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:9px;margin-bottom:15px}.card-heading h2,.history-card h2{margin:3px 0 0;font-size:17px;font-weight:720}.small-label{color:#8eaabb;font-size:11px;border:1px solid #30495b;background:#1b2f40;border-radius:6px;padding:3px 8px}.inspector-content{display:grid;gap:13px}.tile-banner{padding:13px;border-radius:9px;background:linear-gradient(125deg,#20364b,#172b3a);border:1px solid #39546a;display:flex;align-items:center;justify-content:space-between;gap:8px}.terrain-title{font-size:16px;font-weight:700}.terrain-subtitle{font-size:11px;color:#adc0cf;margin-top:3px}.terrain-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;color:#dcefd7;border:1px solid #516b62;background:#415b51;font-size:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{border-bottom:1px solid #2a3b4c;padding:5px 0 9px}.detail-item small{display:block;color:#869cac;font-size:10px;margin-bottom:3px}.detail-item strong{font-size:12px;font-weight:650}.nation-pill{display:inline-flex;align-items:center;gap:7px;min-width:0}.nation-dot{display:inline-block;width:10px;height:10px;flex:none;border-radius:3px;box-shadow:0 0 0 1px #fff2}.inspector-note{color:#92a5b7;font-size:11px;line-height:1.65;padding:12px;background:#142839;border:1px dashed #325164;border-radius:8px}.nation-list{display:grid;gap:7px}.nation-row{display:flex;align-items:center;width:100%;text-align:left;gap:10px;padding:9px 10px;border-radius:8px;border:1px solid #2b4153;color:#e0ebf3;background:#162738;transition:background .12s,border-color .12s}.nation-row.active{background:#263c51;border-color:#719b9d;box-shadow:inset 3px 0 #a4dfc5}.nation-badge{width:26px;height:26px;display:grid;place-items:center;border-radius:6px;color:#0e1921;font-weight:850;font-size:11px}.nation-text{flex:1;min-width:0;display:block}.nation-text strong{font-size:13px;display:block}.nation-text small{font-size:10px;color:#9cabb9;display:block}.nation-count{font-variant-numeric:tabular-nums;color:#a9bdc7;font-size:12px}.milestone{display:flex;gap:8px;align-items:center;font-size:12px;margin:10px 0;color:#c2d1d9}.milestone .tick{color:#72c9a4;border-radius:50%;background:#203d38;width:19px;height:19px;display:grid;place-items:center;flex-shrink:0}.milestone.pending{color:#94a8ba}.milestone.pending .tick{background:#203042;color:#7894a8}.scope-note{color:#8da4b4;font-size:11px;border-top:1px solid #324254;padding-top:11px;margin:13px 0 0;line-height:1.65}.history-card{grid-column:1/-1;padding:19px 21px;display:flex;gap:24px;align-items:center;justify-content:space-between}.chronicle{font-size:12px;color:#bacdd4;display:flex;align-items:center;gap:13px}.event-tag{color:#a4d5c0;background:#244537;border:1px solid #466a5e;border-radius:4px;padding:2px 7px;font-size:10px}.footer{display:flex;justify-content:space-between;color:#71899b;font-size:10px;padding:19px 0 30px;gap:10px}.toast{opacity:0;pointer-events:none;position:fixed;bottom:24px;left:50%;transform:translate(-50%,10px);transition:opacity .2s,transform .2s;z-index:40;background:#203949;color:#e8f6f4;padding:12px 18px;border:1px solid #649688;border-radius:10px;max-width:90%;box-shadow:0 12px 34px #0007;font-size:13px;text-align:center}.toast.visible{opacity:1;transform:translate(-50%,0)}.sr-only{position:absolute;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
@@ -862,7 +862,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7F2A2'; // Modern research capacity and AI industry research path
+const VERSION = 'V0.7F2A3'; // Industrial facility AI repair and safe coal-entry retrofit
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -5116,17 +5116,44 @@ function f1PromoteIndustrial(w){
   if(w.events.length>180)w.events.splice(0,w.events.length-180);w.changeSeq++;
  }
 }
+// F2A3: coal/steam startup is a one-time infrastructure investment, not a
+// license to ignore a persistent food collapse. Evidence is the LAST four
+// actual quarterly food records, not estimates or fabricated backfill.
+function f2a3IndustrialFoodGate(w,n,firstInfrastructure){
+ const q=n.lastQuarter||{},cons=Math.max(0,q.foodConsumed||0);
+ if(cons===0||n.resources.food>=Math.max(60,cons*2))return 'NORMAL_2Q';
+ if(v07f1c1WorkshopFoodGate(q,n,w).stable)return 'STABLE_FOOD_4Q';
+ if(!firstInfrastructure||n.gold<Math.max(4000,3*((q.upkeep||0)+(q.civil?.total||0))))return 'BLOCKED';
+ const four=(n.economicRecovery?.history||[]).slice(-4);
+ if(four.length!==4||four.some((r,i)=>!Number.isSafeInteger(r.dayIndex)||
+   i>0&&r.dayIndex-four[i-1].dayIndex!==30)||w.dayIndex-four[3].dayIndex>30||w.dayIndex<four[3].dayIndex)return 'BLOCKED';
+ if(!four.every(r=>r.goods?.food&&Number.isFinite(r.goods.food.produced)&&
+  Number.isFinite(r.goods.food.consumed)&&(r.goods.food.consumed===0||r.goods.food.produced>=r.goods.food.consumed*.90)))return 'BLOCKED';
+ return 'FIRST_INDUSTRY_90PCT_4Q';
+}
+function f2a3CoalRetrofitSafe(w,n,b,owned){
+ if(!['quarry','mine','academy','barracks'].includes(b.typeId))return false;
+ if(b.typeId==='academy'&&owned.filter(x=>x.typeId==='academy').length<=1)return false;
+ // No wartime conversions; never remove the last usable training facility.
+ if(b.typeId==='barracks'&&(militaryAtWar(w,n.id)||v04e1ReservedBarracks(w,n.id).length<=1))return false;
+ return true;
+}
 function f1IndustryAIQuarter(w){
+ // Repair is evaluated quarterly and requires neither a 2Q food reserve nor
+ // a new factory. At most one paid repair per AI country per quarter.
+ f2a3FactoryRepairQuarter(w);
  f2FactoryAIQuarter(w);
- // Each nation's industrial decision attempts at most one action per year.
+ // Each nation's new industrial investment attempts at most one action per year.
  if(w.dayIndex%120!==0)return;
  for(const n of w.nations){if(!n.active||n.controller!=='AI'||n.civilization?.era!=='early_modern'&&n.civilization?.era!=='industrial_modern')continue;
   if(n.civilization.era==='early_modern'&&n.civilization.stage<4)continue;
-  if(n.gold<350||n.resources.food<Math.max(60,(n.lastQuarter?.foodConsumed||0)*2))continue;
+  if(n.gold<350)continue;
   const owned=w.buildings.filter(b=>b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id);
   if(hasTech(w,n.id,'coal_extraction')){
    const pits=owned.filter(b=>b.typeId==='coal_pit');
-   if(pits.length<Math.max(1,Math.min(3,Math.ceil(owned.filter(b=>b.typeId==='workshop').length/2)))){
+   const firstCoal=pits.length===0&&!f1EnsureIndustry(n).coalMinedEver;
+   if(pits.length<Math.max(1,Math.min(3,Math.ceil(owned.filter(b=>b.typeId==='workshop').length/2)))&&
+      f2a3IndustrialFoodGate(w,n,firstCoal)!=='BLOCKED'){
     let action=null;
     for(const s of w.settlements.filter(s=>s.ownerId===n.id)){
      for(const tid of s.tileIds){const t=w.tiles[tid];if(!BUILDINGS.coal_pit.terrains.includes(t.terrain))continue;
@@ -5134,7 +5161,9 @@ function f1IndustryAIQuarter(w){
       if(canExecuteNationAction(w,n.id,a)){action=a;break;}
      }if(action)break;
     }
-    if(!action){for(const b of owned){if(!['quarry','mine','academy'].includes(b.typeId))continue;
+    if(!action){const candidates=owned.filter(b=>f2a3CoalRetrofitSafe(w,n,b,owned))
+      .sort((a,b)=>['quarry','mine','academy','barracks'].indexOf(a.typeId)-['quarry','mine','academy','barracks'].indexOf(b.typeId)||a.id-b.id);
+     for(const b of candidates){
       const a={type:'REDEVELOP_FACILITY',buildingType:'coal_pit',buildingId:b.id};if(canExecuteNationAction(w,n.id,a)){action=a;break;}
     }}
     if(action){executeNationAction(w,n.id,action);continue;}
@@ -5143,8 +5172,10 @@ function f1IndustryAIQuarter(w){
   // Install a real device. Existing converted workshops already possess their historical equipment.
   for(const b of owned.filter(b=>b.typeId==='workshop').sort((a,b)=>b.level-a.level||a.id-b.id)){
    const devices=f1Devices(b);let type=null;
-   if(b.level>=3&&hasTech(w,n.id,'steam_engineering')&&!devices.steam&&n.resources.coal>=6&&n.gold>=1800)type='STEAM';
-   else if(hasTech(w,n.id,'basic_mechanical_power')&&!devices.mechanical&&!devices.waterwheel){type=riverAdjacentTileInfo(w,b.tileId).riverbank?'WATERWHEEL':'MECHANICAL';}
+   if(b.level>=3&&hasTech(w,n.id,'steam_engineering')&&!devices.steam&&n.resources.coal>=6&&n.gold>=1800&&
+      f2a3IndustrialFoodGate(w,n,!f1EnsureIndustry(n).steamOperatedEver)!=='BLOCKED')type='STEAM';
+   else if(hasTech(w,n.id,'basic_mechanical_power')&&!devices.mechanical&&!devices.waterwheel&&
+      f2a3IndustrialFoodGate(w,n,false)!=='BLOCKED'){type=riverAdjacentTileInfo(w,b.tileId).riverbank?'WATERWHEEL':'MECHANICAL';}
    if(!type)continue;
    const a={type:'INSTALL_WORKSHOP_POWER',buildingId:b.id,source:type};if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);break;}
   }
@@ -5228,6 +5259,35 @@ function f2ValidateWorld(w){
  for(const b of w.buildings)if(b.typeId==='factory'&&(b.level>3||!f1ValidWorkshopPower(w,b)||!Number.isSafeInteger(b.factoryRuns||0)||(b.factoryRuns||0)<0||b.lastFactoryOperatedDay!=null&&(b.lastFactoryOperatedDay>w.dayIndex||b.lastFactoryOperatedDay%30!==0)))return false;
  return true;
 }
+// Installed power is an *engineering* capacity check independent of temporary
+// coal shortages. Actual production still pays quarterly coal and Gold.
+function f2a3InstalledFactoryCapacity(w,n,b){
+ const d=f1Devices(b),base=f1PowerBase(w,b,n).pu;
+ return Math.min(115,base+(d.steam&&hasTech(w,n.id,'steam_engineering')?65:0));
+}
+function f2a3InstallFactoryPower(w,n,b,needed){
+ if(b.status!=='ACTIVE'||b.disconnected||b.powerProject||n.f2a3LastPowerRepairDay===w.dayIndex||f2a3InstalledFactoryCapacity(w,n,b)>=needed)return false;
+ const d=f1Devices(b);
+ // Steam is the first required backbone; waterwheel is preferred where legal.
+ const sources=d.steam?['WATERWHEEL','MECHANICAL']:['STEAM','WATERWHEEL','MECHANICAL'];
+ for(const source of sources){
+  if(d[source.toLowerCase()])continue;
+  const a={type:'INSTALL_WORKSHOP_POWER',buildingId:b.id,source};
+  if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);n.f2a3LastPowerRepairDay=w.dayIndex;return true;}
+ }
+ return false;
+}
+function f2a3FactoryRepairQuarter(w){
+ if(w.dayIndex%30!==0)return;
+ for(const n of w.nations){
+  if(!n.active||n.controller!=='AI')continue;
+  const broken=w.buildings.filter(b=>b.typeId==='factory'&&b.status==='ACTIVE'&&!b.disconnected&&
+    w.tiles[b.tileId]?.ownerId===n.id&&F2_FACTORY_LEVELS[b.level]&&
+    f2a3InstalledFactoryCapacity(w,n,b)<F2_FACTORY_LEVELS[b.level].pu)
+   .sort((a,b)=>b.level-a.level||a.id-b.id);
+  for(const b of broken)if(f2a3InstallFactoryPower(w,n,b,F2_FACTORY_LEVELS[b.level].pu))break;
+ }
+}
 function f2FactoryAIQuarter(w){
  if(w.dayIndex%120!==0)return;
  for(const n of w.nations){
@@ -5241,7 +5301,11 @@ function f2FactoryAIQuarter(w){
   }
   for(const b of operating){
    const p=f1Devices(b);if(!p.steam){const a={type:'INSTALL_WORKSHOP_POWER',buildingId:b.id,source:'STEAM'};if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);break;}}
-   if(b.level<3&&n.resources.machine_parts>=(b.level===1?4:10)+10){const a={type:'UPGRADE_FACILITY',buildingId:b.id};if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);break;}}
+   if(b.level<3&&n.resources.machine_parts>=(b.level===1?4:10)+10){
+    const required=F2_FACTORY_LEVELS[b.level+1].pu;
+    if(f2a3InstalledFactoryCapacity(w,n,b)<required){if(f2a3InstallFactoryPower(w,n,b,required))break;continue;}
+    const a={type:'UPGRADE_FACILITY',buildingId:b.id};if(canExecuteNationAction(w,n.id,a)){executeNationAction(w,n.id,a);break;}
+   }
   }
  }
 }
@@ -16202,14 +16266,14 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const f1NativeSave=['V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=['V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=['V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=['V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
-   throw Error('지원하지 않는 저장 버전입니다 (V0.7F2A2~기존 지원 버전 호환).');
+   throw Error('지원하지 않는 저장 버전입니다 (V0.7F2A3~기존 지원 버전 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -18921,7 +18985,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v07f2a2-world';
+const SAVE_KEY='vilob-light-v07f2a3-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -18933,7 +18997,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
