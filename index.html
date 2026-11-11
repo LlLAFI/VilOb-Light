@@ -862,7 +862,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.7F1B'; // Paid emergency forestry, safeguarded production wood, lumber continuity
+const VERSION = 'V0.7F1C1'; // Technology-scaled settlement limits and stable-food workshop recovery
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -1863,15 +1863,31 @@ function settlementSpacing(world){
   const area=world.size*(world.height||world.size);
   return Math.max(15,Math.min(60,Math.round(Math.sqrt(area)*.62)));
 }
+/** F1C1: researched technologies independently increase territory-supported settlements
+ * and each settlement's physical footprint. This function is pure and RNG-neutral.
+ * Larger historical settlements acquired by conquest are preserved, not truncated.
+ */
+const V07F1C1_SETTLEMENT_TECHS=Object.freeze([
+  ['urban_planning',.10,0],['administrative_system',.10,0],
+  ['regional_governance',.05,1],['construction_management',.05,0],
+  ['mixed_use_construction',.05,1],['workshop_concentration',.05,0]
+]);
+function settlementFootprintCapacity(world,nationId){
+  let maxTiles=13,maxRadius=4;
+  for(const [id,density,radius] of V07F1C1_SETTLEMENT_TECHS){
+    if(hasTech(world,nationId,id)){maxTiles++;maxRadius+=radius;}
+  }
+  return {maxTiles,maxRadius};
+}
 function settlementCapacity(world,nationId,territoryMetrics=null){
   const nation=world.nations[nationId];
   if(!nation?.active)return {limit:0,ownedCount:0,spacing:settlementSpacing(world),bonus:0};
   const count=territoryMetrics?.nationId===nationId?territoryMetrics.ownedCount:
     world.tiles.reduce((sum,t)=>sum+(t.ownerId===nationId?1:0),0);
-  const bonus=(hasTech(world,nationId,'urban_planning')?.10:0)+
-    (hasTech(world,nationId,'administrative_system')?.10:0);
+  const bonusPercent=V07F1C1_SETTLEMENT_TECHS.reduce((sum,[id,density])=>sum+(hasTech(world,nationId,id)?Math.round(density*100):0),0);
+  const bonus=bonusPercent/100;
   const spacing=settlementSpacing(world);
-  return {limit:count?1+Math.floor((count-1)*(1+bonus)/spacing):0,ownedCount:count,spacing,bonus};
+  return {limit:count?1+Math.floor((count-1)*(100+bonusPercent)/(spacing*100)):0,ownedCount:count,spacing,bonus};
 }
 // --- src/sim/culture-accounting-d1a1.js ---
 /** D1A1: world cultures are identities, not sovereign states. No cultural game effects yet.
@@ -5435,9 +5451,9 @@ function settlementExpansionDemand(world,s,forecast=null,siteUsage=null){
 }
 function settlementExpansionCandidate(world,s,tid,demand=null){
   const tile=world.tiles[tid];
-  if(!s||!tile||s.tileIds.length>=13||tile.ownerId!==s.ownerId||tile.settlementId!==null||tile.occupiedBy!==null)return null;
+  if(!s||!tile||s.tileIds.length>=settlementFootprintCapacity(world,s.ownerId).maxTiles||tile.ownerId!==s.ownerId||tile.settlementId!==null||tile.occupiedBy!==null)return null;
   const radius=footprintDistance(tid,s.coreTileId,world.size);
-  if(radius>4)return null;
+  if(radius>settlementFootprintCapacity(world,s.ownerId).maxRadius)return null;
   const members=new Set(s.tileIds);
   const contacts=neighbors4(tid,world.size,world.height).filter(id=>members.has(id)).length;
   if(!contacts)return null;
@@ -5451,14 +5467,24 @@ function settlementExpansionCandidate(world,s,tid,demand=null){
   else if(need.shortages.iron&&['rock','mountain'].includes(tile.terrain))value+=12;
   else if(need.occupancy>=.85)value+=tile.terrain==='plain'||tile.terrain==='grass'?6:2;
   const score=50+15*(contacts-1)-8*Math.max(0,radius-2)+Math.min(20,value);
-  return {contacts,radius,value:Math.min(20,value),score,gold:15+(contacts===1?4:0)+(radius===4?5:0)};
+  return {contacts,radius,value:Math.min(20,value),score,gold:15+(contacts===1?4:0)+(radius>=4?5:0)+(radius>=5?3*(radius-4):0)};
 }
 
+/** Match executeNationAction's primary/secondary selection before checking radii. */
+function settlementMergePrimary(world,a,b){
+  const nation=world.nations[a.ownerId];
+  return a.coreTileId===nation?.capitalId?a:b.coreTileId===nation?.capitalId?b:
+    (a.formerCapitalOf?.length||0)?a:(b.formerCapitalOf?.length||0)?b:a;
+}
 function settlementMergeAssessment(world,a,b){
-  if(!a||!b||a.id===b.id||a.ownerId!==b.ownerId||a.tileIds.length+b.tileIds.length>13)return null;
+  if(!a||!b||a.id===b.id||a.ownerId!==b.ownerId)return null;
+  const cap=settlementFootprintCapacity(world,a.ownerId);
+  if(a.tileIds.length+b.tileIds.length>cap.maxTiles)return null;
   if((a.formerCapitalOf?.length||0)&&(b.formerCapitalOf?.length||0))return null;
+  const primary=settlementMergePrimary(world,a,b);
   const coreDistance=footprintDistance(a.coreTileId,b.coreTileId,world.size);
-  if(coreDistance>4)return null;
+  if(coreDistance>cap.maxRadius)return null;
+  if([...a.tileIds,...b.tileIds].some(id=>footprintDistance(id,primary.coreTileId,world.size)>cap.maxRadius))return null;
   const bTiles=new Set(b.tileIds);
   let sharedEdges=0;
   for(const tid of a.tileIds)for(const nid of neighbors4(tid,world.size,world.height))if(bTiles.has(nid))sharedEdges++;
@@ -11282,8 +11308,7 @@ function executeNationAction(world,nationId,action){
     case 'MERGE_SETTLEMENTS':{
       const other=findSettlement(world,action.otherSettlementId);
       // Preserve capital and otherwise the larger/older center.
-      const primary=s.coreTileId===n.capitalId?s:other.coreTileId===n.capitalId?other:
-        s.formerCapitalOf.length?s:other.formerCapitalOf.length?other:s;
+      const primary=settlementMergePrimary(world,s,other);
       const secondary=primary===s?other:s;
       const housingBefore=settlementHousing(world,primary)+settlementHousing(world,secondary);
       e1OnSettlementMerge(world,nationId,primary.id,secondary.id);
@@ -11570,7 +11595,7 @@ function candidatesForNation(world,n,territory,recovery=null){
   for(const s of world.settlements){
     if(s.ownerId!==n.id)continue;
     if(s.development<100)out.push({action:{type:'DEVELOP_SETTLEMENT',settlementId:s.id},utility:.92+(100-s.development)/240+(Math.min(150,s.population)/700)});
-    if(s.tileIds.length<13){
+    if(s.tileIds.length<settlementFootprintCapacity(world,n.id).maxTiles){
       const demand=settlementExpansionDemand(world,s,forecast,siteUsage);
       territory.footprintDemands.set(s.id,demand);
       if(demand.needed){
@@ -11732,7 +11757,8 @@ function v07c3DevelopmentDiagnosis(w,n,q=null,siteUsage=null){
   const counts={local:localTypes,nation:nationTypes};
   const cap=v07dWorkshopCap(w,n);
   const foodCover=n.resources.food/required;
-  const eligible=foodRatioSafeForWorkshop(forecast,n);
+  const foodGate=v07f1c1WorkshopFoodGate(forecast,n,w);
+  const eligible=foodGate.eligible;
   let openSites=0,riverOpen=0,surplusSites=0,riverSurplus=0;
   for(const s of owned){
     const town=byTown.get(s.id)||[];
@@ -11760,23 +11786,53 @@ function v07c3DevelopmentDiagnosis(w,n,q=null,siteUsage=null){
   if(workshops.length>=cap)codes.push('WORKSHOP_CAP_REACHED');
   if(forecast.produced.food<forecast.foodConsumed*.98)codes.push('FOOD_OUTPUT_DEFICIT');
   if(n.foodPressure<.95)codes.push('FOOD_PRESSURE');
-  if(n.resources.food<forecast.foodConsumed*2)codes.push('FOOD_RESERVE_SHORTAGE');
+  if(!eligible&&n.resources.food<forecast.foodConsumed*2)codes.push('FOOD_RESERVE_SHORTAGE');
+  if(!eligible&&n.resources.food>=forecast.foodConsumed&&n.resources.food<forecast.foodConsumed*2&&!foodGate.historyHealthy)codes.push('FOOD_STABILITY_4Q');
   if(n.resources.wood<=Math.max(100,forecast.produced.wood*3)||n.resources.iron<=Math.max(40,forecast.produced.iron*3))codes.push('RESOURCE_SHORTAGE');
   if(n.gold<=Math.max(1500,(forecast.upkeep+forecast.civil.total)*4))codes.push('TREASURY_SHORTAGE');
   if(!openSites&&!surplusSites)codes.push('NO_WORKSHOP_SITE');
   const readiness=v07cEarlyModernReadiness(w,n);
   return {tech:readiness.tech,academy:readiness.academy,workshop:readiness.workshop,ready:readiness.ready,
     built:workshops.length,cap,foodProduced:forecast.produced.food,foodConsumed:forecast.foodConsumed,
-    foodStock:n.resources.food,foodCover,foodRequired:forecast.foodConsumed*2,foodPressure:n.foodPressure,
+    foodStock:n.resources.food,foodCover,foodRequired:forecast.foodConsumed*(foodGate.stable?1:2),foodPressure:n.foodPressure,foodPath:foodGate.path,foodHistoryCount:foodGate.historyCount,foodHistoryHealthy:foodGate.historyHealthy,
     openSites,surplusSites,riverOpen,riverSurplus,eligible,blockers:codes};
 }
 const V07C3_DEVELOPMENT_REASON=Object.freeze({
  TECH_MISSING:'길드 조직 미연구',WORKSHOP_CAP_REACHED:'국가 공방 수 상한',
  FOOD_OUTPUT_DEFICIT:'식량 분기 생산 부족',FOOD_PRESSURE:'식량 압박 심화',
- FOOD_RESERVE_SHORTAGE:'식량 비축 2분기 미달',RESOURCE_SHORTAGE:'목재·철 착공 자원 부족',
+ FOOD_RESERVE_SHORTAGE:'식량 비축 2분기 미달',FOOD_STABILITY_4Q:'최근 4분기 식량 안정 조건 미달',RESOURCE_SHORTAGE:'목재·철 착공 자원 부족',
  TREASURY_SHORTAGE:'건설 자금 부족',NO_WORKSHOP_SITE:'합법적 신축·재개발 부지 없음'});
 
-function foodRatioSafeForWorkshop(q,n){return q.foodConsumed<=0||q.produced.food>=q.foodConsumed*.98&&n.foodPressure>=.95&&n.resources.food>=q.foodConsumed*2;}
+/** F1C1: keep the original 2Q food gate, and add a conservative 1Q/4Q-history path.
+ * History is existing quarter telemetry, never synthesized; four consecutive
+ * records are required and must end at the current or preceding quarter.
+ */
+function v07f1c1WorkshopFoodGate(q,n,world=null){
+  const c=Math.max(0,q.foodConsumed||0),produced=Math.max(0,q.produced?.food||0);
+  const strict=c===0||produced>=c*.98&&n.foodPressure>=.95&&n.resources.food>=c*2;
+  const history=n.economicRecovery?.history||[];
+  const now=world?.dayIndex;
+  const four=history.length>=4?history.slice(-4):[];
+  const contiguous=four.length===4&&four.every((h,i)=>Number.isInteger(h.dayIndex)&&
+    (i===0||h.dayIndex-four[i-1].dayIndex===30)&&
+    (i!==3||now===undefined||now-h.dayIndex>=0&&now-h.dayIndex<=30));
+  const healthy=contiguous&&four.every(h=>{
+    const f=h.goods?.food;return f&&Number.isFinite(f.produced)&&Number.isFinite(f.consumed)&&
+      f.consumed>=0&&(f.consumed===0||f.produced>=f.consumed*.98);
+  });
+  const stable=Boolean(!strict&&c>0&&produced>=c&&n.foodPressure>=.98&&
+    n.resources.food>=c&&healthy);
+  return {eligible:strict||stable,path:strict?'NORMAL_2Q':stable?'STABLE_FOOD_4Q':'BLOCKED',
+    strict,stable,historyCount:four.length,historyHealthy:!!healthy,reserveQuarters:c>0?n.resources.food/c:Infinity};
+}
+function foodRatioSafeForWorkshop(q,n,world=null){return v07f1c1WorkshopFoodGate(q,n,world).eligible;}
+function v07f1c1TownWorkshopSafe(world,s,n,q,buildings){
+  if(!s||s.population>settlementHousing(world,s)*1.02)return false;
+  if(!buildings.some(b=>b.typeId==='farm'&&b.status==='ACTIVE'&&!b.disconnected&&world.tiles[b.tileId]?.ownerId===n.id))return false;
+  const local=q.regionalEconomy?.towns?.get(s.id);
+  if(!local)return false;
+  return local.demand<=0||local.workers>=local.demand*.65;
+}
 function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
   const candidates=[],q=forecast||projectedQuarter(world,n),reserve=n.resources,p=d1dEffectiveProfile(world,n.id);
   const structures=allStructures(world),byTown=new Map(),byTownType=new Map(),activeByTownType=new Map(),v07c3LocalTypes=new Map(),v07c3NationTypes=new Map();
@@ -11800,8 +11856,9 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
   const barracksCount=v04e1ReservedBarracks(world,n.id).length;
   const workshopCount=world.buildings.filter(b=>b.typeId==='workshop'&&world.tiles[b.tileId]?.ownerId===n.id).length;
   const workshopCap=v07dWorkshopCap(world,n);
+  const f1c1FoodGate=v07f1c1WorkshopFoodGate(q,n,world);
   const workshopEligible=hasTech(world,n.id,'guild_organization')&&workshopCount<workshopCap&&
-    foodRatioSafeForWorkshop(q,n)&&reserve.wood>Math.max(100,q.produced.wood*3)&&reserve.iron>Math.max(40,q.produced.iron*3)&&
+    f1c1FoodGate.eligible&&reserve.wood>Math.max(100,q.produced.wood*3)&&reserve.iron>Math.max(40,q.produced.iron*3)&&
     n.gold>Math.max(1500,(q.upkeep+q.civil.total)*4);
   const barracksMil=p.military?.militaryInvestment??50;
   const barracksHealth=q.goldIncome-q.upkeep-q.civil.total;
@@ -11838,7 +11895,7 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
           case 'mine':utility=(.25+Math.max(0,1-reserve.iron/70)*1.1)*resourceUrgency('iron');break;
           case 'fort':utility=0;break; // F3D: produced only by strategicFortCandidates.
           case 'academy':utility=.22+((n.researchLevel<100)?(.15+n.researchLevel/500):.04);break;
-          case 'workshop':utility=workshopEligible&&!(byTownType.get(s.id+':workshop')||0)&&
+          case 'workshop':utility=workshopEligible&&(!f1c1FoodGate.stable||v07f1c1TownWorkshopSafe(world,s,n,q,townBuildings))&&!(byTownType.get(s.id+':workshop')||0)&&
             (t.roadLevel>0||world.tiles[s.coreTileId]?.roadLevel>0||local?.roadNetwork)?
               (2.0+Math.min(.5,(n.gold-1000)/10000))*v07c3WorkshopPowerPreference(world,n.id,tid):0;break;
           case 'barracks':utility=barracksEligible&&v04e1BarracksSlotAvailable(world,n.id,s.id)?(.30+barracksMil/100*1.35+(atWar?.20:0))*Math.min(1.3,Math.max(.3,(militaryStrengthTarget(world,n.id)-activeManpower(world,n.id))/Math.max(1,militaryStrengthTarget(world,n.id)))):0;break;
@@ -11951,7 +12008,7 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
   // chosen surplus house to become a guild workshop, never evict residents.
   if(workshopEligible&&hasTech(world,n.id,'urban_redevelopment')){
     for(const s of world.settlements){
-      if(s.ownerId!==n.id||(byTownType.get(s.id+':workshop')||0)>0)continue;
+      if(s.ownerId!==n.id||(byTownType.get(s.id+':workshop')||0)>0||f1c1FoodGate.stable&&!v07f1c1TownWorkshopSafe(world,s,n,q,byTown.get(s.id)||[]))continue;
       const housing=settlementHousing(world,s);
       // Only surplus *housing* needs the strict occupancy gate; converting a
       // redundant lumber/quarry/mine/academy never removes a house.
@@ -15683,7 +15740,7 @@ function validateWorld(w){
   const sMap=new Map(),member=new Set();
   if(!Array.isArray(w.settlements)||w.settlements.length>w.tiles.length)fail('정착지 수');
   for(const s of w.settlements){
-    if(!Number.isInteger(s.id)||sMap.has(s.id)||!nations.get(s.ownerId)?.active||!Array.isArray(s.tileIds)||s.tileIds.length<1||s.tileIds.length>13||!s.tileIds.includes(s.coreTileId)||new Set(s.tileIds).size!==s.tileIds.length)fail('정착지');
+    if(!Number.isInteger(s.id)||sMap.has(s.id)||!nations.get(s.ownerId)?.active||!Array.isArray(s.tileIds)||s.tileIds.length<1||s.tileIds.length>19||!s.tileIds.includes(s.coreTileId)||new Set(s.tileIds).size!==s.tileIds.length)fail('정착지');
     if(!Number.isInteger(s.population)||s.population<0||!Number.isFinite(s.development)||s.development<0||s.development>100||
       !Number.isSafeInteger(s.inheritedHousing||0)||(s.inheritedHousing||0)<0)fail('인구·발전');
     if(typeof s.name!=='string'||!s.name.trim()||!nations.has(s.founderNationId)||!Array.isArray(s.formerCapitalOf)||
@@ -15862,14 +15919,14 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
- const f1NativeSave=['V0.7F1','V0.7F1A','V0.7F1B'].includes(parsed?.version);
- const e3e2NativeSave=['V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B'].includes(parsed?.version);
- const accepted=['V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=['V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1'].includes(parsed?.version);
+ const e3e2NativeSave=['V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1'].includes(parsed?.version);
+ const accepted=['V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
-   throw Error('지원하지 않는 저장 버전입니다 (V0.7F1B~기존 지원 버전 호환).');
+   throw Error('지원하지 않는 저장 버전입니다 (V0.7F1C1~기존 지원 버전 호환).');
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -18580,7 +18637,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v07f1b-world';
+const SAVE_KEY='vilob-light-v07f1c1-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -18592,7 +18649,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -18710,7 +18767,7 @@ details[details.length-1].append(make('small',{text:grouping}));
         ['철',number.format(nation.resources.iron),`분기 +${econ.produced.iron}`]
       ].map(([key,value,sub])=>make('div',{class:'economy-item'},[make('small',{text:key}),make('strong',{text:value}),make('small',{text:sub})]))),
       make('div',{text:`국제 교역: ${partners.length?partners.map(v=>`${v.other.name} (분기 수송 ${v.route.capacity})`).join(' · '):'현재 연결된 교역 상대 없음'}`}),
-      make('div',{text:`정착지 편제 ${nation.settlementIds.length}/${cap.limit}개 · 기술 정착 밀도 +${Math.round(cap.bonus*100)}%`}),
+      make('div',{text:`정착지 편제 ${nation.settlementIds.length}/${cap.limit}개 · 기술 정착 밀도 +${Math.round(cap.bonus*100)}% · 정착지 크기 ${settlementFootprintCapacity(app.world,nation.id).maxTiles}타일 / 반경 ${settlementFootprintCapacity(app.world,nation.id).maxRadius}`}),
       make('div',{text:`도로 ${roads.roadTiles}타일(개선 ${roads.upgradedTiles}) · 정착지 연결 ${roads.connected}쌍 · 연결망 ${roads.networks.filter(v=>v.cores.length>=2).length}개 · 행정 효율 ${(cohesion.efficiency*100).toFixed(1)}% · 국경 부담 ${(cohesion.borderPenalty*100).toFixed(1)}% · 거리 부담 ${(cohesion.distancePenalty*100).toFixed(1)}% · 식량 충족 ${(nation.foodPressure*100).toFixed(0)}%`})]));
   }else{
     const frontier=app.world.nations.map(n=>({nation:n,claim:getClaimCost(app.world,n.id,t.id)})).filter(v=>v.claim);
@@ -19192,10 +19249,10 @@ function renderNationOverview(){
   const c3diag=v07c3DevelopmentDiagnosis(w,n,econ);
   const c3reason=c3diag.blockers.map(code=>V07C3_DEVELOPMENT_REASON[code]||code).join(' · ');
   const c3development=make('section',{class:'overview-section', 'aria-label':'근세 개발 장애 진단'},[
-    make('h3',{text:'V0.7D · 도시 건설·근세 발전 진단'}),
+    make('h3',{text:'F1C1 · 도시 건설·근세 발전 진단'}),
     make('div',{class:'muted-line',text:`일반 시설 슬롯: 타일당 기본 ${BUILDING_TILE_SLOTS} + 연구 보너스 ${generalTileSlotLimit(w,n.id)-BUILDING_TILE_SLOTS} = 최대 ${generalTileSlotLimit(w,n.id)}칸 · 신규 기술 도시 복합 건축 ${hasTech(w,n.id,'mixed_use_construction')?'연구 완료':'미연구'}`}),
     make('div',{class:'muted-line',text:`근세 진입 조건 · ${c3diag.tech?'✓':'○'} 활판 인쇄 · ${c3diag.academy?'✓':'○'} 가동 학술원 · ${c3diag.workshop?'✓':'○'} 가동 공방`}),
-    make('div',{class:'muted-line',text:`공방 ${c3diag.built}/${c3diag.cap}개 · 식량 생산/소비 ${number.format(c3diag.foodProduced)} / ${number.format(c3diag.foodConsumed)} · 비축 ${c3diag.foodCover.toFixed(2)}분기 / 필요 2.00분기 · 식량 압박 ${c3diag.foodPressure.toFixed(2)}`}),
+    make('div',{class:'muted-line',text:`공방 ${c3diag.built}/${c3diag.cap}개 · 식량 생산/소비 ${number.format(c3diag.foodProduced)} / ${number.format(c3diag.foodConsumed)} · 비축 ${c3diag.foodCover.toFixed(2)}분기 / 현재 경로 필요 ${(c3diag.foodRequired/Math.max(1,c3diag.foodConsumed)).toFixed(2)}분기 · ${c3diag.foodPath} · 식량 압박 ${c3diag.foodPressure.toFixed(2)}`}),
     make('div',{class:'muted-line',text:`합법적 공방 부지: 신축 ${c3diag.openSites}곳(강변 ${c3diag.riverOpen}) · 안전 재개발 ${c3diag.surplusSites}곳(강변 ${c3diag.riverSurplus})`}),
     make('div',{class:'muted-line',text:c3diag.blockers.length?`공방 개발 제한: ${c3reason}`:'공방 개발 조건 충족 · 실제 착공은 국가 AI 평가와 자재/AP에 따름'}),
     make('div',{class:'muted-line',text:`공방 동력: 기초 기계동력 ${hasTech(w,n.id,'basic_mechanical_power')?'연구 완료':'미연구'} · 강변 ×${v07dWorkshopPowerFactors(w,n.id).watermill.toFixed(2)} / 대체 ×${v07dWorkshopPowerFactors(w,n.id).alternative.toFixed(2)} · 최근 수차 ${n.lastQuarter?.workshop?.watermills||0}개 · 대체 ${n.lastQuarter?.workshop?.alternativePower||0}개 · 공방 Lv.3 ${w.buildings.filter(b=>b.typeId==='workshop'&&b.level===3&&w.tiles[b.tileId]?.ownerId===n.id).length}개`})
@@ -19252,10 +19309,11 @@ function renderNationOverview(){
   const places=make('section',{class:'overview-section'},[make('h3',{text:`정착지 · ${settlements.length} / ${townCapacity.limit}개`})]);
   places.append(make('div',{class:'muted-line',text:'F1 · 지역 시설 생산 전망 (분기 기준) · 노동 가동률·발전도·도로 반영 · 전국 기초 채집 및 기술 보너스 별도 · 정착지 재고 없음'}));
   places.append(make('div',{class:'muted-line',text:`국가 분기 예상 (기술·기초 채집 포함) · 식량 +${econ.produced.food} / 소비 -${econ.foodConsumed} · 목재 +${econ.produced.wood} · 석재 +${econ.produced.stone} · 철 +${econ.produced.iron} · 연구 +${econ.knowledgeIncome}`}));
-  places.append(make('div',{class:'muted-line',text:`D5A · 소유 영토 ${townCapacity.ownedCount}타일 · 기본 간격 ${townCapacity.spacing}타일 · 기술 밀도 +${Math.round(townCapacity.bonus*100)}% · 신규 설립 여유 ${Math.max(0,townCapacity.limit-settlements.length)}개`}));
+  const f1c1Footprint=settlementFootprintCapacity(w,n.id);
+  places.append(make('div',{class:'muted-line',text:`F1C1 · 소유 영토 ${townCapacity.ownedCount}타일 · 간격 ${townCapacity.spacing}타일 · 기술 밀도 +${Math.round(townCapacity.bonus*100)}% · 신규 설립 여유 ${Math.max(0,townCapacity.limit-settlements.length)}개 · 정착지 상한 ${f1c1Footprint.maxTiles}타일 / 중심 반경 ${f1c1Footprint.maxRadius}`}));
   for(const settlement of settlements){
     const row=make('div',{class:'nation-action-row'},[
-      make('div',{},[make('strong',{text:settlementDisplayName(w,settlement)+(settlement.coreTileId===n.capitalId?' ♛':'')}),make('div',{class:'muted-line',text:`인구 ${number.format(settlement.population)} / 주거 ${number.format(settlementHousing(w,settlement))} · 발전 ${settlement.development} · ${settlement.level}단계`})])]);
+      make('div',{},[make('strong',{text:settlementDisplayName(w,settlement)+(settlement.coreTileId===n.capitalId?' ♛':'')}),make('div',{class:'muted-line',text:`인구 ${number.format(settlement.population)} / 주거 ${number.format(settlementHousing(w,settlement))} · 발전 ${settlement.development} · ${settlement.level}단계 · 면적 ${settlement.tileIds.length}/${f1c1Footprint.maxTiles}타일 · 현재 반경 ${Math.max(0,...settlement.tileIds.map(id=>footprintDistance(id,settlement.coreTileId,w.size)))}/${f1c1Footprint.maxRadius}`})])]);
     const facility=settlementBuildings(w,settlement.id),summary={};
     for(const b of facility)summary[b.typeId]=(summary[b.typeId]||0)+1;
     row.firstChild.append(make('div',{class:'muted-line',text:facility.length?`시설 ${facility.length}개 · ${Object.entries(summary).map(([type,count])=>`${BUILDINGS[type]?.label||type} ${count}`).join(' · ')}`:'시설 없음'}));
