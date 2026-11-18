@@ -1798,12 +1798,51 @@ function startRetreat(world,army,initialTroops,battleTile){
 }
 // F3H1: Keep 1:1 combat byte-for-byte in the legacy round branch. Additional armies
 // participate only when physically assembled on the appropriate side's tile.
+// V0.8H: armored-front support is a pure, derived stability value; NO troop counts,
+// combat damage budgets, vehicle inventory, crew pools or RNG are modified here.
+function v08hArmoredFrontSupport(w,a){
+ if(!w||!a?.v08fTankIds?.length)return 0;
+ let result=0;
+ for(const t of v08fTanks(w,a)){
+  if(!v08fReady(w,a,t))continue;
+  result+=t.hp>=71?25:t.hp>=36?15:5;
+ }
+ return result;
+}
+function v08hFront(w,a,m=null){
+ const baseline=hFrontCount(w,a);
+ return baseline+(m?.v08hFrontVersion===1?v08hArmoredFrontSupport(w,a):0);
+}
+function v08hFrontThreshold(m){return Math.max(1,m?.initialFront||1)*.40;}
+function v08hStable(w,a,m){
+ if(m?.frontBroken)return false;
+ const baseline=Math.max(1,m?.initialFront||1);
+ // The no-tank case retains the old SUSTAINED firing formula exactly.
+ const oldThreshold=Math.max(1,Math.floor(baseline*.40));
+ const current=v08hFront(w,a,m);
+ if(current<=oldThreshold)return false;
+ // A tank cannot independently keep the infantry rear fire corridor open.
+ // This gate is applied only to H8 armored formations; dormant/no-tank worlds are unchanged.
+ if(m?.v08hFrontVersion===1&&m.v08hInitialTankSupport>0&&deployedManpower(a,'front')<=0)return false;
+ return true;
+}
+function v08hFrontStats(w,a){
+ const humans=deployedManpower(a,'front');
+ const machines=hPositionQty(w,a,'front',true);
+ const armor=v08hArmoredFrontSupport(w,a);
+ return {humans,machines,armor,effective:humans+machines+armor,readyTanks:v08fAlive(w,a).length};
+}
 const H1_FRONT_CAP={plain:350,grass:350,forest:250,rock:220,mountain:180};
 const h1Army=(w,id)=>w.armies.find(a=>a.id===id);
-function h1Member(w,a,joinedRound=0){hPromoteMachineFront(w,a);return {armyId:a.id,joinedDay:w.dayIndex,joinedRound,initialManpower:hCombatPresence(w,a),initialFront:hFrontCount(w,a),frontBroken:false};}
+function h1Member(w,a,joinedRound=0){
+ hPromoteMachineFront(w,a);
+ const armor=v08hArmoredFrontSupport(w,a);
+ return {armyId:a.id,joinedDay:w.dayIndex,joinedRound,initialManpower:hCombatPresence(w,a),
+   initialFront:hFrontCount(w,a)+armor,v08hFrontVersion:1,v08hInitialTankSupport:armor,frontBroken:false};
+}
 function h1EnsureMembers(w,e){
-  if(!Array.isArray(e.attackers))e.attackers=[{armyId:e.attackerArmyId,joinedDay:e.startedDay,initialManpower:e.initialManpowerA,initialFront:e.initialFrontA,frontBroken:!!e.frontBrokenA}];
-  if(!Array.isArray(e.defenders))e.defenders=[{armyId:e.defenderArmyId,joinedDay:e.startedDay,initialManpower:e.initialManpowerB,initialFront:e.initialFrontB,frontBroken:!!e.frontBrokenB}];
+  if(!Array.isArray(e.attackers))e.attackers=[{armyId:e.attackerArmyId,joinedDay:e.startedDay,initialManpower:e.initialManpowerA,initialFront:e.initialFrontA,frontBroken:!!e.frontBrokenA,...(e.v08hFrontVersion===1?{v08hFrontVersion:1,v08hInitialTankSupport:e.v08hInitialTankSupportA||0}:{})}];
+  if(!Array.isArray(e.defenders))e.defenders=[{armyId:e.defenderArmyId,joinedDay:e.startedDay,initialManpower:e.initialManpowerB,initialFront:e.initialFrontB,frontBroken:!!e.frontBrokenB,...(e.v08hFrontVersion===1?{v08hFrontVersion:1,v08hInitialTankSupport:e.v08hInitialTankSupportB||0}:{})}];
   e.attackerOriginTileId??=h1Army(w,e.attackerArmyId)?.tileId??e.tileId;
   e.attackerNationId??=h1Army(w,e.attackerArmyId)?.nationId;
   e.defenderNationId??=h1Army(w,e.defenderArmyId)?.nationId;
@@ -1866,7 +1905,7 @@ function h1Deployment(w,e,side,phase){
   const members=h1Live(w,e,side);
   const shooters=phase==='SUSTAINED'?members.filter(m=>{
     const a=h1Army(w,m.armyId);
-    return !m.frontBroken&&hFrontCount(w,a)>Math.max(1,Math.floor(Math.max(1,m.initialFront)*.40));
+    return v08hStable(w,a,m);
   }):members;
   return h1DeploymentFromArmies(w,shooters.map(m=>h1Army(w,m.armyId)),phase,side==='defenders',e.tileId);
 }
@@ -1927,7 +1966,7 @@ function v07f2c2c2RangedTargets(w,e,side){
 function h1Reinforce(e,m,a,w=null){
   const baseline=Math.max(1,m.initialFront||1),threshold=baseline*.40;
   let added=0,broken=false;
-  const currentFront=()=>w?hFrontCount(w,a):deployedManpower(a,'front');
+  const currentFront=()=>w?v08hFront(w,a,m):deployedManpower(a,'front');
   if(currentFront()<=threshold&&deployedManpower(a,'reserve')>0){
     for(const id of a.deployment.reserve.slice()){
       const unit=a.units.find(u=>u.id===id);if(!unit?.manpower)continue;
@@ -2117,7 +2156,7 @@ function h1ResolveMulti(w,e){
       const change=h1Reinforce(e,m,a,w);reinforces[si]+=change.added;machineAdvances[si]+=change.machineAdvanced||0;collapsed[si]+=Number(change.broken);
     }
     const allocA=h1Deployment(w,e,'attackers',phase),allocB=h1Deployment(w,e,'defenders',phase);
-    const observation=v07d2Traces.get(w)?.enabled?v07d2PhaseBegin(w,e,phase,sides.map((side,i)=>({side,allocation:i?allocB:allocA,members:h1Live(w,e,side).map(m=>({army:h1Army(w,m.armyId),broken:m.frontBroken,stable:!m.frontBroken&&hFrontCount(w,h1Army(w,m.armyId))>Math.max(1,Math.floor(Math.max(1,m.initialFront)*.40))}))}))):null;
+    const observation=v07d2Traces.get(w)?.enabled?v07d2PhaseBegin(w,e,phase,sides.map((side,i)=>({side,allocation:i?allocB:allocA,members:h1Live(w,e,side).map(m=>({army:h1Army(w,m.armyId),broken:m.frontBroken,stable:v08hStable(w,h1Army(w,m.armyId),m)}))}))):null;
     const ammoA=new Map(),ammoB=new Map();
     if(phase==='OPENING'||phase==='SUSTAINED'||(G4_COMBAT_ENABLED&&phase==='MELEE')){
       for(const m of h1Live(w,e,'attackers')){const a=h1Army(w,m.armyId);ammoA.set(m.armyId,{human:v07cVolleyCheck(w,a,allocA,e.warId),machine:hVolley(w,a,phase,e.warId,allocA)});}
@@ -2162,6 +2201,12 @@ function h1ResolveMulti(w,e){
       aPower:Math.round(powerA),bPower:Math.round(powerB),reinforcementA:reinforces[0],reinforcementB:reinforces[1],machineAdvanceA:machineAdvances[0],machineAdvanceB:machineAdvances[1],
       collapseA:collapsed[0],collapseB:collapsed[1],aMachineHits:machineHitsA,bMachineHits:machineHitsB,aFront:sideMen('attackers','front'),aRear:sideMen('attackers','rear'),aReserve:sideMen('attackers','reserve'),aMachineFront:sideMachines('attackers','front'),aMachineRear:sideMachines('attackers','rear'),
       bFront:sideMen('defenders','front'),bRear:sideMen('defenders','rear'),bReserve:sideMen('defenders','reserve'),bMachineFront:sideMachines('defenders','front'),bMachineRear:sideMachines('defenders','rear'),perArmyLosses:lossByArmy,
+      v08hArmorA:h1Live(w,e,'attackers').reduce((s,m)=>s+(m.v08hFrontVersion===1?v08hArmoredFrontSupport(w,h1Army(w,m.armyId)):0),0),
+      v08hArmorB:h1Live(w,e,'defenders').reduce((s,m)=>s+(m.v08hFrontVersion===1?v08hArmoredFrontSupport(w,h1Army(w,m.armyId)):0),0),
+      v08hEffectiveFrontA:h1Live(w,e,'attackers').reduce((s,m)=>s+v08hFront(w,h1Army(w,m.armyId),m),0),
+      v08hEffectiveFrontB:h1Live(w,e,'defenders').reduce((s,m)=>s+v08hFront(w,h1Army(w,m.armyId),m),0),
+      v08hReadyTanksA:h1Live(w,e,'attackers').reduce((s,m)=>s+v08fAlive(w,h1Army(w,m.armyId)).length,0),
+      v08hReadyTanksB:h1Live(w,e,'defenders').reduce((s,m)=>s+v08fAlive(w,h1Army(w,m.armyId)).length,0),
       deployedA:allocA.reduce((v,x)=>v+x.men,0),deployedB:allocB.reduce((v,x)=>v+x.men,0),
       xpParticipation:[...allocA,...allocB].filter(x=>x.men>0).map(x=>[x.armyId,x.men])});
     v07d2PhaseEnd(w,observation,{attackers:powerA,defenders:powerB});
@@ -2286,7 +2331,8 @@ function startEngagement(world,attacker,defender,tileId,warId){
   const e={id:world.nextEngagementId++,warId,tileId,attackerArmyId:attacker.id,defenderArmyId:defender.id,round:0,
     nextRoundDay:world.dayIndex+2,history:[],startedDay:world.dayIndex,
     initialManpowerA:hCombatPresence(world,attacker),initialManpowerB:hCombatPresence(world,defender),
-    initialFrontA:hFrontCount(world,attacker),initialFrontB:hFrontCount(world,defender),
+    initialFrontA:hFrontCount(world,attacker)+v08hArmoredFrontSupport(world,attacker),initialFrontB:hFrontCount(world,defender)+v08hArmoredFrontSupport(world,defender),
+    v08hFrontVersion:1,v08hInitialTankSupportA:v08hArmoredFrontSupport(world,attacker),v08hInitialTankSupportB:v08hArmoredFrontSupport(world,defender),
     frontBrokenA:false,frontBrokenB:false};
   world.engagements.push(e);
   for(const a of [attacker,defender]){a.engagementId=e.id;a.status='ENGAGED';a.order=null;}

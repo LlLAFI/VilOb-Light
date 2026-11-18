@@ -1806,6 +1806,7 @@ function c3TakeLoss(u,amount,politicalReason='OTHER',politicalDay=null){
  d1cObserveLoss(u,lost,politicalReason,politicalDay);c3RefreshUnit(u);return removed;
 }
 function c3Reinforce(u,amount,w,nid){
+ if(u.typeId==='tank_crew')throw Error('V0.8G 전차 승무원은 TANK_CREW 전용 보충으로만 증원할 수 있습니다.');
  if(!Array.isArray(u.trainingBatches))c3InitUnit(u,w,nid);
  const req=u.trainingRequirementDays;
  u.manpower+=amount;
@@ -2092,10 +2093,10 @@ function reinforcementPlan(army,amount,unitId=null){
     for(const id of groupIds)ids.set(id,position);
   if(unitId!==null){
     const u=army.units.find(u=>u.id===unitId);
-    if(!u||!ids.has(unitId))return null;
+    if(!u||!ids.has(unitId)||u.typeId==='tank_crew')return null;
     return [{unitId:u.id,typeId:u.typeId,position:ids.get(u.id),amount}];
   }
-  const groups=army.units.filter(u=>ids.has(u.id));
+  const groups=army.units.filter(u=>ids.has(u.id)&&u.typeId!=='tank_crew');
   if(!groups.length)return null;
   const shares=groups.map(u=>Math.max(1,u.allocationWeight??u.manpower));
   const sum=shares.reduce((a,b)=>a+b,0);
@@ -2403,11 +2404,69 @@ function v08fValidate(w){
  for(const [id,q] of Object.entries(s.stocks)){if(!w.nations[Number(id)]||!Number.isSafeInteger(q)||q<0)return false;stored+=q;}
  for(const a of w.armies){const ids=a.v08fTankIds||[];if(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.length>2||ids.some(id=>!s.vehicles.some(t=>t.id===id&&t.armyId===a.id)))return false;}
  for(const t of s.vehicles){const a=w.armies.find(a=>a.id===t.armyId);if(!a||t.nationId!==a.nationId||!a.v08fTankIds?.includes(t.id)||seen.has(t.id)||!Number.isSafeInteger(t.id)||t.id<1||t.id>=s.nextId||!Number.isSafeInteger(t.hp)||t.hp<=0||t.hp>100||typeof t.fueled!=='boolean'||!Number.isSafeInteger(t.lastServicedDay))return false;
-  seen.add(t.id);const crew=v08fCrew(a,t);if(!crew||crewUsed.has(crew.id)||crew.manpower<0||crew.manpower>6||!a.deployment.back.includes(crew.id))return false;crewUsed.add(crew.id);deployed++;
+  seen.add(t.id);const crew=v08fCrew(a,t);if(!crew||crewUsed.has(crew.id)||!Number.isSafeInteger(crew.manpower)||crew.manpower<0||crew.manpower>6||!a.deployment.back.includes(crew.id))return false;crewUsed.add(crew.id);deployed++;
  }
  // Crew groups can't exist without physical assigned vehicles; no duplicate crew registration.
  for(const a of w.armies)for(const u of a.units)if(u.typeId==='tank_crew'&&!crewUsed.has(u.id))return false;
  return stored+deployed+s.destroyed===s.produced;
+}
+
+
+// V0.8G: strict legacy-only repair of over-reinforced tank crew.
+// Reject ambiguous manpower, training or culture records instead of erasing the evidence.
+// No RNG, vehicle HP, battle history or physical stocks change.
+function v08gRepairLegacyCrew(w,sourceVersion){
+ if(sourceVersion!=='V0.8F'||!w.v08fArmor?.vehicles?.length)return [];
+ const pending=[];
+ for(const t of w.v08fArmor.vehicles){
+  const a=w.armies.find(a=>a.id===t.armyId),u=a&&v08fCrew(a,t);
+  if(!u||!(u.manpower>V08F_SPEC.crew))continue;
+  const n=w.nations[t.nationId];
+  const cultures=u.culturePopulation||{},cultureTotal=Object.values(cultures).reduce((v,x)=>v+x,0);
+  const originalWeight=u.allocationWeight??u.manpower;
+  const valid=a.nationId===t.nationId&&a.v08fTankIds?.includes(t.id)&&
+   a.deployment.back?.includes(u.id)&&Number.isSafeInteger(u.manpower)&&
+   u.trainedManpower===u.manpower&&Array.isArray(u.trainingBatches)&&!u.trainingBatches.length&&
+   Number.isSafeInteger(originalWeight)&&originalWeight>=0&&originalWeight<=150&&
+   Object.entries(cultures).every(([key,val])=>key&&Number.isSafeInteger(val)&&val>=0)&&
+   cultureTotal===u.manpower&&n?.military&&Number.isSafeInteger(n.military.reserveReady)&&
+   n.military.reserveReady>=0&&n.military.reserveCulturePopulation&&
+   Number.isSafeInteger(t.id)&&t.nationId===a.nationId;
+  if(!valid)throw Error(`V0.8G 승무원 복구 거부: 차량 #${t.id}의 초과 인원에 대한 근거가 부족합니다.`);
+  const extra=u.manpower-V08F_SPEC.crew;
+  // Deterministic proportional culture take without modifying the source before all checks.
+  const remaining=extra,parts={};let left=remaining;
+  const entries=Object.entries(cultures).sort((x,y)=>x[0].localeCompare(y[0]));
+  for(const [key,count] of entries){const take=Math.floor(extra*count/u.manpower);parts[key]=take;left-=take;}
+  for(const [key,count] of entries){if(!left)break;const take=Math.min(left,count-parts[key]);parts[key]+=take;left-=take;}
+  if(left)throw Error('V0.8G 승무원 문화 인구 배분 오류');
+  pending.push({t,a,u,n,extra,parts});
+ }
+ if(!pending.length)return [];
+ // Preflight all reserve overflow and culture totals; no partial application.
+ for(const p of pending){
+  if(!Number.isSafeInteger(p.n.military.reserveReady+p.extra))throw Error('V0.8G 예비병 한도 오류');
+  for(const [key,count] of Object.entries(p.parts)){
+   const r=p.n.military.reserveCulturePopulation[key]??0;
+   if(!Number.isSafeInteger(r)||r<0||!Number.isSafeInteger(r+count))throw Error('V0.8G 예비병 문화 수량 오류');
+  }
+ }
+ const audit=[];
+ for(const p of pending){
+  p.u.manpower-=p.extra;p.u.trainedManpower-=p.extra;
+  // Dedicated vehicle crew is one group: do not subtract excess from its old AI weight.
+  p.u.allocationWeight=V08F_SPEC.crew;
+  for(const [key,count] of Object.entries(p.parts)){
+   p.u.culturePopulation[key]-=count;
+   if(!p.u.culturePopulation[key])delete p.u.culturePopulation[key];
+   p.n.military.reserveCulturePopulation[key]=(p.n.military.reserveCulturePopulation[key]??0)+count;
+  }
+  p.n.military.reserveReady+=p.extra;
+  c3RefreshUnit(p.u);
+  audit.push({dayIndex:w.dayIndex,vehicleId:p.t.id,armyId:p.a.id,nationId:p.n.id,returnedToReserve:p.extra,cultures:p.parts});
+ }
+ w.v08gCrewRepairAudit={schema:1,sourceVersion,entries:audit};
+ return audit;
 }
 
 // --- src/sim/military-policy.js ---
