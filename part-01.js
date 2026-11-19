@@ -1,6 +1,6 @@
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.8I'; // 0.8I: machine-gun suppression; V0.8H armored front and A-1R-H visuals preserved
+const VERSION = 'V0.9A'; // ancient coastwise naval hulls, ports and event-based fleets; V0.8J army/industry preserved
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2570,7 +2570,7 @@ function iDemand(b){
   const a=F2_FACTORY_LEVELS[b.level]||F2_FACTORY_LEVELS[1];
   return {coal:a.coal+(b.powerDevices?.steam?3:0),iron:a.iron,steel:0,machine_parts:0};
  }
- if(b.typeId==='steelworks')return {coal:5,iron:12,steel:0,machine_parts:1}; // maintenance reserve, 1 per 4 runs
+ if(b.typeId==='steelworks'){const spec=v08jSteelSpec(b.v08jSteelSupplyPlan&&b.level===1?2:b.level);return {coal:spec.coal,iron:spec.iron,steel:0,machine_parts:1};} // one physical maintenance part reserved
  if(b.typeId==='arsenal')return {coal:2,iron:6,steel:3,machine_parts:1};
  if(b.typeId==='steam_pump')return {coal:2,iron:0,steel:0,machine_parts:1};
  return {coal:0,iron:0,steel:0,machine_parts:0};

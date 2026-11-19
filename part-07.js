@@ -587,7 +587,8 @@ function buildingCandidates(world,n,recovery=null,forecast=null,siteUsage=null){
       if(b.settlementId!==s.id||b.status!=='ACTIVE'||b.disconnected||b.level>=maxBuildingLevel(b.typeId)||
          !g2LevelUnlocked(world,n.id,b.typeId,b.level+1)||world.tiles[b.tileId].occupiedBy!==null)continue;
       const kind=b.typeId,used=admitted.get(kind)||0;
-      if(kind==='factory')continue; // V0.7J: factory upgrades are handled exclusively by the F2 industrial planner.
+      if(kind==='factory'||kind==='steelworks')continue; // Industrial upgrades are handled by dedicated paid planners.
+      if(kind==='house'&&b.level===5&&n.v08jDevelopment?.lastHouseYear===Math.floor(world.dayIndex/120))continue;
       if(used>=4)continue;
       if(kind==='fort'&&b.level>=3&&!atWar)continue;
       if(kind==='academy'&&n.technology.unlocked.length===g4ResearchCount())continue;
@@ -3790,6 +3791,10 @@ function runQuarter(world){
   f1IndustryAIQuarter(world);
   i2AIQuarter(world);
   i3aAIQuarter(world);
+  // J: paid industrial investment can anticipate a factory upgrade; no free PU.
+  v08jIndustrialPowerAIQuarter(world);
+  v08jSteelAIQuarter(world);
+  navyAIQuarter(world); // paid naval founding before the civil AI exhausts AP
   const followUp=[];
   for(const n of world.nations){
     if(!n.active||n.controller!=='AI')continue;
@@ -3951,6 +3956,7 @@ if(!apRecord)continue; // E4B: a valid minor action may proceed without a primar
   refreshApCaps(world);
   processCivilizationEraQuarter(world);
   v06e7aQuarter(world);
+  navyQuarterUpkeep(world);
   if(h1dTelemetry.enabled){const t=performance.now(),q={dayIndex:world.dayIndex,totalMs:+(t-h1dPerfBegin).toFixed(2),preMilitaryMs:+(h1dPerfBeforeMilitary-h1dPerfBegin).toFixed(2),militaryMs:+(h1dPerfBeforeAuto-h1dPerfBeforeMilitary).toFixed(2),automatonMs:+(h1dPerfAfterAuto-h1dPerfBeforeAuto).toFixed(2),postMs:+(t-h1dPerfAfterAuto).toFixed(2)};h1dTelemetry.quarters++;h1dTelemetry.lastQuarterMs=q.totalMs;h1dTelemetry.maxQuarterMs=Math.max(h1dTelemetry.maxQuarterMs,q.totalMs);h1dTelemetry.samples.push(q);if(h1dTelemetry.samples.length>32)h1dTelemetry.samples.shift();}
 }
 /** E3 AI action: candidate selection only, uses the same paid SET_WORKSHOP_MODE. */
@@ -4034,9 +4040,10 @@ function advanceSimulation(world,days,entropySource=null){
     const nextMilitaryEvent=nextMilitaryDay(world);
     const nextFortEvent=nextFortProjectDay(world);
     const nextSpecialistEvent=c3NextTrainingDay(world);
+    const nextNavalEvent=navyNextDay(world);
     const fortIn=nextFortEvent-world.dayIndex;
     const militaryIn=nextMilitaryEvent-world.dayIndex;
-    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until);
+    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until,nextNavalEvent>world.dayIndex?nextNavalEvent-world.dayIndex:until);
     c3AdvanceTraining(world,jump);
     world.dayIndex+=jump;remaining-=jump;
     d1cPruneCommanderHistory(world); // H1: exact 360-day retention, even on non-quarter days.
@@ -4044,6 +4051,7 @@ function advanceSimulation(world,days,entropySource=null){
     completeRearming(world);
     g5RedeployFinish(world);
     hFinishRepairs(world);
+    navyProcessDay(world);
     const quarterBoundary=world.dayIndex%DAYS_PER_QUARTER===0;
     if(quarterBoundary){
       reseedAtBoundary(world,entropySource);

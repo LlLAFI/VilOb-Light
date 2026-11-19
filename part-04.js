@@ -548,6 +548,146 @@ function f2FactoryAIQuarter(w){
   }
  }
 }
+// --- V0.8J: Industrial investment, advanced housing and steel, armored AI ---
+// No new random draws, combat damage changes, or free resources.
+function v08jIndustrialPowerCandidate(w,n){
+ const last=n.f2jIndustry?.lastDecision;
+ if(last?.reason!=='GRID_SHORT'||last.dayIndex!==w.dayIndex)return {reason:'NO_CONFIRMED_FACTORY_DEMAND'};
+ const stock=f2c2cEnsure(n),hist=stock.history.slice(-8),runs=f2Ensure(n).history.slice(-8);
+ if(hist.length<8||runs.length<8||hist.filter(q=>q.partsActive&&q.endParts<q.partsTarget*.75).length<4)return {reason:'DEMAND_NOT_SUSTAINED'};
+ if(runs.filter(q=>q.sites>0&&q.operated>0).length<6)return {reason:'UTILIZATION_LOW'};
+ if(!f2c2BuildFoodGate(w,n).eligible)return {reason:'FOOD_RISK'};
+ const existing=w.buildings.filter(b=>b.typeId==='factory'&&w.tiles[b.tileId]?.ownerId===n.id);
+ if(existing.some(b=>['CONSTRUCTING','UPGRADING','REDEVELOPING'].includes(b.status)))return {reason:'FACTORY_PROJECT_PENDING'};
+ const active=existing.filter(b=>b.status==='ACTIVE'&&!b.disconnected);
+ const capacity=active.reduce((sum,b)=>sum+(F2_FACTORY_LEVELS[b.level]?.parts||0),0),demand=f2c2cRecentNeed(n,'machine_parts');
+ if(demand<=capacity*.9)return {reason:'CAPACITY_SUFFICIENT'};
+ const forecast=projectedQuarter(w,n),spec=F2_FACTORY_LEVELS[4];
+ let denied='FACTORY_NOT_READY';
+ for(const b of active.filter(b=>b.level===3&&g2LevelUnlocked(w,n.id,'factory',4)).sort((a,b)=>a.id-b.id)){
+  const site=w.settlements.find(s=>s.id===b.settlementId),local=forecast.regionalEconomy.towns.get(b.settlementId);
+  const workerPool=local&&site?Math.min(Math.floor(local.workers||0),site.population):0;
+  if(!local||!site||workerPool<spec.labor||local.demand>0&&workerPool/Math.max(1,local.demand)<.85){denied='LABOR_SHORT';continue;}
+  if(!local.roadNetwork&&w.tiles[b.tileId]?.roadLevel===0&&w.tiles[site.coreTileId]?.roadLevel===0){denied='ROUTE_BLOCKED';continue;}
+  const action={type:'UPGRADE_FACILITY',buildingId:b.id},price=getNationActionCost(w,n.id,action);
+  if(!price||!canExecuteNationAction(w,n.id,action)){denied='UPGRADE_UNAFFORDABLE';continue;}
+  if(n.gold<Math.max(18000,price.gold*3)||n.gold<price.gold+720){denied='FISCAL_RISK';continue;}
+  const reserve={iron:spec.iron*4,coal:spec.coal*4+12,machine_parts:1};
+  if(Object.entries(reserve).some(([g,amt])=>i1Available(w,n,b.settlementId,g)<amt)){denied='REGIONAL_INPUT_SHORT';continue;}
+  if(n.resources.iron<price.resources.iron+reserve.iron||n.resources.coal<reserve.coal){denied='NATIONAL_INPUT_SHORT';continue;}
+  const partsValue=(w.market?.prices?.machine_parts||30000)/1000,ironValue=(w.market?.prices?.iron||1000)/1000;
+  const woodValue=(w.market?.prices?.wood||1000)/1000,coalValue=(w.market?.prices?.coal||6000)/1000;
+  const prior=F2_FACTORY_LEVELS[3],marginal=(spec.parts-prior.parts)*partsValue-(spec.gold-prior.gold)
+    -(spec.iron-prior.iron)*ironValue-(spec.wood-prior.wood)*woodValue-(spec.coal-prior.coal)*coalValue;
+  if(marginal<=0||price.gold/marginal>80){denied='ROI_LOW';continue;}
+  const preview=f2jGridCapacityPreview(w,n,b,spec.pu);
+  if(preview.ready)return {reason:'ALREADY_POWERED',buildingId:b.id};
+  const missing=Math.max(0,preview.missing-preview.external);
+  if(!missing)return {reason:'ALREADY_POWERED',buildingId:b.id};
+  return {reason:'QUALIFIED',buildingId:b.id,settlementId:b.settlementId,missingPU:missing,
+   factoryDemand:demand,factoryCapacity:capacity,upgradeGold:price.gold,marginalGold:Math.round(marginal*100)/100};
+ }
+ return {reason:denied};
+}
+function v08jIndustrialPowerAIQuarter(w){
+ if(w.dayIndex%120!==0)return;
+ for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
+  const record=n.v08jDevelopment??=( {} );
+  const plan=v08jIndustrialPowerCandidate(w,n),diag={dayIndex:w.dayIndex,...plan};
+  record.power=diag;
+  if(plan.reason!=='QUALIFIED')continue;
+  const site=w.settlements.find(s=>s.id===plan.settlementId),station=i2Station(w,plan.settlementId);
+  if(!site||!hasTech(w,n.id,'power_transmission')){diag.reason='STATION_TECH_OR_SITE_BLOCKED';continue;}
+  // One real construction action / evaluation, and never build a second plant on the same site.
+  const existing=i3aPlant(w,plan.settlementId);
+  if(existing){diag.reason=existing.status==='CONSTRUCTING'?'PLANT_UNDER_CONSTRUCTION':'PLANT_PRESENT';continue;}
+  if(!i2StationOnline(w,station)){
+   if(station){diag.reason='STATION_UNDER_CONSTRUCTION_OR_OFFLINE';continue;}
+   const price=i2Cost(w,n.id,'STATION',{settlementId:plan.settlementId});
+   if(n.gold<price.gold*3+1000||!i2BuildLegal(w,n.id,'STATION',{settlementId:plan.settlementId})||!canAfford(n,price)){
+    diag.reason='STATION_UNAFFORDABLE_OR_ILLEGAL';continue;
+   }
+   const res=i2Build(w,n.id,'STATION',{settlementId:plan.settlementId});
+   diag.reason=res.ok?'PAID_STATION_STARTED':'STATION_BUILD_FAILED';continue;
+  }
+  // HYDRO cannot serve a >95PU shortfall: STEAM may be built at a riverside.
+  const riverside=riverAdjacentTileInfo(w,site.coreTileId).riverbank;
+  const type=riverside&&plan.missingPU<=I3A_TYPES.HYDRO.pu?'HYDRO':'STEAM',def=I3A_TYPES[type];
+  const available=Math.floor(def.pu*Math.pow(.97,0));
+  if(available<plan.missingPU){diag.reason='SINGLE_PLANT_INSUFFICIENT';continue;}
+  if(type==='STEAM'&&(n.resources.coal<def.coal*12||!i3a2FuelReadiness(w,n,site,def).ready)){
+   diag.reason='FUEL_SUPPLY_UNVERIFIED';continue;
+  }
+  const price=i3aPrice(type);
+  if(n.gold<Math.max(5500,price.gold*2+2000)||!i3aBuildLegal(w,n.id,site.id,type)||!canAfford(n,price)){
+   diag.reason='PLANT_UNAFFORDABLE_OR_ILLEGAL';continue;
+  }
+  const res=i3aBuild(w,n.id,site.id,type);
+  diag.reason=res.ok?'PAID_PLANT_STARTED':'PLANT_BUILD_FAILED';diag.type=type;
+  diag.plantId=res.id??null;
+ }
+}
+function v08jSteelAIQuarter(w){
+ if(w.dayIndex%120!==0)return;
+ const spec=v08jSteelSpec(2);
+ for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
+  const state=n.v08jDevelopment??=( {} ),year=Math.floor(w.dayIndex/120);
+  const info={dayIndex:w.dayIndex,reason:'NO_DEMAND'};state.steel=info;
+  if(state.lastSteelYear===year){info.reason='YEAR_LIMIT';continue;}
+  if(!g2LevelUnlocked(w,n.id,'steelworks',2)){info.reason='TECH_LOCKED';continue;}
+  const steel=w.buildings.filter(b=>b.typeId==='steelworks'&&w.tiles[b.tileId]?.ownerId===n.id);
+  for(const b of steel)b.v08jSteelSupplyPlan=false; // an investment proposal never survives its annual re-evaluation implicitly
+  if(!steel.length){info.reason='NO_STEELWORKS';continue;}
+  if(steel.some(b=>['UPGRADING','CONSTRUCTING','REDEVELOPING'].includes(b.status))){info.reason='PROJECT_PENDING';continue;}
+  const active=steel.filter(b=>b.status==='ACTIVE'&&!b.disconnected),capacity=active.reduce((v,b)=>v+v08jSteelSpec(b.level).output+techBonus(w,n.id,'steelworksYield'),0);
+  const demand=f2c2cRecentNeed(n,'steel'),hist=f2c2cEnsure(n).history.slice(-12),runs=f2bEnsure(n).history.slice(-12);
+  const shortQuarters=hist.filter(q=>q.steelActive&&q.endSteel<q.steelTarget*.75).length;
+  const operated=runs.filter(q=>q.steelworksSites>0&&q.steelworksOperated>0).length;
+  Object.assign(info,{demand,capacity,shortQuarters,operated,observed:Math.min(hist.length,runs.length)});
+  if(hist.length<8||runs.length<8){info.reason='HISTORY_SHORT';continue;}
+  if(shortQuarters<6||demand<=capacity){info.reason='CAPACITY_SUFFICIENT_OR_NO_SHORTAGE';continue;}
+  if(operated<Math.ceil(runs.length*.75)){info.reason='LOW_UTILIZATION';continue;}
+  if(!f2c2BuildFoodGate(w,n).eligible){info.reason='FOOD_RISK';continue;}
+  const forecast=projectedQuarter(w,n);let denied='NO_ELIGIBLE_STEELWORKS';
+  for(const b of active.filter(b=>b.level===1).sort((a,b)=>a.id-b.id)){
+   const site=w.settlements.find(s=>s.id===b.settlementId),local=forecast.regionalEconomy.towns.get(b.settlementId);
+   if(!site||!local||local.workers<spec.labor||local.demand>0&&local.workers/local.demand<.85){denied='LABOR_SHORT';continue;}
+   if(!local.roadNetwork&&w.tiles[b.tileId]?.roadLevel===0&&w.tiles[site.coreTileId]?.roadLevel===0){denied='ROUTE_BLOCKED';continue;}
+   const act={type:'UPGRADE_FACILITY',buildingId:b.id},price=getNationActionCost(w,n.id,act);
+   if(!price||!isNationActionLegal(w,n.id,act)){denied='UPGRADE_ILLEGAL';continue;}
+   if(n.gold<Math.max(18000,price.gold*3)||n.gold<price.gold+1000){denied='FISCAL_RISK';continue;}
+   if(Object.entries({iron:spec.iron*3,coal:spec.coal*4,machine_parts:2}).some(([g,v])=>i1Available(w,n,b.settlementId,g)<v)){
+    b.v08jSteelSupplyPlan=true; // request the physical upgraded-operation inputs through existing I1 freight planner
+    denied='REGIONAL_INPUT_SHORT';continue;
+   }
+   if(!canExecuteNationAction(w,n.id,act)){denied='UNAFFORDABLE';continue;}
+   // A strict payback test based on incremental physical steel and operational costs.
+   // Steel is not traded in the seven-good market. Use a conservative strategic construction scarcity value
+   // rather than a nonexistent market spot price; this is an investment priority proxy, not actual Gold revenue.
+   const old=v08jSteelSpec(1),steelValue=Math.max(40,(w.market?.prices?.steel||0)/1000);
+   const ironValue=(w.market?.prices?.iron||1000)/1000,coalValue=(w.market?.prices?.coal||6000)/1000;
+   const margin=(spec.output-old.output)*steelValue-(spec.gold-old.gold)
+     -(spec.iron-old.iron)*ironValue-(spec.coal-old.coal)*coalValue;
+   if(margin<=0||price.gold/margin>160){denied='ROI_LOW';continue;}
+   const res=executeNationAction(w,n.id,act);
+   if(res.ok){state.lastSteelYear=year;Object.assign(info,{reason:'PAID_UPGRADE_STARTED',buildingId:b.id,upgradeGold:price.gold,
+    marginalGold:Math.round(margin*100)/100});break;}
+   denied='UPGRADE_FAILED';
+  }
+  if(info.reason!=='PAID_UPGRADE_STARTED')info.reason=denied;
+ }
+}
+function v08jSummary(w){
+ const modern=(w.battleHistory||[]).slice(-50).flatMap(b=>b.history?.flatMap(h=>h.phases||[])||[]);
+ const mg=modern.filter(p=>(p.v08iMgFiredA||0)+(p.v08iMgFiredB||0)>0);
+ return {version:VERSION,dayIndex:w.dayIndex,houseLv6:w.buildings.filter(b=>b.typeId==='house'&&b.level===6).length,
+  steelworksLv2:w.buildings.filter(b=>b.typeId==='steelworks'&&b.level===2).length,
+  centralPlants:w.i3Power?.plants?.length||0,modernCombat:{battleSample:Math.min(50,w.battleHistory?.length||0),phases:modern.length,
+   machineGunFirePhases:mg.length,suppressedPhases:modern.filter(p=>(p.v08iIncomingA||0)>0||(p.v08iIncomingB||0)>0).length},
+  nations:w.nations.filter(n=>n.active).map(n=>({id:n.id,name:n.name,development:n.v08jDevelopment??null,
+   armored:n.v08jArmoredDecision??null,industry:n.f2jIndustry?.lastDecision??null}))};
+}
+
 function f2FactorySummary(w){return {version:VERSION,dayIndex:w.dayIndex,nations:w.nations.map(n=>({id:n.id,name:n.name,coal:n.resources.coal,machine_parts:n.resources.machine_parts,lastQuarter:f2Ensure(n).lastQuarter,firstFactoryDecision:n.f2a4FirstFactoryDecision||null,level4Decision:n.f2jIndustry?.lastDecision||null,factories:w.buildings.filter(b=>b.typeId==='factory'&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>({id:b.id,level:b.level,status:b.status,powerDevices:b.powerDevices,lastOperatedDay:b.lastFactoryOperatedDay||null,jLastQuarter:b.f2jLastQuarter||null}))}))};}
 
 // V0.7E3E3 — paid wood-supply recovery and per-quarter logistics audit.

@@ -205,7 +205,7 @@ function localProductivityReport(w,nationId,roadInfo=null){
     if(b.typeId==='steelworks'&&!f2c2cCanProduce(w.nations[nationId],'steel'))continue;
     if(!groups.has(b.settlementId))groups.set(b.settlementId,[]);
     groups.get(b.settlementId).push({b,base,terrain:tile.terrain,underAttack:occupied.has(b.tileId)});
-    const rawDemand=b.typeId==='factory'?(F2_FACTORY_LEVELS[b.level]?.labor||18):(LOCAL_LABOR_DEMAND[b.typeId]||0)*g2LevelLabor(b.level);
+    const rawDemand=b.typeId==='factory'?(F2_FACTORY_LEVELS[b.level]?.labor||18):b.typeId==='steelworks'?v08jSteelSpec(b.level).labor:(LOCAL_LABOR_DEMAND[b.typeId]||0)*g2LevelLabor(b.level);
     const saving=b.typeId==='workshop'?f1LaborSavings(w,b,w.nations[nationId],rawDemand):0;
     local.demand+=rawDemand-saving;local.powerLaborSaved=(local.powerLaborSaved||0)+saving;
     if(LOCAL_LABOR_DEMAND[b.typeId])local.activeFacilities++;
@@ -2339,21 +2339,25 @@ function f2bRunPumpsBeforeProduction(w){
   b.f2bRuns=runs;b.f2bOperatingDay=w.dayIndex;
  }
 }
+// V0.8J: level-specific physical steel production; Lv.1 identical to V0.8I.
+const V08J_STEEL_LEVELS=Object.freeze({1:{output:6,iron:12,coal:5,gold:55,labor:35,maintEvery:4},2:{output:10,iron:18,coal:8,gold:85,labor:55,maintEvery:3}});
+function v08jSteelSpec(level){return V08J_STEEL_LEVELS[level]||V08J_STEEL_LEVELS[1];}
 function f2bRunSteelworksQuarter(w,projections){
  for(const b of w.buildings.filter(b=>b.typeId==='steelworks').sort((a,b)=>a.id-b.id)){
-  const n=w.nations[w.tiles[b.tileId]?.ownerId],s=f2bServiceLegal(w,b,n,35);
+  const n=w.nations[w.tiles[b.tileId]?.ownerId],spec=v08jSteelSpec(b.level),s=f2bServiceLegal(w,b,n,spec.labor);
   if(!n?.active)continue;
   const q=f2bEnsure(n).lastQuarter;q.steelworksSites++;
   if(!s||!f2c2cCanProduce(n,'steel'))continue;
   const local=projections.get(n.id)?.regionalEconomy?.towns?.get(s.id);
-  const steelOutput=6+techBonus(w,n.id,'steelworksYield');
-  if(!local||local.workers<35||n.resources.iron<12||n.resources.coal<5||n.gold<55||n.resources.steel+steelOutput>F2B_MAX_STOCK)continue;
-  const runs=(b.f2bRuns||0)+1,maintenance=runs%4===0?1:0;
-  if(n.resources.machine_parts<maintenance||!i1Can(w,n,b,{iron:12,coal:5,machine_parts:maintenance}))continue;
-  n.resources.iron-=12;n.resources.coal-=5;n.gold-=55;n.resources.machine_parts-=maintenance;
-  i1Debit(w,n,b,{iron:12,coal:5,machine_parts:maintenance});
+  const steelOutput=spec.output+techBonus(w,n.id,'steelworksYield');
+  if(!local||local.workers<spec.labor||n.resources.iron<spec.iron||n.resources.coal<spec.coal||n.gold<spec.gold||n.resources.steel+steelOutput>F2B_MAX_STOCK)continue;
+  const runs=(b.f2bRuns||0)+1,maintenance=runs%spec.maintEvery===0?1:0;
+  const bill={iron:spec.iron,coal:spec.coal,machine_parts:maintenance};
+  if(n.resources.machine_parts<maintenance||!i1Can(w,n,b,bill))continue;
+  n.resources.iron-=spec.iron;n.resources.coal-=spec.coal;n.gold-=spec.gold;n.resources.machine_parts-=maintenance;
+  i1Debit(w,n,b,bill);
   n.resources.steel+=steelOutput;i1Credit(w,n,b,'steel',steelOutput);q.steel.produced+=steelOutput;q.machine_parts.used+=maintenance;
-  q.ironUsed+=12;q.coalUsed+=5;q.goldUsed+=55;q.steelworksOperated++;
+  q.ironUsed+=spec.iron;q.coalUsed+=spec.coal;q.goldUsed+=spec.gold;q.steelworksOperated++;
   b.f2bRuns=runs;b.f2bOperatingDay=w.dayIndex;
  }
 }

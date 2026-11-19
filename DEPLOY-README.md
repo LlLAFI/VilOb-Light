@@ -1,5 +1,9 @@
-# VILOB LIGHT V0.8I · GitHub Pages
+# VILOB Light V0.9A — GitHub Pages 업로드
 
-기존 V0.8H 본편의 동일 위치에 ZIP의 **압축을 푼 모든 파일**을 덮어쓰세요. `index.html`, `style.css`, `editor.html`, `part-01.js`부터 `part-10.js`까지 같은 폴더에 있어야 합니다. ZIP 자체를 웹 업로드하지 마세요.
+1. ZIP 파일을 PC에 압축 해제합니다.
+2. 압축 해제한 파일을 **전부** 같은 GitHub Pages 제공 폴더에 업로드하세요.
+3. 반드시 `index.html`, `style.css`, `editor.html`, `part-01.js`부터 `part-09.js`, **새로운 `part-09a.js`**, `part-10.js`가 함께 있어야 합니다.
+4. 변경을 커밋한 뒤 Pages를 새로고침하고 기존 V0.8J 세이브를 불러올 수 있는지 확인하세요.
+5. 세이브는 파일로 별도 백업하십시오. 배포 전 파일을 overwrite 하는 방식이며 ZIP 자체를 웹 루트에 올리는 방식이 아닙니다.
 
-V0.8I는 기관총 제압/공격군 점진 전개 기능입니다. 이전 V0.8H의 저장은 불러오기 대상에 포함되며 브라우저 자동 저장 키는 `vilob-light-v08i-world`로 분리됩니다. 기존 V0.8H 브라우저 저장은 읽기 전용 폴백입니다.
+실제 호스팅 URL에서의 확인은 사용자 GitHub Pages 환경에서 수행해야 합니다.

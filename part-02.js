@@ -1043,6 +1043,7 @@ function d1ValidateCultureWorld(w,fail){
   }
   for(const s of w.settlements)poolOK(s.culturePopulation,s.population,'정착지');
   for(const a of w.armies)for(const u of a.units)poolOK(u.culturePopulation,u.manpower,'현역 편제');
+  for(const ship of w.navy?.ships||[])poolOK(ship.crewCulturePopulation,ship.crew,'해군 선원');
   return true;
 }
 /** Explicit diagnostics only, not called by daily simulation or Atlas redraw. */
@@ -1050,13 +1051,14 @@ function d1CultureAudit(w){
   d1ValidateCultureWorld(w,reason=>{throw Error(reason);});
   const out={version:w.version,dayIndex:w.dayIndex,bootstrap:{...w.cultureBootstrap},
     cultures:w.cultures.length,settlementGroups:0,unitGroups:0,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0,
-    byCulture:Object.fromEntries(w.cultures.map(c=>[c.id,{name:c.name,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0}]))};
+    navyCrew:0,byCulture:Object.fromEntries(w.cultures.map(c=>[c.id,{name:c.name,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0,navyCrew:0}]))};
   function collect(pool,kind){out[kind]+=d1CultureTotal(pool);for(const [id,count] of Object.entries(pool))out.byCulture[id][kind]+=count;}
   for(const s of w.settlements){out.settlementGroups+=Object.keys(s.culturePopulation).length;collect(s.culturePopulation,'civilians');}
   for(const n of w.nations){collect(n.military.reserveCulturePopulation,'reserves');for(const t of n.military.training)collect(t.culturePopulation,'trainees');}
   for(const a of w.armies)for(const u of a.units){out.unitGroups+=Object.keys(u.culturePopulation).length;collect(u.culturePopulation,'soldiers');}
   for(const f of w.uprisings?.active||[])for(const d of f.militia)collect(d1CulturePool(d.cultureId,d.men),'militia');
-  out.total=out.civilians+out.trainees+out.reserves+out.soldiers+out.militia;
+  for(const ship of w.navy?.ships||[])collect(ship.crewCulturePopulation,'navyCrew');
+  out.total=out.civilians+out.trainees+out.reserves+out.soldiers+out.militia+out.navyCrew;
   out.verified=true;return out;
 }
 // --- end D1A1 culture-accounting ---
@@ -2292,6 +2294,29 @@ function v08fOnArmyRemoved(w,a,reason,captorId=null){
  }
  a.v08fTankIds=[];
 }
+// V0.8J: armored deployment is scored on reachable war fronts without moving any army.
+// The existing paid deployment/storage actions retain all crew, fuel, and unit ledgers.
+function v08jArmorFronts(w,nid){
+ const opponents=new Set(warsOfNation(w,nid).flatMap(war=>warOpponents(war,nid)));
+ if(!opponents.size)return [];
+ const fronts=[];
+ for(const t of w.tiles){if(t.ownerId!==nid||t.terrain==='water'||t.occupiedBy!==null||t.terrain==='mountain')continue;
+  if(neighbors4(t.id,w.size,w.height).some(id=>opponents.has(w.tiles[id]?.ownerId)))fronts.push(t);
+ }
+ return fronts.slice(0,120); // bounded deterministic candidate search
+}
+function v08jArmorCandidate(w,n,a,fronts){
+ if(!fronts.length)return {army:a,score:a.morale/100,frontTileId:null,distance:null,reason:'PEACETIME'};
+ const ax=a.tileId%w.size,ay=Math.floor(a.tileId/w.size);
+ const closest=fronts.map(t=>({tile:t,dist:Math.abs(t.x-ax)+Math.abs(t.y-ay)}))
+  .sort((x,y)=>x.dist-y.dist||x.tile.id-y.tile.id).slice(0,5);
+ for(const item of closest){
+  const route=landRoute(w,a.tileId,item.tile.id,t=>t.ownerId===n.id&&t.occupiedBy===null&&t.terrain!=='mountain',n.id);
+  if(!route||route.some(id=>w.tiles[id]?.terrain==='mountain'))continue;
+  return {army:a,score:10-Math.min(9,route.length/9)+a.morale/250,frontTileId:item.tile.id,distance:route.length-1,reason:'REACHABLE_FRONT'};
+ }
+ return {army:a,score:-5+a.morale/250,frontTileId:null,distance:null,reason:'FRONT_NOT_REACHABLE'};
+}
 function v08fQuarter(w){
  const s=v08fEnsure(w);
  for(const t of s.vehicles){
@@ -2312,8 +2337,32 @@ function v08fQuarter(w){
   if(refill&&canExecuteNationAction(w,n.id,{type:'TANK_CREW',armyId:refill.armyId,tankId:refill.id})){
    executeNationAction(w,n.id,{type:'TANK_CREW',armyId:refill.armyId,tankId:refill.id});continue;
   }
-  const candidate=w.armies.filter(a=>a.nationId===n.id&&v08fSafeArmy(w,a)&&v08fEscort(a)>=30&&v08fTanks(w,a).length<2&&v08fActionLegal(w,n.id,{type:'TANK_DEPLOY',armyId:a.id}))
-   .sort((a,b)=>v08fTanks(w,a).length-v08fTanks(w,b).length||b.morale-a.morale||a.id-b.id)[0];
+  const frontline=v08jArmorFronts(w,n.id);
+  const distances=a=>frontline.length?Math.min(...frontline.map(t=>Math.abs(t.x-a.tileId%w.size)+Math.abs(t.y-Math.floor(a.tileId/w.size)))):0;
+  const choices=w.armies.filter(a=>a.nationId===n.id&&v08fSafeArmy(w,a)&&v08fEscort(a)>=30&&v08fTanks(w,a).length<2&&v08fActionLegal(w,n.id,{type:'TANK_DEPLOY',armyId:a.id}))
+   .sort((a,b)=>distances(a)-distances(b)||a.id-b.id).slice(0,10)
+   .map(a=>v08jArmorCandidate(w,n,a,frontline)).sort((a,b)=>b.score-a.score||v08fTanks(w,a.army).length-v08fTanks(w,b.army).length||a.army.id-b.army.id);
+  const candidate=choices[0]?.army;
+  n.v08jArmoredDecision={dayIndex:w.dayIndex,fronts:frontline.length,selectedArmyId:candidate?.id??null,reason:choices[0]?.reason||'NO_SAFE_ARMY',distance:choices[0]?.distance??null};
+  // Reassign only a fully intact tank from a safe rear garrison by two paid actions
+  // over separate quarters. No on-the-spot teleportation or free crew is introduced.
+  if(frontline.length&&candidate&&(s.stocks[n.id]||0)===0&&choices[0]?.reason==='REACHABLE_FRONT'){
+   const best=choices[0];
+   const rear=owned.map(t=>({t,a:w.armies.find(a=>a.id===t.armyId)}))
+    .filter(x=>x.a&&x.a.id!==candidate.id&&v08fSafeArmy(w,x.a)&&x.t.hp===100&&v08fActionLegal(w,n.id,{type:'TANK_STORE',armyId:x.a.id,tankId:x.t.id}))
+    .sort((a,b)=>a.t.id-b.t.id);
+   for(const x of rear.slice(0,6)){
+    const at=v08jArmorCandidate(w,n,x.a,frontline);
+    if(at.reason!=='REACHABLE_FRONT'||at.distance===null||best.distance===null||at.distance-best.distance<5)continue;
+    const action={type:'TANK_STORE',armyId:x.a.id,tankId:x.t.id};
+    if(canExecuteNationAction(w,n.id,action)){
+     executeNationAction(w,n.id,action);
+     n.v08jArmoredDecision={...n.v08jArmoredDecision,reason:'PAID_REAR_STORAGE_FOR_REDEPLOY',storedTankId:x.t.id};
+     break;
+    }
+   }
+   if(n.v08jArmoredDecision.reason==='PAID_REAR_STORAGE_FOR_REDEPLOY')continue;
+  }
   if(candidate&&(s.stocks[n.id]||0)>0&&canExecuteNationAction(w,n.id,{type:'TANK_DEPLOY',armyId:candidate.id})){
     executeNationAction(w,n.id,{type:'TANK_DEPLOY',armyId:candidate.id});continue;
   }
@@ -2477,7 +2526,7 @@ const militaryPopulation=(w,id)=>{
  const civilians=w.settlements.reduce((sum,s)=>sum+(s.ownerId===id?s.population:0),0);
  const n=w.nations[id];
  // Drafted trainees and active soldiers remain people: enlistment cannot shrink the denominator.
- return civilians+activeManpower(w,id)+(n?.military?.reserveReady||0)+(n?.military?.training||[]).reduce((sum,t)=>sum+t.amount,0);
+ return civilians+activeManpower(w,id)+(w.navy?.ships||[]).filter(s=>s.nationId===id).reduce((sum,s)=>sum+s.crew,0)+(n?.military?.reserveReady||0)+(n?.military?.training||[]).reduce((sum,t)=>sum+t.amount,0);
 };
 const activeManpower=(w,id)=>w.armies.reduce((sum,a)=>sum+(a.nationId===id?a.units.reduce((n,u)=>n+u.manpower,0):0),0);
 const militaryAtWar=(w,id)=>Boolean(warOfNation(w,id));
@@ -2658,6 +2707,7 @@ function chargeMilitaryOperation(w,id,amount,warId=null,kind='operation'){
 /** Light V0.1E1: map-anchored facilities, no worker/person or logistics entities. */
 
 const BUILDINGS=Object.freeze({
+  port:{label:'항구·조선소',symbol:'⚓',terrains:['plain','grass','forest','rock','mountain'],days:90,ap:1.2,gold:550,materials:{wood:65,stone:35}},
   house:{label:'주택',symbol:'⌂',terrains:['plain','grass','forest','rock','mountain'],days:30,ap:1,gold:28,materials:{wood:7,stone:1},capacity:75},
   farm:{label:'농장',symbol:'✿',terrains:['plain','grass','forest'],days:30,ap:1,gold:28,materials:{wood:6,stone:1},produces:{food:76}},
   lumber:{label:'벌목장',symbol:'♣',terrains:['forest','grass'],days:30,ap:1,gold:25,materials:{wood:3,stone:1},produces:{wood:24}},
@@ -2677,10 +2727,10 @@ const BUILDINGS=Object.freeze({
 const MAX_BUILDING_LEVEL=5;
 // F2A5: advanced farms alone may reach Lv.7. Every other facility retains its existing cap.
 const F2A5_MAX_FARM_LEVEL=7;
-function maxBuildingLevel(typeId){return typeId==='farm'?F2A5_MAX_FARM_LEVEL:typeId==='factory'?4:F2B_INDUSTRIAL_TYPES.includes(typeId)?1:MAX_BUILDING_LEVEL;}
+function maxBuildingLevel(typeId){return typeId==='farm'?F2A5_MAX_FARM_LEVEL:typeId==='factory'?4:typeId==='house'?6:typeId==='steelworks'?2:typeId==='port'?3:F2B_INDUSTRIAL_TYPES.includes(typeId)?1:MAX_BUILDING_LEVEL;}
 const F2B_INDUSTRIAL_TYPES=Object.freeze(['steelworks','steam_pump','arsenal']);
 const G2_LEVEL_OUTPUT=Object.freeze({
- house:[0,75,150,225,300,390],farm:[0,76,152,228,345,495,535,575],
+ house:[0,75,150,225,300,390,540],farm:[0,76,152,228,345,495,535,575],
  lumber:[0,24,48,72,105,145],quarry:[0,18,36,54,80,112],
  mine:[0,9,18,27,40,56],academy:[0,7,14,21,30,42],
  fortDefense:[0,25,50,75,105,145],fortFirepower:[0,60,120,180,245,335]
@@ -2696,7 +2746,9 @@ const G2_LEVEL_TECH=Object.freeze({
   barracks:['tactical_advances','steelmaking']
 });
 const G2_ADVANCED_COST=Object.freeze({
- house:[null,null,null,null,{gold:450,wood:100,stone:25,apUnits:30,days:150},{gold:1050,wood:250,stone:75,apUnits:45,days:240}],
+ port:[null,null,{gold:1800,wood:130,stone:90,iron:30,apUnits:30,days:160},{gold:4500,wood:180,stone:140,iron:120,steel:14,machine_parts:16,apUnits:50,days:240}],
+ house:[null,null,null,null,{gold:450,wood:100,stone:25,apUnits:30,days:150},{gold:1050,wood:250,stone:75,apUnits:45,days:240},{gold:2400,wood:320,stone:120,iron:70,steel:6,machine_parts:8,apUnits:60,days:330}],
+ steelworks:[null,null,{gold:6200,wood:135,stone:95,iron:180,steel:12,machine_parts:16,apUnits:40,days:300}],
  farm:[null,null,null,null,{gold:460,wood:100,stone:25,apUnits:30,days:150},{gold:1150,wood:260,stone:80,apUnits:45,days:240},
   {gold:1600,wood:320,stone:110,apUnits:50,days:300},{gold:2400,wood:450,stone:155,apUnits:60,days:360}],
  lumber:[null,null,null,null,{gold:450,wood:90,stone:22,apUnits:30,days:150},{gold:1000,wood:220,stone:65,apUnits:45,days:240}],
@@ -2709,6 +2761,10 @@ const G2_ADVANCED_COST=Object.freeze({
 function g2LevelUnlocked(w,nationId,typeId,nextLevel){
   if(nextLevel>maxBuildingLevel(typeId))return false;
   if(typeId==='coal_pit')return false;
+  if(typeId==='port')return nextLevel===2?hasTech(w,nationId,'commercial_transport')&&(w.nations[nationId]?.civilization?.era!=='ancient'):nextLevel===3?hasTech(w,nationId,'steam_engineering')&&hasTech(w,nationId,'mechanized_manufacturing'):false;
+  // V0.8J: both advanced tiers are actual paid upgrades, unlocked only in Industrial Modern IV.
+  if(typeId==='house'&&nextLevel===6)return w.nations[nationId]?.civilization?.era==='industrial_modern'&&w.nations[nationId].civilization.stage>=4&&['high_density_housing','mechanized_manufacturing','industrial_quality_control'].every(id=>hasTech(w,nationId,id));
+  if(typeId==='steelworks')return nextLevel===2&&w.nations[nationId]?.civilization?.era==='industrial_modern'&&w.nations[nationId].civilization.stage>=4&&['mechanized_manufacturing','industrial_process_standardization','industrial_quality_control'].every(id=>hasTech(w,nationId,id));
   // F2A5: gate the two farm-only advanced levels on existing, already researched technologies.
   if(typeId==='farm'&&nextLevel>=6)return nextLevel===6?hasTech(w,nationId,'precision_cultivation'):
     nextLevel===7&&hasTech(w,nationId,'improved_farm_tools');
@@ -2836,7 +2892,7 @@ function settlementHousing(world,s){
   return Math.max(1,Math.floor((basic+housing)*(1+techBonus(world,s.ownerId,'housing'))));
 }
 function settlementBuildings(world,settlementId){return allStructures(world).filter(b=>b.settlementId===settlementId);}
-function buildingTileSlotsUsed(world,tid){return world.buildings.filter(b=>b.tileId===tid&&!b.industrialSlot).length;}
+function buildingTileSlotsUsed(world,tid){return world.buildings.filter(b=>b.tileId===tid&&!b.industrialSlot&&!b.portSlot).length;}
 function f2bIndustrialSlotFree(w,settlementId){return !w.buildings.some(b=>b.industrialSlot&&b.settlementId===settlementId);}
 function f2bCanBuild(w,id,type){return w.nations[id]?.civilization?.era==='industrial_modern'&&(type==='steelworks'?hasTech(w,id,'steelmaking')&&hasTech(w,id,'coal_extraction')&&hasTech(w,id,'mechanized_manufacturing'):type==='steam_pump'?hasTech(w,id,'steam_engineering')&&hasTech(w,id,'irrigation_networks')&&hasTech(w,id,'mechanized_manufacturing'):type==='arsenal'?hasTech(w,id,'mechanized_manufacturing')&&hasTech(w,id,'steelmaking')&&hasTech(w,id,'field_artillery_casting'):false);}
 /** F4D3: exact, quarter-local counts of all physical sites (including disconnected
@@ -2846,13 +2902,14 @@ function f2bCanBuild(w,id,type){return w.nations[id]?.civilization?.era==='indus
  */
 function f4d3SiteUsage(world){
   const generalUsed=new Map(),defenseUsed=new Map();
-  for(const b of world.buildings)if(!b.industrialSlot)generalUsed.set(b.tileId,(generalUsed.get(b.tileId)||0)+1);
+  for(const b of world.buildings)if(!b.industrialSlot&&!b.portSlot)generalUsed.set(b.tileId,(generalUsed.get(b.tileId)||0)+1);
   for(const b of world.defenses||[])defenseUsed.set(b.tileId,(defenseUsed.get(b.tileId)||0)+1);
   return {generalUsed,defenseUsed};
 }
 function buildingSiteLegal(world,nationId,action,siteUsage=null){
   const s=world.settlements.find(s=>s.id===action.settlementId&&s.ownerId===nationId);
   const tile=world.tiles[action.targetTileId],type=BUILDINGS[action.buildingType];
+  if(action.buildingType==='port'&&(!hasTech(world,nationId,'timber_processing')||!navyPortLegal(world,nationId,action.settlementId,action.targetTileId)))return false;
   if(action.buildingType==='workshop'&&!hasTech(world,nationId,'guild_organization'))return false;
   if(action.buildingType==='factory'&&!f2FactoryUnlocked(world,nationId))return false;
   if(action.buildingType==='coal_pit'&&!hasTech(world,nationId,'coal_extraction'))return false;
@@ -2862,7 +2919,7 @@ function buildingSiteLegal(world,nationId,action,siteUsage=null){
   const used=siteUsage?(siteUsage.generalUsed.get(tile?.id)||0):buildingTileSlotsUsed(world,tile?.id);
   const normal=used<generalTileSlotLimit(world,nationId);
   const dedicated=special&&f2bIndustrialSlotFree(world,action.settlementId);
-  const slot=action.buildingType==='fort'?(siteUsage?(siteUsage.defenseUsed.get(tile?.id)||0):defenseTileSlotsUsed(world,tile?.id))<DEFENSE_TILE_SLOTS:
+  const slot=action.buildingType==='port'?!world.buildings.some(b=>b.typeId==='port'&&b.tileId===tile?.id):action.buildingType==='fort'?(siteUsage?(siteUsage.defenseUsed.get(tile?.id)||0):defenseTileSlotsUsed(world,tile?.id))<DEFENSE_TILE_SLOTS:
     (action.industrialSlot===true?dedicated:(normal||dedicated));
   if(action.industrialSlot===true&&!special)return false;
   if(['steam_pump','arsenal'].includes(action.buildingType)&&world.buildings.some(b=>b.settlementId===action.settlementId&&(b.typeId===action.buildingType||b.redevelopTo===action.buildingType)))return false;
@@ -2872,7 +2929,7 @@ function upgradeSiteLegal(world,nationId,action){
   const building=getStructure(world,action.buildingId),s=building&&world.settlements.find(s=>s.id===building.settlementId);
   const tile=building&&world.tiles[building.tileId];
   return Boolean(building&&(!building.disconnected)&&(building.typeId==='fort'&&building.settlementId===null||s?.ownerId===nationId)&&tile?.ownerId===nationId&&tile.occupiedBy===null&&
-    building.status==='ACTIVE'&&building.level<maxBuildingLevel(building.typeId)&&g2LevelUnlocked(world,nationId,building.typeId,building.level+1)&&(building.typeId!=='fort'||building.hp>0&&!building.repair));
+    building.status==='ACTIVE'&&(building.typeId!=='port'||navyIsCoast(world,building.tileId))&&building.level<maxBuildingLevel(building.typeId)&&g2LevelUnlocked(world,nationId,building.typeId,building.level+1)&&(building.typeId!=='fort'||building.hp>0&&!building.repair));
 }
 const G1_FORT_PRICES=Object.freeze([null,
   {gold:900,wood:100,stone:120,apUnits:30,days:180},
@@ -2915,7 +2972,7 @@ function redevelopmentLegal(w,nationId,action){
   if(action.buildingType==='coal_pit'&&!hasTech(w,nationId,'coal_extraction'))return false;
   if(F2B_INDUSTRIAL_TYPES.includes(action.buildingType)&&!f2bCanBuild(w,nationId,action.buildingType))return false;
   if(['steam_pump','arsenal'].includes(action.buildingType)&&w.buildings.some(x=>x.settlementId===w.buildings.find(b=>b.id===action.buildingId)?.settlementId&&(x.typeId===action.buildingType||x.redevelopTo===action.buildingType)))return false;
-  if(!b||b.disconnected||b.status!=='ACTIVE'||!type||b.typeId===action.buildingType||action.buildingType==='fort')return false;
+  if(!b||b.disconnected||b.status!=='ACTIVE'||!type||b.typeId===action.buildingType||action.buildingType==='fort'||action.buildingType==='port'||b.typeId==='port')return false;
   if(action.buildingType==='factory'&&(b.typeId!=='workshop'||b.level<3))return false;
   if(F2B_INDUSTRIAL_TYPES.includes(action.buildingType)&&(!['quarry','academy','barracks','workshop'].includes(b.typeId)||b.industrialSlot))return false;
   const tile=w.tiles[b.tileId],s=w.settlements.find(s=>s.id===b.settlementId);

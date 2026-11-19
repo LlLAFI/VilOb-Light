@@ -226,7 +226,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,riverSchemaVersion:RIVER_SCHEMA_VERSION,riverSegments:generateRiverSegments(seedString,size,height,tiles),nations,settlements,trade:initialTrade(),market:e3eInitialMarket(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
-    e2Artillery:{produced:0,destroyed:0,stocks:{}},v08fArmor:{schema:1,nextId:1,produced:0,destroyed:0,stocks:{},vehicles:[],history:[]},e2aPolicyAIEnabled:true,e3FiscalAIEnabled:true,e7bFiscalStabilityEnabled:true,v06e5Violence:v06e5NewWorldState(),v06e6Policy:v06e6NewWorldState(),nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
+    navy:navyNew(),e2Artillery:{produced:0,destroyed:0,stocks:{}},v08fArmor:{schema:1,nextId:1,produced:0,destroyed:0,stocks:{},vehicles:[],history:[]},e2aPolicyAIEnabled:true,e3FiscalAIEnabled:true,e7bFiscalStabilityEnabled:true,v06e5Violence:v06e5NewWorldState(),v06e6Policy:v06e6NewWorldState(),nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
   for(const n of nations){makeLeader(world,n.id);n.survival=b4aNewSurvival(world,n.id);n.governance.unifiedAI=v06e6NewNationAI();}
   v06e7aInit(world);
   refreshApCaps(world);
@@ -274,7 +274,8 @@ function validateWorld(w){
   const fail=what=>{throw Error('월드 검증 실패: '+what);};
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
   if(w.v08eRecovery&&(w.v08eRecovery.schema!==1||w.v08eRecovery.kind!=='AUDITED_TERRITORIAL_F2B_79530'||w.v08eRecovery.sourceVersion!=='V0.8D'||w.v08eRecovery.originDay!==79530||w.v08eRecovery.machineParts!==6||w.v08eRecovery.steel!==16||w.v08eRecovery.donorNationId!==6||w.v08eRecovery.receiverNationId!==10||!Number.isSafeInteger(w.v08eRecovery.dayIndex)||w.v08eRecovery.dayIndex>w.dayIndex))fail('V0.8E 산업 회계 복구 기록');
-  if(!hValidate(w))fail('H 오토마톤 실물·파츠 회계');
+  navyValidate(w,fail);
+ if(!hValidate(w))fail('H 오토마톤 실물·파츠 회계');
  if(!v08fValidate(w))fail('V0.8F 돌격전차 실물·승무원 보존식');
  if(!i1Valid(w))fail('I1 실물 지역 재고·수송 보존식');
  if(w.v07lRecovery&&(!Array.isArray(w.v07lRecovery.pruned)||w.v07lRecovery.pruned.length>256||w.v07lRecovery.schema!==1||!Number.isSafeInteger(w.v07lRecovery.dayIndex)||w.v07lRecovery.dayIndex>w.dayIndex||w.v07lRecovery.pruned.some(p=>!Number.isSafeInteger(p.nationId)||!Number.isSafeInteger(p.settlementId))))fail('I1L 복구 이력');
@@ -406,7 +407,7 @@ function validateWorld(w){
   }
   // V0.7D: total building-list safety bound must match V0.7C3 physical 6-slot tile ceiling.
   if(!Array.isArray(w.buildings)||!Array.isArray(w.defenses)||!Number.isSafeInteger(w.nextBuildingId)||w.nextBuildingId<0||w.buildings.length>w.tiles.length*6+w.settlements.length||w.defenses.length>w.tiles.length*DEFENSE_TILE_SLOTS)fail('시설 목록');
-  const buildingIds=new Set(),occupiedSlots=new Map(),industrialSlots=new Set();
+  const buildingIds=new Set(),occupiedSlots=new Map(),industrialSlots=new Set(),portTiles=new Set(),portSettlements=new Set();
   for(const b of allStructures(w)){
     const tile=w.tiles[b.tileId],s=sMap.get(b.settlementId),def=BUILDINGS[b.typeId];
     const isDefense=b.typeId==='fort',inDefense=w.defenses.includes(b);
@@ -429,7 +430,10 @@ function validateWorld(w){
     if(b.typeId==='workshop'&&((b.workshopMode!==undefined&&!['standard','precision'].includes(b.workshopMode))||
         (b.lastOperatedDay!==undefined&&b.lastOperatedDay!==null&&(!Number.isSafeInteger(b.lastOperatedDay)||b.lastOperatedDay<0||b.lastOperatedDay>w.dayIndex||b.lastOperatedDay%30!==0))))fail('E1 공방 가동 상태');
     buildingIds.add(b.id);const key=(isDefense?'D:':'B:')+tile.id;
-    if(b.industrialSlot){
+    if(b.portSlot){
+      if(b.typeId!=='port'||isDefense||!navyIsCoast(w,b.tileId)||portTiles.has(b.tileId)||b.settlementId===null||portSettlements.has(b.settlementId))fail('V0.9A 전용 해안 부두');
+      portTiles.add(b.tileId);portSettlements.add(b.settlementId);
+    }else if(b.industrialSlot){
       if(isDefense||!F2B_INDUSTRIAL_TYPES.includes(b.typeId))fail('F2B 산업 전용 부지');
       if(b.settlementId!==null){if(industrialSlots.has(b.settlementId))fail('F2B 산업 전용 부지');industrialSlots.add(b.settlementId);}
     }else occupiedSlots.set(key,(occupiedSlots.get(key)||0)+1);
@@ -586,16 +590,16 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
  const v08gSourceVersion=parsed.version;
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
-   if(!['V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
+   if(!['V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
    if(was==='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
@@ -625,6 +629,7 @@ function deserializeWorld(json){
  parsed.e2Artillery??={produced:0,destroyed:0,stocks:{}};
  v08fEnsure(parsed);for(const a of parsed.armies||[])a.v08fTankIds??=[];
  v08gRepairLegacyCrew(parsed,v08gSourceVersion);
+ navyEnsure(parsed); // V0.9A: existing saves begin with zero real ships or retroactive investments.
  // E3E: start price history at import, never invent past market transactions.
  parsed.market??=e3eInitialMarket();
  e3eMigrateMarket(parsed);
@@ -654,7 +659,7 @@ function deserializeWorld(json){
  validateWorld(parsed);return parsed;
 }
 function serializeWorld(world){
- i2Ensure(world);i3aEnsure(world);
+ navyEnsure(world);i2Ensure(world);i3aEnsure(world);
  for(const n of world.nations){i1Reconcile(world,n);i1aSyncPreviousQuarter(i1Ensure(n,world));}
  validateWorld(world);
  return JSON.stringify(world,(key,val)=>key==='historicalChronicle'&&val===world.historicalChronicle?i1aPackChronicle(val):val,2);
@@ -2754,6 +2759,7 @@ const p=this.point(e),wasDrag=this.drag;
     d2bDrawOverlay.call(this,ctx,scale,originX,originY,w,h,'pins');
     d1cDrawMapWarnings.call(this,ctx,scale,originX,originY,w,h);
     this.drawBattleOverlays(ctx,scale,originX,originY,w,h,false);
+    navyDrawOverlay(this);
     this.updateDefensePopover();
   }
 

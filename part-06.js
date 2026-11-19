@@ -2490,6 +2490,7 @@ const distance=(a,b,size)=>{const p=pointOf(a,size),q=pointOf(b,size);return Mat
 const findSettlement=(world,id)=>world.settlements.find(s=>s.id===id);
 const tilesOwned=(world,id)=>world.tiles.some(t=>t.ownerId===id);
 function getNationActionCost(world,nationId,action,metrics=null){
+  if(action?.type==='NAVY_BUILD_SHIP')return navyShipPrice(action.shipType);
   if(MILITARY_ACTIONS.includes(action?.type))return getActionPrice(world,nationId,action,metrics);
   if(!world.nations[nationId]||!Object.hasOwn(costs,action?.type))return null;
   return getActionPrice(world,nationId,action,metrics);
@@ -2535,6 +2536,7 @@ function isNationActionLegal(world,nationId,action,metrics=null){
   }
 }
 function canExecuteNationAction(world,nationId,action,metrics=null){
+ if(action?.type?.startsWith('NAVY_'))return navyActionLegal(world,nationId,action);
  if(action&&['TANK_BUILD','TANK_DEPLOY','TANK_REPAIR','TANK_CREW','TANK_STORE'].includes(action.type))return v08fActionLegal(world,nationId,action)&&canAfford(world.nations[nationId],v08fActionPrice(world,nationId,action));
  if(action?.type==='I2_BUILD_STATION')return i2BuildLegal(world,nationId,'STATION',action)&&canAfford(world.nations[nationId],i2Cost(world,nationId,'STATION',action));
  if(action?.type==='I2_BUILD_LINE'){
@@ -2562,6 +2564,7 @@ function advanceLevel(s){
   s.level=score>=140?4:score>=93?3:score>=53?2:1;
 }
 function executeNationAction(world,nationId,action){
+ if(action?.type?.startsWith('NAVY_'))return navyActionExecute(world,nationId,action);
  if(action&&['TANK_BUILD','TANK_DEPLOY','TANK_REPAIR','TANK_CREW','TANK_STORE'].includes(action.type))return v08fActionExecute(world,nationId,action);
  if(action?.type==='I2_BUILD_STATION')return i2Build(world,nationId,'STATION',action);
  if(action?.type==='I2_BUILD_LINE')return i2Build(world,nationId,'LINE',action);
@@ -2606,7 +2609,7 @@ function executeNationAction(world,nationId,action){
     case 'BUILD_FACILITY':{
       const definition=BUILDINGS[action.buildingType],id=world.nextBuildingId++;
       const f2bSpecial=F2B_INDUSTRIAL_TYPES.includes(action.buildingType)&&(action.industrialSlot===true||buildingTileSlotsUsed(world,action.targetTileId)>=generalTileSlotLimit(world,nationId));
-      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,...(f2bSpecial?{industrialSlot:true}:{}),...(F2B_INDUSTRIAL_TYPES.includes(action.buildingType)?{f2bRuns:0,f2bOperatingDay:null}:{}),...(action.buildingType==='arsenal'?{f2cRuns:0,f2cOperatingDay:null}:{}),tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,...(action.buildingType==='fort'?{hp:fortMaxHP({level:1}),zeroHpSince:null}:{disconnected:false,...(['workshop','factory'].includes(action.buildingType)?{powerDevices:{mechanical:false,waterwheel:false,steam:false}}:{})}),status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,v04dConstructionDays(world,nationId,action.buildingType,buildingDays(action.buildingType,1)))});
+      (action.buildingType==='fort'?world.defenses:world.buildings).push({id,typeId:action.buildingType,...(f2bSpecial?{industrialSlot:true}:{}),...(action.buildingType==='port'?{portSlot:true}:{}),...(F2B_INDUSTRIAL_TYPES.includes(action.buildingType)?{f2bRuns:0,f2bOperatingDay:null}:{}),...(action.buildingType==='arsenal'?{f2cRuns:0,f2cOperatingDay:null}:{}),tileId:action.targetTileId,settlementId:action.buildingType==='fort'?world.tiles[action.targetTileId].settlementId:action.settlementId,level:1,...(action.buildingType==='fort'?{hp:fortMaxHP({level:1}),zeroHpSince:null}:{disconnected:false,...(['workshop','factory'].includes(action.buildingType)?{powerDevices:{mechanical:false,waterwheel:false,steam:false}}:{})}),status:'CONSTRUCTING',completeDay:world.dayIndex+Math.max(1,v04dConstructionDays(world,nationId,action.buildingType,buildingDays(action.buildingType,1)))});
       if(action.buildingType==='coal_pit')f2b1EnsureCoalSeam(world,tile);
       delta.buildingId=id;break;
     }
@@ -2617,7 +2620,9 @@ function executeNationAction(world,nationId,action){
       delta.buildingId=d.id;delta.completeDay=d.repair.completeDay;break;
     }
     case 'UPGRADE_FACILITY':{
-      const b=getStructure(world,action.buildingId);b.status='UPGRADING';b.targetLevel=b.level+1;
+      const b=getStructure(world,action.buildingId);
+      if(b.typeId==='house'&&b.level===5&&n.controller==='AI'){n.v08jDevelopment??={};n.v08jDevelopment.lastHouseYear=Math.floor(world.dayIndex/120);n.v08jDevelopment.lastHouseId=b.id;}
+      b.status='UPGRADING';b.targetLevel=b.level+1;
       b.completeDay=world.dayIndex+Math.max(1,v04dConstructionDays(world,nationId,b.typeId,buildingDays(b.typeId,b.level+1)));delta.buildingId=b.id;break;
     }
     case 'CLAIM_TILE':tile.ownerId=nationId;e5InvalidateBorders(world);delta.tileId=tile.id;
