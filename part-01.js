@@ -1,6 +1,6 @@
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.8H'; // 0.8H: armored front integrity + A-1R-H tank visuals; V0.8G crew safeguards preserved
+const VERSION = 'V0.8I'; // 0.8I: machine-gun suppression; V0.8H armored front and A-1R-H visuals preserved
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;

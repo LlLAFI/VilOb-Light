@@ -1689,7 +1689,7 @@ function g4SingleCloseAllocation(army,defending){
  const ids=new Set(army.deployment.front||[]);
  return army.units.filter(u=>ids.has(u.id)&&u.manpower>0).map(u=>({armyId:army.id,unitId:u.id,men:c3CombatMen(u,defending)}));
 }
-function linePower(world,army,phase,defending,ground,lineBroken,ammoReady=true,frontStable=true,channelOut=null){
+function linePower(world,army,phase,defending,ground,lineBroken,ammoReady=true,frontStable=true,channelOut=null,suppressionRate=0){
   const cmd=commander(world,army),morale=.55+army.morale/180;
   const positions=phase==='OPENING'?['front','rear']:phase==='SUSTAINED'?['rear']:['front'];
   const active=new Set(positions.flatMap(pos=>army.deployment[pos]));
@@ -1707,7 +1707,8 @@ function linePower(world,army,phase,defending,ground,lineBroken,ammoReady=true,f
   const terrain=defending?(ground==='mountain'?1.38:ground==='forest'?1.16:ground==='rock'?1.1:1.05):1;
   const command=1+((cmd?.command||50)-50)/270+((defending?cmd?.defense:cmd?.attack)||50)/420;
   // No dormant reserve contributes attack power; a broken line loses cohesion.
-  const result=Math.max(0,base*morale*terrain*command*(army.supplyMultiplier??(army.supplied?1:.78))*(1+techBonus(world,army.nationId,'combatPower'))*(1+(army.supplied?techBonus(world,army.nationId,'supplyPower'):0))*(lineBroken?.67:1)*(1+b4aPowerBonus(army)));
+  let result=Math.max(0,base*morale*terrain*command*(army.supplyMultiplier??(army.supplied?1:.78))*(1+techBonus(world,army.nationId,'combatPower'))*(1+(army.supplied?techBonus(world,army.nationId,'supplyPower'):0))*(lineBroken?.67:1)*(1+b4aPowerBonus(army)));
+  if(suppressionRate>0)result*=1-suppressionRate;
   if(channelOut&&G4_COMBAT_ENABLED&&base>0)for(const [key,value] of localChannels)channelOut.set(key,(channelOut.get(key)||0)+value*result/base);
   return result;
 }
@@ -1832,6 +1833,62 @@ function v08hFrontStats(w,a){
  const armor=v08hArmoredFrontSupport(w,a);
  return {humans,machines,armor,effective:humans+machines+armor,readyTanks:v08fAlive(w,a).length};
 }
+// V0.8I · Machine-gun suppression. A persisted engagement-only, deterministic
+// pressure model. No additional RNG, casualties, inventory, or battle ammo.
+// Suppression reduces HUMAN CONTACT/MELEE power only; vehicles, H-machines
+// and artillery have separate attack paths. Maximum effect 25%.
+const V08I_MAX_SUPPRESS=.25;
+const V08I_ATTACK_BUILD=.35;
+const V08I_FADE=.45;
+function v08iState(e){
+ if(!e.v08iSuppression)e.v08iSuppression={schema:1,attackPressure:0,defensePressure:0};
+ return e.v08iSuppression;
+}
+function v08iMgPaid(army,allocation,paid){
+ if(!paid)return 0;
+ const ids=new Set(army.units.filter(u=>u.typeId==='machine_gunner'&&u.weaponId==='machine_gun'&&u.manpower>0).map(u=>u.id));
+ return allocation.reduce((v,x)=>v+(x.armyId===army.id&&ids.has(x.unitId)?x.men:0),0);
+}
+function v08iMultiPaid(w,e,side,allocation,paid){
+ let result=0;
+ for(const m of h1Live(w,e,side)){
+  const a=h1Army(w,m.armyId);
+  result+=v08iMgPaid(a,allocation,paid.get(m.armyId)?.human!==false);
+ }
+ return result;
+}
+function v08iFire(e,phase,mgAttack,mgDefense,attackFront,defenseFront){
+ const state=v08iState(e);
+ if(phase==='OPENING'||phase==='SUSTAINED'){
+  // Front exposure is measured BEFORE this phase's casualties are applied.
+  const intensityA=Math.min(1,mgAttack/Math.max(1,defenseFront)/.25);
+  const intensityB=Math.min(1,mgDefense/Math.max(1,attackFront)/.25);
+  // Opening attacker fire establishes targeting but not an immediate suppression bonus.
+  if(phase==='SUSTAINED'){
+   state.attackPressure=mgAttack>0?Math.min(intensityA,state.attackPressure+V08I_ATTACK_BUILD*intensityA):state.attackPressure*V08I_FADE;
+  }
+  if(phase==='OPENING'||phase==='SUSTAINED'){
+   state.defensePressure=mgDefense>0?intensityB:state.defensePressure*V08I_FADE;
+  }
+ }
+ return {mgAttack,mgDefense,attackPressure:state.attackPressure,defensePressure:state.defensePressure,
+   // Pressure is fired by the opposite side. Delay is already reflected in pressure.
+   incomingA:(phase==='CONTACT'||phase==='MELEE')?V08I_MAX_SUPPRESS*state.defensePressure:0,
+   incomingB:(phase==='CONTACT'||phase==='MELEE')?V08I_MAX_SUPPRESS*state.attackPressure:0};
+}
+function v08iPhase(e,phase,mgAttack,mgDefense,frontA,frontB){
+ // Laboratory-only switch: never set by the main game; toggles this new rule
+ // without requiring a second or reimplemented battle engine.
+ if(e.v08iLabSuppressionOff===true)return {mgAttack,mgDefense,attackPressure:0,defensePressure:0,incomingA:0,incomingB:0};
+ // No firing => no suppression, but old engagements acquire state on first use.
+ return v08iFire(e,phase,mgAttack,mgDefense,frontA,frontB);
+}
+function v08iPhaseTelemetry(state){return {
+ v08iMgFiredA:state.mgAttack,v08iMgFiredB:state.mgDefense,
+ v08iPressureA:+state.attackPressure.toFixed(4),v08iPressureB:+state.defensePressure.toFixed(4),
+ v08iIncomingA:+(state.incomingA*100).toFixed(2),v08iIncomingB:+(state.incomingB*100).toFixed(2)
+};}
+
 const H1_FRONT_CAP={plain:350,grass:350,forest:250,rock:220,mountain:180};
 const h1Army=(w,id)=>w.armies.find(a=>a.id===id);
 function h1Member(w,a,joinedRound=0){
@@ -1930,7 +1987,7 @@ function h1DeploymentFromArmies(w,armies,phase,defending,tileId){
   const quotas=h1Allocate(groupOrder.map((key,i)=>({armyId:i,unitId:i,count:groups.get(key).reduce((v,x)=>v+x.count,0)})),cap);
   return quotas.flatMap((quota,i)=>h1Allocate(groups.get(groupOrder[i]),quota.men));
 }
-function h1Power(w,army,phase,defending,terrain,broken,alloc,ammoReady=true,channelOut=null,machineAmmo=true){
+function h1Power(w,army,phase,defending,terrain,broken,alloc,ammoReady=true,channelOut=null,machineAmmo=true,suppressionRate=0){
   const cmd=commander(w,army),morale=.55+army.morale/180;
   const troops=new Map(alloc.filter(x=>x.armyId===army.id).map(x=>[x.unitId,x.men]));
   let base=0;const localChannels=new Map();
@@ -1946,7 +2003,8 @@ function h1Power(w,army,phase,defending,terrain,broken,alloc,ammoReady=true,chan
   }
   const ground=defending?(terrain==='mountain'?1.38:terrain==='forest'?1.16:terrain==='rock'?1.1:1.05):1;
   const command=1+((cmd?.command||50)-50)/270+((defending?cmd?.defense:cmd?.attack)||50)/420;
-  const result=Math.max(0,base*morale*ground*command*(army.supplyMultiplier??(army.supplied?1:.78))*(1+techBonus(w,army.nationId,'combatPower'))*(1+(army.supplied?techBonus(w,army.nationId,'supplyPower'):0))*(broken?.67:1)*(1+b4aPowerBonus(army)));
+  let result=Math.max(0,base*morale*ground*command*(army.supplyMultiplier??(army.supplied?1:.78))*(1+techBonus(w,army.nationId,'combatPower'))*(1+(army.supplied?techBonus(w,army.nationId,'supplyPower'):0))*(broken?.67:1)*(1+b4aPowerBonus(army)));
+  if(suppressionRate>0)result*=1-suppressionRate;
   if(channelOut&&G4_COMBAT_ENABLED&&base>0)for(const [key,value] of localChannels)channelOut.set(key,(channelOut.get(key)||0)+value*result/base);
   return result+hMachineChannels(w,army,phase,defending,terrain,broken,channelOut,machineAmmo,alloc);
 }
@@ -2163,8 +2221,13 @@ function h1ResolveMulti(w,e){
       for(const m of h1Live(w,e,'defenders')){const a=h1Army(w,m.armyId);ammoB.set(m.armyId,{human:v07cVolleyCheck(w,a,allocB,e.warId),machine:hVolley(w,a,phase,e.warId,allocB)});}
     }
     e3bMark('AFTER_AMMO',w,e);
+    const mgFiredA=(phase==='OPENING'||phase==='SUSTAINED')?v08iMultiPaid(w,e,'attackers',allocA,ammoA):0;
+    const mgFiredB=(phase==='OPENING'||phase==='SUSTAINED')?v08iMultiPaid(w,e,'defenders',allocB,ammoB):0;
+    const frontA=h1Live(w,e,'attackers').reduce((s,m)=>s+deployedManpower(h1Army(w,m.armyId),'front'),0);
+    const frontB=h1Live(w,e,'defenders').reduce((s,m)=>s+deployedManpower(h1Army(w,m.armyId),'front'),0);
+    const mgState=v08iPhase(e,phase,mgFiredA,mgFiredB,frontA,frontB);
     const channelsA=new Map(),channelsB=new Map();
-    const sidePower=(side,alloc,defense,ammo,channels)=>h1Live(w,e,side).reduce((v,m)=>{const value=h1Power(w,h1Army(w,m.armyId),phase,defense,terrain,m.frontBroken,alloc,ammo.get(m.armyId)?.human!==false,channels,ammo.get(m.armyId)?.machine!==false);e3cWeights[side].set(m.armyId,(e3cWeights[side].get(m.armyId)||0)+value);return v+value;},0);
+    const sidePower=(side,alloc,defense,ammo,channels)=>h1Live(w,e,side).reduce((v,m)=>{const value=h1Power(w,h1Army(w,m.armyId),phase,defense,terrain,m.frontBroken,alloc,ammo.get(m.armyId)?.human!==false,channels,ammo.get(m.armyId)?.machine!==false,side==='attackers'?mgState.incomingA:mgState.incomingB);e3cWeights[side].set(m.armyId,(e3cWeights[side].get(m.armyId)||0)+value);return v+value;},0);
     const tanksA=v08fPhasePlan(w,e,phase,'attackers'),tanksB=v08fPhasePlan(w,e,phase,'defenders');
     const powerA=sidePower('attackers',allocA,false,ammoA,channelsA)+tanksA.power,powerB=sidePower('defenders',allocB,true,ammoB,channelsB)+tanksB.power;
     const totalA=h1Live(w,e,'attackers').reduce((v,m)=>v+hCombatPresence(w,h1Army(w,m.armyId)),0);
@@ -2208,6 +2271,7 @@ function h1ResolveMulti(w,e){
       v08hReadyTanksA:h1Live(w,e,'attackers').reduce((s,m)=>s+v08fAlive(w,h1Army(w,m.armyId)).length,0),
       v08hReadyTanksB:h1Live(w,e,'defenders').reduce((s,m)=>s+v08fAlive(w,h1Army(w,m.armyId)).length,0),
       deployedA:allocA.reduce((v,x)=>v+x.men,0),deployedB:allocB.reduce((v,x)=>v+x.men,0),
+      ...v08iPhaseTelemetry(mgState),
       xpParticipation:[...allocA,...allocB].filter(x=>x.men>0).map(x=>[x.armyId,x.men])});
     v07d2PhaseEnd(w,observation,{attackers:powerA,defenders:powerB});
     if(h1Live(w,e,'attackers').reduce((s,m)=>s+hCombatPresence(w,h1Army(w,m.armyId)),0)===0||h1Live(w,e,'defenders').reduce((s,m)=>s+hCombatPresence(w,h1Army(w,m.armyId)),0)===0)break;
@@ -2522,8 +2586,11 @@ function resolveEngagementRoundD1(world,e){
     const ammoA=!shooting||v07cVolleyCheck(world,a,phase==='MELEE'?g4SingleCloseAllocation(a,false):v07f2c2c2SingleVolleyAllocation(a,phase,stableA,false),e.warId);
     const ammoB=!shooting||v07cVolleyCheck(world,b,phase==='MELEE'?g4SingleCloseAllocation(b,true):v07f2c2c2SingleVolleyAllocation(b,phase,stableB,true),e.warId);
     e3bMark('AFTER_AMMO',world,e);
+    const mgFiredA=(phase==='OPENING'||phase==='SUSTAINED')?v08iMgPaid(a,v07f2c2c2SingleVolleyAllocation(a,phase,stableA,false),ammoA):0;
+    const mgFiredB=(phase==='OPENING'||phase==='SUSTAINED')?v08iMgPaid(b,v07f2c2c2SingleVolleyAllocation(b,phase,stableB,true),ammoB):0;
+    const mgState=v08iPhase(e,phase,mgFiredA,mgFiredB,deployedManpower(a,'front'),deployedManpower(b,'front'));
     const channelsA=new Map(),channelsB=new Map();
-    const powerA=linePower(world,a,phase,false,terrain,e.frontBrokenA,ammoA,stableA,channelsA),powerB=linePower(world,b,phase,true,terrain,e.frontBrokenB,ammoB,stableB,channelsB);
+    const powerA=linePower(world,a,phase,false,terrain,e.frontBrokenA,ammoA,stableA,channelsA,mgState.incomingA),powerB=linePower(world,b,phase,true,terrain,e.frontBrokenB,ammoB,stableB,channelsB,mgState.incomingB);
     const beforeA=manpower(a),beforeB=manpower(b);
     let toB=powerA===0?0:Math.max(1,Math.round(powerA/65*(.74+randCombat(world)*.50)));
     let toA=powerB===0?0:Math.max(1,Math.round(powerB/65*(.74+randCombat(world)*.50)));
@@ -2535,7 +2602,8 @@ function resolveEngagementRoundD1(world,e){
       aPower:Math.round(powerA),bPower:Math.round(powerB),reinforcementA:changeA.added,reinforcementB:changeB.added,
       collapseA:changeA.broken,collapseB:changeB.broken,
       aFront:deployedManpower(a,'front'),aRear:deployedManpower(a,'rear'),aReserve:deployedManpower(a,'reserve'),
-      bFront:deployedManpower(b,'front'),bRear:deployedManpower(b,'rear'),bReserve:deployedManpower(b,'reserve')});
+      bFront:deployedManpower(b,'front'),bRear:deployedManpower(b,'rear'),bReserve:deployedManpower(b,'reserve'),
+      ...v08iPhaseTelemetry(mgState)});
     v07d2PhaseEnd(world,observation,{attackers:powerA,defenders:powerB});
     if(!manpower(a)||!manpower(b))break;
   }
