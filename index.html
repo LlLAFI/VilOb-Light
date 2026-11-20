@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9B</title>
+<title>VILOB Light · V0.9E</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -939,7 +939,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9D'; // ancient coastwise naval hulls, ports and event-based fleets; V0.8J army/industry preserved
+const VERSION = 'V0.9E'; // ancient coastwise naval hulls, ports and event-based fleets; V0.8J army/industry preserved
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -8719,6 +8719,49 @@ function i2DamageAt(w,tileId,progress){i3aDamageAt(w,tileId,progress);if(!w.i2Po
  for(const ob of affected){const before=ob.hp;ob.hp=Math.max(0,before-loss);if(ob.hp!==before){w.changeSeq++;if(ob.hp===0){delete ob.repair;i2Log(w,'DESTROYED',{id:ob.id,tileId,structureKind:ob.settlementId!==undefined?'STATION':'LINE'});
   recordHistoricalEvent(w,'war',`동력망 시설 #${ob.id}이(가) 전투로 파괴되었습니다.`,[ob.ownerId]);}}}
 }
+
+// V0.9D3: I2 connections are installed at physical settlement cores. When a
+// secondary settlement is merged away, its station is NOT teleported onto the
+// primary core. Remove its obsolete station and paid lines terminating there.
+// No refunds or historical-quarter rewrites: the construction was real.
+function i2OnSettlementMerge(w,primaryId,secondaryId){
+ if(!w.i2Power)return {stations:0,lines:0};
+ const st=w.i2Power;
+ const obsoleteStations=st.stations.filter(x=>x.settlementId===secondaryId);
+ const obsoleteLines=st.lines.filter(x=>x.from===secondaryId||x.to===secondaryId);
+ if(!obsoleteStations.length&&!obsoleteLines.length)return {stations:0,lines:0};
+ st.stations=st.stations.filter(x=>x.settlementId!==secondaryId);
+ st.lines=st.lines.filter(x=>x.from!==secondaryId&&x.to!==secondaryId);
+ for(const line of obsoleteLines)i2Log(w,'MERGE_LINE_RETIRED',{id:line.id,from:line.from,to:line.to,absorbedSettlementId:secondaryId,intoSettlementId:primaryId});
+ for(const station of obsoleteStations)i2Log(w,'MERGE_STATION_RETIRED',{id:station.id,fromSettlementId:secondaryId,intoSettlementId:primaryId,tileId:station.tileId});
+ w.changeSeq++;
+ return {stations:obsoleteStations.length,lines:obsoleteLines.length};
+}
+// Strict one-time legacy repair for old saves: only recognize I2 stations whose
+// vanished settlement was physically absorbed into an existing same-owner
+// settlement. Unrelated invalid stations remain invalid and fail validation.
+function i2RepairAbsorbedOrphans(w){
+ if(!w.i2Power)return {stations:0,lines:0};
+ const st=w.i2Power,known=new Set(w.settlements.map(s=>s.id));
+ const retired=[];
+ for(const station of st.stations){
+  if(known.has(station.settlementId))continue;
+  const tile=w.tiles[station.tileId],survivor=tile&&w.settlements.find(s=>s.id===tile.settlementId);
+  if(!survivor||tile.ownerId!==station.ownerId||survivor.ownerId!==station.ownerId||
+     !survivor.tileIds.includes(station.tileId)||station.tileId===survivor.coreTileId)continue;
+  retired.push({station,survivorId:survivor.id});
+ }
+ if(!retired.length)return {stations:0,lines:0};
+ const ids=new Set(retired.map(x=>x.station.settlementId));
+ const orphanLines=st.lines.filter(l=>ids.has(l.from)||ids.has(l.to));
+ st.stations=st.stations.filter(x=>!ids.has(x.settlementId));
+ st.lines=st.lines.filter(l=>!ids.has(l.from)&&!ids.has(l.to));
+ for(const line of orphanLines)i2Log(w,'LEGACY_MERGE_LINE_RETIRED',{id:line.id,from:line.from,to:line.to});
+ for(const {station,survivorId} of retired)i2Log(w,'LEGACY_MERGE_STATION_RETIRED',{id:station.id,fromSettlementId:station.settlementId,intoSettlementId:survivorId,tileId:station.tileId});
+ w.changeSeq++;
+ return {stations:retired.length,lines:orphanLines.length};
+}
+
 function i2OnTransfer(w,sid,oldOwner,newOwner){i3aOnTransfer(w,sid,oldOwner,newOwner);const st=i2Ensure(w),ob=i2Station(w,sid);if(ob){ob.ownerId=newOwner;delete ob.repair;}
  // Lines are not automatically annexed: original owner's physical rights lapse.
  for(const l of st.lines)if(l.from===sid||l.to===sid){l.hp=0;delete l.repair;i2Log(w,'CONQUEST_LINE_DISABLED',{id:l.id,from:oldOwner,to:newOwner});}
@@ -17367,6 +17410,9 @@ function executeNationAction(world,nationId,action){
       // Never erase the historical-capital center in a merger.
       for(const id of secondary.formerCapitalOf)markCapitalHistory(primary,id);
       primary.development=limit(Math.max(primary.development,secondary.development)+2,0,100);advanceLevel(primary);
+      // I2 nodes and cable endpoints refer to physical settlement cores.
+      // Retire the disappearing core BEFORE removing its settlement record.
+      i2OnSettlementMerge(world,primary.id,secondary.id);
       for(const id of secondary.tileIds)world.tiles[id].settlementId=primary.id;
       for(const b of allStructures(world))if(b.settlementId===secondary.id)b.settlementId=primary.id;
       // Preserve prior housing capacity, including all transferred houses exactly once.
@@ -22117,15 +22163,17 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
  const v08gSourceVersion=parsed.version;
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
+   // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
+   if(!['V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22139,7 +22187,7 @@ function deserializeWorld(json){
    }
    if(was!=='V0.7A'&&was!=='V0.6F4D3'&&was!=='V0.6E5'&&was!=='V0.6E6'&&was!=='V0.6E7A'&&was!=='V0.6E7A1'&&was!=='V0.6E7B'&&was!=='V0.6E7C'&&was!=='V0.6F1'&&was!=='V0.6F2'&&was!=='V0.6F3'&&was!=='V0.6F4A'&&was!=='V0.6F4B'&&was!=='V0.6F4B1'&&was!=='V0.6F4C'&&was!=='V0.6F4D1'&&was!=='V0.6F4D2')v06e5MigrateWorld(parsed);
    if(was!=='V0.7A'&&was!=='V0.6F4D3')for(const n of parsed.nations)n.civilization=migrateMedievalStage(n.civilization,n.technology);
-   } // V0.7A1/A1A/A1B require only a version update; do NOT re-run old E-era migrations.
+   }} // V0.9D native hotfix or V0.7A1/A1A/A1B older migrations.
  }
  parsed.riverSchemaVersion??=RIVER_SCHEMA_VERSION;
  parsed.riverSegments??=[];
@@ -22178,6 +22226,11 @@ function deserializeWorld(json){
  i1lRepairZeroOrphans(parsed); // V0.7L: prune only provably empty, unreferenced orphan rows
  i1Migrate(parsed); // one-time bounded location allocation, no fabricated shipments
  i2Ensure(parsed); // I2 starts with no retroactively fabricated network
+ // D3 narrowly repairs paid I2 facilities orphaned by old same-owner mergers.
+ // No silent rewrite of unrelated corrupt data, gold, resources, or RNG.
+ if(['V0.9D2','V0.9D1','V0.9D','V0.9C'].includes(v08eSourceVersion))i2RepairAbsorbedOrphans(parsed);
+ // Inactive peace-time blockades are missions, not valid naval control.
+ navyDExpireInvalidBlockades(parsed);
  i3aEnsure(parsed); // I3A starts with no fabricated historical production
  // An older J save may contain one authentic Lv.4 quarter; never infer it from Lv.3 factoryRuns.
  for(const b of parsed.buildings||[])if(b.typeId==='factory'&&b.level===4&&b.kLevel4OperatedDay==null&&b.f2jLastQuarter?.operated===true){
@@ -25402,14 +25455,81 @@ function navyValidate(w,fail){const nv=w.navy;if(!nv||nv.schema!==1||!Array.isAr
  return true;
 }
 function navySummary(w){const nv=navyEnsure(w);return {version:w.version,dayIndex:w.dayIndex,ports:w.buildings.filter(b=>b.typeId==='port').length,ships:nv.ships.length,fleets:nv.fleets.length,crew:nv.ships.reduce((n,s)=>n+s.crew,0),produced:nv.produced,scrapped:nv.scrapped,freightDelivered:nv.bDelivered||0,seaTradesSettled:nv.bTrades||0,armyPassages:nv.bPassages||0,activeVoyages:nv.fleets.filter(f=>f.bAssignment).length,voyages:nv.fleets.filter(f=>f.bAssignment).map(f=>({fleetId:f.id,nationId:f.nationId,kind:f.bAssignment.kind,phase:f.bAssignment.phase,from:f.bAssignment.sourcePortId,to:f.bAssignment.destinationPortId,good:f.bAssignment.good||null,amount:f.bAssignment.amount??f.bAssignment.loadedAmount??null})),events:nv.events.slice(-15),navalCombat:{...navyCEnsure(w).cStats},navalBattles:navyCEnsure(w).cHistory.slice(-10).map(e=>({id:e.id,dayIndex:e.finishedDay,tileId:e.tileId,rounds:e.round,winnerNationId:e.winnerNationId,reason:e.reason})),activeNavalBattles:navyCEnsure(w).cEngagements.map(e=>({id:e.id,tileId:e.tileId,round:e.round,nationAId:e.nationAId,nationBId:e.nationBId})),dStats:{...navyDEnsure(w).dStats},missionByFleet:nv.fleets.map(f=>({id:f.id,nationId:f.nationId,mission:f.dMission||'IDLE',targetPortId:f.dTargetPortId||null})),seaControlledTiles:navyDControl(w).tiles.size,blockades:[...navyDControl(w).blockades.values()],annualRecords:navyDEnsure(w).dYearly.length,decadeRecords:navyDEnsure(w).dDecades.length};}
-function navyDrawOverlay(renderer){if(!renderer.world?.navy)return;const ctx=renderer.ctx,scale=renderer.scale,ox=renderer.originX,oy=renderer.originY;
- ctx.save();navyDDrawSea(renderer);navyCDrawPorts(renderer);navyDDrawBlockadedPorts(renderer);for(const f of renderer.world.navy.fleets){const t=renderer.world.tiles[f.tileId];if(!t)continue;const x=ox+(t.x+.5)*scale,y=oy+(t.y+.52)*scale;if(x<-20||y<-20||x>renderer.width+20||y>renderer.height+20)continue;
-  ctx.beginPath();ctx.arc(x,y,Math.max(7,Math.min(14,scale*.28)),0,Math.PI*2);ctx.fillStyle='#07364d';ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=renderer.world.nations[f.nationId]?.color||'#d9edf9';ctx.stroke();ctx.font=`bold ${Math.max(11,Math.min(18,scale*.40))}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#f5fbff';navyDDrawFleetGlyph(ctx,x,y,Math.max(7,Math.min(14,scale*.28)),f,renderer.world);
- }navyCDrawBattles(renderer);ctx.restore();}
+function navyDrawOverlay(renderer){
+ if(!renderer.world?.navy)return;
+ const w=renderer.world,nv=navyEnsure(w),ctx=renderer.ctx,scale=renderer.scale,ox=renderer.originX,oy=renderer.originY;
+ ctx.save();navyDDrawSea(renderer);navyCDrawPorts(renderer);navyDDrawBlockadedPorts(renderer);
+ // V0.9D2 visual-only: aggregate fleets by (water tile, nation). Independent
+ // national markers make hostile blockaders visible even when an unfinished
+ // friendly hull occupies the same sea tile. Never mutate fleet/ship ledgers.
+ const shipsById=new Map(nv.ships.map(s=>[s.id,s]));
+ const validBlockadeFleets=new Set([...navyDControl(w).blockades.values()].map(b=>b.fleetId));
+ const tiles=new Map();
+ for(const f of nv.fleets){
+  const t=w.tiles[f.tileId];if(!t||t.terrain!=='water'||!f.shipIds?.length)continue;
+  const key=`${f.tileId}:${f.nationId}`;
+  let g=tiles.get(key);
+  if(!g){g={tileId:f.tileId,nationId:f.nationId,shipIds:[],fleetIds:[],activeCount:0,buildingCount:0,blockade:false};tiles.set(key,g);}
+  g.fleetIds.push(f.id);
+  if(validBlockadeFleets.has(f.id))g.blockade=true;
+  for(const id of f.shipIds){const s=shipsById.get(id);if(!s)continue;
+   if(s.status==='BUILDING'){g.buildingCount++;continue;}
+   g.shipIds.push(id);g.activeCount++;
+  }
+ }
+ const byTile=new Map();for(const g of tiles.values()){
+  if(!g.activeCount&&!g.buildingCount)continue;
+  if(!byTile.has(g.tileId))byTile.set(g.tileId,[]);
+  byTile.get(g.tileId).push(g);
+ }
+ for(const [tileId,groups] of byTile){
+  const t=w.tiles[tileId];groups.sort((a,b)=>Number(b.blockade)-Number(a.blockade)||Number(!!b.activeCount)-Number(!!a.activeCount)||a.nationId-b.nationId);
+  const cols=Math.ceil(Math.sqrt(groups.length)),rows=Math.ceil(groups.length/cols);
+  for(let i=0;i<groups.length;i++){
+   const g=groups[i],col=i%cols,row=Math.floor(i/cols);
+   // Space owners apart inside one sea tile; cap the radius so two owners fit
+   // at standard 100% zoom. Marker remains anchored to the real tile.
+   const dx=(col-(cols-1)/2)*(.76/Math.max(1,cols-1));
+   const dy=(row-(rows-1)/2)*(.66/Math.max(1,rows-1));
+   const x=ox+(t.x+.5+dx)*scale,y=oy+(t.y+.52+dy)*scale;
+   const r=Math.max(5.2,Math.min(groups.length===1?14:11,scale*(groups.length===1?.26:.19)));
+   if(x<-25||y<-25||x>renderer.width+25||y>renderer.height+25)continue;
+   ctx.save();
+   ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+   ctx.fillStyle=g.activeCount?'#07364d':'#3c3940';ctx.fill();
+   // Red outer rim is on the SAME center as the nation ring. Do not draw
+   // a detached extra ring that visually shifts under a ship-count badge.
+   ctx.lineWidth=g.blockade?3:2;
+   ctx.strokeStyle=g.blockade?'#ff737e':(w.nations[g.nationId]?.color||'#d9edf9');ctx.stroke();
+   if(g.blockade){ctx.beginPath();ctx.arc(x,y,r-2.5,0,Math.PI*2);
+    ctx.strokeStyle=w.nations[g.nationId]?.color||'#d9edf9';ctx.lineWidth=1.25;ctx.stroke();}
+   if(g.activeCount){
+    ctx.fillStyle='#f5fbff';ctx.font=`bold ${Math.max(10,r*1.27)}px sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    navyDDrawFleetGlyph(ctx,x,y,r,{shipIds:g.shipIds},w);
+   }else{
+    // Construction is not a combat-ready vessel: draw a small unfinished
+    // keel and a Korean construction glyph rather than a full fleet icon.
+    ctx.strokeStyle='#eac17d';ctx.lineWidth=1.6;
+    ctx.setLineDash([2,2]);ctx.beginPath();ctx.moveTo(x-r*.55,y+r*.18);ctx.lineTo(x+r*.55,y+r*.18);ctx.lineTo(x+r*.32,y+r*.48);ctx.lineTo(x-r*.32,y+r*.48);ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#ffe2a2';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`bold ${Math.max(8,r*.75)}px sans-serif`;ctx.fillText('건',x,y-r*.25);
+   }
+   // The count is physical ship count, not fleet count. Badge includes ships
+   // still BUILDING (marked by a small gold construction dot).
+   const count=g.activeCount+g.buildingCount;
+   const bx=x+r*.79,by=y+r*.81,br=Math.max(5.6,Math.min(8.7,r*.62));
+   ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fillStyle=g.activeCount?'#0b1e30':'#5c452b';ctx.fill();
+   ctx.strokeStyle='#e4edf0';ctx.lineWidth=1.1;ctx.stroke();ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`bold ${Math.max(8,Math.min(11,br*1.42))}px sans-serif`;ctx.fillText(String(count),bx,by+.4);
+   if(g.buildingCount&&g.activeCount){ctx.beginPath();ctx.arc(x-r*.72,y-r*.68,Math.max(2.5,r*.27),0,Math.PI*2);ctx.fillStyle='#efbe65';ctx.fill();}
+   ctx.restore();
+  }
+ }
+ navyCDrawBattles(renderer);ctx.restore();
+}
 function navyRenderPanel(){if(typeof app==='undefined'||!app.world)return;const host=document.getElementById('navyPanel');if(!host)return;
  const w=app.world,nv=navyEnsure(w),n=w.nations[app.selectedNationId]||w.nations[0],ports=w.buildings.filter(b=>b.typeId==='port'&&w.tiles[b.tileId]?.ownerId===n.id),ships=nv.ships.filter(s=>s.nationId===n.id);
- host.replaceChildren();const h=document.createElement('h3');h.textContent=`⚓ V0.9D 해군 · ${n.name} · 항구 ${ports.length} / 선박 ${ships.length} / 선원 ${ships.reduce((a,s)=>a+s.crew,0)}명`;host.append(h);
- const note=document.createElement('p');note.className='muted-line';note.textContent='실물 수송 · 해전·전술적 호위 · 제해권·전시 항구 봉쇄 · 해군 현대화. 적 해안 상륙은 V0.9E.';host.append(note);
+ host.replaceChildren();const h=document.createElement('h3');h.textContent=`⚓ V0.9E 해군 · ${n.name} · 항구 ${ports.length} / 선박 ${ships.length} / 선원 ${ships.reduce((a,s)=>a+s.crew,0)}명`;host.append(h);
+ const note=document.createElement('p');note.className='muted-line';note.textContent='실물 수송 · 해전·전술적 호위 · 제해권·전시 항구 봉쇄 · 해군 현대화. V0.9E 실물함대 강습상륙 및 육해군 합동전.';host.append(note);
  function button(parent,label,action){const b=document.createElement('button');b.type='button';b.className='jump-button';b.textContent=label;b.addEventListener('click',()=>{let r=executeNationAction(w,n.id,action);if(!r.ok)showToast(r.reason||'실행 불가');else showToast(label+' 완료');navyRenderPanel();map.draw();updateStats();});parent.append(b);}
  if(n.controller==='PLAYER'){
   for(const {action} of navyPortCandidates(w,n.id).slice(0,5))if(canExecuteNationAction(w,n.id,action))button(host,`항구 Lv.1 착공 · 타일 ${action.targetTileId}`,action);
@@ -25464,6 +25584,10 @@ function navyBPortNation(w,p){return p? w.settlements.find(s=>s.id===p.settlemen
 function navyBFleet(w,nid,id){return navyEnsure(w).fleets.find(f=>f.nationId===nid&&f.id===id);}
 function navyBShips(w,f){return f?.shipIds.map(id=>navyEnsure(w).ships.find(s=>s.id===id))||[];}
 function navyBCapacity(w,f,kind){return navyBShips(w,f).reduce((acc,s)=>acc+(s?(kind==='ARMY'?NAVY_B_PASSENGERS[s.typeId]:NAVY_B_CARGO[s.typeId]):0),0);}
+// V0.9D1: cargo items cannot be split between ship holds. Total freight units
+// may overstate actual integer-item capacity (e.g. 40+70+70 units / iron 4 = 45,
+// but each hull holds 10+17+17 = 44 iron items).
+function navyBItemCapacity(w,f,good){const unit=TRADE_GOODS[good]?.freight;return unit>0?navyBShips(w,f).reduce((sum,s)=>sum+(s?Math.floor((NAVY_B_CARGO[s.typeId]||0)/unit):0),0):0;}
 function navyBPortPath(w,f,source,dest){if(!source||!dest||source.id===dest.id)return null;
  const start=navyWaterAtPort(w,source),end=navyWaterAtPort(w,dest),ships=navyBShips(w,f);
  if(start===null||end===null||start!==f.tileId||ships.some(s=>!s))return null;
@@ -25494,7 +25618,7 @@ function navyBParams(w,nid,a){
  }
  if(!NAVY_B_GOODS.includes(a.good)||!Number.isSafeInteger(a.amount)||a.amount<=0)return null;
  const freight=a.amount*TRADE_GOODS[a.good].freight;
- if(freight>navyBCapacity(w,f,'CARGO'))return null;
+ if(a.amount>navyBItemCapacity(w,f,a.good))return null;
  const fee=navyBFreightFee(path,freight);
  if((n.resources.coal||0)<coal||n.gold<fee||a.type==='NAVY_FREIGHT'&&i1Ensure(n,w).transit.length>=I1_TRANSIT_LIMIT)return null;
  // I1 regional+central stock represents available physically accessible goods.
@@ -25638,10 +25762,10 @@ function navyBValidate(w,fail){const nv=navyBEnsure(w);
    claimedArmies.add(j.armyId);
   }else if(j.kind==='DOMESTIC'){
    const n=w.nations[f.nationId],st=i1Ensure(n,w),p=st.transit.find(p=>p.mode==='SEA'&&p.fleetId===f.id&&p.id===j.shipmentId);
-   if(claimedFreight.has(f.id)||p&&(!NAVY_B_GOODS.includes(p.good)||p.amount>navyBCapacity(w,f,'CARGO')/TRADE_GOODS[p.good].freight))fail('V0.9B I1 해운 화물 참조');
+   if(claimedFreight.has(f.id)||p&&(!NAVY_B_GOODS.includes(p.good)||p.amount>navyBItemCapacity(w,f,p.good)))fail('V0.9B I1 해운 화물 참조');
    claimedFreight.add(f.id);
   }else if(j.kind==='TRADE'){
-   if(!NAVY_B_GOODS.includes(j.good)||!Number.isSafeInteger(j.amount)||j.amount<1||j.amount*TRADE_GOODS[j.good].freight>navyBCapacity(w,f,'CARGO')||!w.nations[j.sellerNationId]||!w.nations[j.buyerNationId]||j.sellerNationId===j.buyerNationId||j.sellerNationId!==f.nationId||!Number.isSafeInteger(j.escrowGold)||j.escrowGold<1||j.escrowGold!==j.amount*j.unitPrice)fail('V0.9B 국제 해상 에스크로');
+   if(!NAVY_B_GOODS.includes(j.good)||!Number.isSafeInteger(j.amount)||j.amount<1||j.amount>navyBItemCapacity(w,f,j.good)||!w.nations[j.sellerNationId]||!w.nations[j.buyerNationId]||j.sellerNationId===j.buyerNationId||j.sellerNationId!==f.nationId||!Number.isSafeInteger(j.escrowGold)||j.escrowGold<1||j.escrowGold!==j.amount*j.unitPrice)fail('V0.9B 국제 해상 에스크로');
   }
  }
  for(const a of w.armies)if(a.seaTransit?.navalFleetId&&!claimedArmies.has(a.id))fail('V0.9B 고아 승선 군대');
@@ -25662,7 +25786,7 @@ function navyBDomesticNeed(w,nid,source,dest,f){const n=w.nations[nid],st=i1Ensu
   const demand=iDemand(b);for(const g of NAVY_B_GOODS)targets.set(g,(targets.get(g)||0)+(demand[g]||0)*2);
  }
  for(const g of NAVY_B_GOODS){const need=(targets.get(g)||0)-i1Available(w,n,dest.settlementId,g)-st.transit.filter(t=>t.good===g&&t.to===dest.settlementId).reduce((sum,t)=>sum+t.amount,0);
-  const amount=Math.max(0,Math.min(need,i1Available(w,n,source.settlementId,g),Math.floor(navyBCapacity(w,f,'CARGO')/TRADE_GOODS[g].freight)));
+  const amount=Math.max(0,Math.min(need,i1Available(w,n,source.settlementId,g),navyBItemCapacity(w,f,g)));
   if(amount>0){const action={type:'NAVY_FREIGHT',fleetId:f.id,sourcePortId:source.id,destPortId:dest.id,good:g,amount};if(navyBActionLegal(w,nid,action))return action;}
  }return null;
 }
@@ -25670,7 +25794,7 @@ function navyBExportNeed(w,nid,source,dest,f){const seller=w.nations[nid],buyer=
  if(!buyer)return null;
  for(const g of NAVY_B_GOODS){const surplus=Math.max(0,(seller.resources[g]||0)-safeStock(w,seller,g));
   const short=Math.max(0,safeStock(w,buyer,g)-(buyer.resources[g]||0));
-  const qty=Math.min(surplus,short,i1Available(w,seller,source.settlementId,g),Math.floor(navyBCapacity(w,f,'CARGO')/TRADE_GOODS[g].freight));
+  const qty=Math.min(surplus,short,i1Available(w,seller,source.settlementId,g),navyBItemCapacity(w,f,g));
   if(qty>=1){const action={type:'NAVY_SEA_TRADE',fleetId:f.id,sourcePortId:source.id,destPortId:dest.id,good:g,amount:Math.min(qty,Math.floor(buyer.gold/Math.max(1,tradeUnitPrice(w,nid,buyer.id,g))))};
    if(action.amount>0&&navyBActionLegal(w,nid,action))return action;}
  }return null;
@@ -25730,9 +25854,9 @@ function navyBRenderPanel(w,n,host){const nv=navyBEnsure(w),ports=navyBPorts(w),
  function showEstimate(){const f=navyBFleet(w,n.id,+fp.value),p=navyBPort(w,+from.value),q=navyBPort(w,+to.value);
   const route=f&&p&&q?navyBPortPath(w,f,p,q):null;
   if(!route){estimate.textContent='항구·함대 위치가 맞지 않거나 연결된 수역이 아닙니다.';return;}
-  const weight=(TRADE_GOODS[good.value]?.freight||1)*Math.max(0,Number(qty.value)||0),max=navyBCapacity(w,f,'CARGO');
+  const weight=(TRADE_GOODS[good.value]?.freight||1)*Math.max(0,Number(qty.value)||0),max=navyBCapacity(w,f,'CARGO'),itemMax=navyBItemCapacity(w,f,good.value);
   const duration=(route.length-1)*Math.max(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].daysPerTile));
-  estimate.textContent=`예상 항해 ${duration}일 · 화물 ${weight}/${max} 단위 · 운송료 ${navyBFreightFee(route,weight)} Gold · 연료 석탄 ${navyBCoalCost(w,f,route)}개 · 육군 수송 정원 ${navyBCapacity(w,f,'ARMY')}명 (별도 수송료 5G)`;
+  estimate.textContent=`예상 항해 ${duration}일 · 화물 ${weight}/${max} 단위 (해당 품목 최대 ${itemMax}개) · 운송료 ${navyBFreightFee(route,weight)} Gold · 연료 석탄 ${navyBCoalCost(w,f,route)}개 · 육군 수송 정원 ${navyBCapacity(w,f,'ARMY')}명 (별도 수송료 5G)`;
  }
  for(const el of [fp,from,to,good,qty]){el.addEventListener('change',showEstimate);el.addEventListener('input',showEstimate);}
  showEstimate();
@@ -25783,7 +25907,29 @@ function navyCManifest(w,f){
   const space=Math.floor((a.kind==='ARMY'?NAVY_B_PASSENGERS[s.typeId]:NAVY_B_CARGO[s.typeId])/weight);
   const take=Math.min(amount,space);entries.push({shipId:s.id,amount:take});amount-=take;
  }
- if(amount!==0)throw Error('C0 선박별 선적 명세 용량 초과');
+ if(amount!==0){
+  // V0.9D1 recovery: older V0.9D emergency saves can contain an already-paid
+  // international contract that overflowed the independent ship holds. Restore
+  // the undispatched item(s) to the seller and refund their reserved Gold.
+  // This is never reached by new departures: navyBParams now rejects overbooking.
+  if(a.kind!=='TRADE'||!Number.isSafeInteger(amount)||amount<0||
+     !Number.isSafeInteger(a.unitPrice)||a.unitPrice<=0||
+     !w.nations[a.sellerNationId]||!w.nations[a.buyerNationId]||
+     !NAVY_B_GOODS.includes(a.good)||amount>=a.amount||
+     a.escrowGold!==a.amount*a.unitPrice)throw Error('C0 선박별 선적 명세 용량 초과');
+  const seller=w.nations[a.sellerNationId],buyer=w.nations[a.buyerNationId];
+  const refund=amount*a.unitPrice;
+  seller.resources[a.good]=(seller.resources[a.good]||0)+amount;
+  if(i1Active(w,seller))i1Row(i1Ensure(seller,w),navyBPort(w,a.sourcePortId)?.settlementId)[a.good]+=amount;
+  buyer.gold+=refund;a.amount-=amount;a.escrowGold-=refund;
+  navyLog(w,'SEA_MANIFEST_RECOVERED',f.nationId,`fleet ${f.id}: ${a.good} ×${amount} restored, ${refund}G refunded`);
+  // V0.9D threw before the departure bookkeeping. The presence of a paid,
+  // manifest-less assignment in a native D save identifies that partial action.
+  if(w.version==='V0.9D'||w.version==='V0.9D1'){
+   w.navy.cStats.departures++;(w.navy.cNationStats[f.nationId]??={battles:0,wins:0,losses:0,retreats:0,shipsSunk:0,crewLost:0,hullDamage:0,departures:0,steps:0,freightTrips:0,tradeTrips:0,armyTrips:0}).departures++;
+  }
+  w.changeSeq=(w.changeSeq||0)+1;
+ }
  a.cManifest=entries;return entries;
 }
 function navyCRepairPrice(s){const delta=NAVY_SHIP_TYPES[s.typeId].hp-s.hp;
@@ -25958,7 +26104,7 @@ function navyCValidate(w,fail){const nv=navyCEnsure(w);
  }
  for(const f of nv.fleets){if(f.cEngagementId&&!ids.has(f.cEngagementId))return fail('C 고아 함대 교전');
   if(f.bAssignment){let total=0;const man=f.bAssignment.cManifest;
-   if(!Array.isArray(man)||new Set(man.map(x=>x.shipId)).size!==man.length||man.some(x=>!f.shipIds.includes(x.shipId)||!Number.isSafeInteger(x.amount)||x.amount<0))return fail('C 선박별 적재');
+   if(!Array.isArray(man)||new Set(man.map(x=>x.shipId)).size!==man.length||man.some(x=>{const sh=nv.ships.find(s=>s.id===x.shipId);const good=f.bAssignment.kind==='ARMY'?null:f.bAssignment.good;const weight=good?TRADE_GOODS[good]?.freight:1;const max=sh&&weight>0?Math.floor((f.bAssignment.kind==='ARMY'?NAVY_B_PASSENGERS[sh.typeId]:NAVY_B_CARGO[sh.typeId])/weight):-1;return !f.shipIds.includes(x.shipId)||!Number.isSafeInteger(x.amount)||x.amount<0||x.amount>max;}))return fail('C 선박별 적재');
    total=man.reduce((s,x)=>s+x.amount,0);
    const j=f.bAssignment,expected=j.kind==='ARMY'?j.passengers:j.kind==='TRADE'?j.amount:i1Ensure(w.nations[f.nationId],w).transit.find(x=>x.id===j.shipmentId&&x.fleetId===f.id)?.amount||0;
    if(total!==expected)return fail('C 적재 보존식');
@@ -26196,6 +26342,25 @@ function navyDWartimeTarget(w,f){
   const dist=path.length-1;if(!best||dist<best.dist||dist===best.dist&&p.id<best.p.id)best={p,goal,dist};
  }return best;
 }
+
+// D3: Valid blockade ORDERS require an actual war with the still-owned port.
+// This is independent of readiness, crew count, and the quarterly AI selector.
+function navyDExpireInvalidBlockades(w){
+ if(!w.navy)return 0;
+ const nv=navyDEnsure(w);let expired=0;
+ for(const f of nv.fleets){
+  if(f.dMission!=='BLOCKADE')continue;
+  const port=navyBPort(w,f.dTargetPortId),owner=navyBPortNation(w,port);
+  if(owner!==null&&owner!==undefined&&navyPortOwner(w,port,owner)&&v04dWarBetween(w,f.nationId,owner))continue;
+  // A sailing vessel is NOT teleported. Its route remains physical until it
+  // reaches water, but it is no longer a legal blockader.
+  navyDSetMission(w,f,f.status==='SAILING'?'RETURN':'IDLE',null);
+  navyLog(w,'NAVAL_BLOCKADE_EXPIRED',f.nationId,`fleet ${f.id}: peace/port change`);
+  expired++;
+ }
+ return expired;
+}
+
 function navyDAccountMissions(w){const nv=navyDEnsure(w);
  // V0.9D: quarterly-sampled mission durations; not exact blockade uptime.
  for(const f of nv.fleets){if(f.dLastMissionAccountDay===undefined){f.dLastMissionAccountDay=w.dayIndex;continue;}
@@ -26207,7 +26372,7 @@ function navyDAccountMissions(w){const nv=navyDEnsure(w);
   }
  }
 }
-function navyDQuarter(w){if(w.dayIndex%120!==0)return;const nv=navyDEnsure(w);nv.lastAIDay=w.dayIndex;
+function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockades(w);const nv=navyDEnsure(w);nv.lastAIDay=w.dayIndex;
  navyDAccountMissions(w);
  for(const n of w.nations){if(!n.active||n.controller!=='AI'||!hasTech(w,n.id,'timber_processing'))continue;
   const ports=navyBPorts(w,n.id),ships=nv.ships.filter(s=>s.nationId===n.id).sort((a,b)=>a.id-b.id);
@@ -26279,7 +26444,7 @@ function navyDDrawFleetGlyph(ctx,x,y,r,f,w){
 }
 // Merge an actually needed merchant journey with an available co-located escort,
 // before V0.9B decides loading. No remote escort or free movement.
-function navyDPreQuarter(w){if(w.dayIndex%120!==0)return;
+function navyDPreQuarter(w){navyDExpireInvalidBlockades(w);if(w.dayIndex%120!==0)return;
  const nv=navyDEnsure(w);
  for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
   const ready=nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)).sort((a,b)=>a.id-b.id);
@@ -26330,13 +26495,32 @@ function navyDAppendInspector(box,w,tileId){const t=w.tiles[tileId];if(!t)return
  if(t.terrain!=='water'&&!port)return;
  const section=document.createElement('section');section.className='facility-mini';const head=document.createElement('strong');head.textContent='⚓ V0.9D 제해권 · 해군 상황';section.append(head);
  const line=(label,value)=>{const p=document.createElement('div');p.className='muted-line';p.textContent=`${label}: ${value}`;section.append(p);};
+ const nv=navyEnsure(w),shipById=new Map(nv.ships.map(s=>[s.id,s]));
+ const showFleets=(fleets,label)=>{
+  if(!fleets.length)return;
+  const group=new Map();for(const f of fleets){const ships=f.shipIds.map(id=>shipById.get(id)).filter(Boolean);
+   let g=group.get(f.nationId);if(!g){g={nationId:f.nationId,active:0,building:0,details:[]};group.set(f.nationId,g);}
+   const ready=ships.filter(s=>s.status!=='BUILDING'),pending=ships.length-ready.length;
+   g.active+=ready.length;g.building+=pending;
+   g.details.push(`#${f.id} ${ships.map(s=>NAVY_SHIP_TYPES[s.typeId]?.label||s.typeId).join('+')||'빈 함대'} (${f.dMission||'IDLE'}${pending?' · 건조 중':''})`);
+  }
+  for(const g of [...group.values()].sort((a,b)=>a.nationId-b.nationId)){
+   const status=[g.active?`${g.active}척 건조 완료`:null,g.building?`${g.building}척 건조 중`:null].filter(Boolean).join(' · ');
+   line(`${label} · ${w.nations[g.nationId]?.name||g.nationId}`,`${status} / ${g.details.join(' · ')}`);
+  }
+ };
  if(t.terrain==='water'){
   const c=ctl.tiles.get(tileId);line('해역 통제',!c?'비통제':c.state==='CONTESTED'?'분쟁':`${w.nations[c.nationId]?.name||'미상'} 우세`);
   line('판정일',`${ctl.dayIndex}일`);
   if(c)line('유효 통제력',c.ranked.map(([nid,power])=>`${w.nations[nid]?.name}:${power.toFixed(1)}`).join(' · '));
-  const fleets=navyEnsure(w).fleets.filter(f=>f.tileId===tileId);if(fleets.length)line('함대',fleets.map(f=>`${w.nations[f.nationId]?.name} #${f.id} ${f.dMission||'IDLE'} ${f.status}`).join(' · '));
+  showFleets(nv.fleets.filter(f=>f.tileId===tileId),'이 타일 함선');
  }
- if(port){const blockade=ctl.blockades.get(port.id);line('항구 봉쇄',blockade?`${w.nations[blockade.nationId]?.name} · 실물 해상 운송만 차단`:'없음');}
+ if(port){
+  const blockade=ctl.blockades.get(port.id);line('항구 봉쇄',blockade?`${w.nations[blockade.nationId]?.name} · 실물 해상 운송만 차단`:'없음');
+  const water=navyWaterAtPort(w,port);
+  if(water!=null){const wet=[water,...neighbors4(water,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water')];
+   showFleets(nv.fleets.filter(f=>wet.includes(f.tileId)),'항구 접근 해역');}
+ }
  box.append(section);
 }
 function navyDRenderPanel(w,n,host){const nv=navyDEnsure(w),ctl=navyDControl(w),section=document.createElement('section');section.className='army-detail';host.append(section);
@@ -26366,6 +26550,301 @@ function navyDInitMap(){const focus=document.getElementById('navyDMapFocus'),opa
  for(const el of [focus,opacity,ports])el?.addEventListener('change',()=>{if(typeof map!=='undefined')map.draw();if(typeof renderInspector==='function')renderInspector();});
 }
 navyDInitMap();
+
+</script>
+<script>
+// V0.9E — Physical amphibious assault and joint coastal operations.
+// Applied AFTER A/B/C/D, BEFORE main UI bootstrap. Original in-flight charter
+// voyages and friendly-port NAVY_EMBARK are deliberately left untouched.
+const NAVY_E_SCHEMA=1, NAVY_E_MAX_HISTORY=120, NAVY_E_MAX_DIAGNOSTICS=60;
+const NAVY_E_FEE_GOLD=5,NAVY_E_AP_UNITS=8,NAVY_E_BEACHHEAD_DAYS=12;
+function navyEEnsure(w){const nv=navyEnsure(w);
+ nv.eSchema??=NAVY_E_SCHEMA;nv.eNextId??=1;
+ nv.eStats??={attempted:0,launched:0,landed:0,returned:0,lostAtSea:0,aborted:0,shoreFire:0,armyLoss:0,transportGold:0};
+ nv.eHistory??=[];nv.eDiagnostics??=[];return nv;
+}
+function navyERecord(w,f,kind,detail='',jobOverride=null){
+ const nv=navyEEnsure(w),job=jobOverride||f?.bAssignment;
+ const row={dayIndex:w.dayIndex,kind,nationId:f?.nationId??null,fleetId:f?.id??null,
+  operationId:job?.eOperationId??null,armyId:job?.armyId??null,targetTileId:job?.eTargetTileId??null,
+  detail:String(detail).slice(0,140)};
+ nv.eHistory.push(row);if(nv.eHistory.length>NAVY_E_MAX_HISTORY)nv.eHistory.splice(0,nv.eHistory.length-NAVY_E_MAX_HISTORY);
+ if(f?.nationId!=null)navyLog(w,'AMPHIB_'+kind,f.nationId,row.detail);
+ return row;
+}
+function navyECoastalTargets(w,nid){return w.tiles.filter(t=>t.terrain!=='water'&&t.ownerId!=null&&t.ownerId!==nid&&
+ v04dWarBetween(w,nid,t.ownerId)&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id]?.terrain==='water')&&
+ canLandAt(w,nid,t));}
+function navyEApproach(w,f,target){if(!target||target.terrain==='water')return null;
+ const ships=navyBShips(w,f);
+ if(!ships.length||ships.some(s=>!s||!NAVY_SHIP_TYPES[s.typeId]))return null;
+ const coast=Math.min(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
+ let best=null;
+ for(const id of neighbors4(target.id,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)){
+  const path=navyPath(w,f.tileId,id,coast);
+  if(path&&(!best||path.length<best.length||path.length===best.length&&id<best[best.length-1]))best=path;
+ }
+ return best;
+}
+function navyEParams(w,nid,a){
+ if(a?.type!=='NAVAL_ASSAULT')return null;
+ const n=w.nations[nid],f=navyBFleet(w,nid,a.fleetId),port=navyBPort(w,a.sourcePortId),
+  army=w.armies.find(x=>x.id===a.armyId&&x.nationId===nid),target=w.tiles[a.targetTileId];
+ if(!n?.active||!f||!navyBReady(w,nid,f)||!navyPortOwner(w,port,nid)||navyWaterAtPort(w,port)!==f.tileId||
+   navyDPortBlocked(w,port.id,nid)||!army||army.status!=='READY'||army.engagementId!=null||army.seaTransit||army.order||
+   army.rearmPlan||army.hServiceReturn||army.f3fRout||v08fTanks(w,army).length||
+   !w.settlements.find(s=>s.id===port.settlementId)?.tileIds.includes(army.tileId)||
+   !target||target.ownerId==null||!v04dWarBetween(w,nid,target.ownerId)||!canLandAt(w,nid,target)||
+   !armyOffensiveReady(w,army))return null;
+ const passengers=manpower(army)+hCount(w,army,true);
+ if(passengers<=0||passengers>navyBCapacity(w,f,'ARMY'))return null;
+ const path=navyEApproach(w,f,target);if(!path)return null;
+ const coal=navyBCoalCost(w,f,path);
+ if(n.apUnits<NAVY_E_AP_UNITS||n.gold<NAVY_E_FEE_GOLD||(n.resources.coal||0)<coal)return null;
+ return {n,f,port,army,target,passengers,path,coal};
+}
+function navyEStart(w,nid,a){const k=navyEParams(w,nid,a);if(!k)return {ok:false,reason:'상륙 조건 불충족: 항구·전쟁·병력·함선 정원·해로·비용 확인'};
+ const {n,f,port,army,target,passengers,path}=k;
+ // Spend sailing fuel using the existing NAVY_SAIL engine only after legality.
+ if(path.length>1&&!navyBStartSail(w,nid,f,path[path.length-1]))return {ok:false,reason:'실제 함대 출항 실패'};
+ n.gold-=NAVY_E_FEE_GOLD;n.apUnits-=NAVY_E_AP_UNITS;
+ const nv=navyEEnsure(w),operationId=nv.eNextId++;
+ const job={kind:'ARMY',phase:'OUTBOUND',sourcePortId:port.id,destinationPortId:port.id,
+   startedDay:w.dayIndex,fee:NAVY_E_FEE_GOLD,passengers,armyId:army.id,
+   eOperationId:operationId,eTargetTileId:target.id,eApproachWaterId:path[path.length-1],
+   eArrivalDay:path.length===1?w.dayIndex+2:null,ePhase:path.length===1?'APPROACH':'SAILING'};
+ army.seaTransit={navalFleetId:f.id,originId:army.tileId,destinationId:target.id,
+   arrivalDay:Number.MAX_SAFE_INTEGER,eOperationId:operationId};
+ army.tileId=f.tileId;army.status='SAILING';army.order=null;army.operation=null;army.needsOrders=false;
+ army.nextMoveDay=Number.MAX_SAFE_INTEGER;f.bAssignment=job;
+ navyCManifest(w,f);navyCEnsure(w).cStats.departures++;navyCNation(w,nid).departures++;
+ nv.eStats.attempted++;nv.eStats.launched++;nv.eStats.transportGold+=NAVY_E_FEE_GOLD;
+ navyERecord(w,f,'LAUNCHED',`제${army.id+1}군 ${passengers}명 → 해안 ${target.id}, 해로 ${path.length-1}칸`);
+ w.changeSeq++;return {ok:true,operationId,fleetId:f.id,armyId:army.id,targetTileId:target.id,coal:k.coal};
+}
+function navyEShoreSupport(w,f,army){
+ const n=w.nations[f.nationId];let fired=0;
+ for(const s of navyBShips(w,f).filter(Boolean).sort((a,b)=>a.id-b.id)){
+  const cost=NAVY_D_ARTILLERY[s.typeId];if(!cost||s.crew===0||s.hp<=0)continue;
+  if(Object.entries(cost).some(([good,qty])=>(good==='gold'?n.gold:n.resources[good]||0)<qty))continue;
+  // Paid ammunition, no free artillery damage or instant coastal occupation.
+  navyDCommitFire(w,{nationId:n.id,fired:[{cost,shipId:s.id}],damage:0});fired++;
+  if(fired>=2)break;
+ }
+ if(fired){navyEEnsure(w).eStats.shoreFire+=fired;army.morale=Math.min(100,army.morale+fired*2);
+  navyERecord(w,f,'SHORE_SUPPORT',`유상 함포 지원 ${fired}회 (상륙군 사기 보정)`);}
+ return fired;
+}
+function navyEFinishLanding(w,f){const job=f.bAssignment;
+ if(!job?.eOperationId||job.phase!=='OUTBOUND'||f.status!=='DOCKED'||f.cEngagementId)return false;
+ const army=w.armies.find(a=>a.id===job.armyId),target=w.tiles[job.eTargetTileId];
+ if(!army||army.seaTransit?.navalFleetId!==f.id||army.status!=='SAILING'){
+  // The last passenger may have been lost when the final transport sank.
+  if(!army){navyEEnsure(w).eStats.lostAtSea++;navyERecord(w,f,'LOST_AT_SEA','육군 전멸 또는 수송선 격침');
+    delete f.bAssignment;return true;}
+  throw Error('V0.9E 승선군·함대 연결 불일치');
+ }
+ if(f.tileId!==job.eApproachWaterId||!target||!neighbors4(target.id,w.size,w.height).includes(f.tileId)){
+  navyERecord(w,f,'ABORTED','접안 수역이 다름 · 실제 귀항 필요');navyEEnsure(w).eStats.aborted++;navyBReturn(w,f);return false;
+ }
+ if(target.ownerId==null||!v04dWarBetween(w,f.nationId,target.ownerId)||!canLandAt(w,f.nationId,target)){
+  navyERecord(w,f,'ABORTED','종전·상륙지 변경 · 실제 귀항');navyEEnsure(w).eStats.aborted++;navyBReturn(w,f);return false;
+ }
+ if(job.passengers!==manpower(army)+hCount(w,army,true))throw Error('V0.9E 상륙 탑승 인원 불일치');
+ const available=navyBCapacity(w,f,'ARMY');if(job.passengers>available)throw Error('V0.9E 생존 함선 수용량 초과');
+ army.tileId=target.id;army.status='READY';army.seaTransit=null;army.order=null;army.operation=null;
+ army.eBeachheadUntil=w.dayIndex+NAVY_E_BEACHHEAD_DAYS;
+ job.ePhase='BEACHHEAD';
+ army.morale=Math.max(0,army.morale-8);army.nextMoveDay=w.dayIndex+NAVY_E_BEACHHEAD_DAYS;
+ army.needsOrders=true;army.supplied=isSupplied(w,army);army.roadSupplied=isRoadSupplied(w,army);
+ navyEShoreSupport(w,f,army);
+ const defenders=w.armies.filter(a=>a.id!==army.id&&a.tileId===target.id&&a.nationId!==army.nationId&&a.status!=='SAILING'&&
+ v04dWarBetween(w,a.nationId,army.nationId)&&hCombatPresence(w,a)>0);
+ const defender=defenders.find(a=>a.engagementId===null);
+ if(defender){const war=atWar(w,army.nationId,defender.nationId);if(war)startEngagement(w,army,defender,target.id,war.id);}
+ if(target.ownerId!==army.nationId){const war=atWar(w,army.nationId,target.ownerId);
+  if(war)chargeMilitaryOperation(w,army.nationId,manpower(army)*.15,war.id,'landing');}
+ navyEEnsure(w).eStats.landed++;
+ navyERecord(w,f,'LANDED',`제${army.id+1}군 ${job.passengers}명 · 해안 ${target.id} · 교두보 ${NAVY_E_BEACHHEAD_DAYS}일`);
+ delete f.bAssignment;f.dMission='IDLE';f.dTargetPortId=null;w.changeSeq++;
+ event(w,`${w.nations[f.nationId].name} 제${army.id+1}군이 실물 함대 #${f.id}에서 적 해안 (${target.x},${target.y})에 상륙했습니다.`,'army');
+ return true;
+}
+// Reuse B's return/reroute and C's passenger-loss manifest without new ledgers.
+const navyEOriginalDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){const task=f.bAssignment;
+ if(task?.eOperationId&&task.phase==='OUTBOUND')return navyEFinishLanding(w,f);
+ if(task?.eOperationId&&task.phase==='RETURNING'){
+  navyEEnsure(w).eStats.returned++;navyERecord(w,f,'RETURNED','상륙 중단 후 실제 항구 귀환');
+ }
+ return navyEOriginalDock(w,f);
+};
+// Observe the real physical fleet step; an approach begins only when the ship
+// has entered the final adjacent sea tile, not when AI assigns a remote order.
+const navyEOriginalStep=navyBOnFleetStep;
+navyBOnFleetStep=function(w,f){navyEOriginalStep(w,f);const task=f.bAssignment;
+ if(task?.eOperationId&&task.phase==='OUTBOUND'&&f.tileId===task.eApproachWaterId){
+  task.ePhase='APPROACH';w.changeSeq++;
+ }
+};
+const navyEOriginalShipLoss=navyCShipLoadLoss;
+navyCShipLoadLoss=function(w,f,ship){const t=f.bAssignment;
+ if(t?.eOperationId&&t.kind==='ARMY'){
+  const before=t.passengers;navyEOriginalShipLoss(w,f,ship);
+  const lost=before-(f.bAssignment?.passengers??0);if(lost>0){navyEEnsure(w).eStats.armyLoss+=lost;
+   navyERecord(w,f,'CASUALTIES',`ship ${ship.id}: 승선 인원 ${lost}명 상당 손실`,t);
+   if(!w.armies.some(a=>a.id===t.armyId)){navyEEnsure(w).eStats.lostAtSea++;navyERecord(w,f,'LOST_AT_SEA',`제${t.armyId+1}군 해상 전멸`,t);}}
+  return;
+ }
+ return navyEOriginalShipLoss(w,f,ship);
+};
+const navyEOriginalNext=navyNextDay;
+navyNextDay=function(w){let next=navyEOriginalNext(w);
+ for(const f of navyEnsure(w).fleets){const j=f.bAssignment;
+  if(j?.eOperationId&&j.phase==='OUTBOUND'&&f.status==='DOCKED'&&j.eArrivalDay>w.dayIndex)
+   next=Math.min(next,j.eArrivalDay);
+ }return next;
+};
+const navyEOriginalProcess=navyProcessDay;
+navyProcessDay=function(w){navyEOriginalProcess(w);
+ // Zero-water-step embarkation still takes two days; no synthetic boat teleport.
+ for(const f of [...navyEnsure(w).fleets].sort((a,b)=>a.id-b.id)){
+  const j=f.bAssignment;
+  if(j?.eOperationId&&j.phase==='OUTBOUND'&&f.status==='DOCKED'&&!f.cEngagementId&&
+     (j.eArrivalDay==null||j.eArrivalDay<=w.dayIndex))navyEFinishLanding(w,f);
+ }
+};
+const navyEOriginalLegal=navyActionLegal;
+navyActionLegal=function(w,nid,a){if(a?.type==='NAVAL_ASSAULT')return !!navyEParams(w,nid,a);
+ return navyEOriginalLegal(w,nid,a);
+};
+const navyEOriginalExecute=navyActionExecute;
+navyActionExecute=function(w,nid,a){if(a?.type==='NAVAL_ASSAULT')return navyEStart(w,nid,a);
+ return navyEOriginalExecute(w,nid,a);
+};
+// Do not allow NEW imaginary chartered amphibious invasions. Already sailing
+// LAND_ARMY voyages are not modified and complete with their historical rules.
+const navyEOriginalMilitaryLegal=isMilitaryActionLegal;
+isMilitaryActionLegal=function(w,nid,a){if(a?.type==='LAND_ARMY'){
+  const target=w.tiles[a.targetTileId];if(target?.ownerId!=null&&target.ownerId!==nid&&v04dWarBetween(w,nid,target.ownerId))return false;
+ }return navyEOriginalMilitaryLegal(w,nid,a);
+};
+function navyEAssessAI(w,nid){const nv=navyEEnsure(w),n=w.nations[nid];
+ if(!navyDThreat(w,nid))return {reason:'NO_WAR'};
+ const sources=navyBPorts(w,nid);
+ if(!sources.length)return {reason:'NO_PORT'};
+ const fleets=nv.fleets.filter(f=>f.nationId===nid&&navyBReady(w,nid,f)&&navyBCapacity(w,f,'ARMY')>0).sort((a,b)=>a.id-b.id);
+ if(!fleets.length)return {reason:'NO_TRANSPORT'};
+ const targets=navyECoastalTargets(w,nid);
+ if(!targets.length)return {reason:'NO_TARGET_COAST'};
+ const armies=w.armies.filter(a=>a.nationId===nid&&a.status==='READY'&&!a.seaTransit&&!a.order&&a.engagementId==null&&
+ !v08fTanks(w,a).length&&manpower(a)+hCount(w,a,true)>0).sort((a,b)=>a.id-b.id);
+ if(!armies.length)return {reason:'ARMY_UNAVAILABLE'};
+ // O(number of idle fleets * coastal targets) only once per 120 days, never per tile per day.
+ for(const f of fleets){const port=sources.find(p=>navyWaterAtPort(w,p)===f.tileId);
+  if(!port)continue;
+  const samePort=armies.filter(a=>w.settlements.find(s=>s.id===port.settlementId)?.tileIds.includes(a.tileId));
+  for(const army of samePort){const men=manpower(army)+hCount(w,army,true);
+   if(men>navyBCapacity(w,f,'ARMY')||men<8)continue;
+   // Prefer undefended/poorly defended coasts; never auto-create a war.
+   const sortedTargets=targets.slice().sort((a,b)=>{
+    const da=w.armies.filter(u=>u.tileId===a.id&&v04dWarBetween(w,nid,u.nationId)).reduce((v,u)=>v+manpower(u),0);
+    const db=w.armies.filter(u=>u.tileId===b.id&&v04dWarBetween(w,nid,u.nationId)).reduce((v,u)=>v+manpower(u),0);
+    return da-db||a.id-b.id;
+   });
+   for(const target of sortedTargets){const act={type:'NAVAL_ASSAULT',fleetId:f.id,sourcePortId:port.id,armyId:army.id,targetTileId:target.id};
+    if(navyEParams(w,nid,act))return {reason:'ELIGIBLE',action:act};
+   }
+  }
+ }
+ return {reason:'NO_CAPACITY_OR_SEA_ROUTE_OR_READY_ARMY'};
+}
+const navyEOriginalAI=navyAIQuarter;
+navyAIQuarter=function(w){
+ // Give E assault orders priority over D routine naval patrol when a real army
+ // and physical transport ship are simultaneously available.
+ if(w.dayIndex%120===0){const nv=navyEEnsure(w);
+  for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
+   const decision=navyEAssessAI(w,n.id);
+   const row={dayIndex:w.dayIndex,nationId:n.id,reason:decision.reason,
+    armyId:decision.action?.armyId??null,targetTileId:decision.action?.targetTileId??null};
+   nv.eDiagnostics.push(row);if(nv.eDiagnostics.length>NAVY_E_MAX_DIAGNOSTICS)nv.eDiagnostics.shift();
+   if(decision.action){const result=navyEStart(w,n.id,decision.action);
+    if(!result.ok)row.reason='ACTION_FAILED';}
+  }
+ }
+ return navyEOriginalAI(w);
+};
+const navyEOriginalValidate=navyValidate;
+navyValidate=function(w,fail){navyEOriginalValidate(w,fail);return navyEValidate(w,fail);};
+function navyEValidate(w,fail){const nv=navyEEnsure(w);
+ if(nv.eSchema!==NAVY_E_SCHEMA||!Number.isSafeInteger(nv.eNextId)||nv.eNextId<1||
+  !Array.isArray(nv.eHistory)||nv.eHistory.length>NAVY_E_MAX_HISTORY||
+  !Array.isArray(nv.eDiagnostics)||nv.eDiagnostics.length>NAVY_E_MAX_DIAGNOSTICS)return fail('E 상륙 관측 장부');
+ for(const v of Object.values(nv.eStats))if(!Number.isSafeInteger(v)||v<0)return fail('E 상륙 누적 통계');
+ for(const f of nv.fleets){const a=f.bAssignment;if(!a?.eOperationId)continue;
+  const army=w.armies.find(x=>x.id===a.armyId);
+  if(a.kind!=='ARMY'||!Number.isSafeInteger(a.eOperationId)||!army||army.status!=='SAILING'||
+    army.seaTransit?.navalFleetId!==f.id||army.seaTransit.eOperationId!==a.eOperationId||
+    army.seaTransit.destinationId!==a.eTargetTileId||!w.tiles[a.eTargetTileId]||
+    w.tiles[a.eApproachWaterId]?.terrain!=='water'||
+    !neighbors4(a.eTargetTileId,w.size,w.height).includes(a.eApproachWaterId)||
+    !['OUTBOUND','RETURNING','RETURN_PENDING'].includes(a.phase))return fail('E 상륙 계약 참조');
+ }
+ for(const army of w.armies)if(army.seaTransit?.eOperationId&&!nv.fleets.some(f=>f.bAssignment?.eOperationId===army.seaTransit.eOperationId&&f.bAssignment.armyId===army.id))return fail('E 고아 상륙군');
+ return true;
+}
+function navyEExport(w){const e=navyEEnsure(w);return {version:w.version,dayIndex:w.dayIndex,stats:e.eStats,
+  active:navyEnsure(w).fleets.filter(f=>f.bAssignment?.eOperationId).map(f=>({operationId:f.bAssignment.eOperationId,
+   fleetId:f.id,armyId:f.bAssignment.armyId,nationId:f.nationId,phase:f.bAssignment.phase,targetTileId:f.bAssignment.eTargetTileId,
+   waterTileId:f.tileId,shipIds:f.shipIds,manifest:f.bAssignment.cManifest})),history:e.eHistory,decisions:e.eDiagnostics};}
+const navyEOriginalSummary=navySummary;
+navySummary=function(w){const x=navyEOriginalSummary(w);x.amphibious=navyEExport(w);return x;};
+const navyEOriginalPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){navyEOriginalPanel(w,n,host);const nv=navyEEnsure(w);
+ const section=document.createElement('section');section.className='army-detail';host.append(section);
+ const title=document.createElement('h4');title.textContent='V0.9E · 실물함대 강습상륙';section.append(title);
+ const stat=document.createElement('p');stat.className='muted-line';stat.textContent=`출항 ${nv.eStats.launched} · 적 해안 상륙 ${nv.eStats.landed} · 귀환 ${nv.eStats.returned} · 함포 지원 ${nv.eStats.shoreFire} · 바다 병력손실 ${nv.eStats.armyLoss}`;section.append(stat);
+ for(const f of nv.fleets.filter(f=>f.nationId===n.id&&f.bAssignment?.eOperationId)){
+  const p=document.createElement('p');p.className='muted-line';p.textContent=`상륙작전 #${f.bAssignment.eOperationId} · 함대 #${f.id} · 제${f.bAssignment.armyId+1}군 → 해안 ${f.bAssignment.eTargetTileId} · ${f.bAssignment.phase}`;section.append(p);
+ }
+ const recent=nv.eHistory.filter(x=>x.nationId===n.id).slice(-6).reverse();
+ for(const e of recent){const p=document.createElement('p');p.className='muted-line';p.textContent=`${e.dayIndex}일 ${e.kind}: ${e.detail}`;section.append(p);}
+ const reason=nv.eDiagnostics.filter(x=>x.nationId===n.id).slice(-1)[0];if(reason){const p=document.createElement('p');p.className='muted-line';p.textContent=`최근 AI 상륙 판단: ${reason.reason}`;section.append(p);}
+ const exp=document.createElement('button');exp.type='button';exp.className='jump-button';exp.textContent='E 상륙작전 JSON 내보내기';
+ exp.addEventListener('click',()=>download(`vilob-naval-amphibious-day${w.dayIndex}.json`,JSON.stringify(navyEExport(w),null,2),'application/json'));section.append(exp);
+ if(n.controller!=='PLAYER')return;
+ const choose=(label,options)=>{const wrap=document.createElement('label');wrap.style.cssText='display:inline-flex;flex-direction:column;gap:3px;min-width:135px;margin:4px';wrap.textContent=label;
+  const el=document.createElement('select');for(const [value,name] of options){const op=document.createElement('option');op.value=String(value);op.textContent=name;el.append(op);}wrap.append(el);section.append(wrap);return el;};
+ const ports=navyBPorts(w,n.id),fleets=nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)&&navyBCapacity(w,f,'ARMY')>0),targets=navyECoastalTargets(w,n.id);
+ const armies=w.armies.filter(a=>a.nationId===n.id&&a.status==='READY'&&!a.seaTransit&&!v08fTanks(w,a).length);
+ if(!fleets.length||!ports.length||!targets.length||!armies.length){const p=document.createElement('p');p.className='muted-line';p.textContent='상륙 명령을 내리려면 전쟁·출발 항구·수송함·대기 중인 육군·접근 가능한 적 해안이 필요합니다.';section.append(p);return;}
+ const fl=choose('실제 함대',fleets.map(f=>[f.id,`#${f.id} · 정원 ${navyBCapacity(w,f,'ARMY')}명`]));
+ const port=choose('출발 항구',ports.map(p=>[p.id,`#${p.id} · ${w.settlements.find(s=>s.id===p.settlementId)?.name||'항구'}`]));
+ const army=choose('육군',armies.map(a=>[a.id,`제${a.id+1}군 ${manpower(a)+hCount(w,a,true)}명`]));
+ const coast=choose('목표 적 해안',targets.map(t=>[t.id,`타일 ${t.id} (${t.x},${t.y}) · ${w.nations[t.ownerId]?.name||'적국'}`]));
+ const hint=document.createElement('p');hint.className='muted-line';section.append(hint);
+ const action=()=>({type:'NAVAL_ASSAULT',fleetId:Number(fl.value),sourcePortId:Number(port.value),armyId:Number(army.value),targetTileId:Number(coast.value)});
+ const preview=()=>{const k=navyEParams(w,n.id,action());hint.textContent=k?`출항 가능 · 해상 ${k.path.length-1}칸 · ${k.passengers}명 · ${NAVY_E_AP_UNITS/10}AP/${NAVY_E_FEE_GOLD}G · 석탄 ${k.coal}`:'현재 조합은 불가 (함대의 출발 수역, 정원, 상륙 대상, 자원/전쟁 상태 확인)';};
+ [fl,port,army,coast].forEach(el=>el.addEventListener('change',preview));preview();
+ const send=document.createElement('button');send.className='jump-button';send.textContent='적 해안 강습상륙 출항';send.addEventListener('click',()=>{
+  const result=navyActionExecute(w,n.id,action());showToast(result.ok?'실제 수송함 강습상륙 개시':result.reason);
+  navyRenderPanel();map.draw();updateStats();});section.append(send);
+};
+// The map overlay uses existing Canvas water/ship marks; E adds a small
+// beachward approach arrow without changing tile ownership or naval markers.
+const navyEOriginalOverlay=navyDrawOverlay;
+navyDrawOverlay=function(renderer){navyEOriginalOverlay(renderer);
+ const w=renderer.world,ctx=renderer.ctx,scale=renderer.scale,ox=renderer.originX,oy=renderer.originY;
+ for(const f of navyEnsure(w).fleets){const j=f.bAssignment;if(!j?.eOperationId||j.phase!=='OUTBOUND')continue;
+  const coast=w.tiles[j.eTargetTileId],sea=w.tiles[f.tileId];if(!coast||!sea)continue;
+  const x=ox+(coast.x+.5)*scale,y=oy+(coast.y+.5)*scale;
+  if(x<-20||y<-20||x>renderer.width+20||y>renderer.height+20)continue;
+  ctx.save();ctx.strokeStyle='#ffca7c';ctx.lineWidth=Math.max(1.5,Math.min(3,scale*.055));ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.arc(x,y,Math.max(6,Math.min(15,scale*.26)),0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ffcf87';ctx.font=`bold ${Math.max(10,Math.min(16,scale*.3))}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('↧',x,y);ctx.restore();
+ }
+};
 
 </script>
 <script>
