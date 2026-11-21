@@ -945,7 +945,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3A'; // maritime route UI and accounting (no economic or RNG rule changes)
+const VERSION = 'V0.9G3B'; // seven-good market-integrated maritime logistics
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -8126,7 +8126,7 @@ const E3E_MARKET_FEE_RATE=10; // percentage charged separately to buyers and sel
 const E3E_MARKET_PRICE_STEP=150; // 15% of current price at full one-sided order imbalance
 const E3E_GOOD_INDEX=['food','wood','stone','iron','coal','machine_parts','steel'];
 // E3E1: indirect brokered physical trade, no synthetic resource or pathfinder.
-const E3E1_INDIRECT_FREIGHT_LIMIT=3000, E3E1_INDIRECT_FEE_RATE=15;
+const E3E1_INDIRECT_FREIGHT_LIMIT=3000, E3E1_INDIRECT_FEE_RATE=30; // G3B: broker premium for unshipped abstract trade
 function e3eInitialMarket(){
  const prices={};for(const good of E3E_GOOD_INDEX)prices[good]=TRADE_GOODS[good].price*1000;
  return {schema:2,coalIntroducedDay:0,f2bIntroducedDay:0,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
@@ -8158,13 +8158,14 @@ function e3eBoundPrice(good,v){const b=e3eBaseMilli(good);return Math.max(Math.r
 function e3ePriceText(milli){return (milli/1000).toFixed(3);}
 function e3ePriceAmount(qty,priceMilli){return Math.max(1,Math.round(qty*priceMilli/1000));}
 function e3eFee(base){return Math.ceil(base*E3E_MARKET_FEE_RATE/100);}
-function e3ePayment(qty,priceMilli,mode='DIRECT'){
+function e3ePayment(qty,priceMilli,mode='DIRECT',freight=0,distance=0){
  const base=e3ePriceAmount(qty,priceMilli),fee=e3eFee(base),indirectFeeGold=mode==='INDIRECT'?Math.ceil(base*E3E1_INDIRECT_FEE_RATE/100):0;
- return {base,buyerPaid:base+fee+indirectFeeGold,sellerReceived:base-fee,feeGold:2*fee+indirectFeeGold,baseFeeGold:2*fee,indirectFeeGold};
+ const transportFeeGold=mode==='DIRECT'?g3bLandCost(freight,distance):0;
+ return {base,buyerPaid:base+fee+indirectFeeGold+transportFeeGold,sellerReceived:base-fee,feeGold:2*fee+indirectFeeGold+transportFeeGold,baseFeeGold:2*fee,indirectFeeGold,transportFeeGold};
 }
 function e3eMarketEligible(w,a,b){return a!==b&&Boolean(w.nations[a]?.active&&w.nations[b]?.active)&&!warAgainst(w,a,b)&&relationOf(w,a,b)>=-45;}
 function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',indirectUsage=null){
- const market=e3eEnsureMarket(w),from=w.nations[seller],to=w.nations[buyer],s=e3ePayment(qty,priceMilli,mode);
+ const market=e3eEnsureMarket(w),from=w.nations[seller],to=w.nations[buyer],s=e3ePayment(qty,priceMilli,mode,v07cFreightUnits(w,buyer,good,qty),r?.distance||0);
  if(!e3eMarketEligible(w,seller,buyer)||qty<1||qty>10000||from.resources[good]<qty||to.gold<s.buyerPaid)return null;
  const freight=v07cFreightUnits(w,buyer,good,qty),t=ensureTrade(w);
  let used=0;
@@ -8179,17 +8180,18 @@ function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',ind
  if(mode==='DIRECT')t.used[r.key]=used+freight;
  else{indirectUsage.import[buyer]+=freight;indirectUsage.export[seller]+=freight;}
  recordDependencyTrade(w,seller,buyer,good,qty,s.base,mode);
+ if(mode==='DIRECT'&&s.transportFeeGold)g3bEnsure(w).stats.landFreightGold+=s.transportFeeGold;
  const fs=tradeStats(from),ts=tradeStats(to);
  fs.exports+=qty;fs.exportValue+=s.sellerReceived;fs.quarterExports+=qty;fs.quarterExportValue+=s.sellerReceived;
  ts.imports+=qty;ts.importValue+=s.buyerPaid;ts.quarterImports+=qty;ts.quarterImportValue+=s.buyerPaid;
  const tradeId=t.nextId++;
  t.history.push({id:tradeId,dayIndex:w.dayIndex,seller,buyer,good,quantity:qty,unitPrice:priceMilli/1000,gold:s.base,
    market:true,mode,freightUsed:freight,priceMilli,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,
-   baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,routeDistance:mode==='DIRECT'?r.distance:null});
+   baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,transportFeeGold:s.transportFeeGold,routeDistance:mode==='DIRECT'?r.distance:null});
  if(t.history.length>MAX_EVENTS)t.history.splice(0,t.history.length-MAX_EVENTS);
  const e={id:market.nextFillId++,tradeId,dayIndex:w.dayIndex,seller,buyer,good,quantity:qty,priceMilli,mode,freightUsed:freight,
   baseGold:s.base,buyerPaid:s.buyerPaid,sellerReceived:s.sellerReceived,feeGold:s.feeGold,
-  baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,routeDistance:mode==='DIRECT'?r.distance:null};
+  baseFeeGold:s.baseFeeGold,indirectFeeGold:s.indirectFeeGold,transportFeeGold:s.transportFeeGold,routeDistance:mode==='DIRECT'?r.distance:null};
  market.fills.push(e);if(market.fills.length>E3E_MARKET_FILLS_LIMIT)market.fills.shift();
  for(const [key,n] of [['volume',qty],['baseGold',s.base],['buyerPaid',s.buyerPaid],['sellerReceived',s.sellerReceived],['feesSink',s.feeGold],['trades',1],
   [mode==='DIRECT'?'directVolume':'indirectVolume',qty],[mode==='DIRECT'?'directTrades':'indirectTrades',1],['indirectFeeGold',s.indirectFeeGold]])market.totals[key]+=n;
@@ -8208,7 +8210,7 @@ function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloo
    w.nations[seller].resources[good]-sellerFloor));
  let lo=0;
  while(lo<hi){const mid=Math.ceil((lo+hi)/2);
-  if(v07cFreightUnits(w,buyer,good,mid)<=freightRemaining&&e3ePayment(mid,priceMilli,mode).buyerPaid<=Math.max(0,w.nations[buyer].gold-buyerReserve))lo=mid;
+  if(v07cFreightUnits(w,buyer,good,mid)<=freightRemaining&&e3ePayment(mid,priceMilli,mode,v07cFreightUnits(w,buyer,good,mid),r?.distance||0).buyerPaid<=Math.max(0,w.nations[buyer].gold-buyerReserve))lo=mid;
   else hi=mid-1;
  }
  return lo;
@@ -8302,6 +8304,12 @@ function e3eRunMarketQuarter(w,projections=null){
    }
   };
   goodContexts.push({good,priceMilli,orders,requests,demand,supply,sums,settle});
+ }
+ // G3B: allocate a physically shipped subset of *the same* quarter's market orders.
+ // Reservations count against both orders. Their completion is NOT added to E3E filled volume.
+ for(const ctx of goodContexts)for(const r of ctx.requests){
+  const buy=ctx.orders.find(o=>o.nationId===r.buyer&&o.side==='BUY'),sell=ctx.orders.find(o=>o.nationId===r.seller&&o.side==='SELL');
+  if(buy&&sell)g3bTryMarketSea(w,ctx.good,ctx.priceMilli,r,buy,sell,needs);
  }
  // Keep E3E1 direct-first contract across all goods. Only the indirect pass
  // reserves a meaningful 30% of EACH country's shipping cap for non-food
@@ -8398,7 +8406,7 @@ function e3eValidateMarket(w){const m=w.market,integer=(x,min=0)=>Number.isSafeI
    day=q.dayIndex;
  }
  if(m.quarterDay!==null&&day!==m.quarterDay)return false;
- for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold||!['DIRECT','INDIRECT'].includes(e.mode)||!integer(e.indirectFeeGold)||!integer(e.baseFeeGold)||e.baseFeeGold+e.indirectFeeGold!==e.feeGold||e.mode==='INDIRECT'&&(e.routeDistance!==null||!integer(e.freightUsed,1)))return false;
+ for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold||!['DIRECT','INDIRECT','SEA'].includes(e.mode)||!integer(e.indirectFeeGold)||!integer(e.baseFeeGold)||e.baseFeeGold+e.indirectFeeGold+(e.transportFeeGold||0)!==e.feeGold||e.mode==='INDIRECT'&&(e.routeDistance!==null||!integer(e.freightUsed,1)))return false;
  for(const o of m.pendingOrders)if(!integer(o.id)||!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.quantity,1)||o.quantity>10000||!integer(o.remaining,1)||o.remaining>o.quantity||!integer(o.placedDay)||!integer(o.expiresDay)||o.placedDay>w.dayIndex||o.expiresDay<o.placedDay||!integer(o.limitPriceMilli,1)||o.limitPriceMilli<e3eBaseMilli(o.good)/2||o.limitPriceMilli>e3eBaseMilli(o.good)*3)return false;
  for(const o of m.lastOrders)if(!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.requested,1)||!integer(o.filled)||o.filled>o.requested||!integer(o.unfilled)||o.filled+o.unfilled!==o.requested||!integer(o.limitPriceMilli,1))return false;
  return true;
@@ -22206,9 +22214,9 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
@@ -22216,7 +22224,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -25177,12 +25185,14 @@ function e3eRenderMarketPanel(){
  const chosenNation=e3eSelectedNation===null?app.selectedNationId:e3eSelectedNation;
  const nation=w.nations[chosenNation]||w.nations[0],lq=m.lastQuarter;
  const top=make('div',{class:'e3e-market-overview'});
- top.append(make('div',{class:'e3e-market-stat'},[make('small',{text:'시장 상태'}),make('strong',{text:m.openedDay===null?'체결 전 · 개장 대기':'개장 · '+(timeAt(m.openedDay).year)+'년'}),make('small',{text:'직접 교역 우선 · 간접 중개 가능'})]),
+ top.append(make('div',{class:'e3e-market-stat'},[make('small',{text:'시장 상태'}),make('strong',{text:m.openedDay===null?'체결 전 · 개장 대기':'개장 · '+(timeAt(m.openedDay).year)+'년'}),make('small',{text:'육상·해상 운송비 비교 · 간접 중개 가능'})]),
    make('div',{class:'e3e-market-stat'},[make('small',{text:'최근 분기 체결'}),make('strong',{text:number.format(lq?.trades||0)+'건'}),make('small',{text:number.format(lq?.totalVolume||0)+'개 실물 이전'})]),
    make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 거래대금'}),make('strong',{text:number.format(m.totals.buyerPaid)+' G'}),make('small',{text:'실제 구매자 지출 · 수수료 포함'})]),
-   make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 공식 수수료 소멸'}),make('strong',{text:number.format(m.totals.feesSink)+' G'}),make('small',{text:'기본 각 10% + 간접 구매 추가 15%p'})]));
+   make('div',{class:'e3e-market-stat'},[make('small',{text:'누적 공식 수수료 소멸'}),make('strong',{text:number.format(m.totals.feesSink)+' G'}),make('small',{text:'기본 각 10% + 간접 구매 추가 30%p'})]));
+ if(m.g3b){const gs=m.g3b.stats,active=m.g3b.events.filter(e=>e.status==='AFLOAT').length;
+  top.append(make('div',{class:'e3e-market-stat'},[make('small',{text:'시장연동 해상무역'}),make('strong',{text:number.format(gs.completed)+'회 인도 · '+number.format(gs.delivered)+'개'}),make('small',{text:'운항 중 '+active+'건 · 수송실패 '+number.format(gs.lost)+'개 · 육상 운임 '+number.format(gs.landFreightGold)+' G'})]));}
  const modeSummary=make('div',{class:'e3e-market-detail'});
- modeSummary.append(make('h3',{text:'이번 분기 직접 · 간접 거래'}),make('div',{class:'e3e-market-grid'},[
+ modeSummary.append(make('h3',{text:'이번 분기 육상 · 간접 즉시 정산'}),make('div',{class:'e3e-market-grid'},[
   ...[['직접 거래량',lq?.directVolume||0],['간접 거래량',lq?.indirectVolume||0],['간접 거래 횟수',lq?.indirectTrades||0],['간접 추가 운송비',lq?.indirectFeeGold||0]].map(([label,value])=>make('div',{class:'e3e-market-mini'},[make('small',{text:label}),make('strong',{text:number.format(value)})]))]));
  const prices=make('div',{class:'e3e-market-prices'});
  for(const g of E3E_GOOD_INDEX){
@@ -25194,7 +25204,7 @@ function e3eRenderMarketPanel(){
  const q=lq?.goods?.[good],data=make('div',{class:'e3e-market-detail'});
  data.append(make('h3',{text:`${E3E_MARKET_LABELS[good]} · 국제 가격 추이`}),e3eMarketSparkline(m.quarters,good));
  data.append(make('div',{class:'e3e-market-grid'},[
-   ...[['유효 매수 주문',q?.validDemand||0],['유효 매도 주문',q?.validSupply||0],['실제 거래 수량',q?.volume||0],['미체결 매수',q?.unfilledBuy||0],['미체결 매도',q?.unfilledSell||0],['최근 분기 수수료',q?.feesSink||0],['직접 체결량',q?.directVolume||0],['간접 체결량',q?.indirectVolume||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
+   ...[['유효 매수 주문',q?.validDemand||0],['유효 매도 주문',q?.validSupply||0],['즉시 인도 수량',q?.volume||0],['미체결 매수',q?.unfilledBuy||0],['미체결 매도',q?.unfilledSell||0],['최근 분기 수수료',q?.feesSink||0],['직접 체결량',q?.directVolume||0],['간접 체결량',q?.indirectVolume||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
  // F2A5-C: explain observed food order scarcity without changing any market rules.
  if(good==='food'&&q){
   const orderGap=Math.max(0,q.requestedBuy-q.requestedSell);
@@ -25217,7 +25227,7 @@ function e3eRenderMarketPanel(){
  // Registered manual player orders are executed at the next economic quarter, not instantly.
  if(nation.controller==='PLAYER'&&nation.active){
    const action=make('div',{class:'e3e-market-detail'},[make('h3',{text:'플레이어 시장 지정가 주문'})]);
-   action.append(make('p',{class:'muted-line',text:'시장 주문은 30일 분기 결산에서 재고·국고·거래 가능한 상대국이 있을 때만 체결됩니다. 직접 교역을 먼저 시도하고 나머지는 추가 비용을 내는 간접 거래로 체결할 수 있습니다. 체결 전에는 자원/Gold가 차감되지 않으며, 4분기 뒤 만료됩니다.'}));
+   action.append(make('p',{class:'muted-line',text:'시장 주문은 30일 분기 결산에서 재고·국고·거래 가능한 상대국이 있을 때만 체결됩니다. 육상·해상의 물류비를 비교하고 남은 수요는 간접 중개로 체결합니다. 육상·간접 거래는 즉시 정산됩니다. 해상 예약은 출항 시 자원과 Gold를 차감하고 실제 도착 후 거래 완료로 기록합니다. 주문은 4분기 뒤 만료됩니다.'}));
    const controls=make('div',{class:'e3e-market-order-form'});
    const direction=make('select',{id:'e3eMarketSide'});
    direction.append(make('option',{value:'BUY',text:'매수'}),make('option',{value:'SELL',text:'매도'}));
@@ -25228,7 +25238,7 @@ function e3eRenderMarketPanel(){
       const r=e3eSetManualOrder(app.world,nation.id,good,direction.value,Number(quantity.value),Math.round(Number(limit.value)*1000));
       showToast(r.reason);e3eRenderMarketPanel();
    });
-   const estimate=make('p',{class:'muted-line',text:'매수 시 수수료: 직접 +10%, 간접 +25% (기본 10% + 물류 15%). 지정가는 수수료 전 시장가격입니다.'});
+   const estimate=make('p',{class:'muted-line',text:'매수 비용: 상품 대금 +10% 시장 수수료, 육상 거리 운임 별도. 간접 중개는 +30%p, 해상은 실물 선박 운임·연료가 발생합니다. 지정가는 수수료 전 시장가격입니다.'});
    action.append(estimate);
    controls.append(make('label',{},[make('small',{text:'방향'}),direction]),make('label',{},[make('small',{text:'수량 (개)'}),quantity]),make('label',{},[make('small',{text:'지정가 (G/개)'}),limit]),submit);
    action.append(controls);
@@ -25245,14 +25255,14 @@ function e3eRenderMarketPanel(){
  table.append(make('p',{class:'muted-line',text:'미체결 주문은 다음 분기에 새 재고·국고·교역로 조건으로 재평가됩니다. 임의의 가상 판매자는 없습니다.'}));
  const list=make('div',{class:'e3e-market-order-list'});
  for(const o of orders.slice(0,24))list.append(make('div',{class:'e3e-market-row'},[make('strong',{text:w.nations[o.nationId]?.name||'—'}),
-  make('span',{text:o.side==='BUY'?'매수':'매도'}),make('span',{text:`요청 ${number.format(o.requested)} · 체결 ${number.format(o.filled)}`}),
+  make('span',{text:o.side==='BUY'?'매수':'매도'}),make('span',{text:`요청 ${number.format(o.requested)} · 배정 ${number.format(o.filled)}${o.g3bReserved?' (해상 출항 예약 '+number.format(o.g3bReserved)+')':''}`}),
   make('span',{text:o.unfilled?`미체결 ${number.format(o.unfilled)} · ${({'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 없음','DIPLOMATIC_BLOCK':'외교 제한','LIMIT_PRICE':'지정가 불일치','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'구매 자금 부족','SAFE_STOCK':'안전 재고 보호','FREIGHT_OR_COUNTERPARTY_CAP':'운송·상대국 한도','DIRECT_FREIGHT_CAP':'직접 운송 한도','NO_MATCHING_COUNTERPARTY':'잔여 거래 가능 상대 없음'})[o.blockReason]||'거래 제약'}`:'전량 체결'})]));
  if(!orders.length)list.append(make('p',{class:'muted-line',text:'이 품목에 접수된 주문이 없습니다.'}));table.append(list);
  const fills=m.fills.filter(x=>x.good===good).slice(-15).reverse(),recent=make('div',{class:'e3e-market-detail'},[make('h3',{text:'최근 체결 내역'})]);
  const fillList=make('div',{class:'e3e-market-order-list'});
  for(const f of fills)fillList.append(make('div',{class:'e3e-market-row'},[make('strong',{text:`${w.nations[f.seller]?.name||'?'} → ${w.nations[f.buyer]?.name||'?'}`}),
-  make('span',{text:timeAt(f.dayIndex).year+'년 · '+(f.mode==='INDIRECT'?'간접':'직접')}),make('span',{text:`${number.format(f.quantity)}개 · ${e3ePriceText(f.priceMilli)} G/개`}),
-  make('span',{text:`구매 ${number.format(f.buyerPaid)} / 판매 ${number.format(f.sellerReceived)} G · 기본 수수료 ${number.format(f.baseFeeGold??f.feeGold)}G + 간접 ${number.format(f.indirectFeeGold||0)}G`})]));
+  make('span',{text:timeAt(f.dayIndex).year+'년 · '+(f.mode==='INDIRECT'?'간접':f.mode==='SEA'?'해상 도착':'육상')}),make('span',{text:`${number.format(f.quantity)}개 · ${e3ePriceText(f.priceMilli)} G/개`}),
+  make('span',{text:`구매 ${number.format(f.buyerPaid)} / 판매 ${number.format(f.sellerReceived)} G · 기본 수수료 ${number.format(f.baseFeeGold??f.feeGold)}G + 간접 ${number.format(f.indirectFeeGold||0)}G + 육상 운임 ${number.format(f.transportFeeGold||0)}G`})]));
  if(!fills.length)fillList.append(make('p',{class:'muted-line',text:'체결 이력이 없습니다.'}));recent.append(fillList);
  const blockBox=make('div',{class:'e3e-market-detail'},[make('h3',{text:'이번 분기 미체결 주요 원인'})]);
  const reasons={'NO_BUYER':'매수국 없음','NO_SELLER_SURPLUS':'판매 잉여 부족','DIPLOMATIC_BLOCK':'외교 제한','DIRECT_ROUTE_CAP':'직접 운송 한도','INDIRECT_IMPORT_CAP':'간접 수입 한도','INDIRECT_EXPORT_CAP':'간접 수출 한도','GOLD':'Gold 부족','LIMIT_PRICE':'지정가 불일치','SAFE_STOCK':'안전 재고','FREIGHT_OR_COUNTERPARTY_CAP':'운송·거래 상대국 한도','NO_MATCHING_COUNTERPARTY':'잔여 거래 가능 상대 없음'};
@@ -25622,7 +25632,7 @@ function navyRenderPanel(){if(typeof app==='undefined'||!app.world)return;const 
 // V0.9A naval hull/crew ledger is authoritative. I1 remains authoritative for national industrial stock.
 const NAVY_B_CARGO=Object.freeze({coastal_galley:40,medieval_galley:70,sailing_transport:140,steam_transport:220,armed_sail:0,ironclad:0,escort:0});
 const NAVY_B_PASSENGERS=Object.freeze({coastal_galley:24,medieval_galley:48,sailing_transport:100,steam_transport:160,armed_sail:0,ironclad:0,escort:0});
-const NAVY_B_GOODS=Object.freeze(['coal','iron','steel','machine_parts']);
+const NAVY_B_GOODS=Object.freeze(['food','wood','stone','coal','iron','steel','machine_parts']);
 const NAVY_B_ICON_D=Object.freeze([
  ['line','M32 10 V40 M18 22 H46'],['fill','M19 24 H45 L42 37 H22 Z'],
  ['accent','M22 29 H42'],['fill','M12 42 Q32 49 52 42 L47 53 Q32 61 17 53 Z'],
@@ -25685,11 +25695,16 @@ function navyBParams(w,nid,a){
  if((n.resources.coal||0)<coal||n.gold<fee||a.type==='NAVY_FREIGHT'&&i1Ensure(n,w).transit.length>=I1_TRANSIT_LIMIT)return null;
  // I1 regional+central stock represents available physically accessible goods.
  i1Reconcile(w,n);
- if(i1Available(w,n,source.settlementId,a.good)<a.amount+(a.good==='coal'?coal:0))return null;
+ if(I_GOODS.includes(a.good)&&i1Available(w,n,source.settlementId,a.good)<a.amount+(a.good==='coal'?coal:0))return null;
+ if(!I_GOODS.includes(a.good)&&(n.resources[a.good]||0)<a.amount)return null;
  if(a.type==='NAVY_SEA_TRADE'){
-  const buyer=w.nations[destNation];const price=tradeUnitPrice(w,nid,destNation,a.good);
-  if(!price||buyer.gold<price*a.amount||n.resources[a.good]-a.amount-(a.good==='coal'?coal:0)<safeStock(w,n,a.good))return null;
-  return {...result,good:a.good,amount:a.amount,freight,fee,price,total:price*a.amount};
+  const buyer=w.nations[destNation],marketDeal=a.g3bMarket;
+  const price=marketDeal?Math.max(1,Math.floor(e3ePriceAmount(a.amount,marketDeal.priceMilli)/a.amount)):tradeUnitPrice(w,nid,destNation,a.good);
+  const marketPay=marketDeal?e3ePayment(a.amount,marketDeal.priceMilli,'SEA'):null;
+  if(marketDeal&&(!Number.isSafeInteger(marketDeal.priceMilli)||marketDeal.priceMilli<1||marketDeal.buyerId!==destNation||marketDeal.sellerId!==nid||marketDeal.good!==a.good))return null;
+  const total=marketPay?marketPay.buyerPaid:price*a.amount;
+  if(!price||buyer.gold<total||n.resources[a.good]-a.amount-(a.good==='coal'?coal:0)<safeStock(w,n,a.good))return null;
+  return {...result,good:a.good,amount:a.amount,freight,fee,price,total,marketPay,marketDeal};
  }
  return {...result,good:a.good,amount:a.amount,freight,fee};
 }
@@ -25756,10 +25771,11 @@ function navyBActionExecute(w,nid,a){
   assignment.shipmentId=id;assignment.good=k.good;assignment.loadedAmount=k.amount;nv.bFreightLoaded+=k.amount;
   navyLog(w,'SEA_FREIGHT_LOADED',nid,`${k.good} ×${k.amount} #${id}`);
  }else{
-  const buyer=w.nations[k.destNation],st=i1Ensure(n,w),row=i1Row(st,k.sourceSid),local=Math.min(row[k.good]||0,k.amount);
-  row[k.good]-=local;n.resources[k.good]-=k.amount;buyer.gold-=k.total;
+  const buyer=w.nations[k.destNation];
+  if(I_GOODS.includes(k.good)){const st=i1Ensure(n,w),row=i1Row(st,k.sourceSid),local=Math.min(row[k.good]||0,k.amount);row[k.good]-=local;}
+  n.resources[k.good]-=k.amount;buyer.gold-=k.total;
   assignment={...assignment,kind:'TRADE',sellerNationId:nid,buyerNationId:k.destNation,good:k.good,
-   amount:k.amount,escrowGold:k.total,unitPrice:k.price};
+   amount:k.amount,escrowGold:k.total,unitPrice:k.price,...(k.marketDeal?{g3bMarket:{...k.marketDeal,initialQuantity:k.amount,initialBuyerPaid:k.total,initialSellerReceived:k.marketPay.sellerReceived}}:{})};
   i1Reconcile(w,n);navyLog(w,'SEA_TRADE_PENDING',nid,`${k.good} ×${k.amount}→${k.destNation} escrow ${k.total}G`);
  }
  f.bAssignment=assignment;navyCManifest(w,f);navyCEnsure(w).cStats.departures++;navyCNation(w,nid).departures++;w.changeSeq++;return {ok:true,fleetId:f.id,fee:k.fee,coal:k.coal,kind:assignment.kind};
@@ -25790,16 +25806,17 @@ function navyBOnFleetDock(w,f){const job=f.bAssignment;if(!job)return;
   const seller=w.nations[job.sellerNationId],buyer=w.nations[job.buyerNationId];
   if(job.phase==='RETURNING'){
    seller.resources[job.good]=(seller.resources[job.good]||0)+job.amount;
-   i1Row(i1Ensure(seller,w),p.settlementId)[job.good]+=job.amount;
+   if(I_GOODS.includes(job.good))i1Row(i1Ensure(seller,w),p.settlementId)[job.good]+=job.amount;
    buyer.gold+=job.escrowGold;
    navyLog(w,'SEA_TRADE_REFUNDED',seller.id,`${job.good} ×${job.amount}; gold ${job.escrowGold}`);
   }else{
    buyer.resources[job.good]=(buyer.resources[job.good]||0)+job.amount;
-   i1Row(i1Ensure(buyer,w),p.settlementId)[job.good]+=job.amount;
-   seller.gold+=job.escrowGold;navyBEnsure(w).bTrades++;navyCEnsure(w).cStats.tradeTripsCompleted++;navyCNation(w,f.nationId).tradeTrips++;
-   recordDependencyTrade(w,seller.id,buyer.id,job.good,job.amount,job.escrowGold);
+   if(I_GOODS.includes(job.good))i1Row(i1Ensure(buyer,w),p.settlementId)[job.good]+=job.amount;
+   seller.gold+=job.g3bMarket?g3bSellerReceipt(job):job.escrowGold;navyBEnsure(w).bTrades++;navyCEnsure(w).cStats.tradeTripsCompleted++;navyCNation(w,f.nationId).tradeTrips++;
+   recordDependencyTrade(w,seller.id,buyer.id,job.good,job.amount,job.g3bMarket?g3bBaseAmount(job):job.escrowGold);
    const fs=tradeStats(seller),ts=tradeStats(buyer);
-   fs.exports+=job.amount;fs.exportValue+=job.escrowGold;fs.quarterExports+=job.amount;fs.quarterExportValue+=job.escrowGold;
+   const sellerGold=job.g3bMarket?g3bSellerReceipt(job):job.escrowGold;
+   fs.exports+=job.amount;fs.exportValue+=sellerGold;fs.quarterExports+=job.amount;fs.quarterExportValue+=sellerGold;
    ts.imports+=job.amount;ts.importValue+=job.escrowGold;ts.quarterImports+=job.amount;ts.quarterImportValue+=job.escrowGold;
    navyLog(w,'SEA_TRADE_SETTLED',seller.id,`${job.good} ×${job.amount}, ${job.escrowGold}G`);
   }
@@ -25827,7 +25844,7 @@ function navyBValidate(w,fail){const nv=navyBEnsure(w);
    if(claimedFreight.has(f.id)||p&&(!NAVY_B_GOODS.includes(p.good)||p.amount>navyBItemCapacity(w,f,p.good)))fail('V0.9B I1 해운 화물 참조');
    claimedFreight.add(f.id);
   }else if(j.kind==='TRADE'){
-   if(!NAVY_B_GOODS.includes(j.good)||!Number.isSafeInteger(j.amount)||j.amount<1||j.amount>navyBItemCapacity(w,f,j.good)||!w.nations[j.sellerNationId]||!w.nations[j.buyerNationId]||j.sellerNationId===j.buyerNationId||j.sellerNationId!==f.nationId||!Number.isSafeInteger(j.escrowGold)||j.escrowGold<1||j.escrowGold!==j.amount*j.unitPrice)fail('V0.9B 국제 해상 에스크로');
+   if(!NAVY_B_GOODS.includes(j.good)||!Number.isSafeInteger(j.amount)||j.amount<1||j.amount>navyBItemCapacity(w,f,j.good)||!w.nations[j.sellerNationId]||!w.nations[j.buyerNationId]||j.sellerNationId===j.buyerNationId||j.sellerNationId!==f.nationId||!Number.isSafeInteger(j.escrowGold)||j.escrowGold<1||(j.g3bMarket?!g3bValidJob(j):j.escrowGold!==j.amount*j.unitPrice))fail('V0.9B 국제 해상 에스크로');
   }
  }
  for(const a of w.armies)if(a.seaTransit?.navalFleetId&&!claimedArmies.has(a.id))fail('V0.9B 고아 승선 군대');
@@ -25845,14 +25862,14 @@ function navyBHasDemand(w,nid){const f=navyEnsure(w).fleets.find(f=>f.nationId==
 function navyBDomesticNeed(w,nid,source,dest,f){const n=w.nations[nid],st=i1Ensure(n,w);
  if(!i1Active(w,n)||i1RoadPath(w,n,source.settlementId,dest.settlementId)!==null)return null;
  const targets=new Map();for(const b of iActiveSites(w,n))if(b.settlementId===dest.settlementId&&['factory','steelworks','arsenal','steam_pump'].includes(b.typeId)){
-  const demand=iDemand(b);for(const g of NAVY_B_GOODS)targets.set(g,(targets.get(g)||0)+(demand[g]||0)*2);
+  const demand=iDemand(b);for(const g of I_GOODS)targets.set(g,(targets.get(g)||0)+(demand[g]||0)*2);
  }
- for(const g of NAVY_B_GOODS){const need=(targets.get(g)||0)-i1Available(w,n,dest.settlementId,g)-st.transit.filter(t=>t.good===g&&t.to===dest.settlementId).reduce((sum,t)=>sum+t.amount,0);
+ for(const g of I_GOODS){const need=(targets.get(g)||0)-i1Available(w,n,dest.settlementId,g)-st.transit.filter(t=>t.good===g&&t.to===dest.settlementId).reduce((sum,t)=>sum+t.amount,0);
   const amount=Math.max(0,Math.min(need,i1Available(w,n,source.settlementId,g),navyBItemCapacity(w,f,g)));
   if(amount>0){const action={type:'NAVY_FREIGHT',fleetId:f.id,sourcePortId:source.id,destPortId:dest.id,good:g,amount};if(navyBActionLegal(w,nid,action))return action;}
  }return null;
 }
-function navyBExportNeed(w,nid,source,dest,f){const seller=w.nations[nid],buyer=w.nations[navyBPortNation(w,dest)];
+function navyBExportNeed(w,nid,source,dest,f){if(w.market?.g3b)return null;const seller=w.nations[nid],buyer=w.nations[navyBPortNation(w,dest)];
  if(!buyer)return null;
  for(const g of NAVY_B_GOODS){const surplus=Math.max(0,(seller.resources[g]||0)-safeStock(w,seller,g));
   const short=Math.max(0,safeStock(w,buyer,g)-(buyer.resources[g]||0));
@@ -25874,7 +25891,7 @@ function navyBQuarter(w){const nv=navyBEnsure(w);
     const path=navyPath(w,navyWaterAtPort(w,first),c.water,NAVY_SHIP_TYPES[ship.typeId].coast);
     if(!path||!path.length||path.length>60)continue;
     const shortage=iActiveSites(w,n).some(b=>b.settlementId===destSid&&['factory','steelworks','arsenal','steam_pump'].includes(b.typeId)&&
-     NAVY_B_GOODS.some(g=>(iDemand(b)[g]||0)*2>i1Available(w,n,destSid,g)&&i1Available(w,n,first.settlementId,g)>0));
+     I_GOODS.some(g=>(iDemand(b)[g]||0)*2>i1Available(w,n,destSid,g)&&i1Available(w,n,first.settlementId,g)>0));
     if(shortage&&canExecuteNationAction(w,n.id,c.action)){
      const r=executeNationAction(w,n.id,c.action);if(r.ok){navyLog(w,'SEA_SECOND_PORT_STARTED',n.id,String(destSid));break;}
     }
@@ -26077,7 +26094,7 @@ function navyCShipLoadLoss(w,f,s){const task=f.bAssignment;if(!task)return;
   if(cargo.amount<=0)st.transit=st.transit.filter(p=>p!==cargo);
   stats.freightLost+=lost;navyLog(w,'FREIGHT_SUNK',n.id,`${cargo.good} ×${lost} ship ${s.id}`);
  }else if(task.kind==='TRADE'){
-  const buyer=w.nations[task.buyerNationId],refund=lost*task.unitPrice;
+  const buyer=w.nations[task.buyerNationId],refund=task.g3bMarket?g3bLossRefund(task,lost):lost*task.unitPrice;
   buyer.gold+=refund;task.amount-=lost;task.escrowGold-=refund;
   stats.tradeLost+=lost;stats.refundGold+=refund;
   navyLog(w,'TRADE_LOST_REFUNDED',f.nationId,`${task.good} ×${lost} refund ${refund}G`);
@@ -28521,11 +28538,11 @@ function g3aDepart(w,f,result){const a=f.bAssignment;if(!a||a.kind!=='TRADE')ret
  if(r){r.sellerNationId=trip.sellerNationId;r.buyerNationId=trip.buyerNationId;r.lastDepartureDay=w.dayIndex;r.lastGood=a.good;
   r.departed++;r.loadedUnits+=a.amount;r.transportFeeGold+=trip.transportFeeGold;r.coalSpent+=trip.coalSpent;}
 }
-function g3aFinish(w,t,status,amount=0){const s=g3aEnsure(w);if(!s.active.some(x=>x.id===t.id))return;
+function g3aFinish(w,t,status,amount=0,settledGold=null){const s=g3aEnsure(w);if(!s.active.some(x=>x.id===t.id))return;
  t.status=status;t.finishDay=w.dayIndex;
  const r=s.routes.find(x=>x.key===t.key);
- if(status==='DELIVERED'){t.deliveredAmount=amount;s.stats.deliveredTrips++;s.stats.deliveredUnits+=amount;s.stats.tradeGoldSettled+=amount*(t.initialAmount?t.escrowGold/t.initialAmount:0);
-  if(r){r.completed++;r.deliveredUnits+=amount;r.settledTradeGold+=amount*(t.initialAmount?t.escrowGold/t.initialAmount:0);r.lastCompletedDay=w.dayIndex;r.lastPath=t.actualTiles.slice();}}
+ if(status==='DELIVERED'){t.deliveredAmount=amount;s.stats.deliveredTrips++;s.stats.deliveredUnits+=amount;s.stats.tradeGoldSettled+=Number.isSafeInteger(settledGold)?settledGold:Math.round(amount*(t.initialAmount?t.escrowGold/t.initialAmount:0));
+  if(r){r.completed++;r.deliveredUnits+=amount;r.settledTradeGold+=Number.isSafeInteger(settledGold)?settledGold:Math.round(amount*(t.initialAmount?t.escrowGold/t.initialAmount:0));r.lastCompletedDay=w.dayIndex;r.lastPath=t.actualTiles.slice();}}
  else if(status==='RETURNED'){t.returnedAmount=amount;s.stats.returnedTrips++;s.stats.returnedUnits+=amount;if(r){r.returned++;r.returnedUnits+=amount;}}
  else if(status==='LOST'){s.stats.lostTrips++;if(r)r.lost++;}
  s.active=s.active.filter(x=>x!==t);
@@ -28554,7 +28571,7 @@ navyBOnFleetDock=function(w,f){const before=f.bAssignment,t=before?.kind==='TRAD
  const amount=before?.kind==='TRADE'?before.amount:0,phase=before?.phase;
  const result=g3aOriginalDock(w,f);
  if(t){if(!f.bAssignment){
-    g3aFinish(w,t,phase==='OUTBOUND'?'DELIVERED':phase==='RETURNING'?'RETURNED':'LOST',amount);
+    g3aFinish(w,t,phase==='OUTBOUND'?'DELIVERED':phase==='RETURNING'?'RETURNED':'LOST',amount,phase==='OUTBOUND'?before?.escrowGold:null);
   }else{t.status=f.bAssignment.phase;}
  }return result;};
 function g3aValidPath(w,path){return Array.isArray(path)&&path.length<=G3A_MAX_PATH&&path.every(id=>Number.isSafeInteger(id)&&id>=0&&w.tiles[id]?.terrain==='water');}
@@ -31204,6 +31221,175 @@ function h1bRenderHistory(w,parent,nid){
 }
 
 requestAnimationFrame(animate);
+</script>
+<script>
+// V0.9G3B — Actual seven-good market-to-vessel bookings, dated physical settlement,
+// priced road freight, commercial route choice, deterministic ships and bounded audit.
+// Does not modify amphibious warfare, combat, supply crates, or G3A route paths.
+const G3B_SCHEMA=1, G3B_LEDGER_MAX=240, G3B_LAND_RATE=.045;
+const G3B_ROUTE_CACHE=new WeakMap();
+function g3bEnsure(w){const m=e3eEnsureMarket(w);
+ if(!m.g3b)m.g3b={schema:G3B_SCHEMA,nextId:1,events:[],stats:{reserved:0,loaded:0,completed:0,delivered:0,lost:0,returned:0,buyerPaid:0,sellerReceived:0,feeSink:0,seaFreightGold:0,landFreightGold:0,refunded:0,failures:0},reasons:{}};
+ return m.g3b;
+}
+function g3bMarketFreightFee(path,freight){return 4+Math.ceil(freight/30)*Math.ceil((path.length-1)/5);}
+function g3bLandCost(freight,distance){return freight>0&&distance>0?Math.ceil(freight*distance*G3B_LAND_RATE):0;}
+function g3bRecord(w,reason){const a=g3bEnsure(w);a.reasons[reason]=(a.reasons[reason]||0)+1;}
+function g3bMarketPay(good,qty,priceMilli){return e3ePayment(qty,priceMilli,'SEA');}
+function g3bValidJob(j){const m=j.g3bMarket;
+ return !!(m&&Number.isSafeInteger(m.priceMilli)&&m.priceMilli>0&&m.buyerId===j.buyerNationId&&m.sellerId===j.sellerNationId&&m.good===j.good&&
+ Number.isSafeInteger(m.initialQuantity)&&m.initialQuantity>=j.amount&&m.initialQuantity>0&&Number.isSafeInteger(m.initialBuyerPaid)&&m.initialBuyerPaid>=j.escrowGold&&
+ Number.isSafeInteger(m.initialSellerReceived)&&m.initialSellerReceived>=0&&m.initialSellerReceived<=m.initialBuyerPaid&&
+ Number.isSafeInteger(m.refunded||0)&&(m.refunded||0)>=0&&Number.isSafeInteger(m.lost||0)&&(m.lost||0)>=0&&
+ (m.refunded||0)+j.escrowGold===m.initialBuyerPaid&&j.amount+(m.lost||0)===m.initialQuantity);
+}
+function g3bSellerReceipt(j){if(!j.g3bMarket)return j.escrowGold;
+ return Math.min(j.escrowGold,Math.floor(j.g3bMarket.initialSellerReceived*j.amount/j.g3bMarket.initialQuantity));
+}
+function g3bBaseAmount(j){return j.g3bMarket?e3ePriceAmount(j.amount,j.g3bMarket.priceMilli):j.escrowGold;}
+function g3bLossRefund(j,amount){if(!j.g3bMarket)return amount*j.unitPrice;
+ const r=amount===j.amount?j.escrowGold:Math.floor(j.escrowGold*amount/j.amount);
+ j.g3bMarket.lost=(j.g3bMarket.lost||0)+amount;j.g3bMarket.refunded=(j.g3bMarket.refunded||0)+r;
+ return r;
+}
+function g3bIsFreeFleet(w,f){return navyBReady(w,f.nationId,f)&&!f.g3bReturnPortId&&!navyF3FleetReserved(w,f)&&!g2FleetReserved(w,f);}
+function g3bFindCandidate(w,seller,buyer,good='food',needed=60){
+ const name=`${seller}:${buyer}:${good}:${needed}`;
+ const saved=G3B_ROUTE_CACHE.get(w);
+ if(saved?.day===w.dayIndex&&saved.values.has(name)){
+  const seen=saved.values.get(name);
+  if(!seen||g3bIsFreeFleet(w,seen.fleet))return seen;
+  saved.values.delete(name);
+ }
+ const cache=saved?.day===w.dayIndex?saved:{day:w.dayIndex,values:new Map()};G3B_ROUTE_CACHE.set(w,cache);
+ const destPorts=navyBPorts(w,buyer),fromPorts=navyBPorts(w,seller),fleets=navyEnsure(w).fleets.filter(f=>f.nationId===seller&&g3bIsFreeFleet(w,f)).sort((a,b)=>a.id-b.id);
+ let best=null,bestCost=Infinity;
+ for(const f of fleets){const capacity=navyBItemCapacity(w,f,good),qty=Math.min(needed,capacity);if(qty<1)continue;
+  for(const from of fromPorts){if(navyWaterAtPort(w,from)!==f.tileId)continue;
+   for(const to of destPorts){if(navyDPortBlocked(w,from.id,seller)||navyDPortBlocked(w,to.id,seller))continue;
+    const path=navyBPortPath(w,f,from,to);if(!path)continue;
+    const coal=navyBCoalCost(w,f,path);if((w.nations[seller]?.resources.coal||0)<coal)continue;
+    const cost=(g3bMarketFreightFee(path,qty*TRADE_GOODS[good].freight)+coal*TRADE_GOODS.coal.price)/qty;
+    if(cost<bestCost||cost===bestCost&&(!best||f.id<best.fleet.id)){
+      best={fleet:f,source:from,dest:to,path,coal};bestCost=cost;
+    }
+   }
+  }
+ }
+ cache.values.set(name,best);return best;
+}
+function g3bMaxBuy(w,buyer,good,priceMilli,budget,max){let lo=0,hi=max;
+ while(lo<hi){const mid=Math.ceil((lo+hi)/2);
+  if(g3bMarketPay(good,mid,priceMilli).buyerPaid<=budget)lo=mid;else hi=mid-1;
+ }return lo;
+}
+function g3bTryMarketSea(w,good,priceMilli,r,bo,so,needs){
+ if(bo.filled>=bo.requested||so.filled>=so.requested)return false;
+ const seller=w.nations[r.seller],buyer=w.nations[r.buyer];if(!seller||!buyer)return false;
+ // Market orders are authoritative. No order can be booked by land or broker twice.
+ const f=g3bFindCandidate(w,seller.id,buyer.id,good,Math.min(bo.requested-bo.filled,so.requested-so.filled));if(!f){g3bRecord(w,'NO_READY_FLEET_OR_ROUTE');return false;}
+ const floor=Math.max(safeStock(w,seller,good),needs.get(seller.id)?.target[good]||0),stock=seller.resources[good]||0;
+ let max=Math.min(bo.requested-bo.filled,so.requested-so.filled,stock-floor,navyBItemCapacity(w,f.fleet,good));
+ if(I_GOODS.includes(good))max=Math.min(max,i1Available(w,seller,f.source.settlementId,good)-(good==='coal'?f.coal:0));
+ if(max<1){g3bRecord(w,'NO_SELLER_LOCAL_STOCK_OR_CAPACITY');return false;}
+ const goldReserve=buyer.controller==='PLAYER'?0:Math.max(30,Math.floor(buyer.gold*.12),needs.get(buyer.id)?.intent&&good!=='food'?needs.get(buyer.id).intent.price.gold+needs.get(buyer.id).upkeep:0);
+ max=g3bMaxBuy(w,buyer,good,priceMilli,Math.max(0,buyer.gold-goldReserve),max);
+ if(max<1){g3bRecord(w,'NO_GOLD');return false;}
+ const freight=max*TRADE_GOODS[good].freight;
+ const seaFare=g3bMarketFreightFee(f.path,freight),seaCost=seaFare+f.coal*TRADE_GOODS.coal.price;
+ const landCost=r.route?g3bLandCost(v07cFreightUnits(w,buyer.id,good,max),r.route.distance):Infinity;
+ const indirectFee=Math.ceil(e3ePriceAmount(max,priceMilli)*E3E1_INDIRECT_FEE_RATE/100);
+ // Transshipment has a fixed charge; bulky long-distance deliveries get the discount.
+ if(seaCost>=Math.min(landCost,indirectFee)&&landCost!==Infinity){g3bRecord(w,'LAND_OR_BROKER_CHEAPER');return false;}
+ if(seaCost>=indirectFee&&landCost===Infinity){g3bRecord(w,'BROKER_CHEAPER');return false;}
+ if(seller.gold<seaFare){g3bRecord(w,'NO_EXPORT_FEE_GOLD');return false;}
+ const marketDeal={sellerId:seller.id,buyerId:buyer.id,good,priceMilli};
+ const action={type:'NAVY_SEA_TRADE',fleetId:f.fleet.id,sourcePortId:f.source.id,destPortId:f.dest.id,good,amount:max,g3bMarket:marketDeal};
+ if(!navyBActionLegal(w,seller.id,action)){g3bRecord(w,'BLOCKED_OR_NOT_LEGAL');return false;}
+ const out=navyBActionExecute(w,seller.id,action);if(!out?.ok){g3bRecord(w,'FAILED_SAIL');return false;}
+ const job=f.fleet.bAssignment,ledger=g3bEnsure(w),id=ledger.nextId++;
+ job.g3bMarket.ledgerId=id;job.g3bMarket.refunded=0;job.g3bMarket.lost=0;
+ ledger.events.push({id,dayIndex:w.dayIndex,finishedDay:null,seller:seller.id,buyer:buyer.id,good,quantity:max,
+  loaded:max,lost:0,refunded:0,delivered:0,returned:0,sourcePortId:f.source.id,destinationPortId:f.dest.id,
+  fleetId:f.fleet.id,priceMilli,fee:out.fee,coal:out.coal,buyerPaid:job.escrowGold,sellerReceived:0,feeSink:0,status:'AFLOAT'});
+ if(ledger.events.length>G3B_LEDGER_MAX){const idx=ledger.events.findIndex(e=>e.status!=='AFLOAT');if(idx>=0)ledger.events.splice(idx,1);}
+ ledger.stats.reserved++;ledger.stats.loaded+=max;ledger.stats.seaFreightGold+=out.fee;
+ bo.filled+=max;so.filled+=max;bo.g3bReserved=(bo.g3bReserved||0)+max;so.g3bReserved=(so.g3bReserved||0)+max;
+ return true;
+}
+function g3bFindEvent(w,job){return w.market?.g3b?.events.find(e=>e.id===job?.g3bMarket?.ledgerId)||null;}
+function g3bOnLoss(w,job,removed,refunded){const g=g3bEnsure(w),e=g3bFindEvent(w,job);
+ if(e){e.lost+=removed;e.refunded+=refunded;}g.stats.lost+=removed;g.stats.refunded+=refunded;
+}
+function g3bOnFinish(w,job,phase){if(!job?.g3bMarket)return;
+ const g=g3bEnsure(w),e=g3bFindEvent(w,job),m=e3eEnsureMarket(w);
+ const delivered=phase==='OUTBOUND'?job.amount:0,returned=phase==='RETURNING'?job.amount:0;
+ if(e){e.delivered=delivered;e.returned=returned;e.finishedDay=w.dayIndex;e.status=delivered?'DELIVERED':returned?'RETURNED':'LOST';}
+ if(delivered){const paid=job.escrowGold,sellerReceived=g3bSellerReceipt(job),feeSink=paid-sellerReceived,baseGold=g3bBaseAmount(job);
+  g.stats.completed++;g.stats.delivered+=delivered;g.stats.buyerPaid+=paid;g.stats.sellerReceived+=sellerReceived;g.stats.feeSink+=feeSink;
+  if(e){e.sellerReceived=sellerReceived;e.feeSink=feeSink;}
+  // This fill is appended only after *physical delivery*; earlier market quarters
+  // record a booking, never a fictional shipment or an advance revenue.
+  m.fills.push({id:m.nextFillId++,tradeId:-1,dayIndex:w.dayIndex,seller:job.sellerNationId,buyer:job.buyerNationId,good:job.good,quantity:delivered,
+   priceMilli:job.g3bMarket.priceMilli,mode:'SEA',freightUsed:delivered*TRADE_GOODS[job.good].freight,baseGold,
+   buyerPaid:paid,sellerReceived,feeGold:feeSink,baseFeeGold:feeSink,indirectFeeGold:0,transportFeeGold:0,routeDistance:null});
+  if(m.fills.length>E3E_MARKET_FILLS_LIMIT)m.fills.shift();
+ }else if(returned){g.stats.returned+=returned;g.stats.refunded+=job.escrowGold;if(e)e.refunded+=job.escrowGold;}
+}
+function g3bReturnShip(w,f,job){if(job?.g3bMarket===undefined)return;
+ const origin=navyBPort(w,job.sourcePortId);if(!origin||!navyPortOwner(w,origin,f.nationId))return;
+ f.g3bReturnPortId=origin.id;
+ const home=navyWaterAtPort(w,origin);if(home!==null&&home!==f.tileId&&
+  (w.nations[f.nationId]?.resources.coal||0)>=navyBCoalCost(w,f,navyPath(w,f.tileId,home,Math.min(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].coast)))||[]))
+  navyBStartSail(w,f.nationId,f,home);
+}
+function g3bAutoReturnQuarter(w){for(const f of navyEnsure(w).fleets){if(!f.g3bReturnPortId||f.bAssignment||f.cEngagementId||f.status!=='DOCKED')continue;
+ const origin=navyBPort(w,f.g3bReturnPortId);
+ if(!origin||!navyPortOwner(w,origin,f.nationId)){delete f.g3bReturnPortId;continue;}
+ const home=navyWaterAtPort(w,origin);
+ if(home===f.tileId){delete f.g3bReturnPortId;continue;}
+ const path=navyPath(w,f.tileId,home,Math.min(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].coast)));
+ if(path&&(w.nations[f.nationId].resources.coal||0)>=navyBCoalCost(w,f,path))navyBStartSail(w,f.nationId,f,home);
+ }}
+const g3bPreviousSink=navyCShipLoadLoss;
+navyCShipLoadLoss=function(w,f,s){const job=f.bAssignment,old=job?.kind==='TRADE'&&job.g3bMarket?job.amount:0,oldEscrow=job?.escrowGold||0;
+ const result=g3bPreviousSink(w,f,s);
+ if(old){const lost=old-(f.bAssignment?.amount||0),refund=oldEscrow-(f.bAssignment?.escrowGold||0);
+  if(lost)g3bOnLoss(w,job,lost,refund);
+  if(!f.bAssignment)g3bOnFinish(w,job,'LOST');
+ }return result;
+};
+const g3bPreviousDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){const job=f.bAssignment,phase=job?.phase;
+ const result=g3bPreviousDock(w,f);
+ if(job?.g3bMarket&&!f.bAssignment){g3bOnFinish(w,job,phase);if(phase==='OUTBOUND')g3bReturnShip(w,f,job);}
+ return result;
+};
+const g3bPreviousBQuarter=navyBQuarter;
+navyBQuarter=function(w){g3bAutoReturnQuarter(w);return g3bPreviousBQuarter(w);};
+const g3bPreviousMarketSummary=e3eMarketSummary;
+e3eMarketSummary=function(w){const s=g3bPreviousMarketSummary(w);const g=g3bEnsure(w);
+ s.g3b={stats:{...g.stats},reasons:{...g.reasons},recent:g.events.slice(-25)};return s;
+};
+const g3bPreviousNavyPanel=navyBRenderPanel;
+navyBRenderPanel=function(w,n,host){g3bPreviousNavyPanel(w,n,host);
+ const g=g3bEnsure(w),pane=document.createElement('div');pane.className='army-detail';
+ const head=document.createElement('strong');head.textContent='V0.9G3B · 시장연동 실물 해상무역';pane.append(head);
+ const desc=document.createElement('p');desc.className='muted-line';
+ desc.textContent=`예약 ${g.stats.reserved}회 · 실제 인도 ${g.stats.completed}회 / ${g.stats.delivered}개 · 손실 ${g.stats.lost}개 · 반송 ${g.stats.returned}개 · 구매국 에스크로 환급 ${g.stats.refunded} G`;pane.append(desc);
+ const pending=g.events.filter(e=>e.status==='AFLOAT');const line=document.createElement('p');line.className='muted-line';line.textContent=`운항 중 ${pending.length}건 · 상품 7종 · 해상 운임 ${g.stats.seaFreightGold} G · 육상 거리 운임 ${g.stats.landFreightGold} G`;pane.append(line);
+ host.append(pane);
+};
+function g3bValidate(w,fail){const g=w.market?.g3b;if(!g)return true;
+ const int=x=>Number.isSafeInteger(x)&&x>=0;
+ if(g.schema!==G3B_SCHEMA||!int(g.nextId)||!Array.isArray(g.events)||g.events.length>G3B_LEDGER_MAX||!g.stats||Object.values(g.stats).some(x=>!int(x))||!g.reasons||Object.values(g.reasons).some(x=>!int(x))||g.stats.buyerPaid!==g.stats.sellerReceived+g.stats.feeSink)return fail('G3B 시장·해운 보존 원장');
+ for(const e of g.events){if(!int(e.id)||!int(e.dayIndex)||!w.nations[e.seller]||!w.nations[e.buyer]||!TRADE_GOODS[e.good]||!int(e.quantity)||!int(e.loaded)||!int(e.delivered)||!int(e.lost)||!int(e.returned)||!int(e.refunded)||!['AFLOAT','DELIVERED','RETURNED','LOST'].includes(e.status)||e.delivered+e.lost+e.returned>e.loaded)return fail('G3B 실물 거래 원장');
+  if(e.status==='AFLOAT'&&!w.navy.fleets.some(f=>f.id===e.fleetId&&f.bAssignment?.g3bMarket?.ledgerId===e.id))return fail('G3B 유실된 운송 계약');
+ }return true;
+}
+const g3bPreviousValidate=e3eValidateMarket;
+e3eValidateMarket=function(w){return g3bPreviousValidate(w)&&g3bValidate(w,()=>false);};
+
 </script>
 </body>
 </html>
