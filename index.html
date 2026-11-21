@@ -945,7 +945,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3B'; // seven-good market-integrated maritime logistics
+const VERSION = 'V0.9G3C'; // commercial port capacity, actual harbor income, blockade economy
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -22214,9 +22214,9 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
@@ -22224,7 +22224,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -25677,7 +25677,7 @@ function navyBParams(w,nid,a){
  if(destNation==null||!navyPortOwner(w,dest,destNation)||!w.nations[destNation]?.active)return null;
  if(a.type==='NAVY_SEA_TRADE'?!e3eMarketEligible(w,nid,destNation):destNation!==nid)return null;
  if(a.type==='NAVY_SEA_TRADE'&&destNation===nid)return null;
- const path=navyBPortPath(w,f,source,dest);if(!path||navyDPortBlocked(w,source.id,nid)||navyDPortBlocked(w,dest.id,nid))return null;
+ const path=navyBPortPath(w,f,source,dest);if(!path||navyDPortBlocked(w,source.id,nid)||navyDPortBlocked(w,dest.id,destNation))return null;
  const n=w.nations[nid],coal=navyBCoalCost(w,f,path);
  const result={fleet:f,source,dest,sourceSid:source.settlementId,destSid:dest.settlementId,destNation,path,coal};
  if(a.type==='NAVY_EMBARK'){
@@ -25691,7 +25691,7 @@ function navyBParams(w,nid,a){
  if(!NAVY_B_GOODS.includes(a.good)||!Number.isSafeInteger(a.amount)||a.amount<=0)return null;
  const freight=a.amount*TRADE_GOODS[a.good].freight;
  if(a.amount>navyBItemCapacity(w,f,a.good))return null;
- const fee=navyBFreightFee(path,freight);
+ const fee=a.type==='NAVY_SEA_TRADE'&&a.g3bMarket?g3bMarketFreightFee(path,freight):navyBFreightFee(path,freight);
  if((n.resources.coal||0)<coal||n.gold<fee||a.type==='NAVY_FREIGHT'&&i1Ensure(n,w).transit.length>=I1_TRANSIT_LIMIT)return null;
  // I1 regional+central stock represents available physically accessible goods.
  i1Reconcile(w,n);
@@ -31229,7 +31229,7 @@ requestAnimationFrame(animate);
 const G3B_SCHEMA=1, G3B_LEDGER_MAX=240, G3B_LAND_RATE=.045;
 const G3B_ROUTE_CACHE=new WeakMap();
 function g3bEnsure(w){const m=e3eEnsureMarket(w);
- if(!m.g3b)m.g3b={schema:G3B_SCHEMA,nextId:1,events:[],stats:{reserved:0,loaded:0,completed:0,delivered:0,lost:0,returned:0,buyerPaid:0,sellerReceived:0,feeSink:0,seaFreightGold:0,landFreightGold:0,refunded:0,failures:0},reasons:{}};
+ if(!m.g3b)m.g3b={schema:G3B_SCHEMA,nextId:1,events:[],stats:{reserved:0,loaded:0,completed:0,delivered:0,lost:0,returned:0,buyerPaid:0,sellerReceived:0,feeSink:0,portIncome:0,seaFreightGold:0,landFreightGold:0,refunded:0,failures:0},reasons:{}};
  return m.g3b;
 }
 function g3bMarketFreightFee(path,freight){return 4+Math.ceil(freight/30)*Math.ceil((path.length-1)/5);}
@@ -31256,18 +31256,19 @@ function g3bIsFreeFleet(w,f){return navyBReady(w,f.nationId,f)&&!f.g3bReturnPort
 function g3bFindCandidate(w,seller,buyer,good='food',needed=60){
  const name=`${seller}:${buyer}:${good}:${needed}`;
  const saved=G3B_ROUTE_CACHE.get(w);
- if(saved?.day===w.dayIndex&&saved.values.has(name)){
+ if(saved?.day===w.dayIndex&&saved.seq===w.changeSeq&&saved.values.has(name)){
   const seen=saved.values.get(name);
-  if(!seen||g3bIsFreeFleet(w,seen.fleet))return seen;
+  if(!seen||g3bIsFreeFleet(w,seen.fleet)&&g3cSelectRoom(w,seen.source,seen.dest,seen.fleet,seen.path,good)>0&&!navyDPortBlocked(w,seen.source.id,seller)&&!navyDPortBlocked(w,seen.dest.id,buyer))return seen;
   saved.values.delete(name);
  }
- const cache=saved?.day===w.dayIndex?saved:{day:w.dayIndex,values:new Map()};G3B_ROUTE_CACHE.set(w,cache);
+ const cache=saved?.day===w.dayIndex&&saved.seq===w.changeSeq?saved:{day:w.dayIndex,seq:w.changeSeq,values:new Map()};G3B_ROUTE_CACHE.set(w,cache);
  const destPorts=navyBPorts(w,buyer),fromPorts=navyBPorts(w,seller),fleets=navyEnsure(w).fleets.filter(f=>f.nationId===seller&&g3bIsFreeFleet(w,f)).sort((a,b)=>a.id-b.id);
  let best=null,bestCost=Infinity;
- for(const f of fleets){const capacity=navyBItemCapacity(w,f,good),qty=Math.min(needed,capacity);if(qty<1)continue;
+ for(const f of fleets){const capacity=navyBItemCapacity(w,f,good);if(capacity<1)continue;
   for(const from of fromPorts){if(navyWaterAtPort(w,from)!==f.tileId)continue;
-   for(const to of destPorts){if(navyDPortBlocked(w,from.id,seller)||navyDPortBlocked(w,to.id,seller))continue;
+   for(const to of destPorts){if(navyDPortBlocked(w,from.id,seller)||navyDPortBlocked(w,to.id,buyer))continue;
     const path=navyBPortPath(w,f,from,to);if(!path)continue;
+    const qty=Math.min(needed,capacity,g3cSelectRoom(w,from,to,f,path,good));if(qty<1)continue;
     const coal=navyBCoalCost(w,f,path);if((w.nations[seller]?.resources.coal||0)<coal)continue;
     const cost=(g3bMarketFreightFee(path,qty*TRADE_GOODS[good].freight)+coal*TRADE_GOODS.coal.price)/qty;
     if(cost<bestCost||cost===bestCost&&(!best||f.id<best.fleet.id)){
@@ -31287,10 +31288,11 @@ function g3bTryMarketSea(w,good,priceMilli,r,bo,so,needs){
  if(bo.filled>=bo.requested||so.filled>=so.requested)return false;
  const seller=w.nations[r.seller],buyer=w.nations[r.buyer];if(!seller||!buyer)return false;
  // Market orders are authoritative. No order can be booked by land or broker twice.
- const f=g3bFindCandidate(w,seller.id,buyer.id,good,Math.min(bo.requested-bo.filled,so.requested-so.filled));if(!f){g3bRecord(w,'NO_READY_FLEET_OR_ROUTE');return false;}
+ const f=g3bFindCandidate(w,seller.id,buyer.id,good,Math.min(bo.requested-bo.filled,so.requested-so.filled));if(!f){g3cBlockedOrder(w,seller.id,buyer.id);g3bRecord(w,'NO_READY_FLEET_OR_ROUTE');return false;}
  const floor=Math.max(safeStock(w,seller,good),needs.get(seller.id)?.target[good]||0),stock=seller.resources[good]||0;
  let max=Math.min(bo.requested-bo.filled,so.requested-so.filled,stock-floor,navyBItemCapacity(w,f.fleet,good));
  if(I_GOODS.includes(good))max=Math.min(max,i1Available(w,seller,f.source.settlementId,good)-(good==='coal'?f.coal:0));
+ max=Math.min(max,g3cSelectRoom(w,f.source,f.dest,f.fleet,f.path,good));
  if(max<1){g3bRecord(w,'NO_SELLER_LOCAL_STOCK_OR_CAPACITY');return false;}
  const goldReserve=buyer.controller==='PLAYER'?0:Math.max(30,Math.floor(buyer.gold*.12),needs.get(buyer.id)?.intent&&good!=='food'?needs.get(buyer.id).intent.price.gold+needs.get(buyer.id).upkeep:0);
  max=g3bMaxBuy(w,buyer,good,priceMilli,Math.max(0,buyer.gold-goldReserve),max);
@@ -31309,6 +31311,8 @@ function g3bTryMarketSea(w,good,priceMilli,r,bo,so,needs){
  const out=navyBActionExecute(w,seller.id,action);if(!out?.ok){g3bRecord(w,'FAILED_SAIL');return false;}
  const job=f.fleet.bAssignment,ledger=g3bEnsure(w),id=ledger.nextId++;
  job.g3bMarket.ledgerId=id;job.g3bMarket.refunded=0;job.g3bMarket.lost=0;
+ job.g3cArrivalQuarter=g3cArrivalQuarter(w,f.fleet,f.path);g3cMarkDeparture(w,job,f.source,freight);
+ if(navyBPorts(w,buyer.id).some(p=>p.id!==f.dest.id&&navyDPortBlocked(w,p.id,buyer.id))) {g3cEnsure(w).stats.alternatePortUsed++;g3bRecord(w,'ALTERNATE_PORT_USED');}
  ledger.events.push({id,dayIndex:w.dayIndex,finishedDay:null,seller:seller.id,buyer:buyer.id,good,quantity:max,
   loaded:max,lost:0,refunded:0,delivered:0,returned:0,sourcePortId:f.source.id,destinationPortId:f.dest.id,
   fleetId:f.fleet.id,priceMilli,fee:out.fee,coal:out.coal,buyerPaid:job.escrowGold,sellerReceived:0,feeSink:0,status:'AFLOAT'});
@@ -31382,13 +31386,106 @@ navyBRenderPanel=function(w,n,host){g3bPreviousNavyPanel(w,n,host);
 };
 function g3bValidate(w,fail){const g=w.market?.g3b;if(!g)return true;
  const int=x=>Number.isSafeInteger(x)&&x>=0;
- if(g.schema!==G3B_SCHEMA||!int(g.nextId)||!Array.isArray(g.events)||g.events.length>G3B_LEDGER_MAX||!g.stats||Object.values(g.stats).some(x=>!int(x))||!g.reasons||Object.values(g.reasons).some(x=>!int(x))||g.stats.buyerPaid!==g.stats.sellerReceived+g.stats.feeSink)return fail('G3B 시장·해운 보존 원장');
+ if(g.schema!==G3B_SCHEMA||!int(g.nextId)||!Array.isArray(g.events)||g.events.length>G3B_LEDGER_MAX||!g.stats||Object.values(g.stats).some(x=>!int(x))||!g.reasons||Object.values(g.reasons).some(x=>!int(x))||g.stats.buyerPaid!==g.stats.sellerReceived+g.stats.feeSink+(g.stats.portIncome||0))return fail('G3B 시장·해운 보존 원장');
  for(const e of g.events){if(!int(e.id)||!int(e.dayIndex)||!w.nations[e.seller]||!w.nations[e.buyer]||!TRADE_GOODS[e.good]||!int(e.quantity)||!int(e.loaded)||!int(e.delivered)||!int(e.lost)||!int(e.returned)||!int(e.refunded)||!['AFLOAT','DELIVERED','RETURNED','LOST'].includes(e.status)||e.delivered+e.lost+e.returned>e.loaded)return fail('G3B 실물 거래 원장');
   if(e.status==='AFLOAT'&&!w.navy.fleets.some(f=>f.id===e.fleetId&&f.bAssignment?.g3bMarket?.ledgerId===e.id))return fail('G3B 유실된 운송 계약');
  }return true;
 }
 const g3bPreviousValidate=e3eValidateMarket;
 e3eValidateMarket=function(w){return g3bPreviousValidate(w)&&g3bValidate(w,()=>false);};
+
+</script>
+<script>
+// V0.9G3C — Port Commerce & Maritime Economic Warfare.
+// Actual trade only; amphibious/army supply and domestic freight remain unchanged.
+const G3C_SCHEMA=1, G3C_CAP={1:120,2:300,3:600};
+function g3cEnsure(w){const m=e3eEnsureMarket(w);if(!m.g3c)m.g3c={schema:1,ports:{},stats:{loadedFreight:0,deliveredFreight:0,portIncome:0,feeSinkRemaining:0,maintenanceBilled:0,waitingDocks:0,blockedChecks:0,blockedOrders:0,alternatePortUsed:0,settled:0},recent:[]};return m.g3c;}
+function g3cQuarter(day){return Math.floor(day/DAYS_PER_QUARTER);}
+function g3cPortRow(w,port){const c=g3cEnsure(w);const id=String(typeof port==='object'?port.id:port);let p=c.ports[id];if(!p){p=c.ports[id]={quarter:g3cQuarter(w.dayIndex),loaded:0,unloaded:0,freightLoaded:0,freightUnloaded:0,income:0,maintenanceBilled:0,tradeTrips:0,waits:0,lastQuarter:null};}
+ const q=g3cQuarter(w.dayIndex);if(p.quarter!==q){p.lastQuarter={quarter:p.quarter,loaded:p.loaded,unloaded:p.unloaded};p.quarter=q;p.loaded=0;p.unloaded=0;}return p;}
+function g3cPortLimit(p){return G3C_CAP[Math.min(3,Math.max(1,p.level||1))]||120;}
+function g3cDepartRoom(w,p){return Math.max(0,g3cPortLimit(p)-g3cPortRow(w,p).loaded);}
+function g3cArrivalQuarter(w,f,path){const days=Math.max(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].daysPerTile));return g3cQuarter(w.dayIndex+path.length*days);}
+function g3cInboundRoom(w,p,quarter){let available=g3cPortLimit(p),row=g3cPortRow(w,p);
+ if(quarter===row.quarter)available-=row.unloaded;
+ // Only shipping contracts with an ETA in this quarter count as committed slots.
+ // A delayed arrival remains physical cargo and waits for a later unload slot.
+ for(const f of navyEnsure(w).fleets){const job=f.bAssignment;if(job?.g3bMarket&&job.phase==='OUTBOUND'&&job.destinationPortId===p.id&&job.g3cArrivalQuarter===quarter){available-=job.amount*TRADE_GOODS[job.good].freight;}}
+ return Math.max(0,available);}
+function g3cSelectRoom(w,from,to,f,path,good){const fw=TRADE_GOODS[good].freight;return Math.max(0,Math.floor(Math.min(g3cDepartRoom(w,from),g3cInboundRoom(w,to,g3cArrivalQuarter(w,f,path)))/fw));}
+function g3cRecord(w,kind,detail){const c=g3cEnsure(w);c.recent.push({day:w.dayIndex,kind,...detail});if(c.recent.length>80)c.recent.shift();}
+function g3cMarkDeparture(w,job,from,freight){const c=g3cEnsure(w);g3cPortRow(w,from).loaded+=freight;g3cPortRow(w,from).freightLoaded+=freight;c.stats.loadedFreight+=freight;}
+function g3cBlockedOrder(w,seller,buyer){const ports=navyBPorts(w,buyer);if(!ports.length)return;
+ const blocked=ports.filter(p=>navyDPortBlocked(w,p.id,buyer));if(!blocked.length)return;
+ const c=g3cEnsure(w);c.stats.blockedChecks++;if(blocked.length===ports.length){c.stats.blockedOrders++;g3bRecord(w,'BLOCKADED_ORDER');g3bRecord(w,'NO_SAFE_PORT');}}
+function g3cPortFeeSettlement(w,job){if(!job?.g3bMarket||job.amount<1)return;
+ const g=g3bEnsure(w),c=g3cEnsure(w),e=g3bFindEvent(w,job),gross=job.escrowGold-g3bSellerReceipt(job);
+ const sourceShare=Math.floor(gross/4),destShare=Math.floor(gross/4),shares=sourceShare+destShare;
+ if(sourceShare)w.nations[job.sellerNationId].gold+=sourceShare;
+ if(destShare)w.nations[job.buyerNationId].gold+=destShare;
+ g.stats.feeSink-=shares;g.stats.portIncome=(g.stats.portIncome||0)+shares;
+ if(e){e.feeSink-=shares;e.portIncome=shares;e.sourcePortIncome=sourceShare;e.destPortIncome=destShare;}
+ const from=g3cPortRow(w,job.sourcePortId),to=g3cPortRow(w,job.destinationPortId);
+ from.income+=sourceShare;to.income+=destShare;from.tradeTrips++;to.tradeTrips++;
+ c.stats.portIncome+=shares;c.stats.feeSinkRemaining+=gross-shares;c.stats.settled++;
+ g3cRecord(w,'PORT_INCOME',{sourcePortId:job.sourcePortId,destinationPortId:job.destinationPortId,gold:shares,sourceShare,destShare,delivered:job.amount});
+}
+const g3cPriorDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){const j=f.bAssignment,commercial=j?.kind==='TRADE'&&!!j.g3bMarket;
+ if(commercial&&j.phase==='OUTBOUND'){
+  const p=navyBPort(w,j.destinationPortId),owner=navyBPortNation(w,p);
+  // Blockade, capture and invalid docks must follow the existing physical return route.
+  if(p&&owner===j.buyerNationId&&navyPortOwner(w,p,owner)&&navyWaterAtPort(w,p)===f.tileId&&!navyDPortBlocked(w,p.id,owner)){
+   const freight=j.amount*TRADE_GOODS[j.good].freight,row=g3cPortRow(w,p);
+   if(row.unloaded+freight>g3cPortLimit(p)){
+    if(!j.g3cDockWait){j.g3cDockWait=true;j.g3cWaitSince=w.dayIndex;row.waits++;g3cEnsure(w).stats.waitingDocks++;g3cRecord(w,'DOCK_WAIT',{portId:p.id,fleetId:f.id,freight});}
+    return;
+   }
+   row.unloaded+=freight;row.freightUnloaded+=freight;g3cEnsure(w).stats.deliveredFreight+=freight;
+   delete j.g3cDockWait;delete j.g3cWaitSince;
+  }
+ }
+ const wasPhase=j?.phase;
+ const result=g3cPriorDock(w,f);
+ if(commercial&&wasPhase==='OUTBOUND'&&f.bAssignment!==j){
+  g3cPortFeeSettlement(w,j);
+ }
+ return result;
+};
+function g3cRetryWaiting(w){for(const f of navyEnsure(w).fleets){const j=f.bAssignment;
+ if(j?.g3cDockWait&&f.status==='DOCKED'&&!f.cEngagementId)navyBOnFleetDock(w,f);
+}}
+const g3cPreviousQuarter=navyBQuarter;
+navyBQuarter=function(w){g3cRetryWaiting(w);return g3cPreviousQuarter(w);};
+const g3cPreviousUpkeep=navyQuarterUpkeep;
+navyQuarterUpkeep=function(w){const c=g3cEnsure(w);for(const p of w.buildings){if(p.typeId!=='port'||!['ACTIVE','UPGRADING'].includes(p.status)||p.disconnected)continue;
+ const n=w.tiles[p.tileId]?.ownerId;if(n==null||!w.nations[n]?.active)continue;
+ const fee=p.level===1?16:p.level===2?35:70;g3cPortRow(w,p).maintenanceBilled+=fee;c.stats.maintenanceBilled+=fee;
+ }return g3cPreviousUpkeep(w);};
+function g3cSummary(w){const g=g3cEnsure(w);return {schema:1,stats:{...g.stats},ports:Object.entries(g.ports).map(([id,p])=>({portId:Number(id),...p,netGold:p.income-p.maintenanceBilled})),recent:g.recent.slice(-25)};}
+const g3cPreviousMarketSummary=e3eMarketSummary;
+e3eMarketSummary=function(w){const ret=g3cPreviousMarketSummary(w);ret.g3c=g3cSummary(w);return ret;};
+const g3cPreviousPanel=navyBRenderPanel;
+navyBRenderPanel=function(w,n,host){g3cPreviousPanel(w,n,host);
+ const g=g3cEnsure(w),pane=document.createElement('div');pane.className='army-detail';
+ const head=document.createElement('strong');head.textContent='V0.9G3C · 항만 상업·봉쇄 경제 원장';pane.append(head);
+ const ports=navyBPorts(w,n.id);const lines=document.createElement('p');lines.className='muted-line';
+ lines.textContent=`전체 상업 선적 ${g.stats.loadedFreight} freight · 인도 ${g.stats.deliveredFreight} · 항만 수수료 배분 ${g.stats.portIncome}G · 기존 항만 유지비 청구 ${g.stats.maintenanceBilled}G · 하역 대기 ${g.stats.waitingDocks}회 · 봉쇄 후보 탐색 차단 ${g.stats.blockedOrders}회`;pane.append(lines);
+ for(const port of ports){const raw=g.ports[String(port.id)],p=raw?{...raw,loaded:raw.quarter===g3cQuarter(w.dayIndex)?raw.loaded:0,unloaded:raw.quarter===g3cQuarter(w.dayIndex)?raw.unloaded:0}:{loaded:0,unloaded:0,income:0,maintenanceBilled:0},line=document.createElement('p');line.className='muted-line';
+  line.textContent=`항구 #${port.id} Lv.${port.level} · 이번 분기 출항 ${p.loaded}/${g3cPortLimit(port)} · 하역 ${p.unloaded}/${g3cPortLimit(port)} freight · 누적 수익 ${p.income}G · 유지비 청구 ${p.maintenanceBilled}G · 누적 순기여 ${p.income-p.maintenanceBilled}G`;pane.append(line);
+ }host.append(pane);
+};
+function g3cValidate(w){const c=w.market?.g3c;if(!c)return true;const valid=x=>Number.isSafeInteger(x)&&x>=0;
+ if(c.schema!==1||!c.ports||!c.stats||!Array.isArray(c.recent)||c.recent.length>80||Object.values(c.stats).some(v=>!valid(v)))return false;
+ for(const [id,p] of Object.entries(c.ports)){
+  if(!valid(Number(id))||!valid(p.quarter)||!valid(p.loaded)||!valid(p.unloaded)||!valid(p.freightLoaded)||!valid(p.freightUnloaded)||!valid(p.income)||!valid(p.maintenanceBilled)||!valid(p.tradeTrips)||!valid(p.waits)||p.loaded>600||p.unloaded>600)return false;
+ }
+ const g=w.market?.g3b;if(g&&((g.stats.portIncome||0)!==c.stats.portIncome||g.stats.buyerPaid!==g.stats.sellerReceived+g.stats.feeSink+(g.stats.portIncome||0)))return false;
+ for(const f of navyEnsure(w).fleets)if(f.bAssignment?.g3cDockWait&&(f.status!=='DOCKED'||f.bAssignment.kind!=='TRADE'||f.bAssignment.phase!=='OUTBOUND'))return false;
+ return true;
+}
+const g3cPreviousMarketValidator=e3eValidateMarket;
+e3eValidateMarket=function(w){return g3cPreviousMarketValidator(w)&&g3cValidate(w);};
 
 </script>
 </body>
