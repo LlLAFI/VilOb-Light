@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9F2</title>
+<title>VILOB Light · V0.9F4</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -939,7 +939,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9F2'; // joint amphibious planning/soft reservations; V0.9F1 gameplay preserved
+const VERSION = 'V0.9F4'; // paid physical amphibious launch + lifecycle audit
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -13921,6 +13921,7 @@ function c2AssignFronts(w){
   for(const a of w.armies){
     const live=liveFor(a.nationId);
     if(!live.length||a.engagementId!==null||a.status==='SAILING'||a.status==='RETREATING'||a.status==='REGROUP')continue;
+    if(navyF3ProtectArmy(w,a))continue; // F3 reserved expedition: its actual war front remains assigned.
     if(a.assignedWarId!=null&&live.some(v=>v.id===a.assignedWarId)&&w.dayIndex<(a.c2NextFrontReviewDay||0))continue;
     const old=a.assignedWarId;
     if(old!=null){const key=a.nationId+':'+old;committed.set(key,Math.max(0,(committed.get(key)||0)-manpower(a)));}
@@ -15858,6 +15859,7 @@ function assignWarOrders(w,execute,reactive=false){
             a.needsOrders=false;w.changeSeq++;continue;
           }
         }
+        if(navyF3ProtectArmy(w,a))continue; // F3: survival and supply retreat above were already evaluated.
         if(a.order){
           const target=w.tiles[a.order.targetTileId];
           const friendsHere=new Set(warFriends(war,id));
@@ -16319,6 +16321,7 @@ function assignPeacetimeGarrisons(w,execute){
     const keepReserve=armies.length>=4?Math.max(1,Math.floor(armies.length*.17)):0;
     const deployable=armies.slice(0,Math.max(0,armies.length-keepReserve));
     for(const army of deployable){
+      if(navyF3ProtectArmy(w,army))continue;
       if(c3ArmyPending(army)>0&&atSafeSettlement(w,army))continue; // train recruits before sending them to border outposts
       // Never interrupt other orders, replenishment trips, or a recent re-positioning.
       if(army.operation?.type==='REARM'&&manpower(army)<150&&w.dayIndex-(army.operation.assignedDay||0)<120)continue;
@@ -22163,9 +22166,9 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
@@ -22173,7 +22176,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22231,7 +22234,9 @@ function deserializeWorld(json){
  if(['V0.9D2','V0.9D1','V0.9D','V0.9C'].includes(v08eSourceVersion))i2RepairAbsorbedOrphans(parsed);
  // Inactive peace-time blockades are missions, not valid naval control.
  navyDExpireInvalidBlockades(parsed);
- navyF2Reconcile(parsed); // F2 plans are soft: do not restore orphaned or defeated-war reservations.
+ navyF2Reconcile(parsed); // F2 plans restored; F3 may now upgrade reservation state.
+ navyF3Migrate(parsed,v08eSourceVersion); // Strictly evidenced one-time historical last-port capture; never guess unrelated recipients.
+ navyF4Ensure(parsed); // F4: new empty operation ledger for historical saves; never backfill E voyages.
  i3aEnsure(parsed); // I3A starts with no fabricated historical production
  // An older J save may contain one authentic Lv.4 quarter; never infer it from Lv.3 factoryRuns.
  for(const b of parsed.buildings||[])if(b.typeId==='factory'&&b.level===4&&b.kLevel4OperatedDay==null&&b.f2jLastQuarter?.operated===true){
@@ -22242,7 +22247,8 @@ function deserializeWorld(json){
 function serializeWorld(world){
  navyEnsure(world);navyBEnsure(world);navyCEnsure(world);navyF2Ensure(world);i2Ensure(world);i3aEnsure(world);
  for(const n of world.nations){i1Reconcile(world,n);i1aSyncPreviousQuarter(i1Ensure(n,world));}
- navyF2Reconcile(world); // Read-only cleanup at save boundary; no physical orders or expenses.
+ navyF2Reconcile(world); // F3 reservation checks do not issue commands during save.
+ navyF3Ensure(world);navyF4Ensure(world);
  validateWorld(world);
  return JSON.stringify(world,(key,val)=>key==='historicalChronicle'&&val===world.historicalChronicle?i1aPackChronicle(val):val,2);
 }
@@ -25427,7 +25433,7 @@ function navyAIQuarter(w){if(w.dayIndex%120!==0)return;const nv=navyEnsure(w);nv
   }
   for(const ship of ships){if(ship.status==='UNCREWED'&&navyActionLegal(w,n.id,{type:'NAVY_CREW',shipId:ship.id})){navyActionExecute(w,n.id,{type:'NAVY_CREW',shipId:ship.id});break;}
    if(ship.hp<NAVY_SHIP_TYPES[ship.typeId].hp&&navyActionLegal(w,n.id,{type:'NAVY_REPAIR',shipId:ship.id})){navyActionExecute(w,n.id,{type:'NAVY_REPAIR',shipId:ship.id});break;}}
-  for(const f of fleet){if(f.status!=='DOCKED'||!f.shipIds.every(id=>nv.ships.find(s=>s.id===id)?.status==='READY'))continue;
+  for(const f of fleet){if(navyF3FleetReserved(w,f)||f.status!=='DOCKED'||!f.shipIds.every(id=>nv.ships.find(s=>s.id===id)?.status==='READY'))continue;
    const dock=navyWaterAtPort(w,p),coast=Math.min(...f.shipIds.map(id=>NAVY_SHIP_TYPES[nv.ships.find(s=>s.id===id).typeId].coast));
    if(f.tileId!==dock){if(navyActionLegal(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:dock}))navyActionExecute(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:dock});}
    else if(!navyBHasDemand(w,n.id)){const neighbors=neighbors4(dock,w.size,w.height).filter(id=>w.tiles[id].terrain==='water'&&navyCoastDistance(w,id)<=coast).sort((a,b)=>a-b);const intercept=neighbors.find(tid=>nv.fleets.some(other=>other.nationId!==n.id&&other.tileId===tid&&v04dWarBetween(w,n.id,other.nationId)));const target=intercept??neighbors[0];
@@ -25831,6 +25837,7 @@ function navyBQuarter(w){const nv=navyBEnsure(w);
    }
   }
   for(const f of nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)).sort((a,b)=>a.id-b.id)){
+   if(navyF3FleetReserved(w,f))continue; // No new merchant trip for a staging transport.
    const from=ports.find(p=>navyWaterAtPort(w,p)===f.tileId);if(!from)continue;
    let task=null;for(const to of navyBPorts(w)){
     if(to.id===from.id)continue;
@@ -26417,6 +26424,7 @@ function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockade
    if(navyActionLegal(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id})){const r=navyActionExecute(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id});if(r.ok){nv.dStats.modernizations++;navyLog(w,'NAVAL_MODERNIZED',n.id,`retired ${old.id}, newer hull ready`);}break;}
   }
   for(const f of nv.fleets.filter(f=>f.nationId===n.id).sort((a,b)=>a.id-b.id)){
+   if(navyF3FleetReserved(w,f))continue; // Keep real transport at the departure port.
    if(f.cEngagementId||f.bAssignment||f.status!=='DOCKED'||!navyBReady(w,n.id,f))continue;
    const damaged=navyBShips(w,f).some(s=>s.hp<NAVY_SHIP_TYPES[s.typeId].hp*.55);
    if(damaged){navyDSetMission(w,f,'RETURN');const home=ports.find(p=>navyWaterAtPort(w,p)===f.tileId)||ports[0];
@@ -26467,8 +26475,8 @@ function navyDPreQuarter(w){navyDExpireInvalidBlockades(w);if(w.dayIndex%120!==0
  const nv=navyDEnsure(w);
  for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
   const ready=nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)).sort((a,b)=>a.id-b.id);
-  const transports=ready.filter(f=>navyBCapacity(w,f,'CARGO')>0&&navyBShips(w,f).every(s=>s.typeId!=='escort'&&s.typeId!=='armed_sail'&&s.typeId!=='ironclad'));
-  const escorts=ready.filter(f=>navyBShips(w,f).every(s=>['escort','armed_sail','medieval_galley','ironclad'].includes(s.typeId)));
+  const transports=ready.filter(f=>!navyF3FleetReserved(w,f)&&navyBCapacity(w,f,'CARGO')>0&&navyBShips(w,f).every(s=>s.typeId!=='escort'&&s.typeId!=='armed_sail'&&s.typeId!=='ironclad'));
+  const escorts=ready.filter(f=>!navyF3FleetReserved(w,f)&&navyBShips(w,f).every(s=>['escort','armed_sail','medieval_galley','ironclad'].includes(s.typeId)));
   for(const merchant of transports){const escort=escorts.find(f=>f.tileId===merchant.tileId&&f!==merchant);
    if(!escort)continue;const from=navyBPorts(w,n.id).find(p=>navyWaterAtPort(w,p)===merchant.tileId);if(!from)continue;
    let task=null;
@@ -26752,11 +26760,11 @@ function navyEAssessAI(w,nid){const nv=navyEEnsure(w),n=w.nations[nid];
  if(!navyDThreat(w,nid))return {reason:'NO_WAR'};
  const sources=navyBPorts(w,nid);
  if(!sources.length)return {reason:'NO_PORT'};
- const fleets=nv.fleets.filter(f=>f.nationId===nid&&navyBReady(w,nid,f)&&navyBCapacity(w,f,'ARMY')>0).sort((a,b)=>a.id-b.id);
+ const fleets=nv.fleets.filter(f=>f.nationId===nid&&!navyF3FleetReserved(w,f)&&navyBReady(w,nid,f)&&navyBCapacity(w,f,'ARMY')>0).sort((a,b)=>a.id-b.id);
  if(!fleets.length)return {reason:'NO_TRANSPORT'};
  const targets=navyECoastalTargets(w,nid);
  if(!targets.length)return {reason:'NO_TARGET_COAST'};
- const armies=w.armies.filter(a=>a.nationId===nid&&a.status==='READY'&&!a.seaTransit&&!a.order&&a.engagementId==null&&
+ const armies=w.armies.filter(a=>a.nationId===nid&&!navyF3ArmyReserved(w,a)&&a.status==='READY'&&!a.seaTransit&&!a.order&&a.engagementId==null&&
  !v08fTanks(w,a).length&&manpower(a)+hCount(w,a,true)>0).sort((a,b)=>a.id-b.id);
  if(!armies.length)return {reason:'ARMY_UNAVAILABLE'};
  // O(number of idle fleets * coastal targets) only once per 120 days, never per tile per day.
@@ -27024,6 +27032,10 @@ navyERecord=function(w,f,kind,detail='',jobOverride=null){
  const year=navyF0Period(w.dayIndex,120);let y=a.years.find(r=>r.year===year);
  if(!y){y=navyF0YearRecord(year);a.years.push(y);a.years.sort((x,z)=>x.year-z.year);}
  y.landings++;
+ while(a.years.length>150){const old=a.years.shift(),decade=Math.floor(old.year/10);
+  let d=a.decades.find(r=>r.decade===decade);if(!d){d={decade,yearsFolded:0,...navyF0YearRecord(0)};delete d.year;a.decades.push(d);a.decades.sort((x,z)=>x.decade-z.decade);}
+  d.yearsFolded++;navyF0Fold(d,old);
+ }
  const target=w.tiles[job?.eTargetTileId];
  for(const war of navyF0WarsFor(w,nid)){
   const attackers=war.sides?.attackers||[war.attackerId],defenders=war.sides?.defenders||[war.defenderId];
@@ -27158,6 +27170,7 @@ function navyF1ReturnQuarter(w){if(w.dayIndex%120!==0)return;
  for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
   const ports=navyBPorts(w,n.id);
   for(const f of nv.fleets.filter(f=>f.nationId===n.id).sort((a,b)=>a.id-b.id)){
+   if(navyF3FleetReserved(w,f))continue; // F3 active staging takes priority over routine F1 return.
    if(f.status!=='DOCKED'||f.bAssignment||f.cEngagementId||!['IDLE','RETURN'].includes(f.dMission||'IDLE'))continue;
    const result=navyF1ChooseReturn(w,f,ports);
    if(!result.action){if(result.reason!=='ALREADY_AT_PORT')navyF1Reason(w,n.id,result.reason);continue;}
@@ -27295,7 +27308,7 @@ function navyF2PlanValid(w,plan,deep=false){const n=w.nations[plan.nationId],war
 }
 function navyF2Reconcile(w,deep=false){const a=navyF2Ensure(w);
  for(let i=a.plans.length-1;i>=0;i--){const plan=a.plans[i],reason=navyF2PlanValid(w,plan,deep);
-  if(reason){a.plans.splice(i,1);navyF2Record(w,'INVALIDATED',plan,reason);}
+  if(reason){navyF3OnInvalidation(w,plan,reason);a.plans.splice(i,1);navyF2Record(w,'INVALIDATED',plan,reason);}
  }
 }
 function navyF2Pick(w,nid,reserved){const a=navyF2Ensure(w),n=w.nations[nid],wars=navyF0WarsFor(w,nid).sort((x,y)=>x.id-y.id);
@@ -27379,7 +27392,7 @@ navyValidate=function(w,fail){if(navyF2OriginalValidate(w,fail)===false)return f
  const ids=new Set(),nations=new Set(),armies=new Set(),fleets=new Set(),targets=new Set();
  for(const p of a.plans){const k=`${p.warId}:${p.targetTileId}`;
   if(!Number.isSafeInteger(p.id)||p.id<1||p.id>=a.nextId||ids.has(p.id)||nations.has(p.nationId)||armies.has(p.armyId)||fleets.has(p.fleetId)||targets.has(k)||
-   !w.nations[p.nationId]||!['RESERVED'].includes(p.state)||
+   !w.nations[p.nationId]||!['RESERVED','STAGING','AT_PORT'].includes(p.state)||
    !['warId','nationId','armyId','fleetId','sourcePortId','stagingTileId','targetTileId','initialArmyTileId','estimatedLandDays','estimatedSeaSteps','estimatedPassengers','estimatedCoal','createdDay','lastReviewedDay','expiresDay'].every(key=>Number.isSafeInteger(p[key])&&p[key]>=0)||
    !w.tiles[p.stagingTileId]||!w.tiles[p.targetTileId]||p.createdDay>w.dayIndex||p.lastReviewedDay>w.dayIndex||p.lastReviewedDay<p.createdDay||
    p.expiresDay!==p.lastReviewedDay+NAVY_F2_TTL||p.estimatedPassengers<8||p.estimatedSeaSteps<0||
@@ -27400,14 +27413,469 @@ function navyF2Export(w){const a=navyF2Ensure(w);return {version:w.version,dayIn
 const navyF2OriginalPanel=navyDRenderPanel;
 navyDRenderPanel=function(w,n,host){navyF2OriginalPanel(w,n,host);
  const a=navyF2Ensure(w),section=document.createElement('section');section.className='army-detail';host.append(section);
- const title=document.createElement('h4');title.textContent='V0.9F2 · 육해군 합동작전 계획 (소프트 예약)';section.append(title);
+ const title=document.createElement('h4');title.textContent='V0.9F2 · 합동작전 계획 원장 (F3 집결과 연동)';section.append(title);
  const plan=a.plans.find(p=>p.nationId===n.id),p=document.createElement('p');p.className='muted-line';
- p.textContent=plan?`예약 #${plan.id} · 전쟁 #${plan.warId} · 육군 #${plan.armyId} · 함대 #${plan.fleetId} · 항구 #${plan.sourcePortId} → 목표 해안 ${plan.targetTileId} · 집결 예상 ${plan.estimatedLandDays}일 / 해상 ${plan.estimatedSeaSteps}칸 · ${plan.estimatedPassengers}명 · 예상 석탄 ${plan.estimatedCoal} · 예상 자원 ${plan.budgetReady?'충족':'추가 확보 필요'} · 실제 이동/출항 없음`:
+ p.textContent=plan?`예약 #${plan.id} · 전쟁 #${plan.warId} · 육군 #${plan.armyId} · 함대 #${plan.fleetId} · 항구 #${plan.sourcePortId} → 목표 해안 ${plan.targetTileId} · 집결 예상 ${plan.estimatedLandDays}일 / 해상 ${plan.estimatedSeaSteps}칸 · ${plan.estimatedPassengers}명 · 예상 석탄 ${plan.estimatedCoal} · 예상 자원 ${plan.budgetReady?'충족':'추가 확보 필요'} · 진행 상태 ${plan.state} · F3 집결 / F4 자동 출항`:
   `예약 없음 · 최근 판단: ${a.history.filter(h=>h.nationId===n.id).at(-1)?.kind||'미평가'} · F0 출항 가능성과 별개`;section.append(p);
  const stat=document.createElement('p');stat.className='muted-line';stat.textContent=`전체 계획 ${a.plans.length} · 누적 선정 ${a.counters.reserved} · 갱신 ${a.counters.renewed} · 무효화 ${a.counters.invalidated} · 분기 평가 ${a.counters.reviews}`;section.append(stat);
  const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F2 합동작전 진단 JSON 내보내기';
  button.addEventListener('click',()=>download(`vilob-naval-f2-planning-day${w.dayIndex}.json`,JSON.stringify(navyF2Export(w),null,2),'application/json'));
  section.append(button);
+};
+
+</script>
+<script>
+// V0.9F3 — physical army staging, protected from routine front/sea AI;
+// treaty-only last-port capture, with strictly evidenced F2 save migration.
+// F4 remains responsible for automatic NAVAL_ASSAULT launch and final abort logic.
+const NAVY_F3_SCHEMA=1,NAVY_F3_HISTORY_LIMIT=120,NAVY_F3_TIMEOUT=360;
+function navyF3Ensure(w){const nv=navyEnsure(w);
+ nv.f3Operations??={schema:NAVY_F3_SCHEMA,stageOrders:0,arrivals:0,failedOrders:0,protectedReviews:0,
+  invalidations:0,reasons:{},history:[]};
+ nv.f3PortLoss??={schema:NAVY_F3_SCHEMA,lossEvents:[],pending:[],migrated:false,migrationDay:null,
+  migratedEvents:0,unresolved:0};
+ return nv.f3Operations;
+}
+function navyF3Log(w,kind,p=null,detail=''){
+ const a=navyF3Ensure(w);a.reasons[kind]=(a.reasons[kind]||0)+1;
+ a.history.push({dayIndex:w.dayIndex,kind,nationId:p?.nationId??null,planId:p?.id??null,
+   armyId:p?.armyId??null,fleetId:p?.fleetId??null,detail:String(detail).slice(0,100)});
+ if(a.history.length>NAVY_F3_HISTORY_LIMIT)a.history.splice(0,a.history.length-NAVY_F3_HISTORY_LIMIT);
+}
+function navyF3ActivePlan(w,nid,armyId=null,fleetId=null){return w.navy?.f2Plans?.plans?.find(p=>
+ p.nationId===nid&&['STAGING','AT_PORT'].includes(p.state)&&
+ (armyId===null||p.armyId===armyId)&&(fleetId===null||p.fleetId===fleetId))||null;}
+function navyF3ArmyReserved(w,army){return !!(army&&navyF3ActivePlan(w,army.nationId,army.id));}
+function navyF3FleetReserved(w,f){return !!(f&&navyF3ActivePlan(w,f.nationId,null,f.id));}
+function navyF3ProtectArmy(w,a){const p=a&&navyF3ActivePlan(w,a.nationId,a.id);
+ if(!p||a.status!=='READY'||a.engagementId!=null||a.seaTransit||a.f3fRout||a.hServiceReturn)return false;
+ if(!w.wars.some(war=>war.id===p.warId&&warSide(war,a.nationId)))return false;
+ if(!navyPortOwner(w,navyBPort(w,p.sourcePortId),a.nationId))return false;
+ // Supply emergencies and actual retreats are always governed by the original army engine.
+ if(!a.supplied&&(a.unsuppliedDays||0)>=30)return false;
+ return true;
+}
+function navyF3AtPort(w,p,a){const port=navyBPort(w,p.sourcePortId),town=w.settlements.find(s=>s.id===port?.settlementId);
+ return !!(a&&town&&town.ownerId===p.nationId&&town.tileIds.includes(a.tileId)&&a.status==='READY'&&!a.order&&a.engagementId==null);
+}
+// Override only active staging plan validity. F2's unstarted reservation rules stay unchanged.
+const navyF3OriginalPlanValid=navyF2PlanValid;
+navyF2PlanValid=function(w,p,deep=false){
+ if(p.state==='RESERVED')return navyF3OriginalPlanValid(w,p,deep);
+ if(!['STAGING','AT_PORT'].includes(p.state))return 'UNKNOWN_PHASE';
+ const n=w.nations[p.nationId],war=w.wars.find(v=>v.id===p.warId),a=w.armies.find(x=>x.id===p.armyId),
+   f=navyBFleet(w,p.nationId,p.fleetId),port=navyBPort(w,p.sourcePortId),t=w.tiles[p.targetTileId];
+ if(!n?.active||n.controller!=='AI'||!war||!warSide(war,p.nationId))return 'WAR_ENDED';
+ if(!t||!warOpponents(war,p.nationId).includes(t.ownerId)||!canLandAt(w,p.nationId,t)||!navyIsCoast(w,t.id))return 'TARGET_CHANGED';
+ if(!navyPortOwner(w,port,p.nationId)||navyWaterAtPort(w,port)===null||navyDPortBlocked(w,port.id,p.nationId))return 'PORT_LOST_OR_BLOCKED';
+ if(!f||f.f1Return||!navyBReady(w,p.nationId,f)||f.tileId!==navyWaterAtPort(w,port))return 'FLEET_UNAVAILABLE';
+ if(!a||a.nationId!==p.nationId||a.status!=='READY'||a.engagementId!=null||a.seaTransit||
+   a.f3fRout||a.hServiceReturn||a.rearmPlan||v08fTanks(w,a).length||
+   !navyF2SafeLand(w,p.nationId,w.tiles[a.tileId]))return 'ARMY_UNAVAILABLE';
+ const men=manpower(a)+hCount(w,a,true);
+ if(men<8)return 'ARMY_DEPLETED';
+ if(men>navyBCapacity(w,f,'ARMY'))return 'CAPACITY_CHANGED';
+ if(w.dayIndex-(p.stagingStartedDay??p.createdDay)>NAVY_F3_TIMEOUT)return 'STAGING_TIMEOUT';
+ if(deep){if(!navyF2Staging(w,p.nationId,a,port,fortificationNetwork(w)))return 'LAND_ROUTE_LOST';
+  if(!navyEApproach(w,f,t))return 'SEA_ROUTE_LOST';}
+ return null;
+};
+function navyF3OnInvalidation(w,p,reason){
+ if(!['STAGING','AT_PORT'].includes(p.state))return;
+ const a=w.armies.find(a=>a.id===p.armyId),stats=navyF3Ensure(w);
+ stats.invalidations++;navyF3Log(w,'STAGING_CANCELLED',p,reason);
+ // A lost strategic reservation must not leave a protected orphan order.
+ // Never touch an actual retreat, engagement, or unrelated replacement order.
+ if(a?.status==='READY'&&a.operation?.type==='AMPHIBIOUS_STAGING'&&a.operation.planId===p.id){
+   a.order=null;a.operation=null;a.needsOrders=true;w.changeSeq++;
+ }
+}
+function navyF3StageUpdate(w,p){const a=w.armies.find(a=>a.id===p.armyId);
+ if(!a)return;
+ if(navyF3AtPort(w,p,a)){
+  if(p.state!=='AT_PORT'){p.state='AT_PORT';p.lastProgressDay=w.dayIndex;
+   navyF3Ensure(w).arrivals++;navyF3Log(w,'AT_PORT',p,`tile ${a.tileId}; no automatic departure`);}
+ }else if(p.state==='AT_PORT'){
+  p.state='STAGING';p.lastProgressDay=w.dayIndex;navyF3Log(w,'STAGING_RESUMED',p,`tile ${a.tileId}`);
+ }
+}
+function navyF3Quarter(w){if(w.dayIndex%120!==0)return;
+ const a=navyF2Ensure(w);if(!a.plans.length)return;
+ const stats=navyF3Ensure(w);
+ for(const p of a.plans.slice()){
+  const army=w.armies.find(x=>x.id===p.armyId),port=navyBPort(w,p.sourcePortId);
+  if(!army||!port)continue;
+  if(p.state==='RESERVED'){
+   p.state='STAGING';p.stagingStartedDay=w.dayIndex;p.lastProgressDay=w.dayIndex;
+   navyF3Log(w,'STAGING_STARTED',p,`port ${p.sourcePortId}`);
+  }
+  navyF3StageUpdate(w,p);
+  if(p.state==='AT_PORT'){stats.protectedReviews++;continue;}
+  if(!navyF3ProtectArmy(w,army)){
+   navyF3Log(w,'STAGING_UNSAFE',p,`status ${army.status}; supply ${army.supplied}`);continue;
+  }
+  const target=p.stagingTileId,action={type:'MOVE_ARMY',armyId:army.id,targetTileId:target};
+  if(army.order?.targetTileId===target){
+   army.operation={type:'AMPHIBIOUS_STAGING',targetTileId:target,assignedDay:w.dayIndex,planId:p.id};
+   p.lastProgressDay=w.dayIndex;stats.protectedReviews++;continue;
+  }
+  if(army.tileId===target){
+   // Existing move engine has not yet cleared an unrelated order; F3 never teleports.
+   if(army.order){navyF3Log(w,'ORDER_PENDING_CLEAR',p,`tile ${target}`);continue;}
+   navyF3StageUpdate(w,p);continue;
+  }
+  if(w.nations[p.nationId].apUnits<2){stats.failedOrders++;navyF3Log(w,'AP_SHORTAGE',p);continue;}
+  if(!isMilitaryActionLegal(w,p.nationId,action)){stats.failedOrders++;navyF3Log(w,'MOVE_ILLEGAL',p);continue;}
+  const result=executeNationAction(w,p.nationId,action);
+  if(result.ok){
+   army.assignedWarId=p.warId;
+   army.operation={type:'AMPHIBIOUS_STAGING',targetTileId:target,assignedDay:w.dayIndex,planId:p.id};
+   army.needsOrders=false;stats.stageOrders++;p.lastProgressDay=w.dayIndex;
+   navyF3Log(w,'MOVE_ORDERED',p,`${army.tileId} → ${target}; normal 0.2 AP`);
+  }else{stats.failedOrders++;navyF3Log(w,'MOVE_REJECTED',p,result.reason||'');}
+ }
+}
+// Daily update only checks actual arrival and invalidations. MOVE orders are issued quarterly.
+const navyF3OriginalAI=navyAIQuarter;
+navyAIQuarter=function(w){const result=navyF3OriginalAI(w);if(w.dayIndex%120===0)navyF3Quarter(w);return result;};
+const navyF3OriginalProcess=navyProcessDay;
+navyProcessDay=function(w){const result=navyF3OriginalProcess(w);
+ if(w.navy?.f2Plans?.plans?.length)for(const p of w.navy.f2Plans.plans)if(p.state!=='RESERVED')navyF3StageUpdate(w,p);
+ if(w.navy?.f3PortLoss?.pending?.length)navyF3ApplyPending(w);
+ return result;
+};
+
+function navyF3LossState(w){navyF3Ensure(w);return w.navy.f3PortLoss;}
+function navyF3RecordLoss(w,row){const state=navyF3LossState(w);
+ state.lossEvents.push(row);if(state.lossEvents.length>120)state.lossEvents.splice(0,state.lossEvents.length-120);
+}
+function navyF3TransferGroup(w,source,to,portId,warId,shipIds,retrospective=false){
+ const nv=navyEnsure(w),state=navyF3LossState(w),moved=[],pending=[];
+ for(const f of nv.fleets.filter(f=>f.nationId===source&&f.shipIds.some(id=>shipIds.includes(id))).sort((a,b)=>a.id-b.id)){
+  if(f.bAssignment||f.cEngagementId){pending.push(...f.shipIds);continue;}
+  if(f.f1Return){delete f.f1Return;}
+  f.nationId=to;f.dMission='IDLE';f.dTargetPortId=null;
+  // Preserve the real physical route and all existing paid coal; no teleportation.
+  for(const sid of f.shipIds){const s=nv.ships.find(s=>s.id===sid);
+   if(s&&s.nationId===source){s.nationId=to;moved.push(sid);}}
+ }
+ // Ship under construction may not yet belong to a fleet, but remains a physical hull.
+ for(const sid of shipIds){if(moved.includes(sid)||pending.includes(sid))continue;
+  const s=nv.ships.find(s=>s.id===sid&&s.nationId===source);if(s){s.nationId=to;moved.push(sid);}}
+ if(pending.length){const unique=[...new Set(pending)].sort((a,b)=>a-b);
+  const existing=state.pending.find(p=>p.fromId===source&&p.toId===to&&p.portId===portId&&p.warId===warId);
+  if(existing)existing.shipIds=[...new Set([...existing.shipIds,...unique])].sort((a,b)=>a-b);
+  else state.pending.push({dayIndex:w.dayIndex,fromId:source,toId:to,portId,warId,shipIds:unique});
+ }
+ if(moved.length){
+  navyLog(w,'NAVAL_LAST_PORT_CAPTURE',to,`${source}→${to}; ships ${moved.join(',')}; port ${portId}`);
+  w.changeSeq++;
+ }
+ navyF3RecordLoss(w,{dayIndex:w.dayIndex,kind:retrospective?'HISTORICAL_CAPTURE':'LAST_PORT_CAPTURE',
+  fromId:source,toId:to,warId,portId,shipIds:moved.slice().sort((a,b)=>a-b),pendingShipIds:pending.slice().sort((a,b)=>a-b)});
+ if(retrospective&&moved.length)state.migratedEvents++;
+ return {moved,pending};
+}
+function navyF3ApplyPending(w){const state=navyF3LossState(w);
+ for(let i=state.pending.length-1;i>=0;i--){const p=state.pending[i];
+  const still=p.shipIds.filter(id=>navyEnsure(w).ships.some(s=>s.id===id&&s.nationId===p.fromId));
+  if(!still.length){state.pending.splice(i,1);continue;}
+  const ready=still.filter(id=>{const fleet=navyEnsure(w).fleets.find(f=>f.shipIds.includes(id));
+   return !fleet||!fleet.bAssignment&&!fleet.cEngagementId;});
+  if(!ready.length)continue; // No repeated event logging for a still-busy transport.
+  const result=navyF3TransferGroup(w,p.fromId,p.toId,p.portId,p.warId,ready);
+  p.shipIds=[...still.filter(id=>!ready.includes(id)),...result.pending].sort((a,b)=>a-b);
+  if(!p.shipIds.length)state.pending.splice(i,1);
+ }
+}
+let navyF3TreatyContext=null;
+function navyF3ObservePortChange(w,tileIds,oldOwner,newOwner){const ctx=navyF3TreatyContext;
+ if(!ctx||oldOwner==null||oldOwner===newOwner||newOwner==null||ctx.world!==w)return;
+ for(const b of w.buildings){if(b.typeId!=='port'||!tileIds.includes(b.tileId))continue;
+  if(ctx.portsBefore.get(b.id)!==oldOwner)continue;
+  ctx.changes.push({fromId:oldOwner,toId:newOwner,portId:b.id});
+ }
+}
+const navyF3OriginalTransferCore=transferCore;
+transferCore=function(w,sid,to){const s=w.settlements.find(s=>s.id===sid),old=s?.ownerId;
+ const affected=s?.tileIds.slice()||[],result=navyF3OriginalTransferCore(w,sid,to);
+ if(old!==to)navyF3ObservePortChange(w,affected,old,to);return result;
+};
+const navyF3OriginalDetach=detachCededTile;
+detachCededTile=function(w,tileId,to){const old=w.tiles[tileId]?.ownerId,
+ result=navyF3OriginalDetach(w,tileId,to);
+ if(old!==to)navyF3ObservePortChange(w,[tileId],old,to);return result;
+};
+const navyF3OriginalPeace=settlePeace;
+settlePeace=function(w,war,terms){const before=navyF3TreatyContext;
+ const ports=new Map();for(const p of navyBPorts(w)){
+  const nid=navyBPortNation(w,p);if(nid!=null&&navyPortOwner(w,p,nid))ports.set(p.id,nid);
+ }
+ const ctx={world:w,war,portsBefore:ports,changes:[]};navyF3TreatyContext=ctx;
+ try{
+  const result=navyF3OriginalPeace(w,war,terms);
+  const losers=[...new Set(ctx.changes.map(x=>x.fromId))];
+  for(const fromId of losers){
+   if(![...ports.values()].includes(fromId)||navyBPorts(w,fromId).length)continue;
+   const captured=ctx.changes.filter(x=>x.fromId===fromId&&
+     warSide(war,fromId)&&warSide(war,x.toId)&&warSide(war,fromId)!==warSide(war,x.toId));
+   if(!captured.length)continue;
+   // Final actual cession in treaty sequence determines the recipient; tie is deterministic.
+   const finalPort=captured[captured.length-1];
+   const ids=navyEnsure(w).ships.filter(s=>s.nationId===fromId).map(s=>s.id);
+   if(ids.length)navyF3TransferGroup(w,fromId,finalPort.toId,finalPort.portId,war.id,ids);
+  }
+  return result;
+ }finally{navyF3TreatyContext=before;}
+};
+// F2 save migration: require port ownership, original settlement provenance and a
+// territorial peace record that independently names the captor and loser.
+function navyF3HistoricalEvidence(w,fromId){
+ if(navyBPorts(w,fromId).length)return null;
+ const lostPorts=navyEnsure(w).ships.filter(s=>s.nationId===fromId).map(s=>navyBPort(w,s.homePortBuildingId))
+  .filter(Boolean).filter((p,i,a)=>a.findIndex(q=>q.id===p.id)===i).sort((a,b)=>a.id-b.id);
+ const found=[];
+ for(const port of lostPorts){
+  const s=w.settlements.find(s=>s.id===port.settlementId),owner=s?.ownerId;
+  if(!s||owner==null||owner===fromId||w.tiles[port.tileId]?.ownerId!==owner||
+     s.founderNationId!==fromId||!s.formerCapitalOf?.includes(fromId))continue;
+  const battle=w.warHistory.filter(v=>v.kind==='TERRITORIAL'&&v.endedDay<=w.dayIndex&&
+   v.winnerId===owner&&(v.acquiredTiles||0)>0&&(v.territoryAwards?.[owner]||0)>0&&
+   ((v.participants?.attackers||[]).includes(fromId)!==(v.participants?.attackers||[]).includes(owner))&&
+   [...navyEnsure(w).ships.filter(ship=>ship.nationId===fromId)].some(ship=>ship.completeDay<=v.endedDay))
+   .sort((a,b)=>b.endedDay-a.endedDay||b.id-a.id)[0];
+  if(battle)found.push({warId:battle.id,endedDay:battle.endedDay,portId:port.id,toId:owner});
+ }
+ // Do not invent a recipient if evidence points to more than one conqueror.
+ if(!found.length||new Set(found.map(x=>x.toId)).size!==1)return null;
+ found.sort((a,b)=>b.endedDay-a.endedDay||b.portId-a.portId);
+ return found[0];
+}
+function navyF3Migrate(w,sourceVersion){const f=navyF3LossState(w);
+ if(f.migrated)return;
+ if(sourceVersion==='V0.9F3'||sourceVersion==='V0.9F4')return; // Preserve native F3/F4 migration flags across save/load.
+ const nations=[...new Set(navyEnsure(w).ships.map(s=>s.nationId))].sort((a,b)=>a-b);
+ for(const fromId of nations){if(navyBPorts(w,fromId).length)continue;
+  const ev=navyF3HistoricalEvidence(w,fromId);
+  if(!ev){f.unresolved++;continue;}
+  const shipIds=navyEnsure(w).ships.filter(s=>s.nationId===fromId).map(s=>s.id);
+  navyF3TransferGroup(w,fromId,ev.toId,ev.portId,ev.warId,shipIds,true);
+ }
+ f.migrated=true;f.migrationDay=w.dayIndex;
+}
+const navyF3OriginalValidate=navyValidate;
+navyValidate=function(w,fail){if(navyF3OriginalValidate(w,fail)===false)return false;
+ const a=navyF3Ensure(w),f=navyF3LossState(w);
+ if(a.schema!==1||f.schema!==1||!Array.isArray(a.history)||a.history.length>NAVY_F3_HISTORY_LIMIT||
+  !['stageOrders','arrivals','failedOrders','protectedReviews','invalidations'].every(k=>Number.isSafeInteger(a[k])&&a[k]>=0)||
+  !Array.isArray(f.lossEvents)||f.lossEvents.length>120||!Array.isArray(f.pending)||f.pending.length>64||
+  typeof f.migrated!=='boolean'||!Number.isSafeInteger(f.migratedEvents)||f.migratedEvents<0||
+  !Number.isSafeInteger(f.unresolved)||f.unresolved<0)return fail('F3 집결·항구 이양 원장');
+ for(const p of w.navy.f2Plans.plans){if(p.state==='STAGING'||p.state==='AT_PORT'){
+  if(!Number.isSafeInteger(p.stagingStartedDay)||p.stagingStartedDay<p.createdDay||p.stagingStartedDay>w.dayIndex||
+     !Number.isSafeInteger(p.lastProgressDay)||p.lastProgressDay<p.stagingStartedDay||p.lastProgressDay>w.dayIndex)
+   return fail('F3 작전 집결 시점');
+ }}
+ for(const row of f.pending){if(!w.nations[row.fromId]||!w.nations[row.toId]||
+  !Number.isSafeInteger(row.portId)||!Array.isArray(row.shipIds)||row.shipIds.some(id=>!Number.isSafeInteger(id)))return fail('F3 보류 선박 이양');}
+ for(const fleet of w.navy.fleets)if(fleet.shipIds.some(id=>w.navy.ships.find(s=>s.id===id)?.nationId!==fleet.nationId))return fail('F3 함선/함대 국가 불일치');
+ return true;
+};
+const navyF3OriginalSummary=navySummary;
+navySummary=function(w){const s=navyF3OriginalSummary(w),a=navyF3Ensure(w),f=navyF3LossState(w);
+ s.f3Staging={orders:a.stageOrders,arrivals:a.arrivals,failed:a.failedOrders,active:w.navy.f2Plans.plans.filter(p=>p.state==='STAGING').length,
+  atPort:w.navy.f2Plans.plans.filter(p=>p.state==='AT_PORT').length};
+ s.f3Captures={events:f.lossEvents.length,pending:f.pending.length,migrated:f.migratedEvents,unresolved:f.unresolved};return s;
+};
+function navyF3Export(w){const a=navyF3Ensure(w),f=navyF3LossState(w);
+ return {version:w.version,dayIndex:w.dayIndex,plans:navyF2Ensure(w).plans.map(p=>({...p})),
+  staging:{stageOrders:a.stageOrders,arrivals:a.arrivals,failedOrders:a.failedOrders,history:a.history.slice(-60)},
+  portLoss:{lossEvents:f.lossEvents,pending:f.pending,migratedEvents:f.migratedEvents,unresolved:f.unresolved},
+  note:'F3 real MOVE_ARMY staging only; no automatic amphibious launch until F4. Captured hull/crew are not created or destroyed.'};
+}
+const navyF3OriginalPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){navyF3OriginalPanel(w,n,host);
+ const a=navyF3Ensure(w),f=navyF3LossState(w),p=navyF2Ensure(w).plans.find(p=>p.nationId===n.id);
+ const section=document.createElement('section');section.className='army-detail';host.append(section);
+ const h=document.createElement('h4');h.textContent='V0.9F3 · 합동 집결·최후 항구 이양';section.append(h);
+ const text=document.createElement('p');text.className='muted-line';text.textContent=p?
+  `작전 #${p.id} · ${p.state} · 육군 #${p.armyId} → 항구 #${p.sourcePortId} / 집결 타일 ${p.stagingTileId} · F4에서 분기 경계에 자동 출항`:
+  `현 활성 작전 없음 · 누적 실제 집결 명령 ${a.stageOrders}건 / 항구 도착 ${a.arrivals}건`;
+ section.append(text);
+ const loss=document.createElement('p');loss.className='muted-line';loss.textContent=`최후 항구 이양 ${f.lossEvents.filter(e=>e.fromId===n.id||e.toId===n.id).length}건 · 자동 이관 ${f.migratedEvents}건(전체) · 화물/교전 보류 ${f.pending.length}건`;
+ section.append(loss);
+ const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F3 작전·함선 이양 진단 JSON 내보내기';
+ button.addEventListener('click',()=>download(`vilob-naval-f3-day${w.dayIndex}.json`,JSON.stringify(navyF3Export(w),null,2),'application/json'));
+ section.append(button);
+};
+
+</script>
+<script>
+// V0.9F4 — completed physical amphibious operations and sea-supply observation.
+// Existing E naval action remains the sole paid embarkation/landing authority.
+// F4 does not supply armies; occupied-port sea convoys are deferred to V0.9G.
+const NAVY_F4_SCHEMA=1,NAVY_F4_HISTORY_LIMIT=160,NAVY_F4_ACTIVE_LIMIT=32;
+function navyF4Ensure(w){const n=navyEnsure(w);
+ n.f4Operations??={schema:1,active:[],history:[],lastReviewDay:null,
+  counters:{attempts:0,launched:0,landed:0,aborted:0,returned:0,lostAtSea:0,cancelled:0,blocked:0},reasons:{}};
+ return n.f4Operations;
+}
+function navyF4Log(w,kind,p,reason=''){
+ const s=navyF4Ensure(w),r={dayIndex:w.dayIndex,kind,planId:p?.planId??p?.id??null,
+  eOperationId:p?.eOperationId??null,nationId:p?.nationId??null,armyId:p?.armyId??null,
+  fleetId:p?.fleetId??null,reason:String(reason).slice(0,120),
+  ...(kind==='LANDED'&&p?.supplyAtLanding?{supplyAtLanding:{...p.supplyAtLanding}}:{})};
+ s.history.push(r);if(s.history.length>NAVY_F4_HISTORY_LIMIT)s.history.splice(0,s.history.length-NAVY_F4_HISTORY_LIMIT);
+ if(reason&&['BLOCKED','CANCELLED','ABORTED','LOST_AT_SEA'].includes(kind))s.reasons[reason]=(s.reasons[reason]||0)+1;
+ return r;
+}
+function navyF4SupplySnapshot(w,p){
+ const army=w.armies.find(a=>a.id===p.armyId);
+ const occupiedPorts=w.buildings.filter(b=>b.typeId==='port'&&w.tiles[b.tileId]?.ownerId!==p.nationId&&
+  w.tiles[b.tileId]?.occupiedBy===p.nationId).length;
+ return {landSupply:!!army?.supplied,roadSupply:!!army?.roadSupplied,
+  unsuppliedDays:Math.max(0,army?.unsuppliedDays||0),occupiedEnemyPortCandidates:occupiedPorts,
+  seaSupplyDelivered:0,seaSupplyEnabled:false};
+}
+function navyF4Finish(w,row,kind,reason=''){
+ const s=navyF4Ensure(w);
+ if(!s.active.includes(row))return; // Terminal events are idempotent (including repeated E loss logs).
+ if(kind==='LANDED'){
+  row.supplyAtLanding=navyF4SupplySnapshot(w,row);s.counters.landed++;
+ }else if(kind==='RETURNED')s.counters.returned++;
+ else if(kind==='LOST_AT_SEA')s.counters.lostAtSea++;
+ else if(kind==='ABORTED')s.counters.aborted++;
+ row.state=kind;row.endedDay=w.dayIndex;row.lastUpdateDay=w.dayIndex;row.reason=String(reason).slice(0,120);
+ s.active.splice(s.active.indexOf(row),1);navyF4Log(w,kind,row,reason);
+}
+function navyF4OnEEvent(w,r){
+ const s=w.navy?.f4Operations;
+ if(!s||r?.operationId==null)return;
+ const row=s.active.find(x=>x.eOperationId===r.operationId);
+ if(!row)return;
+ if(r.kind==='ABORTED'){
+  if(row.state!=='RETURNING'&&row.state!=='RETURN_PENDING'){
+   s.counters.aborted++;row.abortReason=r.detail;row.state='RETURNING';row.lastUpdateDay=w.dayIndex;
+   navyF4Log(w,'ABORTED',row,r.detail);
+  }
+ }else if(['LANDED','RETURNED','LOST_AT_SEA'].includes(r.kind))navyF4Finish(w,row,r.kind,r.detail);
+}
+// E emits a real terminal event before clearing its physical ship assignment.
+const navyF4OriginalERecord=navyERecord;
+navyERecord=function(w,f,kind,detail='',jobOverride=null){
+ const result=navyF4OriginalERecord(w,f,kind,detail,jobOverride);
+ navyF4OnEEvent(w,result);return result;
+};
+function navyF4Reconcile(w){
+ const s=w.navy?.f4Operations;if(!s?.active?.length)return;
+ for(const row of s.active.slice()){
+  const f=navyEnsure(w).fleets.find(x=>x.id===row.fleetId),j=f?.bAssignment;
+  if(j?.eOperationId===row.eOperationId){
+   if(j.phase==='RETURN_PENDING'&&row.state!=='RETURN_PENDING'){row.state='RETURN_PENDING';row.lastUpdateDay=w.dayIndex;navyF4Log(w,'RETURN_PENDING',row,'NO_SAFE_RETURN_PORT');}
+   else if(j.phase==='RETURNING'&&row.state==='LAUNCHED'){row.state='RETURNING';row.lastUpdateDay=w.dayIndex;navyF4Log(w,'RETURNING',row,'E_RETURN_ROUTE');}
+   continue;
+  }
+  // All E terminal events are observed above; a missing physical contract is not a landing.
+  navyF4Finish(w,row,'ABORTED','CONTRACT_ENDED_WITHOUT_TERMINAL_EVENT');
+ }
+}
+// Prevent re-reservation by F2 while the same nation's paid physical assault is sailing.
+const navyF4OriginalPick=navyF2Pick;
+navyF2Pick=function(w,nid,reserved){
+ if(w.navy?.f4Operations?.active?.some(x=>x.nationId===nid))return {reason:'OPERATION_IN_FLIGHT'};
+ return navyF4OriginalPick(w,nid,reserved);
+};
+// Preserve exact F2 and F3 invalidation accounting, adding F4 abort visibility only.
+const navyF4OriginalInvalidate=navyF3OnInvalidation;
+navyF3OnInvalidation=function(w,p,reason){
+ if(['STAGING','AT_PORT'].includes(p.state)){
+  const s=navyF4Ensure(w);s.counters.cancelled++;navyF4Log(w,'CANCELLED',p,reason);
+ }
+ return navyF4OriginalInvalidate(w,p,reason);
+};
+function navyF4BlockReason(w,p){
+ const n=w.nations[p.nationId],a=w.armies.find(a=>a.id===p.armyId),f=navyBFleet(w,p.nationId,p.fleetId);
+ if(!n||!a||!f)return 'MISSING_COMPONENT';
+ if(n.apUnits<NAVY_E_AP_UNITS)return 'AP_SHORTAGE';
+ if(n.gold<NAVY_E_FEE_GOLD)return 'GOLD_SHORTAGE';
+ const t=w.tiles[p.targetTileId],path=navyEApproach(w,f,t);
+ if(!path)return 'SEA_ROUTE_LOST';
+ if((n.resources.coal||0)<navyBCoalCost(w,f,path))return 'COAL_SHORTAGE';
+ if(!armyOffensiveReady(w,a))return 'ARMY_NOT_READY';
+ return 'FINAL_LEGALITY_FAILED';
+}
+function navyF4Quarter(w){if(w.dayIndex%30!==0)return;
+ const s=navyF4Ensure(w);s.lastReviewDay=w.dayIndex;
+ navyF4Reconcile(w);
+ const plans=navyF2Ensure(w).plans;
+ for(const p of plans.slice().sort((a,b)=>a.id-b.id)){
+  if(p.state!=='AT_PORT'||s.active.some(x=>x.nationId===p.nationId))continue;
+  const army=w.armies.find(a=>a.id===p.armyId);
+  if(!navyF3AtPort(w,p,army))continue;
+  const validity=navyF2PlanValid(w,p,false);
+  if(validity)continue; // F2 invalidates only real obsolescence, not temporary budget shortages.
+  const act={type:'NAVAL_ASSAULT',fleetId:p.fleetId,sourcePortId:p.sourcePortId,armyId:p.armyId,targetTileId:p.targetTileId};
+  const legal=navyEParams(w,p.nationId,act);
+  if(!legal){const why=navyF4BlockReason(w,p);s.counters.blocked++;navyF4Log(w,'BLOCKED',p,why);continue;}
+  s.counters.attempts++;
+  const result=navyEStart(w,p.nationId,act);
+  if(!result.ok){s.counters.blocked++;navyF4Log(w,'BLOCKED',p,result.reason||'SAIL_FAILED');continue;}
+  const row={planId:p.id,eOperationId:result.operationId,warId:p.warId,nationId:p.nationId,armyId:p.armyId,
+   fleetId:p.fleetId,sourcePortId:p.sourcePortId,targetTileId:p.targetTileId,launchedDay:w.dayIndex,
+   lastUpdateDay:w.dayIndex,state:'LAUNCHED',passengers:legal.passengers,coalCost:legal.coal,
+   goldCost:NAVY_E_FEE_GOLD,apCost:NAVY_E_AP_UNITS,abortReason:null};
+  s.active.push(row);s.counters.launched++;
+  const i=plans.findIndex(x=>x.id===p.id);if(i>=0)plans.splice(i,1);
+  navyF4Log(w,'LAUNCHED',row,`E#${result.operationId} passengers=${legal.passengers}`);
+  // No INVALIDATED event: the reservation has been fulfilled, not revoked.
+ }
+}
+const navyF4OriginalAI=navyAIQuarter;
+navyAIQuarter=function(w){const result=navyF4OriginalAI(w);navyF4Quarter(w);return result;};
+const navyF4OriginalProcess=navyProcessDay;
+navyProcessDay=function(w){const result=navyF4OriginalProcess(w);navyF4Reconcile(w);return result;};
+const navyF4OriginalValidate=navyValidate;
+navyValidate=function(w,fail){if(navyF4OriginalValidate(w,fail)===false)return false;
+ const s=navyF4Ensure(w),integer=k=>Number.isSafeInteger(s.counters[k])&&s.counters[k]>=0;
+ if(s.schema!==NAVY_F4_SCHEMA||!Array.isArray(s.active)||s.active.length>NAVY_F4_ACTIVE_LIMIT||
+  !Array.isArray(s.history)||s.history.length>NAVY_F4_HISTORY_LIMIT||
+  !['attempts','launched','landed','aborted','returned','lostAtSea','cancelled','blocked'].every(integer)||
+  !s.reasons||Object.values(s.reasons).some(v=>!Number.isSafeInteger(v)||v<0)||
+  !(s.lastReviewDay===null||Number.isSafeInteger(s.lastReviewDay)&&s.lastReviewDay>=0&&s.lastReviewDay<=w.dayIndex&&s.lastReviewDay%30===0))return fail('F4 작전 원장');
+ const ops=new Set(),nations=new Set(),plans=new Set();
+ for(const p of s.active){if(!['LAUNCHED','RETURNING','RETURN_PENDING'].includes(p.state)||
+  !['planId','eOperationId','warId','nationId','armyId','fleetId','sourcePortId','targetTileId','launchedDay','lastUpdateDay','passengers','coalCost','goldCost','apCost'].every(k=>Number.isSafeInteger(p[k])&&p[k]>=0)||
+  p.launchedDay>w.dayIndex||p.lastUpdateDay>w.dayIndex||p.lastUpdateDay<p.launchedDay||
+  !w.nations[p.nationId]||!w.tiles[p.targetTileId]||ops.has(p.eOperationId)||nations.has(p.nationId)||plans.has(p.planId)||
+  w.navy.f2Plans.plans.some(x=>x.id===p.planId))return fail('F4 실물 작전 참조');
+  ops.add(p.eOperationId);nations.add(p.nationId);plans.add(p.planId);
+ }
+ for(const r of s.history){if(!Number.isSafeInteger(r.dayIndex)||r.dayIndex>w.dayIndex||r.dayIndex<0||
+  !['LAUNCHED','BLOCKED','CANCELLED','ABORTED','LANDED','RETURNING','RETURN_PENDING','RETURNED','LOST_AT_SEA'].includes(r.kind)||
+  typeof r.reason!=='string'||r.reason.length>120)return fail('F4 작전 사건 이력');}
+ return true;
+};
+const navyF4OriginalSummary=navySummary;
+navySummary=function(w){const x=navyF4OriginalSummary(w),s=navyF4Ensure(w);
+ x.f4Operations={active:s.active.map(p=>({...p})),counters:{...s.counters},recent:s.history.slice(-20),lastReviewDay:s.lastReviewDay,
+  note:'F4 has no sea supply. V0.9G will deliver paid physical convoys to occupied ports.'};return x;
+};
+function navyF4Export(w){const s=navyF4Ensure(w);
+ return {version:w.version,dayIndex:w.dayIndex,active:s.active,history:s.history,counters:s.counters,reasons:s.reasons,
+  seaSupply:{enabled:false,delivered:0,note:'Occupied enemy ports are not supply sources until paid physical convoys arrive in V0.9G.'}};
+}
+const navyF4OriginalPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){navyF4OriginalPanel(w,n,host);
+ const s=navyF4Ensure(w),sec=document.createElement('section');sec.className='army-detail';host.append(sec);
+ const h=document.createElement('h4');h.textContent='V0.9F4 · 자동 상륙·작전 결과';sec.append(h);
+ const row=s.active.find(x=>x.nationId===n.id),last=s.history.filter(x=>x.nationId===n.id).at(-1),p=document.createElement('p');p.className='muted-line';
+ p.textContent=row?`전시 작전 #${row.planId} → 실물 상륙 #${row.eOperationId} · ${row.state} · 육군 #${row.armyId} · 함대 #${row.fleetId}`:
+  `현재 진행 중 없음 · 최근 ${last?.kind||'기록 없음'} · 출항 ${s.counters.launched}건 / 상륙 ${s.counters.landed}건 / 귀항 ${s.counters.returned}건 / 해상 전멸 ${s.counters.lostAtSea}건`;
+ sec.append(p);
+ const note=document.createElement('p');note.className='muted-line';note.textContent='상륙 후 보급: 기존 육상 연결 여부만 적용 · 적 점령 항구의 실물 보급선은 V0.9G에서 도입';sec.append(note);
+ const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F4 작전·보급 관측 JSON 내보내기';
+ button.addEventListener('click',()=>download(`vilob-naval-f4-day${w.dayIndex}.json`,JSON.stringify(navyF4Export(w),null,2),'application/json'));
+ sec.append(button);
 };
 
 </script>
