@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9F4</title>
+<title>VILOB Light · V0.9F7</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -939,7 +939,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9F4'; // paid physical amphibious launch + lifecycle audit
+const VERSION = 'V0.9G2'; // autonomous paid physical naval supply with real return voyages
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -6751,7 +6751,8 @@ function detachCededTile(w,tileId,recipientId){
     if(!s||s.coreTileId===tileId)throw Error('정착지 중심은 부분 양도할 수 없습니다.');
     s.tileIds=s.tileIds.filter(id=>id!==tileId);
     for(const b of w.buildings)if(b.tileId===tileId){b.settlementId=null;b.disconnected=true;
-      if(b.status!=='ACTIVE')b.pausedRemainingDays=Math.max(1,b.completeDay-w.dayIndex);}
+      if(b.status!=='ACTIVE')b.pausedRemainingDays=Math.max(1,b.completeDay-w.dayIndex);
+      if(b.typeId==='port')navyF6Record(w,'DETACHED',b,oldId,'TERRITORY_CEDED');}
   }
   const detachedBarracks=w.buildings.filter(b=>b.tileId===tileId&&b.typeId==='barracks');
   const previousOwner=t.ownerId;
@@ -6762,9 +6763,22 @@ function detachCededTile(w,tileId,recipientId){
   refreshApCaps(w); // G1: territorial peace updates AP ceilings immediately.
 }
 function reconnectAnnexedFacilities(w,tileId,settlementId){
+  const existingPort=navyF5PortCount(w,settlementId)>0;
+  const incomingPort=w.buildings.find(b=>b.typeId==='port'&&b.tileId===tileId&&b.disconnected&&b.settlementId!==settlementId);
+  const portCollision=Boolean(existingPort&&incomingPort);
   const restoredBarracks=w.buildings.filter(b=>b.tileId===tileId&&b.disconnected&&b.typeId==='barracks');
-  for(const b of w.buildings)if(b.tileId===tileId&&b.disconnected){b.settlementId=settlementId;b.disconnected=false;
-    if(b.pausedRemainingDays){b.completeDay=w.dayIndex+b.pausedRemainingDays;delete b.pausedRemainingDays;}}
+  for(const b of w.buildings)if(b.tileId===tileId&&b.disconnected){
+    // A second physical port is not a second *operating* port: retain it dormant.
+    // In normal AI play F5 expansion legality prevents this path altogether.
+    if(portCollision&&b.typeId==='port'){
+      b.settlementId=null;
+      navyF6Record(w,'RECONNECT_BLOCKED',b,settlementId,'EXISTING_CONNECTED_PORT');
+      continue;
+    }
+    b.settlementId=settlementId;b.disconnected=false;
+    if(b.pausedRemainingDays){b.completeDay=w.dayIndex+b.pausedRemainingDays;delete b.pausedRemainingDays;}
+    if(b.typeId==='port')navyF6Record(w,'RECONNECTED',b,settlementId,'OWNED_SETTLEMENT');
+  }
   for(const d of w.defenses||[])if(d.tileId===tileId)d.settlementId=settlementId;
   v04e2RegisterBarracksEvent(w,'RECONNECT',[w.tiles[tileId]?.ownerId,w.tiles[tileId]?.ownerId],settlementId,restoredBarracks);
 }
@@ -10860,6 +10874,7 @@ function settlementExpansionDemand(world,s,forecast=null,siteUsage=null){
 function settlementExpansionCandidate(world,s,tid,demand=null){
   const tile=world.tiles[tid];
   if(!s||!tile||s.tileIds.length>=settlementFootprintCapacity(world,s.ownerId).maxTiles||tile.ownerId!==s.ownerId||tile.settlementId!==null||tile.occupiedBy!==null)return null;
+  if(navyF5PortCount(world,s.id)&&world.buildings.some(b=>b.typeId==='port'&&b.tileId===tid))return null;
   const radius=footprintDistance(tid,s.coreTileId,world.size);
   if(radius>settlementFootprintCapacity(world,s.ownerId).maxRadius)return null;
   const members=new Set(s.tileIds);
@@ -10888,6 +10903,7 @@ function settlementMergeAssessment(world,a,b){
   if(!a||!b||a.id===b.id||a.ownerId!==b.ownerId)return null;
   // F2B: a merged settlement cannot inherit two separate dedicated industrial sites.
   if(world.buildings.filter(x=>x.industrialSlot&&(x.settlementId===a.id||x.settlementId===b.id)).length>1)return null;
+  if(navyF5PortCount(world,a.id)&&navyF5PortCount(world,b.id))return null;
   const cap=settlementFootprintCapacity(world,a.ownerId);
   if(a.tileIds.length+b.tileIds.length>cap.maxTiles)return null;
   if((a.formerCapitalOf?.length||0)&&(b.formerCapitalOf?.length||0))return null;
@@ -11529,7 +11545,7 @@ function applyLosses(army,loss,phase,politicalDay=null,world=null,attackChannels
     const u=units.get(id);if(!u||remaining<=0)break;
     const take=Math.min(u.manpower,remaining);e2DamageArtilleryGuns(army,u,take,world);c3TakeLoss(u,take,'BATTLE',politicalDay);remaining-=take;removed+=take;
   }
-  army.morale=battleClamp(Math.round(army.morale-removed/Math.max(8,manpower(army)+removed)*105-(phase==='MELEE'?5:2)),0,100);
+  army.morale=battleClamp(Math.round(army.morale-removed/Math.max(8,manpower(army)+removed)*85-(phase==='MELEE'?3.5:1.5)),0,100);
   return removed;
 }
 function writeBattleEvent(world,text){world.events.push({dayIndex:world.dayIndex,text,kind:'battle'});if(world.events.length>180)world.events.shift();}
@@ -11896,13 +11912,13 @@ function h1aSideDamage(w,budget,alloc,phase,resolveArmy=id=>h1Army(w,id),attackC
     else{e2DamageArtilleryGuns(r.army,r.unit,r.losses,w);c3TakeLoss(r.unit,r.losses,'BATTLE',w.dayIndex);byArmy.get(r.armyId).losses+=r.losses;}
   }
   const overallRatio=totalExposed/Math.max(1,[...byArmy.values()].reduce((sum,x)=>sum+x.initialMen,0));
-  const baseFatigue=phase==='MELEE'?5:2;
+  const baseFatigue=phase==='MELEE'?3.5:1.5;
   const output={};
   for(const [id,entry] of byArmy){
     // Exposure-based fatigue is independent of how many integer hits occurred.
     const exposureRatio=entry.exposed/Math.max(1,entry.initialMen);
     const normalized=overallRatio>0?exposureRatio/overallRatio:0;
-    const lossShock=105*entry.losses/Math.max(8,entry.initialMen);
+    const lossShock=85*entry.losses/Math.max(8,entry.initialMen);
     entry.army.morale=battleClamp(entry.army.morale-baseFatigue*normalized-lossShock,0,100);
     output[id]=entry.losses;
   }
@@ -12134,10 +12150,10 @@ function h1ResolveMulti(w,e){
     e[side]=keep;
   }
   const liveA=h1Live(w,e,'attackers'),liveB=h1Live(w,e,'defenders');
-  if(!liveA.length||!liveB.length||e.round>=8){
+  if(!liveA.length||!liveB.length||e.round>=12){
     const score=side=>h1Live(w,e,side).reduce((v,m)=>{const a=h1Army(w,m.armyId);return v+(manpower(a)+hEffective(w,a))*(.6+a.morale/130);},0);
     const winner=!liveA.length?'defenders':!liveB.length?'attackers':score('attackers')>score('defenders')?'attackers':'defenders';
-    h1FinishMulti(w,e,winner,e.round>=8,[!liveA.length?'ATTACKER_SIDE_COLLAPSED':null,!liveB.length?'DEFENDER_SIDE_COLLAPSED':null,e.round>=8?'MAX_ROUNDS':null].filter(Boolean));
+    h1FinishMulti(w,e,winner,e.round>=12,[!liveA.length?'ATTACKER_SIDE_COLLAPSED':null,!liveB.length?'DEFENDER_SIDE_COLLAPSED':null,e.round>=12?'MAX_ROUNDS':null].filter(Boolean));
   }else{e.nextRoundDay=w.dayIndex+4;w.changeSeq++;}
 }
 function h1FinishMulti(w,e,winnerSide,withdrawn=false,conditions=[]){
@@ -12174,7 +12190,7 @@ function h1FinishMulti(w,e,winnerSide,withdrawn=false,conditions=[]){
       !hostileFortUncaptured(w,a.tileId,a.nationId))a.tileId=e.tileId;
   }
   w.battleHistory.push({id:e.id,tileId:e.tileId,dayIndex:w.dayIndex,attackerArmyId:e.attackerArmyId,defenderArmyId:e.defenderArmyId,
-    attackerNationId:nationOf('attackers'),defenderNationId:nationOf('defenders'),winnerNationId,rounds:e.round,history:e.history.slice(-8),
+    attackerNationId:nationOf('attackers'),defenderNationId:nationOf('defenders'),winnerNationId,rounds:e.round,history:e.history.slice(-12),
     participantArmyIds:{attackers:e.allAttackerArmyIds.slice(),defenders:e.allDefenderArmyIds.slice()},
     perArmyLosses:{...e.perArmyLosses},pursuits,pursuit:{losses:pursuits.reduce((v,x)=>v+x.losses,0),reason:'COALITION',advantage:pursuits[0]?.advantage||0,rate:pursuits[0]?.rate||0}});
   if(w.battleHistory.length>50)w.battleHistory.shift();
@@ -12311,7 +12327,7 @@ function endEngagement(world,e,winner,loser,withdrawn=false,conditions=[]){
   // Battle victory secures the field, not the region. Occupation requires time and resistance.
   world.battleHistory.push({id:e.id,tileId:e.tileId,dayIndex:world.dayIndex,attackerArmyId:e.attackerArmyId,defenderArmyId:e.defenderArmyId,
     attackerNationId:world.armies.find(a=>a.id===e.attackerArmyId)?.nationId,defenderNationId:world.armies.find(a=>a.id===e.defenderArmyId)?.nationId,
-    winnerNationId:winner.nationId,rounds:e.round,history:e.history.slice(-8),pursuit});
+    winnerNationId:winner.nationId,rounds:e.round,history:e.history.slice(-12),pursuit});
   if(world.battleHistory.length>50)world.battleHistory.shift();
   world.engagements=world.engagements.filter(v=>v.id!==e.id);
   writeBattleEvent(world,`${winN.name}군이 ${lossN.name}군을 격퇴했습니다. (${e.round}라운드${withdrawn?'·후퇴':''}${pursuit.losses?`·패주 ${pursuit.losses}명`:''})`);
@@ -12430,12 +12446,12 @@ function resolveEngagementRoundD1(world,e){
   b4aRecordCombat(world,b,e.id,e.round,Math.max(0,phaseRecords.reduce((x,r)=>x+(r.bFront||0)+(r.bRear||0),0)),lossB);
   const brokenA=!manpower(a)||a.morale<23||e.frontBrokenA&&a.morale<39;
   const brokenB=!manpower(b)||b.morale<23||e.frontBrokenB&&b.morale<39;
-  if(brokenA||brokenB||e.round>=8){
+  if(brokenA||brokenB||e.round>=12){
     let winner,loser;
     if(brokenA!==brokenB){winner=brokenA?b:a;loser=brokenA?a:b;}
     else{const scoreA=manpower(a)*(.6+a.morale/130),scoreB=manpower(b)*(.6+b.morale/130);
       winner=scoreA>scoreB?a:b;loser=winner===a?b:a;}
-    endEngagement(world,e,winner,loser,e.round>=8,[brokenA?'ATTACKER_COLLAPSE':null,brokenB?'DEFENDER_COLLAPSE':null,e.round>=8?'MAX_ROUNDS':null].filter(Boolean));
+    endEngagement(world,e,winner,loser,e.round>=12,[brokenA?'ATTACKER_COLLAPSE':null,brokenB?'DEFENDER_COLLAPSE':null,e.round>=12?'MAX_ROUNDS':null].filter(Boolean));
   }else{e.nextRoundDay=world.dayIndex+4;world.changeSeq++;}
 }
 
@@ -12589,14 +12605,16 @@ function updateArmySupply(w){
     f1SupplyGraphScope={world:w,nations:new Map()};
     f1SupplyGraphStats.sweeps++;
   }
-  try {f1UpdateArmySupplyCore(w);} finally {f1SupplyGraphScope=previousScope;}
+  const oldG1Scope=g1SupplySweepScope;g1SupplySweepScope={world:w,day:w.dayIndex,graphs:new Map(),spent:new Map()};
+  try {g1BeforeSupplySweep(w);f1UpdateArmySupplyCore(w);} finally {g1FinishSupplySweep(w);g1SupplySweepScope=oldG1Scope;f1SupplyGraphScope=previousScope;}
 }
 function f1UpdateArmySupplyCore(w){
   for(const a of w.armies){
     if(a.status==='DESTROYED'||men(a)===0)continue;
     const last=Number.isInteger(a.supplyCheckedDay)?Math.min(a.supplyCheckedDay,w.dayIndex):w.dayIndex;
     const elapsed=Math.max(0,w.dayIndex-last);
-    const connected=f1SupplyConnected(w,a);
+    const onLand=f1SupplyConnected(w,a);
+    const connected=onLand||g1PayArmySupply(w,a,elapsed);
     const previous=Number.isInteger(a.unsuppliedDays)?a.unsuppliedDays:0;
     const now=connected?0:previous+elapsed;
     a.supplied=connected;a.unsuppliedDays=now;
@@ -12612,6 +12630,7 @@ function f1UpdateArmySupplyCore(w){
         const current=men(a);if(!current)break;
         const rate=days>=60?.02:.01;
         const casualties=militaryLosses(a,Math.max(1,Math.ceil(current*rate*(1-techBonus(w,a.nationId,'supplyAttrition')))),'SUPPLY',w.dayIndex);
+        if(casualties&&a.status==='SAILING')navyF5OnSupplyLoss(w,a,casualties);
         const war=w.wars.find(v=>v.id===a.assignedWarId)||warOfNation(w,a.nationId);
         if(war&&casualties){war.supplyCasualties??={};war.casualties??={};war.supplyCasualties[a.nationId]=(war.supplyCasualties[a.nationId]||0)+casualties;war.casualties[a.nationId]=(war.casualties[a.nationId]||0)+casualties;}
       }
@@ -14869,7 +14888,7 @@ function finishSeaVoyage(w,a){
   event(w,legal?`${w.nations[a.nationId].name} 제${a.id+1}군이 해안 (${target.x},${target.y})에 상륙했습니다.`:`${w.nations[a.nationId].name} 제${a.id+1}군이 종전/상륙 불가로 원래 해안에 귀항했습니다.`,'army');
   w.changeSeq++;
 }
-function isSupplied(w,a){return hasSupplyLine(w,a);}
+function isSupplied(w,a){return hasSupplyLine(w,a)||g1PaidArmyCovered(w,a);}
 const MILITARY_ACTIONS=['REDEPLOY_COHORT','REARM_ARMY','TRAIN_RESERVES','TRAIN_FORMATION','EMERGENCY_MUSTER','RECRUIT_ARMY','RAISE_ARTILLERY','REINFORCE_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','DECLARE_WAR','BETRAY_ALLIANCE','IMPROVE_RELATIONS','OFFER_ALLIANCE','ACCEPT_ALLIANCE','REJECT_ALLIANCE','END_ALLIANCE','RESPOND_DEFENSE_CALL','RESPOND_ATTACK_CALL','MAKE_PEACE','OFFER_PEACE','ACCEPT_PEACE','REJECT_PEACE','OFFER_SUBMISSION','ACCEPT_SUBMISSION','REJECT_SUBMISSION','OFFER_RELEASE','ACCEPT_RELEASE','REJECT_RELEASE',...C2_ACTIONS];
 function isMilitaryActionLegal(w,nationId,act){
   const n=w.nations[nationId];if(!n?.active||!act||!MILITARY_ACTIONS.includes(act.type))return false;
@@ -17404,6 +17423,7 @@ function executeNationAction(world,nationId,action){
       const primary=settlementMergePrimary(world,s,other);
       const secondary=primary===s?other:s;
       const housingBefore=settlementHousing(world,primary)+settlementHousing(world,secondary);
+      if(navyF5PortCount(world,primary.id)&&navyF5PortCount(world,secondary.id))throw Error('F5 병합 금지: 정착지 두 곳에 전용 항구');
       const assertI1Merge=i1OnSettlementMerge(world,nationId,primary.id,secondary.id);
       e1OnSettlementMerge(world,nationId,primary.id,secondary.id);
       d2bMergeSettlement(world,primary,secondary);
@@ -21539,9 +21559,10 @@ function advanceSimulation(world,days,entropySource=null){
     const nextFortEvent=nextFortProjectDay(world);
     const nextSpecialistEvent=c3NextTrainingDay(world);
     const nextNavalEvent=navyNextDay(world);
+    const nextG1SupplyEvent=g1NextSupplyDay(world);
     const fortIn=nextFortEvent-world.dayIndex;
     const militaryIn=nextMilitaryEvent-world.dayIndex;
-    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until,nextNavalEvent>world.dayIndex?nextNavalEvent-world.dayIndex:until);
+    const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until,nextNavalEvent>world.dayIndex?nextNavalEvent-world.dayIndex:until,nextG1SupplyEvent>world.dayIndex?nextG1SupplyEvent-world.dayIndex:until);
     c3AdvanceTraining(world,jump);
     world.dayIndex+=jump;remaining-=jump;
     d1cPruneCommanderHistory(world); // H1: exact 360-day retention, even on non-quarter days.
@@ -21565,6 +21586,9 @@ function advanceSimulation(world,days,entropySource=null){
       processMilitaryDay(world,executeNationAction);
       for(const n of world.nations)i1Reconcile(world,n); // national military spending is an explicit legacy draw
       if(quarterBoundary)i1CloseQuarter(world); // only unspent stock may depart at end of quarter
+    }else if(world.dayIndex===nextG1SupplyEvent){
+      // Only tick paid stock; the military planner is NOT rerun at extra batch boundaries.
+      updateArmySupply(world);
     }
   }
   return world;
@@ -21988,7 +22012,10 @@ function validateWorld(w){
     const tile=w.tiles[b.tileId],s=sMap.get(b.settlementId),def=BUILDINGS[b.typeId];
     const isDefense=b.typeId==='fort',inDefense=w.defenses.includes(b);
     if(isDefense!==inDefense)fail('일반 시설·방어시설 분류');
-    if(!Number.isInteger(b.id)||b.id<0||buildingIds.has(b.id)||!def||!tile||!(isDefense&&b.settlementId===null&&tile.settlementId===null||!isDefense&&b.disconnected===true&&b.settlementId===null&&tile.settlementId===null||s&&s.tileIds.includes(tile.id)&&tile.ownerId===s.ownerId)||
+    if(!Number.isInteger(b.id)||b.id<0||buildingIds.has(b.id)||!def||!tile||!(isDefense&&b.settlementId===null&&tile.settlementId===null||
+      !isDefense&&b.disconnected===true&&b.settlementId===null&&
+      (tile.settlementId===null||b.typeId==='port'&&b.portSlot===true&&sMap.has(tile.settlementId))||
+      s&&s.tileIds.includes(tile.id)&&tile.ownerId===s.ownerId)||
       !def.terrains.includes(tile.terrain)||!Number.isInteger(b.level)||b.level<1||b.level>maxBuildingLevel(b.typeId)||
       !['ACTIVE','CONSTRUCTING','UPGRADING','REDEVELOPING'].includes(b.status)||!Number.isInteger(b.completeDay)||b.completeDay<0||
       (b.status==='UPGRADING'&&b.targetLevel!==b.level+1)||
@@ -22006,9 +22033,16 @@ function validateWorld(w){
     if(b.typeId==='workshop'&&((b.workshopMode!==undefined&&!['standard','precision'].includes(b.workshopMode))||
         (b.lastOperatedDay!==undefined&&b.lastOperatedDay!==null&&(!Number.isSafeInteger(b.lastOperatedDay)||b.lastOperatedDay<0||b.lastOperatedDay>w.dayIndex||b.lastOperatedDay%30!==0))))fail('E1 공방 가동 상태');
     buildingIds.add(b.id);const key=(isDefense?'D:':'B:')+tile.id;
+    if(b.typeId==='port'&&!b.portSlot)fail('F6 항구 전용 슬롯 누락');
     if(b.portSlot){
-      if(b.typeId!=='port'||isDefense||!navyIsCoast(w,b.tileId)||portTiles.has(b.tileId)||b.settlementId===null||portSettlements.has(b.settlementId))fail('V0.9A 전용 해안 부두');
-      portTiles.add(b.tileId);portSettlements.add(b.settlementId);
+      // F6: a ceded port remains a unique, physical coastal structure, but has
+      // no operational settlement until a legal reconnection.  Never exempt
+      // coast, tile uniqueness, real structure identity or active-port bounds.
+      const detached=b.settlementId===null;
+      if(b.typeId!=='port'||isDefense||!navyIsCoast(w,b.tileId)||portTiles.has(b.tileId)||
+        detached&&b.disconnected!==true||!detached&&portSettlements.has(b.settlementId))fail('V0.9A 전용 해안 부두');
+      portTiles.add(b.tileId);
+      if(!detached)portSettlements.add(b.settlementId);
     }else if(b.industrialSlot){
       if(isDefense||!F2B_INDUSTRIAL_TYPES.includes(b.typeId))fail('F2B 산업 전용 부지');
       if(b.settlementId!==null){if(industrialSlots.has(b.settlementId))fail('F2B 산업 전용 부지');industrialSlots.add(b.settlementId);}
@@ -22115,7 +22149,7 @@ function validateWorld(w){
   const usedInBattle=new Set();
   for(const e of w.engagements){
     const war=w.wars.find(v=>v.id===e.warId);
-    if(!war||!w.tiles[e.tileId]||!Number.isInteger(e.round)||e.round<0||e.round>8||!Number.isInteger(e.nextRoundDay))fail('교전');
+    if(!war||!w.tiles[e.tileId]||!Number.isInteger(e.round)||e.round<0||e.round>12||!Number.isInteger(e.nextRoundDay))fail('교전');
     h1EnsureMembers(w,e);
     if(e.v08iSuppression&&(
       e.v08iSuppression.schema!==1||
@@ -22166,9 +22200,9 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
@@ -22176,7 +22210,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22236,7 +22270,8 @@ function deserializeWorld(json){
  navyDExpireInvalidBlockades(parsed);
  navyF2Reconcile(parsed); // F2 plans restored; F3 may now upgrade reservation state.
  navyF3Migrate(parsed,v08eSourceVersion); // Strictly evidenced one-time historical last-port capture; never guess unrelated recipients.
- navyF4Ensure(parsed); // F4: new empty operation ledger for historical saves; never backfill E voyages.
+ navyF4Ensure(parsed);g1Ensure(parsed); // G1: historical worlds start with empty, strictly conserved logistics ledger.
+  navyF5Migrate(parsed,v08eSourceVersion); // F4 evidenced emergency-only: physical passenger/port recovery before strict validation.
  i3aEnsure(parsed); // I3A starts with no fabricated historical production
  // An older J save may contain one authentic Lv.4 quarter; never infer it from Lv.3 factoryRuns.
  for(const b of parsed.buildings||[])if(b.typeId==='factory'&&b.level===4&&b.kLevel4OperatedDay==null&&b.f2jLastQuarter?.operated===true){
@@ -22248,7 +22283,7 @@ function serializeWorld(world){
  navyEnsure(world);navyBEnsure(world);navyCEnsure(world);navyF2Ensure(world);i2Ensure(world);i3aEnsure(world);
  for(const n of world.nations){i1Reconcile(world,n);i1aSyncPreviousQuarter(i1Ensure(n,world));}
  navyF2Reconcile(world); // F3 reservation checks do not issue commands during save.
- navyF3Ensure(world);navyF4Ensure(world);
+ navyF3Ensure(world);navyF4Ensure(world);navyF5Ensure(world);navyF6Ensure(world);g1Ensure(world);
  validateWorld(world);
  return JSON.stringify(world,(key,val)=>key==='historicalChronicle'&&val===world.historicalChronicle?i1aPackChronicle(val):val,2);
 }
@@ -25306,7 +25341,8 @@ function navyWaterSize(w,tileId,cap=10001){
 }
 function navyPortLegal(w,nationId,settlementId,tileId){
  const s=w.settlements.find(s=>s.id===settlementId&&s.ownerId===nationId);
- return Boolean(s&&s.tileIds.includes(tileId)&&navyIsCoast(w,tileId)&&!w.buildings.some(b=>b.typeId==='port'&&b.settlementId===settlementId));
+ return Boolean(s&&s.tileIds.includes(tileId)&&navyIsCoast(w,tileId)&&
+  !w.buildings.some(b=>b.typeId==='port'&&(b.settlementId===settlementId||b.tileId===tileId)));
 }
 function navyShipPrice(typeId){const type=NAVY_SHIP_TYPES[typeId];return type?{gold:type.gold,apUnits:type.apUnits,knowledge:0,resources:{...type.resources}}:null;}
 function navyPortOwner(w,b,nationId){return Boolean(b?.typeId==='port'&&['ACTIVE','UPGRADING'].includes(b.status)&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===nationId&&w.settlements.some(s=>s.id===b.settlementId&&s.ownerId===nationId));}
@@ -25322,6 +25358,7 @@ function navyActionLegal(w,nationId,a){
   const ship=nv.ships.find(s=>s.id===a.shipId&&s.nationId===nationId),port=ship&&w.buildings.find(b=>b.id===ship.homePortBuildingId),town=port&&w.settlements.find(s=>s.id===port.settlementId),type=ship&&NAVY_SHIP_TYPES[ship.typeId];
   return Boolean(ship&&['UNCREWED','READY'].includes(ship.status)&&!ship.repairPlan&&ship.crew<type.crew&&port&&navyPortOwner(w,port,nationId)&&town&&town.population>=type.crew-ship.crew+10&&ship.tileId===navyWaterAtPort(w,port)&&!navyEnsure(w).fleets.some(f=>f.shipIds.includes(ship.id)&&(f.status==='SAILING'||f.cEngagementId||f.bAssignment)));
  }
+ if(a.type==='NAVY_G1_SUPPLY_CONVOY')return !!g1ConvoyParams(w,nationId,a);
  if(a.type==='NAVY_RECOVERY_SAIL')return navyF1RecoveryLegal(w,nationId,a);
  if(a.type==='NAVY_SAIL'){
   const fleet=nv.fleets.find(f=>f.id===a.fleetId&&f.nationId===nationId),ships=fleet?.shipIds.map(id=>nv.ships.find(s=>s.id===id));
@@ -25345,6 +25382,7 @@ function navyActionExecute(w,nationId,a){
  if(!navyActionLegal(w,nationId,a))return {ok:false,reason:'해군 행동 조건·자원·항로 부족'};
  const nv=navyEnsure(w),n=w.nations[nationId];
  if(a.type==='NAVY_SET_MISSION'||a.type==='NAVY_CHANGE_HOME')return navyDActionExecute(w,nationId,a);
+ if(a.type==='NAVY_G1_SUPPLY_CONVOY')return g1LaunchConvoy(w,nationId,a);
  if(a.type==='NAVY_REPAIR'||a.type==='NAVY_RECREW')return navyCActionExecute(w,nationId,a);
  if(a.type==='NAVY_FREIGHT'||a.type==='NAVY_SEA_TRADE'||a.type==='NAVY_EMBARK'||a.type==='NAVY_REROUTE'||a.type==='NAVY_FORM_FLEET')return navyBActionExecute(w,nationId,a);
  if(a.type==='NAVY_BUILD_SHIP'){
@@ -25772,7 +25810,7 @@ function navyBValidate(w,fail){const nv=navyBEnsure(w);
  for(const k of ['bDelivered','bTrades','bPassages','bFreightLoaded','bBlocked'])if(!Number.isSafeInteger(nv[k])||nv[k]<0)fail('V0.9B 해운 누적 계수');
  const claimedArmies=new Set(),claimedFreight=new Set();
  for(const f of nv.fleets){const j=f.bAssignment;if(!j)continue;
-  if(!['DOMESTIC','TRADE','ARMY'].includes(j.kind)||!['OUTBOUND','RETURNING','RETURN_PENDING'].includes(j.phase)||!Number.isSafeInteger(j.sourcePortId)||!Number.isSafeInteger(j.destinationPortId)||!navyBPort(w,j.sourcePortId)||!navyBPort(w,j.destinationPortId)||!Number.isSafeInteger(j.fee)||j.fee<0)fail('V0.9B 해상 계약 스키마');
+  if(!['DOMESTIC','TRADE','ARMY','SUPPLY'].includes(j.kind)||!['OUTBOUND','RETURNING','RETURN_PENDING'].includes(j.phase)||!Number.isSafeInteger(j.sourcePortId)||!Number.isSafeInteger(j.destinationPortId)||!navyBPort(w,j.sourcePortId)||!navyBPort(w,j.destinationPortId)||!Number.isSafeInteger(j.fee)||j.fee<0)fail('V0.9B 해상 계약 스키마');
   if(j.phase==='RETURN_PENDING'&&f.status!=='DOCKED')fail('V0.9B 귀항 대기');
   if(j.kind==='ARMY'){
    const army=w.armies.find(a=>a.id===j.armyId);
@@ -25837,7 +25875,7 @@ function navyBQuarter(w){const nv=navyBEnsure(w);
    }
   }
   for(const f of nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)).sort((a,b)=>a.id-b.id)){
-   if(navyF3FleetReserved(w,f))continue; // No new merchant trip for a staging transport.
+   if(navyF3FleetReserved(w,f)||g2FleetReserved(w,f))continue; // Protect assault reservations and G2 real return voyages.
    const from=ports.find(p=>navyWaterAtPort(w,p)===f.tileId);if(!from)continue;
    let task=null;for(const to of navyBPorts(w)){
     if(to.id===from.id)continue;
@@ -25920,7 +25958,7 @@ function navyCManifest(w,f){
   amount=p?.amount??0;
  }
  if(!Number.isSafeInteger(amount)||amount<0)return null;
- const good=a.kind==='ARMY'?null:a.good,weight=good?TRADE_GOODS[good].freight:1;
+ const good=a.kind==='ARMY'?null:a.good,weight=a.kind==='SUPPLY'?G1_CRATE_FREIGHT:good?TRADE_GOODS[good].freight:1;
  const entries=[];
  for(const s of navyBShips(w,f).filter(Boolean).sort((x,y)=>x.id-y.id)){
   const space=Math.floor((a.kind==='ARMY'?NAVY_B_PASSENGERS[s.typeId]:NAVY_B_CARGO[s.typeId])/weight);
@@ -26123,10 +26161,12 @@ function navyCValidate(w,fail){const nv=navyCEnsure(w);
  }
  for(const f of nv.fleets){if(f.cEngagementId&&!ids.has(f.cEngagementId))return fail('C 고아 함대 교전');
   if(f.bAssignment){let total=0;const man=f.bAssignment.cManifest;
-   if(!Array.isArray(man)||new Set(man.map(x=>x.shipId)).size!==man.length||man.some(x=>{const sh=nv.ships.find(s=>s.id===x.shipId);const good=f.bAssignment.kind==='ARMY'?null:f.bAssignment.good;const weight=good?TRADE_GOODS[good]?.freight:1;const max=sh&&weight>0?Math.floor((f.bAssignment.kind==='ARMY'?NAVY_B_PASSENGERS[sh.typeId]:NAVY_B_CARGO[sh.typeId])/weight):-1;return !f.shipIds.includes(x.shipId)||!Number.isSafeInteger(x.amount)||x.amount<0||x.amount>max;}))return fail('C 선박별 적재');
+   if(!Array.isArray(man)||new Set(man.map(x=>x.shipId)).size!==man.length||man.some(x=>{const sh=nv.ships.find(s=>s.id===x.shipId);const good=f.bAssignment.kind==='ARMY'?null:f.bAssignment.good;const weight=f.bAssignment.kind==='SUPPLY'?G1_CRATE_FREIGHT:good?TRADE_GOODS[good]?.freight:1;const max=sh&&weight>0?Math.floor((f.bAssignment.kind==='ARMY'?NAVY_B_PASSENGERS[sh.typeId]:NAVY_B_CARGO[sh.typeId])/weight):-1;return !f.shipIds.includes(x.shipId)||!Number.isSafeInteger(x.amount)||x.amount<0||x.amount>max;}))return fail('C 선박별 적재');
    total=man.reduce((s,x)=>s+x.amount,0);
-   const j=f.bAssignment,expected=j.kind==='ARMY'?j.passengers:j.kind==='TRADE'?j.amount:i1Ensure(w.nations[f.nationId],w).transit.find(x=>x.id===j.shipmentId&&x.fleetId===f.id)?.amount||0;
+   const j=f.bAssignment,expected=j.kind==='ARMY'?j.passengers:(j.kind==='TRADE'||j.kind==='SUPPLY')?j.amount:i1Ensure(w.nations[f.nationId],w).transit.find(x=>x.id===j.shipmentId&&x.fleetId===f.id)?.amount||0;
    if(total!==expected)return fail('C 적재 보존식');
+   if(j.kind==='ARMY'){const army=w.armies.find(a=>a.id===j.armyId),actual=army?manpower(army)+hCount(w,army,true):-1;
+    if(actual!==j.passengers)return fail(`F5 탑승 인원 불일치: day=${w.dayIndex} fleet=${f.id} army=${j.armyId} actual=${actual} contract=${j.passengers} manifest=${total}`);}
   }
  }
  for(const s of nv.ships)if(s.repairPlan&&(!Number.isSafeInteger(s.repairPlan.completeDay)||s.repairPlan.completeDay<=w.dayIndex||s.repairPlan.restoreHP!==NAVY_SHIP_TYPES[s.typeId].hp))return fail('C 선박 수리 원장');
@@ -26424,7 +26464,7 @@ function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockade
    if(navyActionLegal(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id})){const r=navyActionExecute(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id});if(r.ok){nv.dStats.modernizations++;navyLog(w,'NAVAL_MODERNIZED',n.id,`retired ${old.id}, newer hull ready`);}break;}
   }
   for(const f of nv.fleets.filter(f=>f.nationId===n.id).sort((a,b)=>a.id-b.id)){
-   if(navyF3FleetReserved(w,f))continue; // Keep real transport at the departure port.
+   if(navyF3FleetReserved(w,f)||g2FleetReserved(w,f))continue; // Keep F2/3 assault & G2 return fleets committed.
    if(f.cEngagementId||f.bAssignment||f.status!=='DOCKED'||!navyBReady(w,n.id,f))continue;
    const damaged=navyBShips(w,f).some(s=>s.hp<NAVY_SHIP_TYPES[s.typeId].hp*.55);
    if(damaged){navyDSetMission(w,f,'RETURN');const home=ports.find(p=>navyWaterAtPort(w,p)===f.tileId)||ports[0];
@@ -26475,8 +26515,8 @@ function navyDPreQuarter(w){navyDExpireInvalidBlockades(w);if(w.dayIndex%120!==0
  const nv=navyDEnsure(w);
  for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
   const ready=nv.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)).sort((a,b)=>a.id-b.id);
-  const transports=ready.filter(f=>!navyF3FleetReserved(w,f)&&navyBCapacity(w,f,'CARGO')>0&&navyBShips(w,f).every(s=>s.typeId!=='escort'&&s.typeId!=='armed_sail'&&s.typeId!=='ironclad'));
-  const escorts=ready.filter(f=>!navyF3FleetReserved(w,f)&&navyBShips(w,f).every(s=>['escort','armed_sail','medieval_galley','ironclad'].includes(s.typeId)));
+  const transports=ready.filter(f=>!navyF3FleetReserved(w,f)&&!g2FleetReserved(w,f)&&navyBCapacity(w,f,'CARGO')>0&&navyBShips(w,f).every(s=>s.typeId!=='escort'&&s.typeId!=='armed_sail'&&s.typeId!=='ironclad'));
+  const escorts=ready.filter(f=>!navyF3FleetReserved(w,f)&&!g2FleetReserved(w,f)&&navyBShips(w,f).every(s=>['escort','armed_sail','medieval_galley','ironclad'].includes(s.typeId)));
   for(const merchant of transports){const escort=escorts.find(f=>f.tileId===merchant.tileId&&f!==merchant);
    if(!escort)continue;const from=navyBPorts(w,n.id).find(p=>navyWaterAtPort(w,p)===merchant.tileId);if(!from)continue;
    let task=null;
@@ -27316,7 +27356,7 @@ function navyF2Pick(w,nid,reserved){const a=navyF2Ensure(w),n=w.nations[nid],war
  const ports=navyBPorts(w,nid).filter(p=>!navyDPortBlocked(w,p.id,nid)).slice(0,NAVY_F2_PORT_LIMIT);
  if(!ports.length)return {reason:'NO_PORT'};
  const byWater=new Map();for(const p of ports){const id=navyWaterAtPort(w,p);if(!byWater.has(id))byWater.set(id,[]);byWater.get(id).push(p);}
- const fleets=navyEnsure(w).fleets.filter(f=>f.nationId===nid&&!reserved.fleets.has(f.id)&&!f.f1Return&&
+ const fleets=navyEnsure(w).fleets.filter(f=>f.nationId===nid&&!reserved.fleets.has(f.id)&&!f.f1Return&&!g2FleetReserved(w,f)&&
   navyBReady(w,nid,f)&&navyBCapacity(w,f,'ARMY')>=8&&byWater.has(f.tileId)).sort((x,y)=>x.id-y.id).slice(0,NAVY_F2_FLEET_LIMIT);
  if(!fleets.length)return {reason:'NO_TRANSPORT'};
  const armies=w.armies.filter(army=>!reserved.armies.has(army.id)&&navyF2ArmyReady(w,nid,army)).sort((x,y)=>x.id-y.id).slice(0,NAVY_F2_ARMY_LIMIT);
@@ -27653,7 +27693,7 @@ function navyF3HistoricalEvidence(w,fromId){
 }
 function navyF3Migrate(w,sourceVersion){const f=navyF3LossState(w);
  if(f.migrated)return;
- if(sourceVersion==='V0.9F3'||sourceVersion==='V0.9F4')return; // Preserve native F3/F4 migration flags across save/load.
+ if(['V0.9F3','V0.9F4','V0.9F5','V0.9F6','V0.9F7'].includes(sourceVersion))return; // Preserve native F3/F4 migration flags across save/load.
  const nations=[...new Set(navyEnsure(w).ships.map(s=>s.nationId))].sort((a,b)=>a-b);
  for(const fromId of nations){if(navyBPorts(w,fromId).length)continue;
   const ev=navyF3HistoricalEvidence(w,fromId);
@@ -27876,6 +27916,569 @@ navyDRenderPanel=function(w,n,host){navyF4OriginalPanel(w,n,host);
  const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F4 작전·보급 관측 JSON 내보내기';
  button.addEventListener('click',()=>download(`vilob-naval-f4-day${w.dayIndex}.json`,JSON.stringify(navyF4Export(w),null,2),'application/json'));
  sec.append(button);
+};
+
+// --- V0.9F5: Passenger Conservation + Physical Port Merge Hotfix ---
+const NAVY_F5_MAX_HISTORY=40;
+function navyF5Ensure(w){
+ const nv=navyEnsure(w);
+ if(!nv.f5Hotfix)nv.f5Hotfix={schema:1,passengerEvents:[],portRecoveries:[],migratedFrom:null,migratedDay:null};
+ return nv.f5Hotfix;
+}
+function navyF5PortCount(w,sid){return w.buildings.reduce((n,b)=>n+(b.typeId==='port'&&b.settlementId===sid?1:0),0);}
+function navyF5Record(w,row){const x=navyF5Ensure(w);x.passengerEvents.push(row);if(x.passengerEvents.length>NAVY_F5_MAX_HISTORY)x.passengerEvents.shift();}
+// Remove *only* verified attrition from a real cargo manifest, latest loaded ship ID first.
+// The ship casualty engine owns ship-loss accounting; this function NEVER adds battle casualties.
+function navyF5Deduct(w,f,a,loss,reason){
+ const j=f.bAssignment;
+ if(!j||j.kind!=='ARMY'||j.armyId!==a.id||a.status!=='SAILING'||a.seaTransit?.navalFleetId!==f.id||
+   !Number.isSafeInteger(loss)||loss<=0||!Array.isArray(j.cManifest))throw Error('F5 감원: 승선 군대/함대 참조 불명');
+ const before=manpower(a)+hCount(w,a,true)+loss;
+ const manifest=j.cManifest.reduce((sum,r)=>sum+r.amount,0);
+ if(j.passengers!==before||manifest!==j.passengers)throw Error(`F5 감원 이전 보존 실패: fleet=${f.id} army=${a.id} actualBefore=${before} contract=${j.passengers} manifest=${manifest}`);
+ let left=loss;
+ for(const r of j.cManifest.slice().sort((x,y)=>y.shipId-x.shipId)){
+  const take=Math.min(left,r.amount);r.amount-=take;left-=take;if(!left)break;
+ }
+ if(left)throw Error('F5 승선 명부 부족');
+ j.passengers-=loss;
+ const after=manpower(a)+hCount(w,a,true);
+ if(j.passengers!==after||j.cManifest.reduce((sum,r)=>sum+r.amount,0)!==after)throw Error('F5 감원 이후 보존 실패');
+ navyF5Record(w,{dayIndex:w.dayIndex,kind:reason,fleetId:f.id,armyId:a.id,removed:loss,before,after});
+ if(after===0){
+  if(j.eOperationId!=null){navyEEnsure(w).eStats.lostAtSea++;navyERecord(w,f,'LOST_AT_SEA','SUPPLY_ATTRITION_ALL_PASSENGERS',j);}
+  delete f.bAssignment;navyCRemoveArmy(w,a);
+ }
+ w.changeSeq++;
+}
+function navyF5OnSupplyLoss(w,a,loss){
+ const f=navyEnsure(w).fleets.find(f=>f.id===a.seaTransit?.navalFleetId);
+ if(!f)throw Error(`F5 해상 감원 함대 누락: army=${a.id}`);
+ navyF5Deduct(w,f,a,loss,'SUPPLY');
+}
+function navyF5RecentSupplyEvidence(a,w,job){
+ if(a.unsuppliedDays<30)return false;
+ const from=job.startedDay;
+ return (a.units||[]).some(u=>Object.values(u.militaryGrievances?.groups||{}).some(g=>
+  g.lastCause==='SUPPLY'&&Number.isSafeInteger(g.lastCauseDay)&&g.lastCauseDay>=from&&g.lastCauseDay<=w.dayIndex));
+}
+function navyF5PortReferenced(w,id){
+ const nv=navyEnsure(w);
+ if(nv.ships.some(s=>s.homePortBuildingId===id))return true;
+ if(nv.fleets.some(f=>f.dTargetPortId===id||f.f1Return?.targetPortId===id||f.bAssignment&&
+   ['sourcePortId','destinationPortId'].some(k=>f.bAssignment[k]===id)))return true;
+ if(nv.f2Plans?.plans?.some(p=>p.sourcePortId===id)||nv.f4Operations?.active?.some(p=>p.sourcePortId===id))return true;
+ if(w.nations.some(n=>n.i1?.transit?.some(t=>t.fromPortId===id||t.toPortId===id)))return true;
+ return false;
+}
+// Never guess from an arbitrary mismatch. This may only reconcile a native F4
+// save that has a unique sailing army and dated supply-loss evidence.
+function navyF5Migrate(w,sourceVersion){
+ const s=navyF5Ensure(w);
+ if(sourceVersion!=='V0.9F4'||s.migratedFrom)return;
+ for(const f of w.navy.fleets.slice().sort((a,b)=>a.id-b.id)){
+  const j=f.bAssignment;if(j?.kind!=='ARMY')continue;
+  const a=w.armies.find(a=>a.id===j.armyId);
+  if(!a)continue;
+  const actual=manpower(a)+hCount(w,a,true);
+  if(actual===j.passengers)continue;
+  const manifest=Array.isArray(j.cManifest)?j.cManifest.reduce((n,x)=>n+x.amount,0):-1;
+  const diff=j.passengers-actual;
+  if(actual<1||diff<=0||diff>Math.max(2,Math.ceil(j.passengers*.1))||manifest!==j.passengers||
+   a.status!=='SAILING'||a.seaTransit?.navalFleetId!==f.id||a.tileId!==f.tileId||
+   w.navy.fleets.filter(x=>x.bAssignment?.kind==='ARMY'&&x.bAssignment.armyId===a.id).length!==1||
+   !navyF5RecentSupplyEvidence(a,w,j))throw Error(`F5 구형 세이브 원인 불명 탑승 불일치: fleet=${f.id} army=${a.id} actual=${actual} contract=${j.passengers} manifest=${manifest}`);
+  navyF5Deduct(w,f,a,diff,'F4_EVIDENCED_SUPPLY_MIGRATION');
+ }
+ const bySettlement=new Map();
+ for(const b of w.buildings.filter(b=>b.typeId==='port'&&b.settlementId!=null)){
+  if(!bySettlement.has(b.settlementId))bySettlement.set(b.settlementId,[]);
+  bySettlement.get(b.settlementId).push(b);
+ }
+ for(const [sid,ports] of bySettlement){
+  if(ports.length<2)continue;
+  const refs=ports.filter(b=>navyF5PortReferenced(w,b.id));
+  if(refs.length!==1)throw Error(`F5 항구 중복: 정착지 ${sid}, 참조된 항구 ${refs.map(p=>p.id)}개; 자동 이관 불가`);
+  const keeper=refs[0];
+  for(const other of ports.filter(b=>b!==keeper)){
+   // Preserve every paid physical detail and record the loss of operational status.
+   s.portRecoveries.push({dayIndex:w.dayIndex,settlementId:sid,keptPortId:keeper.id,archivedPort:structuredClone(other),reason:'UNREFERENCED_DUPLICATE_F4'});
+   w.buildings=w.buildings.filter(b=>b!==other);
+   w.changeSeq++;
+  }
+ }
+ s.migratedFrom=sourceVersion;s.migratedDay=w.dayIndex;
+}
+const navyF5OriginalValidate=navyValidate;
+navyValidate=function(w,fail){if(navyF5OriginalValidate(w,fail)===false)return false;
+ const x=navyF5Ensure(w);
+ if(x.schema!==1||!Array.isArray(x.passengerEvents)||x.passengerEvents.length>NAVY_F5_MAX_HISTORY||
+  !Array.isArray(x.portRecoveries)||x.portRecoveries.length>64||
+  x.passengerEvents.some(e=>!Number.isSafeInteger(e.dayIndex)||e.dayIndex>w.dayIndex||
+   !Number.isSafeInteger(e.removed)||e.removed<=0||e.before-e.after!==e.removed)||
+  x.portRecoveries.some(e=>!Number.isSafeInteger(e.archivedPort?.id)||e.archivedPort.typeId!=='port'||
+   w.buildings.some(b=>b.id===e.archivedPort.id)))return fail('F5 승선 복구·항구 이력');
+ return true;
+};
+const navyF5OriginalPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){navyF5OriginalPanel(w,n,host);
+ const x=navyF5Ensure(w),sec=document.createElement('section');sec.className='army-detail';host.append(sec);
+ const h=document.createElement('h4');h.textContent='V0.9F5 · 승선 정합성/항구 핫픽스';sec.append(h);
+ const p=document.createElement('p');p.className='muted-line';p.textContent=`해상 인원 동기화 ${x.passengerEvents.length}건 · 과거 중복 항구 격리 ${x.portRecoveries.length}건 · 이관 ${x.migratedFrom||'없음'}`;sec.append(p);
+ const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F5 승선·항구 진단 JSON 내보내기';
+ button.addEventListener('click',()=>download(`vilob-naval-f5-day${w.dayIndex}.json`,JSON.stringify({dayIndex:w.dayIndex,version:w.version,hotfix:x},null,2),'application/json'));sec.append(button);
+};
+
+
+// --- V0.9F6: Detached Physical Port Lifecycle ---
+const NAVY_F6_MAX_EVENTS=48;
+function navyF6Ensure(w){
+ const nv=navyEnsure(w);
+ if(!nv.f6Ports)nv.f6Ports={schema:1,events:[]};
+ return nv.f6Ports;
+}
+function navyF6Record(w,kind,port,settlementId,reason){
+ const x=navyF6Ensure(w);
+ x.events.push({dayIndex:w.dayIndex,kind,portId:port.id,tileId:port.tileId,settlementId,reason});
+ if(x.events.length>NAVY_F6_MAX_EVENTS)x.events.shift();
+}
+const navyF6PrevValidate=navyValidate;
+navyValidate=function(w,fail){
+ if(navyF6PrevValidate(w,fail)===false)return false;
+ const x=navyF6Ensure(w);
+ if(x.schema!==1||!Array.isArray(x.events)||x.events.length>NAVY_F6_MAX_EVENTS||
+   x.events.some(e=>!['DETACHED','RECONNECTED','RECONNECT_BLOCKED'].includes(e.kind)||
+     !Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||
+     !Number.isSafeInteger(e.portId)||e.portId<0||!Number.isSafeInteger(e.tileId)||!w.tiles[e.tileId]||
+     !Number.isSafeInteger(e.settlementId)||e.settlementId<0||typeof e.reason!=='string'))return fail('F6 항구 분리·재연결 이력');
+ return true;
+};
+const navyF6PrevPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){
+ navyF6PrevPanel(w,n,host);
+ const ports=w.buildings.filter(b=>b.typeId==='port'&&b.disconnected&&b.settlementId===null);
+ const x=navyF6Ensure(w),sec=document.createElement('section');sec.className='army-detail';host.append(sec);
+ const h=document.createElement('h4');h.textContent='V0.9F6 · 분리 항구 보존';sec.append(h);
+ const p=document.createElement('p');p.className='muted-line';
+ p.textContent=`정착지 미연결·비운영 항구 ${ports.length}개 · F6 분리/재연결 기록 ${x.events.length}건 · 운영·수리·건조 제외`;
+ sec.append(p);
+ const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='F6 항구 생애주기 JSON 내보내기';
+ button.addEventListener('click',()=>download(`vilob-naval-f6-day${w.dayIndex}.json`,JSON.stringify({version:VERSION,dayIndex:w.dayIndex,detachedPorts:ports,events:x.events},null,2),'application/json'));
+ sec.append(button);
+};
+
+</script>
+<script>
+// V0.9G1: paid physical military supplies, real fleets and finite occupied-port depots.
+// Deliberately separate from civilian NAVY_B_GOODS and I1 industrial stock.
+const G1_CRATE_PRICE=2,G1_CRATE_FREIGHT=4,G1_SOLDIER_DAYS=100,NAVY_G1_MAX_EVENTS=100;
+let g1SupplySweepScope=null;
+function g1Ensure(w){
+ const nv=navyEnsure(w);
+ if(!nv.g1Supply)nv.g1Supply={schema:1,nextId:1,contracts:[],depots:[],events:[],stats:{purchased:0,delivered:0,returned:0,lost:0,consumed:0,expired:0}};
+ return nv.g1Supply;
+}
+function g1Event(w,kind,detail){
+ const g=g1Ensure(w);g.events.push({dayIndex:w.dayIndex,kind,detail:String(detail).slice(0,170)});
+ if(g.events.length>NAVY_G1_MAX_EVENTS)g.events.shift();w.changeSeq++;
+}
+function g1PortWater(w,p){
+ if(!p||p.typeId!=='port'||!['ACTIVE','UPGRADING'].includes(p.status)||p.disconnected||p.settlementId==null)return null;
+ const s=w.settlements.find(s=>s.id===p.settlementId),t=w.tiles[p.tileId];
+ if(!s||!t||s.ownerId!==t.ownerId||!s.tileIds.includes(t.id))return null;
+ return neighbors4(t.id,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)[0]??null;
+}
+function g1OccupiedPortLand(w,nid,p,warId=null){
+ const water=g1PortWater(w,p);if(water===null)return null;
+ const t=w.tiles[p.tileId];if(t.ownerId===nid||t.ownerId==null||t.occupiedBy!==nid||!Number.isInteger(t.occupiedWarId))return null;
+ const war=w.wars.find(x=>x.id===t.occupiedWarId);if(!war||warId!=null&&war.id!==warId)return null;
+ if(!warSide(war,nid)||!warSide(war,t.ownerId)||warSide(war,nid)===warSide(war,t.ownerId))return null;
+ return {war,water,port:p};
+}
+function g1OccupiedPort(w,nid,p,warId=null){
+ const access=g1OccupiedPortLand(w,nid,p,warId);if(!access)return null;
+ // Only NEW convoy departure/delivery requires sea access. Landed stock survives blockade.
+ const control=navyDControl(w).tiles.get(access.water);
+ if(control?.state==='DOMINANT'&&control.nationId!==nid&&v04dWarBetween(w,nid,control.nationId))return null;
+ return access;
+}
+function g1LoadCapacity(w,f){return navyBShips(w,f).reduce((sum,s)=>sum+(s?Math.floor((NAVY_B_CARGO[s.typeId]||0)/G1_CRATE_FREIGHT):0),0);}
+function g1ConvoyParams(w,nid,a){
+ if(!a||a.type!=='NAVY_G1_SUPPLY_CONVOY'||!w.nations[nid]?.active)return null;
+ const f=navyBFleet(w,nid,a.fleetId),src=navyBPort(w,a.sourcePortId),dst=navyBPort(w,a.destPortId),n=w.nations[nid];
+ if(!f||!src||!dst||!navyBReady(w,nid,f)||!navyPortOwner(w,src,nid))return null;
+ const dest=g1OccupiedPort(w,nid,dst);if(!dest||navyWaterAtPort(w,src)!==f.tileId||navyDPortBlocked(w,src.id,nid))return null;
+ const qty=a.amount;if(!Number.isSafeInteger(qty)||qty<1||qty>g1LoadCapacity(w,f))return null;
+ const coast=Math.min(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
+ const path=f.tileId===dest.water?[f.tileId,f.tileId]:navyPath(w,f.tileId,dest.water,coast);
+ if(!path||path.length<2)return null;
+ const fee=navyBFreightFee(path,qty*G1_CRATE_FREIGHT),coal=navyBCoalCost(w,f,path),cost=fee+qty*G1_CRATE_PRICE;
+ if(n.gold<cost||(n.resources.coal||0)<coal)return null;
+ return {fleet:f,source:src,dest:dst,war:dest.war,water:dest.water,qty,path,fee,coal,cost};
+}
+function g1LaunchConvoy(w,nid,a){
+ const k=g1ConvoyParams(w,nid,a);if(!k)return {ok:false,reason:'G1 점령항·함대·선적 용량·전쟁·Gold·석탄·항로 조건 불충족'};
+ // Reserve actual fuel via existing navy movement. If sail fails, never debit crates/Gold.
+ if(!navyBStartSail(w,nid,k.fleet,k.water))return {ok:false,reason:'G1 실제 출항 실패'};
+ w.nations[nid].gold-=k.cost;
+ const g=g1Ensure(w),id=g.nextId++,f=k.fleet;
+ const manifest=[],ships=navyBShips(w,f).filter(Boolean).sort((a,b)=>a.id-b.id);let rest=k.qty;
+ for(const ship of ships){const quantity=Math.min(rest,Math.floor((NAVY_B_CARGO[ship.typeId]||0)/G1_CRATE_FREIGHT));manifest.push({shipId:ship.id,amount:quantity});rest-=quantity;}
+ if(rest!==0)throw Error('G1 적하 선박 용량 불일치');
+ f.bAssignment={kind:'SUPPLY',phase:'OUTBOUND',sourcePortId:k.source.id,destinationPortId:k.dest.id,
+  startedDay:w.dayIndex,fee:k.fee,warId:k.war.id,contractId:id,good:'military_supply',amount:k.qty,cManifest:manifest};
+ g.contracts.push({id,nationId:nid,fleetId:f.id,sourcePortId:k.source.id,destinationPortId:k.dest.id,warId:k.war.id,
+  startedDay:w.dayIndex,phase:'SAILING',purchased:k.qty,delivered:0,lost:0,returned:0,feeGold:k.fee,purchaseGold:k.qty*G1_CRATE_PRICE,coal:k.coal});
+ g.stats.purchased+=k.qty;g1Event(w,'LOADED',`#${id}: ${k.qty} crates, ${k.cost} Gold, ${k.coal} coal, fleet #${f.id}`);
+ navyLog(w,'MILITARY_SUPPLY_SAILED',nid,`#${id}: ${k.qty} crates to occupied port ${k.dest.id}`);
+ return {ok:true,contractId:id,fleetId:f.id,amount:k.qty,feeGold:k.fee,purchaseGold:k.qty*G1_CRATE_PRICE,coal:k.coal};
+}
+function g1Contract(w,job){return g1Ensure(w).contracts.find(c=>c.id===job.contractId);}
+function g1CargoLostAtSea(w,f,ship){
+ const j=f.bAssignment;if(j?.kind!=='SUPPLY')return;
+ const c=g1Contract(w,j),entry=j.cManifest?.find(e=>e.shipId===ship.id);if(!c||!entry)throw Error('G1 격침 화물 원장 누락');
+ const lost=entry.amount;if(!lost)return;
+ entry.amount=0;j.amount-=lost;c.lost+=lost;g1Ensure(w).stats.lost+=lost;
+ g1Event(w,'SUNK',`#${c.id}: ship #${ship.id} lost ${lost} crates`);
+ if(j.amount===0){c.phase='LOST';c.endedDay=w.dayIndex;delete f.bAssignment;}
+}
+// Wrapper installed AFTER E/F5: do not modify other cargo and amphibious loss paths.
+const g1PreviousShipLoss=navyCShipLoadLoss;
+navyCShipLoadLoss=function(w,f,ship){if(f.bAssignment?.kind==='SUPPLY')return g1CargoLostAtSea(w,f,ship);return g1PreviousShipLoss(w,f,ship);};
+function g1Dock(w,f){
+ const j=f.bAssignment;if(j?.kind!=='SUPPLY')return false;
+ const g=g1Ensure(w),c=g1Contract(w,j);if(!c)throw Error('G1 도착 계약 누락');
+ const destination=navyBPort(w,j.destinationPortId);
+ if(j.phase==='OUTBOUND'&&f.tileId===g1PortWater(w,destination)&&g1OccupiedPort(w,f.nationId,destination,j.warId)){
+  let depot=g.depots.find(d=>d.nationId===f.nationId&&d.portId===destination.id&&d.warId===j.warId);
+  if(!depot){depot={nationId:f.nationId,portId:destination.id,warId:j.warId,remainingSoldierDays:0,receivedSoldierDays:0,consumedSoldierDays:0,expiredSoldierDays:0,lastDeliveryDay:w.dayIndex};g.depots.push(depot);}
+  const delivered=j.amount*G1_SOLDIER_DAYS;depot.receivedSoldierDays+=delivered;depot.remainingSoldierDays+=delivered;depot.lastDeliveryDay=w.dayIndex;
+  c.delivered=j.amount;c.phase='DELIVERED';c.endedDay=w.dayIndex;g.stats.delivered+=j.amount;
+  g1Event(w,'DELIVERED',`#${c.id}: ${j.amount} crates, +${delivered} soldier-days at port #${destination.id}`);
+  navyLog(w,'MILITARY_SUPPLY_DELIVERED',f.nationId,`#${c.id}: ${j.amount} crates`);
+  delete f.bAssignment;f.dMission='IDLE';f.dTargetPortId=null;return true;
+ }
+ if(j.phase==='RETURNING'&&navyPortOwner(w,destination,f.nationId)&&navyWaterAtPort(w,destination)===f.tileId){
+  const returned=j.amount;c.returned=returned;c.phase='RETURNED';c.endedDay=w.dayIndex;g.stats.returned+=returned;
+  // Physical crates are demobilized at home; refund their actual purchase Gold only. Fuel and freight fee remain spent.
+  w.nations[f.nationId].gold+=returned*G1_CRATE_PRICE;
+  g1Event(w,'RETURNED',`#${c.id}: ${returned} crates repatriated, purchase refund ${returned*G1_CRATE_PRICE} Gold`);
+  delete f.bAssignment;return true;
+ }
+ if(j.phase==='RETURN_PENDING')return true;
+ // Landing access revoked, war ended, or sea control blocked: paid return only, never mint depot stock.
+ g1Event(w,'DELIVERY_BLOCKED',`#${c.id}: target port invalid, returning`);
+ navyBReturn(w,f);
+ if(f.bAssignment){c.phase=f.bAssignment.phase==='RETURN_PENDING'?'RETURN_PENDING':'RETURNING';}
+ return true;
+}
+const g1PreviousDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){if(f.bAssignment?.kind==='SUPPLY')return g1Dock(w,f);return g1PreviousDock(w,f);};
+// Supply delivery is never free: spend whole soldier-days when a non-land-supplied army completes one real day.
+function g1NextSupplyDay(w){const g=w.navy?.g1Supply;return g?.depots?.some(d=>d.remainingSoldierDays>0)?w.dayIndex+1:Infinity;}
+function g1BeforeSupplySweep(w){
+ const g=g1Ensure(w);
+ for(const d of g.depots){if(d.remainingSoldierDays>0&&!g1OccupiedPortLand(w,d.nationId,navyBPort(w,d.portId),d.warId)){
+  const loss=d.remainingSoldierDays;d.remainingSoldierDays=0;d.expiredSoldierDays+=loss;g.stats.expired+=loss;
+  g1Event(w,'EXPIRED',`port #${d.portId}: ${loss} soldier-days expired after access lost`);
+ }}
+}
+function g1ReachableFromPort(w,d){
+ const scope=g1SupplySweepScope,key=`${d.nationId}:${d.portId}:${d.warId}`;
+ if(scope?.world===w&&scope.graphs.has(key))return scope.graphs.get(key);
+ const p=navyBPort(w,d.portId),nation=d.nationId,start=p?.tileId,reachable=new Uint8Array(w.tiles.length);
+ if(start==null||!g1OccupiedPortLand(w,nation,p,d.warId))return reachable;
+ const enemy=new Uint8Array(w.tiles.length);
+ for(const a of w.armies)if(a.nationId!==nation&&warAgainst(w,nation,a.nationId)&&a.status!=='DESTROYED'&&men(a)>0)enemy[a.tileId]=1;
+ const pass=t=>TERRAINS[t.terrain]?.passable&&(t.occupiedBy===nation||(t.ownerId===nation&&(t.occupiedBy===null||t.occupiedBy===nation)))&&!enemy[t.id];
+ const queue=[start];reachable[start]=1;
+ for(let i=0;i<queue.length;i++)for(const id of neighbors4(queue[i],w.size,w.height))if(!reachable[id]&&pass(w.tiles[id])){reachable[id]=1;queue.push(id);}
+ if(scope?.world===w)scope.graphs.set(key,reachable);
+ return reachable;
+}
+function g1FinishSupplySweep(w){
+ const scope=g1SupplySweepScope;if(scope?.world!==w||!scope.spent.size)return;
+ // Single batch invalidation AFTER the land BFS graph sweep, not once per supplied army.
+ for(const [key,amount] of scope.spent)g1Event(w,'CONSUMED',`depot ${key}: ${amount} soldier-days paid`);
+}
+function g1PayArmySupply(w,a,elapsed){
+ if(!Number.isInteger(elapsed)||elapsed!==1||a.status==='SAILING'||men(a)<=0||w.tiles[a.tileId]?.terrain==='water')return false;
+ const g=g1Ensure(w),need=men(a);
+ for(const d of g.depots.slice().sort((x,y)=>x.portId-y.portId||x.warId-y.warId)){
+  if(d.nationId!==a.nationId||d.remainingSoldierDays<need||!g1OccupiedPortLand(w,a.nationId,navyBPort(w,d.portId),d.warId)||!g1ReachableFromPort(w,d)[a.tileId])continue;
+  d.remainingSoldierDays-=need;d.consumedSoldierDays+=need;g.stats.consumed+=need;
+  a.g1SupplyPaidDay=w.dayIndex;a.g1SupplyPaidPortId=d.portId;a.g1SupplyPaidWarId=d.warId;
+  if(g1SupplySweepScope?.world===w){const k=`${d.portId}:${d.warId}`;g1SupplySweepScope.spent.set(k,(g1SupplySweepScope.spent.get(k)||0)+need);}else w.changeSeq++;
+  return true;
+ }
+ return false;
+}
+function g1PaidArmyCovered(w,a){
+ if(a.g1SupplyPaidDay!==w.dayIndex||a.g1SupplyPaidPortId==null||a.status==='SAILING')return false;
+ const d=g1Ensure(w).depots.find(d=>d.nationId===a.nationId&&d.portId===a.g1SupplyPaidPortId&&d.warId===a.g1SupplyPaidWarId);
+ return !!(d&&g1OccupiedPortLand(w,a.nationId,navyBPort(w,d.portId),d.warId)&&g1ReachableFromPort(w,d)[a.tileId]);
+}
+function g1Validate(w,fail){
+ const g=g1Ensure(w),stats=g.stats,nonnegative=x=>Number.isSafeInteger(x)&&x>=0;
+ if(g.schema!==1||!nonnegative(g.nextId)||!Array.isArray(g.contracts)||!Array.isArray(g.depots)||!Array.isArray(g.events)||g.events.length>NAVY_G1_MAX_EVENTS||
+  !['purchased','delivered','returned','lost','consumed','expired'].every(k=>nonnegative(stats[k])))return fail('G1 보급 원장 스키마');
+ const ids=new Set();let bought=0,delivered=0,returned=0,lost=0,onboard=0;
+ for(const c of g.contracts){
+  if(!nonnegative(c.id)||ids.has(c.id)||!w.nations[c.nationId]||!nonnegative(c.fleetId)||!nonnegative(c.sourcePortId)||!nonnegative(c.destinationPortId)||
+   !nonnegative(c.warId)||!nonnegative(c.startedDay)||c.startedDay>w.dayIndex||!nonnegative(c.purchased)||c.purchased<1||
+   !['SAILING','RETURNING','RETURN_PENDING','DELIVERED','RETURNED','LOST'].includes(c.phase)||
+   !['delivered','returned','lost'].every(k=>nonnegative(c[k]))||c.delivered+c.returned+c.lost>c.purchased||
+   !nonnegative(c.purchaseGold)||c.purchaseGold!==c.purchased*G1_CRATE_PRICE||!nonnegative(c.feeGold)||!nonnegative(c.coal))return fail('G1 계약 불변식');
+  ids.add(c.id);bought+=c.purchased;delivered+=c.delivered;returned+=c.returned;lost+=c.lost;
+  const f=w.navy.fleets.find(f=>f.id===c.fleetId&&f.nationId===c.nationId&&f.bAssignment?.kind==='SUPPLY'&&f.bAssignment.contractId===c.id);
+  if(['SAILING','RETURNING','RETURN_PENDING'].includes(c.phase)){
+   if(!f||c.delivered||c.returned||f.bAssignment.amount!==c.purchased-c.lost||f.bAssignment.warId!==c.warId||
+    f.bAssignment.sourcePortId!==c.sourcePortId||
+    (f.bAssignment.phase==='OUTBOUND'&&f.bAssignment.destinationPortId!==c.destinationPortId)||(!navyBPort(w,c.destinationPortId)||!navyBPort(w,c.sourcePortId))||
+    c.phase==='RETURNING'&&f.bAssignment.phase!=='RETURNING'||c.phase==='RETURN_PENDING'&&f.bAssignment.phase!=='RETURN_PENDING')return fail('G1 운송 중 실물 계약');
+   onboard+=f.bAssignment.amount;
+  }else if(f||c.delivered+c.returned+c.lost!==c.purchased)return fail('G1 종료 계약 정산');
+ }
+ for(const f of w.navy.fleets)if(f.bAssignment?.kind==='SUPPLY'&&!ids.has(f.bAssignment.contractId))return fail('G1 고아 함대 계약');
+ if(bought!==stats.purchased||delivered!==stats.delivered||returned!==stats.returned||lost!==stats.lost||
+    bought!==delivered+returned+lost+onboard)return fail('G1 구매 상자 보존식');
+ let received=0,consumed=0,expired=0;const depots=new Set();
+ for(const d of g.depots){const k=`${d.nationId}:${d.portId}:${d.warId}`;
+  if(depots.has(k)||!w.nations[d.nationId]||!navyBPort(w,d.portId)||!nonnegative(d.warId)||
+   !['remainingSoldierDays','receivedSoldierDays','consumedSoldierDays','expiredSoldierDays','lastDeliveryDay'].every(x=>nonnegative(d[x]))||
+   d.lastDeliveryDay>w.dayIndex||d.receivedSoldierDays!==d.remainingSoldierDays+d.consumedSoldierDays+d.expiredSoldierDays)return fail('G1 점령항 유한 보급량');
+  depots.add(k);received+=d.receivedSoldierDays;consumed+=d.consumedSoldierDays;expired+=d.expiredSoldierDays;
+ }
+ if(received!==delivered*G1_SOLDIER_DAYS||consumed!==stats.consumed||expired!==stats.expired)return fail('G1 병력일 보존식');
+ if(g.events.some(e=>!Number.isSafeInteger(e.dayIndex)||e.dayIndex<0||e.dayIndex>w.dayIndex||typeof e.kind!=='string'))return fail('G1 이벤트 기록');
+ return true;
+}
+const g1OriginalNavyValidate=navyValidate;
+navyValidate=function(w,fail){if(g1OriginalNavyValidate(w,fail)===false)return false;return g1Validate(w,fail);};
+const g1PreviousNavyPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){
+ g1PreviousNavyPanel(w,n,host);
+ const g=g1Ensure(w),sec=document.createElement('section');sec.className='army-detail';host.append(sec);
+ const h=document.createElement('h4');h.textContent='V0.9G1A · 점령 항구 실물 군수 보급';sec.append(h);
+ const summary=document.createElement('p');summary.className='muted-line';
+ summary.textContent=`구매 ${g.stats.purchased}상자 · 인도 ${g.stats.delivered} · 침몰 ${g.stats.lost} · 귀환 ${g.stats.returned} · 누적 소비 ${g.stats.consumed} 병력·일`;
+ sec.append(summary);
+ for(const d of g.depots.filter(d=>d.nationId===n.id)){
+  const p=document.createElement('p');p.className='muted-line';const port=navyBPort(w,d.portId),land=!!g1OccupiedPortLand(w,n.id,port,d.warId),sea=!!g1OccupiedPort(w,n.id,port,d.warId);
+  p.textContent=`점령 항구 #${d.portId} · 보급 잔량 ${d.remainingSoldierDays} 병력·일 · ${!land?'점령권/항구 무효':sea?'육상 보급·신규 입항 가능':'육상 보급 유효 · 신규 입항 제한'}`;sec.append(p);
+ }
+ if(n.controller==='PLAYER'){
+  const target=w.buildings.filter(p=>g1OccupiedPort(w,n.id,p)),ports=navyBPorts(w,n.id),fleets=w.navy.fleets.filter(f=>f.nationId===n.id&&navyBReady(w,n.id,f)&&g1LoadCapacity(w,f)>0);
+  const msg=document.createElement('p');msg.className='muted-line';msg.textContent=target.length&&ports.length&&fleets.length?'군수 상자 1개 = 100 병력·일 / 공간 4 / Gold 2 + 실제 항해비':'출항 가능한 함대, 자국 정상 항구, 실제 점령한 적 항구가 필요합니다.';sec.append(msg);
+  if(target.length&&ports.length&&fleets.length){
+   const chooser=(opts,label)=>{const l=document.createElement('label');l.textContent=label+' ';l.style.cssText='display:inline-flex;align-items:center;gap:5px;margin:4px';const x=document.createElement('select');for(const [id,name] of opts){const o=document.createElement('option');o.value=id;o.textContent=name;x.append(o);}l.append(x);sec.append(l);return x;};
+   const fleet=chooser(fleets.map(f=>[f.id,`함대 #${f.id} · 최대 ${g1LoadCapacity(w,f)}상자`]),'함대');
+   const src=chooser(ports.map(p=>[p.id,`자국 항구 #${p.id}`]),'출항항');
+   const dst=chooser(target.map(p=>[p.id,`점령 항구 #${p.id} (${w.nations[w.tiles[p.tileId].ownerId]?.name})`]),'도착항');
+   const qty=document.createElement('input');qty.type='number';qty.min='1';qty.step='1';qty.value='1';qty.style.width='70px';sec.append(qty);
+   const button=document.createElement('button');button.type='button';button.className='jump-button';button.textContent='유상 군수 보급선 출항';
+   button.addEventListener('click',()=>{const r=navyActionExecute(w,n.id,{type:'NAVY_G1_SUPPLY_CONVOY',fleetId:+fleet.value,sourcePortId:+src.value,destPortId:+dst.value,amount:Number(qty.value)});showToast(r.ok?`군수 ${r.amount}상자 실제 출항 · 비용 ${r.feeGold+r.purchaseGold}G, 석탄 ${r.coal}`:r.reason);navyRenderPanel();map.draw();updateStats();});sec.append(button);
+  }
+ }
+ const exportBtn=document.createElement('button');exportBtn.type='button';exportBtn.className='jump-button';exportBtn.textContent='G1 군수 보존 원장 JSON 내보내기';
+ exportBtn.addEventListener('click',()=>download(`vilob-naval-g1-day${w.dayIndex}.json`,JSON.stringify({version:VERSION,dayIndex:w.dayIndex,ledger:g},null,2),'application/json'));sec.append(exportBtn);
+};
+
+</script>
+<script>
+// V0.9G2: autonomous *paid* physical naval supply, with actual post-delivery return.
+// G1A army-day/Gold/coal/cargo ledgers, naval engagement, and F7 combat remain unchanged.
+const G2_REVIEW_DAYS=30,G2_TARGET_DAYS=30,G2_TRIGGER_DAYS=10,G2_HISTORY_LIMIT=120,G2_MAX_ACTIVE=64;
+function g2Ensure(w){const nv=navyEnsure(w);
+ if(!nv.g2SupplyAI)nv.g2SupplyAI={schema:1,nextId:1,lastReviewDay:null,active:[],history:[],decisions:{},stats:{reviews:0,launched:0,delivered:0,lost:0,failed:0,returned:0,retry:0}};
+ return nv.g2SupplyAI;
+}
+function g2Record(w,kind,row,reason=''){
+ const s=g2Ensure(w);s.history.push({dayIndex:w.dayIndex,kind,nationId:row.nationId,fleetId:row.fleetId??null,portId:row.portId??null,
+  contractId:row.contractId??null,reason:String(reason).slice(0,96)});
+ if(s.history.length>G2_HISTORY_LIMIT)s.history.shift();w.changeSeq++;
+}
+function g2FleetReserved(w,f){return Boolean(f&&w.navy?.g2SupplyAI?.active?.some(x=>x.fleetId===f.id));}
+function g2Candidates(w,nid){
+ const n=w.nations[nid];if(!n?.active||n.controller!=='AI')return [];
+ const ports=w.buildings.filter(p=>p.typeId==='port'&&w.tiles[p.tileId]?.occupiedBy===nid&&
+  Number.isInteger(w.tiles[p.tileId]?.occupiedWarId)).sort((a,b)=>a.id-b.id),candidates=[];
+ if(!ports.length)return candidates;
+ const armies=w.armies.filter(a=>a.nationId===nid&&a.status!=='SAILING'&&a.status!=='DESTROYED'&&
+  men(a)>0&&w.tiles[a.tileId]?.terrain!=='water'&&!f1SupplyConnected(w,a)).sort((a,b)=>a.id-b.id);
+ for(const p of ports){const access=g1OccupiedPortLand(w,nid,p);if(!access)continue;
+  const d={nationId:nid,portId:p.id,warId:access.war.id},graph=g1ReachableFromPort(w,d),ids=[];let days=0;
+  for(const a of armies)if(graph[a.tileId]){ids.push(a.id);days+=men(a);}
+  if(days) {const depot=g1Ensure(w).depots.find(x=>x.nationId===nid&&x.portId===p.id&&x.warId===access.war.id);
+   candidates.push({nationId:nid,portId:p.id,warId:access.war.id,dayDemand:days,armyIds:ids,stock:depot?.remainingSoldierDays||0,
+    stockDays:(depot?.remainingSoldierDays||0)/days});}
+ }
+ return candidates.sort((a,b)=>a.stockDays-b.stockDays||b.dayDemand-a.dayDemand||a.portId-b.portId);
+}
+function g2ActiveIncoming(w,nid,portId,warId){
+ const g=g1Ensure(w);return g.contracts.filter(c=>c.nationId===nid&&c.destinationPortId===portId&&c.warId===warId&&
+  ['SAILING','RETURNING','RETURN_PENDING'].includes(c.phase));
+}
+function g2SelectLoad(w,candidate){
+ const nid=candidate.nationId,n=w.nations[nid],target=navyBPort(w,candidate.portId);
+ if(!g1OccupiedPort(w,nid,target,candidate.warId))return {reason:'PORT_BLOCKADED'};
+ const sources=navyBPorts(w,nid),fleets=navyEnsure(w).fleets.filter(f=>f.nationId===nid&&
+  navyBReady(w,nid,f)&&!navyF3FleetReserved(w,f)&&!g2FleetReserved(w,f)&&!f.f1Return&&g1LoadCapacity(w,f)>0).sort((a,b)=>a.id-b.id);
+ if(!sources.length)return {reason:'NO_HOME_PORT'};
+ if(!fleets.length)return {reason:navyEnsure(w).fleets.some(f=>f.nationId===nid&&navyF3FleetReserved(w,f))?'FLEET_RESERVED_FOR_ASSAULT':'NO_FLEET'};
+ let best=null,routeCount=0,affordable=false;
+ for(const f of fleets.slice(0,24)){
+  const ships=navyBShips(w,f),coast=Math.min(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
+  const speed=Math.max(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].daysPerTile));
+  for(const source of sources.slice(0,12)){
+   if(navyWaterAtPort(w,source)!==f.tileId||navyDPortBlocked(w,source.id,nid))continue;
+   const water=g1PortWater(w,target),path=f.tileId===water?[f.tileId,f.tileId]:navyPath(w,f.tileId,water,coast);
+   if(!path||path.length<2)continue;routeCount++;
+   const eta=(path.length-1)*speed,
+    projected=Math.max(0,candidate.stock-candidate.dayDemand*eta),
+    pending=g2ActiveIncoming(w,nid,candidate.portId,candidate.warId),
+    incoming=pending.reduce((sum,c)=>sum+(c.purchased-c.lost)*G1_SOLDIER_DAYS,0);
+   if(pending.length)return {reason:'CONVOY_EN_ROUTE',eta,projected,incoming};
+   if((projected+incoming)/candidate.dayDemand>=G2_TRIGGER_DAYS)return {reason:'ALREADY_COVERED',eta,projected,incoming};
+   const request=Math.ceil(Math.max(0,candidate.dayDemand*G2_TARGET_DAYS-projected-incoming)/G1_SOLDIER_DAYS);
+   const maxAmount=Math.min(request,g1LoadCapacity(w,f),Math.floor(n.gold/G1_CRATE_PRICE));
+   if(maxAmount<1)continue;
+   const coal=navyBCoalCost(w,f,path);if((n.resources.coal||0)<coal)continue;
+   // Binary search the largest *legally payable* shipment; never invent funds or bypass G1 legality.
+   let low=1,high=maxAmount,chosen=null;
+   while(low<=high){const mid=Math.floor((low+high)/2),action={type:'NAVY_G1_SUPPLY_CONVOY',fleetId:f.id,sourcePortId:source.id,destPortId:target.id,amount:mid};
+    const params=g1ConvoyParams(w,nid,action);
+    if(params){chosen={action,params};low=mid+1;}else high=mid-1;
+   }
+   if(!chosen)continue;affordable=true;
+   const option={...chosen,eta,projected,incoming,request,deliveredDays:chosen.action.amount*G1_SOLDIER_DAYS};
+   if(!best||option.eta<best.eta||option.eta===best.eta&&option.action.amount>best.action.amount||
+     option.eta===best.eta&&option.action.amount===best.action.amount&&option.action.fleetId<best.action.fleetId)best=option;
+  }
+ }
+ return best||{reason:!routeCount?'NO_ROUTE':!affordable?(n.gold<2?'GOLD_SHORTAGE': 'COAL_OR_GOLD_SHORTAGE'):'CAPACITY_SHORTAGE'};
+}
+function g2AutoQuarter(w){if(w.dayIndex%G2_REVIEW_DAYS!==0)return;
+ const s=g2Ensure(w);if(s.lastReviewDay===w.dayIndex)return;
+ s.lastReviewDay=w.dayIndex;s.stats.reviews++;
+ for(const n of w.nations){if(!n.active||n.controller!=='AI')continue;
+  const candidates=g2Candidates(w,n.id);let outcome={dayIndex:w.dayIndex,reason:'NO_OCCUPIED_PORT',dayDemand:0,stock:0,portId:null,eta:null,plannedCrates:0};
+  if(candidates.length){
+   outcome={...outcome,reason:'NO_ROUTE',portId:candidates[0].portId,dayDemand:candidates[0].dayDemand,stock:candidates[0].stock};
+   // A nation may start at most one physical convoy per 30-day review.
+   for(const c of candidates){
+    const ongoing=g2ActiveIncoming(w,n.id,c.portId,c.warId);
+    const choice=ongoing.length?{reason:'CONVOY_EN_ROUTE',incoming:ongoing.reduce((sum,j)=>sum+(j.purchased-j.lost)*G1_SOLDIER_DAYS,0)}:g2SelectLoad(w,c),reason=choice.reason||'READY';
+    outcome={...outcome,reason,portId:c.portId,warId:c.warId,dayDemand:c.dayDemand,stock:c.stock,eta:choice.eta??null,
+     projected:choice.projected??null,incoming:choice.incoming??0,plannedCrates:choice.action?.amount||0};
+    if(!choice.action)continue;
+    const r=navyActionExecute(w,n.id,choice.action);
+    if(!r.ok){outcome.reason='FINAL_LEGALITY_FAILED';continue;}
+    const row={id:s.nextId++,nationId:n.id,fleetId:r.fleetId,portId:c.portId,warId:c.warId,sourcePortId:choice.action.sourcePortId,
+      contractId:r.contractId,startedDay:w.dayIndex,phase:'OUTBOUND',lastAttemptDay:w.dayIndex,returnPortId:null};
+    s.active.push(row);s.stats.launched++;
+    g2Record(w,'LAUNCHED',row,`${r.amount} crates, ETA ${choice.eta}, demand ${c.dayDemand}/day`);
+    outcome.reason='LAUNCHED';outcome.contractId=r.contractId;outcome.fleetId=r.fleetId;break;
+   }
+  }else if(w.buildings.some(p=>p.typeId==='port'&&w.tiles[p.tileId]?.occupiedBy===n.id))outcome.reason='NO_CONNECTED_ARMY';
+  s.decisions[n.id]=outcome;
+ }
+}
+function g2ReturnAttempt(w,row){
+ const f=navyBFleet(w,row.nationId,row.fleetId);
+ if(!f){row.phase='RETURN_LOST';return 'FLEET_LOST';}
+ if(f.bAssignment||f.cEngagementId||f.status!=='DOCKED'||!navyBReady(w,row.nationId,f))return 'NOT_READY';
+ const ports=navyBPorts(w,row.nationId).sort((a,b)=>a.id-b.id),source=ports.find(p=>p.id===row.sourcePortId);
+ const candidates=source?[source,...ports.filter(p=>p.id!==source.id)]:ports;
+ const coast=Math.min(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
+ let hadRoute=false,hadFuel=false;
+ for(const p of candidates){if(navyDPortBlocked(w,p.id,row.nationId))continue;
+  const to=navyWaterAtPort(w,p),path=to===f.tileId?[f.tileId]:navyPath(w,f.tileId,to,coast);
+  if(!path)continue;hadRoute=true;
+  const coal=navyBCoalCost(w,f,path);if((w.nations[row.nationId].resources.coal||0)<coal)continue;
+  hadFuel=true;
+  row.returnPortId=p.id;
+  if(to===f.tileId){row.phase='RETURNED';navyDSetMission(w,f,'IDLE');return 'RETURNED';}
+  if(navyBStartSail(w,row.nationId,f,to)){row.phase='RETURNING';navyDSetMission(w,f,'RETURN');return 'RETURNING';}
+ }
+ return !hadRoute?'NO_ROUTE':!hadFuel?'COAL_SHORTAGE':'SAIL_FAILED';
+}
+function g2Reconcile(w){
+ const s=g2Ensure(w),contracts=g1Ensure(w).contracts;
+ for(let i=s.active.length-1;i>=0;i--){const row=s.active[i],c=contracts.find(c=>c.id===row.contractId&&c.nationId===row.nationId);
+  const f=navyBFleet(w,row.nationId,row.fleetId);
+  if(!c){s.active.splice(i,1);s.stats.failed++;g2Record(w,'FAILED',row,'MISSING_G1_CONTRACT');continue;}
+  if(c.phase==='LOST' || (!f && c.phase==='DELIVERED')){
+   s.active.splice(i,1);s.stats.lost++;g2Record(w,c.phase==='LOST'?'LOST':'RETURN_LOST',row,'Physical vessel unavailable');continue;
+  }
+  if(['RETURNED'].includes(c.phase)){
+   s.active.splice(i,1);s.stats.failed++;g2Record(w,'RETURNED_CARGO',row,'G1 cargo refunded after failed delivery');continue;
+  }
+  if(c.phase==='DELIVERED'&&row.phase==='OUTBOUND'){
+   row.phase='RETURN_PENDING';s.stats.delivered++;g2Record(w,'DELIVERED',row,`${c.delivered} crates delivered, returning hull (no refund)`);
+  }
+  if(c.phase==='DELIVERED' && ['RETURN_PENDING','RETURNING'].includes(row.phase)){
+   if(row.phase==='RETURNING'&&f?.status==='DOCKED'&&row.returnPortId!=null&&navyWaterAtPort(w,navyBPort(w,row.returnPortId))===f.tileId){
+    row.phase='RETURNED';navyDSetMission(w,f,'IDLE');
+   }else if(row.phase==='RETURNING'&&f?.status==='DOCKED')row.phase='RETURN_PENDING';
+   if(row.phase==='RETURN_PENDING'&&(row.lastAttemptDay===row.startedDay || w.dayIndex-row.lastAttemptDay>=G2_REVIEW_DAYS)){
+    const result=g2ReturnAttempt(w,row);row.lastAttemptDay=w.dayIndex;
+    if(result==='RETURNING')g2Record(w,'RETURNING',row,`return port #${row.returnPortId}`);
+    else if(result==='RETURNED')g2Record(w,'RETURNED',row,'Already at a safe home port');
+    else if(result!=='NOT_READY'){s.stats.retry++;g2Record(w,'RETURN_PENDING',row,result);}
+   }
+  }
+  if(row.phase==='RETURNED'){
+   s.active.splice(i,1);s.stats.returned++;g2Record(w,'RETURNED',row,`physical fleet returned to port #${row.returnPortId}, no Gold refund`);
+  }
+ }
+}
+// Quarter order: protect F2 assault reservations first, then G2 military supply,
+// then existing D pre-quarter escort merging and B merchant freight. No global AI policy rewrite.
+const g2PriorF2Quarter=navyF2Quarter;
+navyF2Quarter=function(w){if(w.dayIndex%120===0&&w.navy?.f2Plans?.lastReviewDay===w.dayIndex)return;return g2PriorF2Quarter(w);};
+const g2PriorPreQuarter=navyDPreQuarter;
+navyDPreQuarter=function(w){
+ if(w.dayIndex%G2_REVIEW_DAYS===0){g2Reconcile(w);
+  if(w.dayIndex%120===0 && w.buildings.some(p=>p.typeId==='port'&&Number.isInteger(w.tiles[p.tileId]?.occupiedWarId)&&w.nations[w.tiles[p.tileId]?.occupiedBy]?.controller==='AI'))navyF2Quarter(w);
+  g2AutoQuarter(w);
+ }
+ return g2PriorPreQuarter(w);
+};
+const g2PriorNavyProcess=navyProcessDay;
+navyProcessDay=function(w){const result=g2PriorNavyProcess(w);if(w.navy?.g2SupplyAI?.active?.length)g2Reconcile(w);return result;};
+const g2PriorValidate=navyValidate;
+navyValidate=function(w,fail){if(g2PriorValidate(w,fail)===false)return false;
+ const s=g2Ensure(w),int=x=>Number.isSafeInteger(x)&&x>=0;
+ if(s.schema!==1||!int(s.nextId)||!Array.isArray(s.active)||s.active.length>G2_MAX_ACTIVE||
+  !Array.isArray(s.history)||s.history.length>G2_HISTORY_LIMIT||!s.stats||
+  !Object.values(s.stats).every(int)||!s.decisions||
+  !(s.lastReviewDay===null||int(s.lastReviewDay)&&s.lastReviewDay<=w.dayIndex&&s.lastReviewDay%30===0))return fail('G2 AI 원장');
+ const ids=new Set(),fleets=new Set(),contracts=new Set();
+ for(const a of s.active){if(!['OUTBOUND','RETURN_PENDING','RETURNING'].includes(a.phase)||
+   !['id','nationId','fleetId','portId','warId','sourcePortId','contractId','startedDay','lastAttemptDay'].every(k=>int(a[k]))||
+   a.startedDay>w.dayIndex||a.lastAttemptDay>w.dayIndex||ids.has(a.id)||fleets.has(a.fleetId)||contracts.has(a.contractId)||
+   !w.nations[a.nationId]||!g1Ensure(w).contracts.some(c=>c.id===a.contractId&&c.nationId===a.nationId)||
+   !(a.returnPortId===null||int(a.returnPortId)))return fail('G2 자동 군수 함대 참조');
+  ids.add(a.id);fleets.add(a.fleetId);contracts.add(a.contractId);
+ }
+ for(const h of s.history)if(!int(h.dayIndex)||h.dayIndex>w.dayIndex||typeof h.kind!=='string'||typeof h.reason!=='string')return fail('G2 AI 이력');
+ return true;
+};
+const g2PriorSummary=navySummary;
+navySummary=function(w){const s=g2Ensure(w),x=g2PriorSummary(w);x.g2SupplyAI={stats:{...s.stats},lastReviewDay:s.lastReviewDay,
+ active:s.active.map(a=>({...a})),decisions:s.decisions,recent:s.history.slice(-20)};return x;};
+const g2PriorPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){g2PriorPanel(w,n,host);
+ const s=g2Ensure(w),sec=document.createElement('section');sec.className='army-detail';host.append(sec);
+ const h=document.createElement('h4');h.textContent='V0.9G2 · AI 실물 군수 보급';sec.append(h);
+ const info=document.createElement('p');info.className='muted-line';info.textContent=`30일 판단 · 자동 출항 ${s.stats.launched} · 인도 ${s.stats.delivered} · 실물 귀항 ${s.stats.returned} · 보급소비 ${g1Ensure(w).stats.consumed} 병력·일`;sec.append(info);
+ const d=s.decisions[n.id],p=document.createElement('p');p.className='muted-line';
+ p.textContent=d?`최근 판단 ${d.dayIndex}일 · ${d.reason} · 점령항 #${d.portId??'-'} · 하루 수요 ${d.dayDemand} · 현지 ${d.stock} · 도착 ETA ${d.eta??'-'}일 · ${d.plannedCrates}상자`:'아직 자동 보급 판단 기록 없음';sec.append(p);
+ for(const a of s.active.filter(x=>x.nationId===n.id)){const p=document.createElement('p');p.className='muted-line';
+  p.textContent=`자동 계약 #${a.contractId} · 함대 #${a.fleetId} · ${a.phase} · 점령항 #${a.portId} → 귀항 #${a.returnPortId??a.sourcePortId}`;sec.append(p);}
+ const btn=document.createElement('button');btn.className='jump-button';btn.type='button';btn.textContent='G2 AI 보급 판단·실물 귀항 원장 JSON 내보내기';
+ btn.addEventListener('click',()=>download(`vilob-naval-g2-day${w.dayIndex}.json`,JSON.stringify({version:VERSION,dayIndex:w.dayIndex,ledger:s,physical:g1Ensure(w)},null,2),'application/json'));sec.append(btn);
 };
 
 </script>
