@@ -858,6 +858,12 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 .i3a-power-toolbar label{display:flex;align-items:center;gap:5px}.i3a-power-toolbar input[type=range]{width:106px;accent-color:#70b6b4}.i3a-power-toolbar input[type=checkbox]{accent-color:#70b6b4}.i3a-power-key{color:#9ec3c4}.i3a-power-key b{color:#6dc5b1}.i3a-power-key em{color:#e0b775;font-style:normal}
 @media(max-width:540px){.i3a-power-toolbar{gap:7px;padding:8px;font-size:10px}.i3a-power-toolbar input[type=range]{width:78px}}
 
+
+.g3a-route-info{font-size:11px;color:#c9e9e4;background:#102c35;border-top:1px dashed #38666e;padding:10px 15px;line-height:1.7}
+.g3a-route-info[hidden]{display:none!important}
+#g3aRouteControls{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap}
+#g3aRouteControls select{max-width:135px;font-size:11px}
+@media (max-width:640px){#g3aRouteControls{max-width:100%;font-size:11px}#g3aRouteControls select{max-width:102px}}
 </style>
 </head>
 <body>
@@ -878,7 +884,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <main class="content"><section class="tab-panel is-active" id="tab-map"><div class="map-tab-layout"><section class="stage">
 <div aria-live="polite" class="stat-grid" id="statGrid"><div class="atlas-stats-header"><span>◈ 세계 현황</span><button aria-controls="atlasStatItems" aria-expanded="true" aria-label="세계 현황 접기" id="atlasStatsToggle" title="세계 현황 접기" type="button">⌃</button></div><div class="atlas-stat-items" id="atlasStatItems"><div class="stat"><span>총인구</span><b>119</b></div><div class="stat"><span>정착지</span><b>7</b></div><div class="stat"><span>소유 타일</span><b>7</b></div><div class="stat"><span>중립 육지</span><b>—</b></div></div></div>
 <section aria-label="세계 지도" class="map-card">
-<div class="map-card-head"><div class="head-title"><button aria-controls="atlasMapSettingsContent" aria-expanded="true" aria-label="지도 설정 접기" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" title="지도 설정 접기" type="button">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><label class="f1a-industry-check" title="B2 절삭 브래킷 · 타일 내부 표시"><input checked="" id="f1aIndustryToggle" type="checkbox"/> ⚙ 산업시설 B2</label><label class="f1a-industry-check" title="석탄 광산 타일 표시"><input checked="" id="f1aCoalToggle" type="checkbox"/> 석탄</label><label class="f1a-industry-check" title="동력 장착 공방 타일 표시"><input checked="" id="f1aPowerToggle" type="checkbox"/> 동력</label><label class="f1a-industry-check" title="증기기관만 강조하고 일반 기계/수차 동력은 숨깁니다"><input checked="" id="f1aSteamOnly" type="checkbox"/> 증기만</label><button class="chip atlas-fit-button" id="atlasMapFitToggle" title="지도 화면 맞춤 전환" type="button">◧ 지도 전체</button><button aria-expanded="true" class="chip atlas-inspector-button" id="atlasInspectorToggle" title="타일 정보창 표시 전환" type="button">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><button class="chip" data-map-mode="culture">문화</button><button class="chip" data-map-mode="social">사회</button><button class="chip" data-map-mode="seaControl">제해권</button><label class="army-mode-selector" hidden id="navyDMapOptions">제해권 보기 <select id="navyDMapFocus"><option value="all">전체 국가</option><option value="selected">선택 국가</option></select> 투명도 <select id="navyDMapOpacity"><option value="0.25">25%</option><option value="0.45" selected>45%</option><option value="0.65">65%</option></select><label><input type="checkbox" id="navyDMapPorts" checked> 봉쇄 항구</label></label><label class="army-mode-selector d2-culture-selector" hidden="" id="d2CultureModeControl">문화 표시 <select aria-label="문화 지도 표시 방식" id="d2CultureMode"><option value="dominant">주요 문화</option><option value="mix">문화 혼합도</option></select></label><label class="army-mode-selector d1b-social-selector" hidden="" id="d1bSocialModeControl">사회 지표 <select aria-label="사회 불만 지도 표시 방식" id="d1bSocialMode"><option value="overall">종합 불만</option><option value="economy">경제</option><option value="safety">안전</option><option value="governance">통치</option><option value="culture">문화 전체</option><option value="cultureBase">문화 기본</option><option value="cultureEvent">문화 사건</option></select></label><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select aria-label="정착지 및 수도 지명 표시" id="settlementLabels"><option selected="" value="auto">자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option selected="" value="auto">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select aria-label="지도 요새 및 방어망 표시" id="defenseLabels"><option selected="" value="network">요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label><label class="checkbox-row"><input checked="" id="riversToggle" type="checkbox"/> 하천</label><div class="i3a-power-toolbar" aria-label="I3A 동력 공급망 지도 설정">
+<div class="map-card-head"><div class="head-title"><button aria-controls="atlasMapSettingsContent" aria-expanded="true" aria-label="지도 설정 접기" class="head-icon atlas-settings-toggle" id="atlasSettingsToggle" title="지도 설정 접기" type="button">▦</button><div><strong id="mapDimensionLabel">19 × 19 WORLD</strong><small id="seedBadge">SEED · —</small></div></div><div class="map-head-controls" id="atlasMapSettingsContent"><label class="f1a-industry-check" title="B2 절삭 브래킷 · 타일 내부 표시"><input checked="" id="f1aIndustryToggle" type="checkbox"/> ⚙ 산업시설 B2</label><label class="f1a-industry-check" title="석탄 광산 타일 표시"><input checked="" id="f1aCoalToggle" type="checkbox"/> 석탄</label><label class="f1a-industry-check" title="동력 장착 공방 타일 표시"><input checked="" id="f1aPowerToggle" type="checkbox"/> 동력</label><label class="f1a-industry-check" title="증기기관만 강조하고 일반 기계/수차 동력은 숨깁니다"><input checked="" id="f1aSteamOnly" type="checkbox"/> 증기만</label><button class="chip atlas-fit-button" id="atlasMapFitToggle" title="지도 화면 맞춤 전환" type="button">◧ 지도 전체</button><button aria-expanded="true" class="chip atlas-inspector-button" id="atlasInspectorToggle" title="타일 정보창 표시 전환" type="button">◧ 정보 숨기기</button><button class="chip selected" data-map-mode="political">정치</button><button class="chip" data-map-mode="terrain">지형</button><button class="chip" data-map-mode="era">문명</button><button class="chip" data-map-mode="independence">독립 동향</button><button class="chip" data-map-mode="culture">문화</button><button class="chip" data-map-mode="social">사회</button><button class="chip" data-map-mode="seaControl">제해권</button><label class="army-mode-selector" id="g3aRouteControls" aria-label="G3A 실제 해상무역로"><input id="g3aShowRoutes" type="checkbox" checked> ⚓ 해상무역로 <select id="g3aFocus" aria-label="무역로 국가 필터"><option value="all">전체</option><option value="selected">선택 국가</option></select><select id="g3aPeriod" aria-label="무역로 기간"><option value="recent" selected>최근 1200일</option><option value="active">운항 중</option><option value="all">누적</option></select><select id="g3aRoutePicker" aria-label="상세 무역로 선택"><option value="">항로 선택</option></select></label><label class="army-mode-selector" hidden id="navyDMapOptions">제해권 보기 <select id="navyDMapFocus"><option value="all">전체 국가</option><option value="selected">선택 국가</option></select> 투명도 <select id="navyDMapOpacity"><option value="0.25">25%</option><option value="0.45" selected>45%</option><option value="0.65">65%</option></select><label><input type="checkbox" id="navyDMapPorts" checked> 봉쇄 항구</label></label><label class="army-mode-selector d2-culture-selector" hidden="" id="d2CultureModeControl">문화 표시 <select aria-label="문화 지도 표시 방식" id="d2CultureMode"><option value="dominant">주요 문화</option><option value="mix">문화 혼합도</option></select></label><label class="army-mode-selector d1b-social-selector" hidden="" id="d1bSocialModeControl">사회 지표 <select aria-label="사회 불만 지도 표시 방식" id="d1bSocialMode"><option value="overall">종합 불만</option><option value="economy">경제</option><option value="safety">안전</option><option value="governance">통치</option><option value="culture">문화 전체</option><option value="cultureBase">문화 기본</option><option value="cultureEvent">문화 사건</option></select></label><label class="army-mode-selector">군대 <select aria-label="지도 군대 정보 표시" id="armyLabels"><option selected="" value="auto">자동</option><option value="compact">간략</option><option value="detail">상세</option><option value="off">끔</option></select></label><label class="army-mode-selector">지명 <select aria-label="정착지 및 수도 지명 표시" id="settlementLabels"><option selected="" value="auto">자동</option><option value="capital">수도만</option><option value="all">전체</option><option value="off">끔</option></select></label><label class="army-mode-selector">시설 <select aria-label="지도 시설 표시" id="buildingLabels"><option selected="" value="auto">자동</option><option value="off">끔</option><option value="detail">상세</option></select></label><label class="army-mode-selector">요새 <select aria-label="지도 요새 및 방어망 표시" id="defenseLabels"><option selected="" value="network">요새 + 방어선</option><option value="points">요새 위치</option><option value="off">숨기기</option></select></label><label class="checkbox-row"><input checked="" id="bordersToggle" type="checkbox"/> 국경선</label><label class="checkbox-row"><input checked="" id="diplomaticBordersToggle" type="checkbox"/> 외교 국경</label><label class="checkbox-row"><input checked="" id="roadsToggle" type="checkbox"/> 도로</label><label class="checkbox-row"><input checked="" id="riversToggle" type="checkbox"/> 하천</label><div class="i3a-power-toolbar" aria-label="I3A 동력 공급망 지도 설정">
 <label title="동력 연결소·송력선·중앙 동력소를 지도에 표시"><input id="i3aNetworkEnabled" type="checkbox"/> ⚙ 동력망 표시</label>
 <label title="동력망 아이콘과 송력선 표시 크기">크기 <input id="i3aNetworkSize" type="range" min="50" max="200" step="10" value="100" aria-label="동력망 표시 크기"/><span id="i3aNetworkSizeValue">100%</span></label>
 <label title="활성 송력선의 이용량과 흐름 방향"><input id="i3aNetworkFlows" type="checkbox" checked/> 흐름·병목</label>
@@ -891,7 +897,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <div class="fortress-stat"><div class="fortress-stat-head"><span class="fortress-stat-label firepower">⚔ 공격력 A</span><strong id="fortressFirepowerValue">—</strong><span class="fortress-delta" id="fortressFirepowerDelta">—</span></div><div class="fortress-track"><span class="fortress-track-fill firepower" id="fortressFirepowerTrack"></span></div><small>요새 지역 세계 평균 <b id="fortressFirepowerMean">—</b></small></div>
 <div class="fortress-help">절대값 R·A · 막대는 세계 요새 평균 대비 두께 지표</div>
 </section><div class="zoom-buttons"><button aria-label="확대" id="zoomInBtn" title="확대">＋</button><button aria-label="축소" id="zoomOutBtn" title="축소">－</button><button aria-label="전체 지도" id="resetViewBtn" title="지도 중앙으로">⌗</button></div><div class="coordinate-badge" id="coordinateLabel">X — · Y —</div></div>
-<div class="map-foot"><div aria-hidden="true" class="atlas-legend-watermark"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button aria-controls="atlasLegendList" aria-expanded="false" class="atlas-legend-toggle" id="atlasLegendToggle" title="지도 범례 보기" type="button">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="d1b-social-map-key" hidden="">● 사회: 정착지 주민의 인구 가중 불만 (0~100) · 문화 전체/지속 기본/사건 분리 · 독립 압력과 별도</span><span class="d2-culture-map-key" hidden="">● 주요 문화: 정착지 인구 최대 문화의 색 · 혼합도: 최다 문화 외 인구 비중 · 타일 전체의 문화가 아님</span><span class="c5-independence-key" hidden="">독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span style="color:#62bfe7">〰 하천(유량 등급)</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
+<div class="g3a-route-info" id="g3aRouteInfo" aria-live="polite" hidden></div><div class="map-foot"><div aria-hidden="true" class="atlas-legend-watermark"><span class="atlas-wm-full">VILOB / WORLD ATLAS · LIGHT <span id="atlasVersionLabel">V0.4E5</span></span><span class="atlas-wm-compact">VILOB / ATLAS</span></div><button aria-controls="atlasLegendList" aria-expanded="false" class="atlas-legend-toggle" id="atlasLegendToggle" title="지도 범례 보기" type="button">◇ 범례 보기</button><div class="legend" id="atlasLegendList"><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#9DA67C"></i>고대</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#6596C6"></i>중세</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#B78A58"></i>근대(향후)</span><span class="v04c-era-key" hidden=""><i class="legend-icon" style="background:#A990CB"></i>미래(향후)</span><span class="d1b-social-map-key" hidden="">● 사회: 정착지 주민의 인구 가중 불만 (0~100) · 문화 전체/지속 기본/사건 분리 · 독립 압력과 별도</span><span class="d2-culture-map-key" hidden="">● 주요 문화: 정착지 인구 최대 문화의 색 · 혼합도: 최다 문화 외 인구 비중 · 타일 전체의 문화가 아님</span><span class="c5-independence-key" hidden="">독립 동향 · 붉은 원: 압력 ≥80 · 호박 원: ≥50 · 압력 점선: 종주국 · 하늘 점선: 성숙 접촉 · 민트 실선: 지원 약속</span><span>♛ 수도</span><span><i class="legend-icon capital"></i> 정착지</span><span>⚔ 교전</span><span><i class="legend-icon border"></i> 국가 경계</span><span>⚔ 군대</span><span>═ 도로</span><span style="color:#62bfe7">〰 하천(유량 등급)</span><span>▣ 점령</span><span>⌂ 일반 시설</span><span>▣ 요새 · 황금 실선: 실제 인접 요새 · 점선: 방어 연결(거리 2칸)</span><span>외교 국경 · 연초록: 동맹 · 연보라 이중선: 종속(화살표는 종주국 방향) · 연빨강: 전쟁(화살표는 공격→방어) · 회백색: 휴전 · 축소 시 화살표 생략</span><span><i class="legend-icon neutral"></i> 중립</span><span><i class="legend-icon water"></i> 물</span></div><span class="map-tip">선택 · 드래그 · 스크롤/핀치 확대</span></div>
 </section>
 </section><aside class="map-side"><section class="sidebar-card inspector-card"><div class="card-heading"><div><div class="eyebrow">INSPECTOR</div><h2>선택한 타일</h2></div><div class="g1-inspector-actions"><span class="small-label" id="tileCoord">—</span><button aria-label="타일 정보 닫기" id="tileInspectorClose" title="정보 숨기기" type="button">×</button></div></div><div class="inspector-content" id="tileInspector">지도의 타일을 선택해 주세요.</div></section></aside></div></section><section class="tab-panel" id="tab-nation"><div class="section-title"><div class="eyebrow">NATIONS &amp; ECONOMY</div><h1>국가</h1><p>국가를 선택해 경제·지도자·정착지 현황을 살펴보세요.</p></div><section aria-label="플레이어 국가 조종" class="player-control-panel player-top-panel" id="playerControlPanel"></section><div class="two-panel-layout"><section class="sidebar-card nations-card"><div class="card-heading"><div><div class="eyebrow">NATIONS</div><h2 id="nationRosterTitle">일곱 국가</h2></div><span class="small-label" id="nationRosterTotal">7 / 7</span></div><div class="nation-list" id="nationList"></div></section><section class="sidebar-card focus-card" id="nationOverviewCard"><div class="card-heading"><div><div class="eyebrow">SELECTED NATION</div><h2>국가 상세</h2></div></div><div id="nationOverview"></div></section></div></section><section class="tab-panel" id="tab-military"><section class="sidebar-card" id="navyPanel" style="margin-bottom:16px"></section><div class="section-title"><div class="eyebrow">MILITARY &amp; BATTLES</div><h1>군사</h1><p>진행 중인 전쟁과 교전을 먼저 확인하고, 필요할 때 부대 정보를 펼치세요.</p></div>
 <nav id="h1bMilitaryPages" class="h1b-military-tabs" aria-label="군사 페이지"><button type="button" id="h1bMilitaryRegularBtn" class="h1b-military-tab active" aria-current="page">군사 현황</button><button type="button" id="h1bMilitaryAutoBtn" class="h1b-military-tab">오토마톤</button></nav>
@@ -939,7 +945,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G2'; // autonomous paid physical naval supply with real return voyages
+const VERSION = 'V0.9G3A'; // maritime route UI and accounting (no economic or RNG rule changes)
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -22200,9 +22206,9 @@ function validateTradeLegacyForMigration(w){
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const v08eSourceVersion=parsed.version;
@@ -22210,7 +22216,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -25505,7 +25511,7 @@ function navySummary(w){const nv=navyEnsure(w);return {version:w.version,dayInde
 function navyDrawOverlay(renderer){
  if(!renderer.world?.navy)return;
  const w=renderer.world,nv=navyEnsure(w),ctx=renderer.ctx,scale=renderer.scale,ox=renderer.originX,oy=renderer.originY;
- ctx.save();navyDDrawSea(renderer);navyCDrawPorts(renderer);navyDDrawBlockadedPorts(renderer);
+ ctx.save();navyDDrawSea(renderer);g3aDrawRoutes(renderer);navyCDrawPorts(renderer);navyDDrawBlockadedPorts(renderer);
  // V0.9D2 visual-only: aggregate fleets by (water tile, nation). Independent
  // national markers make hostile blockaders visible even when an unfinished
  // friendly hull occupies the same sea tile. Never mutate fleet/ship ledgers.
@@ -28479,6 +28485,181 @@ navyDRenderPanel=function(w,n,host){g2PriorPanel(w,n,host);
   p.textContent=`자동 계약 #${a.contractId} · 함대 #${a.fleetId} · ${a.phase} · 점령항 #${a.portId} → 귀항 #${a.returnPortId??a.sourcePortId}`;sec.append(p);}
  const btn=document.createElement('button');btn.className='jump-button';btn.type='button';btn.textContent='G2 AI 보급 판단·실물 귀항 원장 JSON 내보내기';
  btn.addEventListener('click',()=>download(`vilob-naval-g2-day${w.dayIndex}.json`,JSON.stringify({version:VERSION,dayIndex:w.dayIndex,ledger:s,physical:g1Ensure(w)},null,2),'application/json'));sec.append(btn);
+};
+
+</script>
+<script>
+// V0.9G3A - audit-only commercial maritime routes. Do not alter prices,
+// naval orders, resource transfer, RNG, or the existing supply/landing rules.
+const G3A_ROUTE_SCHEMA=1,G3A_MAX_ROUTES=128,G3A_MAX_RECENT=160,G3A_MAX_PATH=2048;
+function g3aEnsure(w){const nv=navyEnsure(w);
+ return nv.g3aTrade??=( {schema:1,nextId:1,routes:[],active:[],recent:[],stats:{departures:0,deliveredTrips:0,returnedTrips:0,lostTrips:0,loadedUnits:0,deliveredUnits:0,lostUnits:0,returnedUnits:0,freightFees:0,tradeGoldSettled:0,coalSpent:0}} );
+}
+function g3aRouteKey(a,b){return `${a}>${b}`;}
+function g3aPathPush(a,id){if(Number.isSafeInteger(id)&&id>=0&&a.length<G3A_MAX_PATH&&a[a.length-1]!==id)a.push(id);}
+function g3aRoute(w,key,sourceId,destId){const s=g3aEnsure(w);let r=s.routes.find(x=>x.key===key);
+ if(r)return r;
+ if(s.routes.length>=G3A_MAX_ROUTES){const used=new Set(s.active.map(v=>v.key));const removable=s.routes.filter(x=>!used.has(x.key)).sort((a,b)=>(a.lastDepartureDay||0)-(b.lastDepartureDay||0)||a.key.localeCompare(b.key))[0];if(removable)s.routes=s.routes.filter(x=>x!==removable);else return null;}
+ r={key,sourcePortId:sourceId,destinationPortId:destId,sellerNationId:null,buyerNationId:null,
+   departed:0,completed:0,returned:0,lost:0,loadedUnits:0,deliveredUnits:0,lostUnits:0,returnedUnits:0,
+   transportFeeGold:0,settledTradeGold:0,coalSpent:0,lastDepartureDay:null,lastCompletedDay:null,lastPath:[],lastGood:null};
+ s.routes.push(r);return r;
+}
+function g3aActive(w,f){return w.navy?.g3aTrade?.active.find(v=>v.fleetId===f.id)||null;}
+function g3aDepart(w,f,result){const a=f.bAssignment;if(!a||a.kind!=='TRADE')return;
+ const s=g3aEnsure(w),key=g3aRouteKey(a.sourcePortId,a.destinationPortId);
+ const freight=a.amount*(TRADE_GOODS[a.good]?.freight||1);
+ const origin=navyWaterAtPort(w,navyBPort(w,a.sourcePortId));
+ const planned=[origin,...(Array.isArray(f.path)?f.path:[])].filter(id=>Number.isSafeInteger(id)&&id>=0).slice(0,G3A_MAX_PATH);
+ const trip={id:s.nextId++,key,fleetId:f.id,sellerNationId:a.sellerNationId,buyerNationId:a.buyerNationId,
+   sourcePortId:a.sourcePortId,destinationPortId:a.destinationPortId,good:a.good,startedDay:w.dayIndex,finishDay:null,
+   initialAmount:a.amount,lostAmount:0,deliveredAmount:0,returnedAmount:0,freight,transportFeeGold:a.fee||0,
+   escrowGold:a.escrowGold||0,coalSpent:result.coal||0,status:'OUTBOUND',plannedTiles:planned,actualTiles:[]};
+ g3aPathPush(trip.actualTiles,origin);g3aPathPush(trip.actualTiles,f.tileId);
+ s.active.push(trip);s.stats.departures++;s.stats.loadedUnits+=a.amount;s.stats.freightFees+=trip.transportFeeGold;s.stats.coalSpent+=trip.coalSpent;
+ const r=g3aRoute(w,key,a.sourcePortId,a.destinationPortId);
+ if(r){r.sellerNationId=trip.sellerNationId;r.buyerNationId=trip.buyerNationId;r.lastDepartureDay=w.dayIndex;r.lastGood=a.good;
+  r.departed++;r.loadedUnits+=a.amount;r.transportFeeGold+=trip.transportFeeGold;r.coalSpent+=trip.coalSpent;}
+}
+function g3aFinish(w,t,status,amount=0){const s=g3aEnsure(w);if(!s.active.some(x=>x.id===t.id))return;
+ t.status=status;t.finishDay=w.dayIndex;
+ const r=s.routes.find(x=>x.key===t.key);
+ if(status==='DELIVERED'){t.deliveredAmount=amount;s.stats.deliveredTrips++;s.stats.deliveredUnits+=amount;s.stats.tradeGoldSettled+=amount*(t.initialAmount?t.escrowGold/t.initialAmount:0);
+  if(r){r.completed++;r.deliveredUnits+=amount;r.settledTradeGold+=amount*(t.initialAmount?t.escrowGold/t.initialAmount:0);r.lastCompletedDay=w.dayIndex;r.lastPath=t.actualTiles.slice();}}
+ else if(status==='RETURNED'){t.returnedAmount=amount;s.stats.returnedTrips++;s.stats.returnedUnits+=amount;if(r){r.returned++;r.returnedUnits+=amount;}}
+ else if(status==='LOST'){s.stats.lostTrips++;if(r)r.lost++;}
+ s.active=s.active.filter(x=>x!==t);
+ s.recent.push(t);if(s.recent.length>G3A_MAX_RECENT)s.recent.splice(0,s.recent.length-G3A_MAX_RECENT);
+}
+const g3aOriginalBAction=navyBActionExecute;
+navyBActionExecute=function(w,nid,a){const out=g3aOriginalBAction(w,nid,a);
+ if(out?.ok&&a?.type==='NAVY_SEA_TRADE'){const f=navyBFleet(w,nid,a.fleetId);if(f)g3aDepart(w,f,out);}
+ return out;};
+const g3aOriginalStep=navyBOnFleetStep;
+navyBOnFleetStep=function(w,f){const result=g3aOriginalStep(w,f),t=g3aActive(w,f);if(t&&f.bAssignment?.kind==='TRADE'){
+   // Only the actual traversed water tile is appended. Returning paths are
+   // still evidence of the voyage, but never counted as delivered trade.
+   g3aPathPush(t.actualTiles,f.tileId);
+   if(f.bAssignment.phase!=='OUTBOUND')t.status=f.bAssignment.phase;
+ }return result;};
+const g3aOriginalSinkLoss=navyCShipLoadLoss;
+navyCShipLoadLoss=function(w,f,ship){const task=f.bAssignment,t=task?.kind==='TRADE'?g3aActive(w,f):null;
+ const before=task?.kind==='TRADE'?task.amount:0;const result=g3aOriginalSinkLoss(w,f,ship);
+ if(t){const after=f.bAssignment?.kind==='TRADE'?f.bAssignment.amount:0,delta=Math.max(0,before-after);
+  if(delta){t.lostAmount+=delta;const s=g3aEnsure(w);s.stats.lostUnits+=delta;const r=s.routes.find(x=>x.key===t.key);if(r)r.lostUnits+=delta;}
+  if(!f.bAssignment)g3aFinish(w,t,'LOST');
+ }return result;};
+const g3aOriginalDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){const before=f.bAssignment,t=before?.kind==='TRADE'?g3aActive(w,f):null;
+ const amount=before?.kind==='TRADE'?before.amount:0,phase=before?.phase;
+ const result=g3aOriginalDock(w,f);
+ if(t){if(!f.bAssignment){
+    g3aFinish(w,t,phase==='OUTBOUND'?'DELIVERED':phase==='RETURNING'?'RETURNED':'LOST',amount);
+  }else{t.status=f.bAssignment.phase;}
+ }return result;};
+function g3aValidPath(w,path){return Array.isArray(path)&&path.length<=G3A_MAX_PATH&&path.every(id=>Number.isSafeInteger(id)&&id>=0&&w.tiles[id]?.terrain==='water');}
+function g3aValidate(w,fail){const s=w.navy?.g3aTrade;if(!s)return true;
+ const int=n=>Number.isSafeInteger(n)&&n>=0;
+ if(s.schema!==1||!int(s.nextId)||!Array.isArray(s.routes)||s.routes.length>G3A_MAX_ROUTES||
+  !Array.isArray(s.active)||s.active.length>Math.max(128,w.navy.fleets.length)||!Array.isArray(s.recent)||s.recent.length>G3A_MAX_RECENT||
+  !s.stats||Object.values(s.stats).some(v=>!int(v)))return fail('G3A 경로 원장 형식');
+ const keys=new Set(),ids=new Set(),fleetIds=new Set();
+ for(const r of s.routes){if(typeof r.key!=='string'||keys.has(r.key)||!int(r.sourcePortId)||!int(r.destinationPortId)||
+  !int(r.departed)||!int(r.completed)||!int(r.returned)||!int(r.lost)||!int(r.loadedUnits)||!int(r.deliveredUnits)||!int(r.lostUnits)||!int(r.returnedUnits)||!int(r.transportFeeGold)||!int(r.settledTradeGold)||!int(r.coalSpent)||!g3aValidPath(w,r.lastPath)||
+  r.lastDepartureDay!==null&&(!int(r.lastDepartureDay)||r.lastDepartureDay>w.dayIndex)||
+  r.lastCompletedDay!==null&&(!int(r.lastCompletedDay)||r.lastCompletedDay>w.dayIndex))return fail('G3A 경로 요약');keys.add(r.key);}
+ for(const t of [...s.active,...s.recent]){if(!int(t.id)||ids.has(t.id)||typeof t.key!=='string'||!int(t.fleetId)||!w.nations[t.sellerNationId]||!w.nations[t.buyerNationId]||t.sellerNationId===t.buyerNationId||
+   !int(t.sourcePortId)||!int(t.destinationPortId)||typeof t.good!=='string'||!NAVY_B_GOODS.includes(t.good)||!int(t.startedDay)||t.startedDay>w.dayIndex||
+   !int(t.initialAmount)||t.initialAmount<1||!int(t.lostAmount)||!int(t.deliveredAmount)||!int(t.returnedAmount)||t.lostAmount+t.deliveredAmount+t.returnedAmount>t.initialAmount||
+   !int(t.freight)||!int(t.transportFeeGold)||!int(t.escrowGold)||!int(t.coalSpent)||!g3aValidPath(w,t.plannedTiles)||!g3aValidPath(w,t.actualTiles)||
+   !(t.finishDay===null||int(t.finishDay)&&t.finishDay>=t.startedDay&&t.finishDay<=w.dayIndex))return fail('G3A 해상 운항 이력');ids.add(t.id);}
+ for(const t of s.active){const f=w.navy.fleets.find(f=>f.id===t.fleetId);
+  if(fleetIds.has(t.fleetId)||!f||f.bAssignment?.kind!=='TRADE'||t.finishDay!==null)return fail('G3A 진행 중 선박 계약 정합');fleetIds.add(t.fleetId);}
+ for(const t of s.recent)if(t.finishDay===null||!['DELIVERED','RETURNED','LOST'].includes(t.status))return fail('G3A 완료 기록');
+ return true;
+}
+const g3aOriginalValidate=navyValidate;
+navyValidate=function(w,fail){const r=g3aOriginalValidate(w,fail);if(r===false)return r;return g3aValidate(w,fail);};
+const g3aOriginalSummary=navySummary;
+navySummary=function(w){const data=g3aOriginalSummary(w),s=w.navy?.g3aTrade;
+ data.g3aTrade=s?{stats:{...s.stats},routeCount:s.routes.length,activeCount:s.active.length,recentCount:s.recent.length,topRoutes:s.routes.slice().sort((a,b)=>b.deliveredUnits-a.deliveredUnits).slice(0,12).map(r=>({...r,lastPath:r.lastPath.slice()}))}:null;return data;};
+function g3aVisible(w){const s=w?.navy?.g3aTrade;if(!s||document.getElementById('g3aShowRoutes')?.checked===false)return [];
+ const focus=document.getElementById('g3aFocus')?.value||'all',windowMode=document.getElementById('g3aPeriod')?.value||'recent',nation=typeof app!=='undefined'?app.selectedNationId:-1;
+ return s.routes.filter(r=>{if(focus==='selected'&&nation!==r.sellerNationId&&nation!==r.buyerNationId)return false;
+   const active=s.active.filter(t=>t.key===r.key),now=active.length>0,recent=r.lastCompletedDay!==null&&w.dayIndex-r.lastCompletedDay<=1200;
+   return windowMode==='active'?now:windowMode==='recent'?now||recent:now||r.completed>0;
+ }).slice(0,64).map(r=>{const active=s.active.filter(t=>t.key===r.key);const current=active[0];const planned=!!current&&current.actualTiles.length<2&&current.plannedTiles.length>=2;return {r,planned,path:current?.actualTiles?.length>=2?current.actualTiles:planned?current.plannedTiles:r.lastPath,
+   active:active.length>0,blocked:null,activeTrips:active.length};}).filter(x=>x.path.length>=2);
+}
+let g3aMapHitBoxes=[];
+function g3aDrawRoutes(renderer){const w=renderer.world,items=g3aVisible(w),ctx=renderer.ctx;g3aRefreshPicker(w);
+ g3aMapHitBoxes=[];if(!items.length)return;
+ const selected=document.getElementById('g3aRoutePicker')?.value||'',ctl=navyDControl(w),sc=renderer.scale,ox=renderer.originX,oy=renderer.originY;
+ ctx.save();ctx.beginPath();ctx.rect(0,0,renderer.width,renderer.height);ctx.clip();ctx.lineCap='round';ctx.lineJoin='round';
+ for(const entry of items){const {r,path,active,planned}=entry;
+  const danger=ctl.blockades.has(r.sourcePortId)||ctl.blockades.has(r.destinationPortId)||
+   path.some(id=>{const state=ctl.tiles.get(id);return state?.nationId!==null&&state?.nationId!==undefined&&v04dWarBetween(w,r.sellerNationId,state.nationId);});
+  const shade=danger?'#f1b66a':planned?'#839ba8':active?'#79e6d4':r.lastCompletedDay!==null&&w.dayIndex-r.lastCompletedDay<=1200?'#68d5c6':'#a7b8c8';
+  const level=r.deliveredUnits>=1000?2:r.deliveredUnits>=250?1.6:1.25;
+  ctx.strokeStyle=shade;ctx.globalAlpha=planned?.46:active||danger?.95:.57;ctx.lineWidth=(r.key===selected?2.8:level);
+  ctx.setLineDash([3.5,6]);ctx.beginPath();let drawn=false;let previous=null;
+  for(const id of path){const t=w.tiles[id];if(!t)continue;
+   const x=ox+(t.x+.5)*sc,y=oy+(t.y+.5)*sc;
+   if(previous){if(Math.max(previous.x,x)>=-14&&Math.min(previous.x,x)<=renderer.width+14&&Math.max(previous.y,y)>=-14&&Math.min(previous.y,y)<=renderer.height+14){
+     ctx.moveTo(previous.x,previous.y);ctx.lineTo(x,y);drawn=true;
+     g3aMapHitBoxes.push({route:r,ax:previous.x,ay:previous.y,bx:x,by:y});}}
+   previous={x,y};
+  }
+  if(drawn)ctx.stroke();
+ }
+ ctx.restore();
+}
+function g3aRouteClicked(x,y){let best=null,distance=64;
+ for(const h of g3aMapHitBoxes){const dx=h.bx-h.ax,dy=h.by-h.ay,den=dx*dx+dy*dy;
+  if(den<=0)continue;const u=Math.max(0,Math.min(1,((x-h.ax)*dx+(y-h.ay)*dy)/den));
+  const d=(x-h.ax-u*dx)**2+(y-h.ay-u*dy)**2;if(d<distance){distance=d;best=h.route;}}
+ return best;
+}
+function g3aUpdateInfo(w){const box=document.getElementById('g3aRouteInfo'),picker=document.getElementById('g3aRoutePicker');if(!box||!picker)return;
+ const s=w?.navy?.g3aTrade;const key=picker.value,route=s?.routes.find(r=>r.key===key);
+ box.hidden=!route;if(!route)return;
+ const f=(n)=>Number(n||0).toLocaleString('ko-KR');
+ const seller=w.nations[route.sellerNationId]?.name||'?',buyer=w.nations[route.buyerNationId]?.name||'?';
+ const ongoing=s.active.filter(t=>t.key===key),last=s.recent.filter(t=>t.key===key).slice(-1)[0];
+ box.textContent=`⚓ ${seller} → ${buyer} · 항구 #${route.sourcePortId} → #${route.destinationPortId} · 출항 ${f(route.departed)} / 인도 ${f(route.completed)} / 반송 ${f(route.returned)} / 침몰 전멸 ${f(route.lost)} · 인도 ${f(route.deliveredUnits)}개 · 손실 ${f(route.lostUnits)}개 · 수송료 ${f(route.transportFeeGold)}G · 정산 ${f(route.settledTradeGold)}G · 석탄 ${f(route.coalSpent)} · 항해 중 ${ongoing.length}건${last?` · 최근 ${last.good} ${last.status} (${last.finishDay}일)`:''}`;
+}
+function g3aRefreshPicker(w){const picker=document.getElementById('g3aRoutePicker');if(!picker)return;
+ const s=w?.navy?.g3aTrade,prev=picker.value,focus=document.getElementById('g3aFocus')?.value||'all',nid=typeof app!=='undefined'?app.selectedNationId:-1;
+ const entries=(s?.routes||[]).filter(r=>focus!=='selected'||r.sellerNationId===nid||r.buyerNationId===nid);
+ const prevKeys=[...picker.options].map(o=>o.value).join('|'),nextKeys=['',...entries.map(x=>x.key)].join('|');
+ if(prevKeys!==nextKeys){picker.replaceChildren(new Option('항로 선택',''));
+  for(const r of entries){const a=w.nations[r.sellerNationId]?.name||r.sellerNationId,b=w.nations[r.buyerNationId]?.name||r.buyerNationId;
+   picker.add(new Option(`${a}→${b} #${r.sourcePortId}→#${r.destinationPortId} (인도 ${r.deliveredUnits})`,r.key));}
+  picker.value=entries.some(x=>x.key===prev)?prev:'';
+ }
+ g3aUpdateInfo(w);
+}
+function g3aInitMap(){for(const id of ['g3aShowRoutes','g3aFocus','g3aPeriod','g3aRoutePicker']){
+ const el=document.getElementById(id);el?.addEventListener('change',()=>{if(typeof app!=='undefined'&&app.world)g3aRefreshPicker(app.world);if(typeof map!=='undefined')map.draw();});}
+ const canvas=document.getElementById('worldCanvas');let down=null,allowClick=true;
+ canvas?.addEventListener('pointerdown',e=>{down={id:e.pointerId,x:e.clientX,y:e.clientY};allowClick=false;});
+ canvas?.addEventListener('pointerup',e=>{allowClick=!!down&&down.id===e.pointerId&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<6;down=null;});
+ canvas?.addEventListener('pointercancel',()=>{down=null;allowClick=false;});
+ canvas?.addEventListener('click',e=>{if(!allowClick||typeof map==='undefined'||!map.world||document.getElementById('g3aShowRoutes')?.checked===false)return;
+ const p=map.point(e),r=g3aRouteClicked(p.x,p.y);if(!r)return;
+ const picker=document.getElementById('g3aRoutePicker');if(picker){picker.value=r.key;g3aUpdateInfo(map.world);map.draw();}
+ });
+}
+g3aInitMap();
+const g3aOriginalPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){g3aOriginalPanel(w,n,host);
+ const section=document.createElement('section');section.className='army-detail';host.append(section);
+ const h=document.createElement('h4');h.textContent='G3A · 실물 국제 해상무역 관측';section.append(h);
+ const s=w.navy?.g3aTrade,stats=s?.stats;
+ const p=document.createElement('p');p.className='muted-line';p.textContent=stats?`실제 상업 출항 ${stats.departures} · 인도 ${stats.deliveredTrips} · 인도량 ${stats.deliveredUnits} · 침몰 손실 ${stats.lostUnits} · 수송료 ${stats.freightFees}G · 석탄 ${stats.coalSpent}개`:'관측 개시 후 국제 상업 출항 기록 없음 (기존 세이브의 과거 경로는 복원하지 않음)';section.append(p);
+ const total=(s?.routes||[]).filter(r=>r.sellerNationId===n.id||r.buyerNationId===n.id),mine=document.createElement('p');mine.className='muted-line';
+ mine.textContent=`${n.name} 관련 실제 경로 ${total.length}개 · 완료 화물 ${total.reduce((z,r)=>z+r.deliveredUnits,0)}개 · 시장 누적 수출 ${n.trade?.exports||0} / 수입 ${n.trade?.imports||0} (시장의 DIRECT/INDIRECT 포함, 해운과 비교 합산 금지)`;section.append(mine);
+ const b=document.createElement('button');b.type='button';b.className='jump-button';b.textContent='G3A 무역 항로·화물 계측 JSON 내보내기';b.addEventListener('click',()=>download(`vilob-g3a-maritime-trade-day${w.dayIndex}.json`,JSON.stringify({version:VERSION,dayIndex:w.dayIndex,ledger:s||null},null,2),'application/json'));section.append(b);
 };
 
 </script>
