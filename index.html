@@ -912,7 +912,12 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div class="military-list" id="warHistoryList"></div><nav aria-label="종전 기록 페이지" class="war-history-pager" id="warHistoryPager"></nav></section>
-</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" disabled="" id="riverApplyBtn" type="button">이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div aria-label="커스텀 맵 시작" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" rel="noopener noreferrer" target="_blank" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input accept=".json,application/json" id="customMapInput" type="file"/></label><button class="primary-button" disabled="" id="customMapStartBtn" type="button">이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section aria-label="V0.7D3 전투 관측" class="below-card"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input id="combatObservationEnabled" type="checkbox"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 최대 1,024개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button class="text-button" disabled="" id="combatObservationCsv" type="button">↓ 전투 관측 CSV</button><button class="text-button" disabled="" id="combatObservationJson" type="button">↓ 전투 관측 JSON</button><button class="text-button" disabled="" id="combatObservationSummary" type="button">↓ 요약 JSON (경량)</button><button class="text-button" disabled="" id="combatObservationGzip" type="button">↓ 상세 JSON.gz (압축)</button><button class="text-button" disabled="" id="combatObservationClear" type="button">기록 비우기</button></div><div class="scope-note" id="combatObservationStatus" role="status">관측 OFF</div></section><details aria-label="세계 정책·재정 감사 통합 도구" class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span aria-hidden="true" class="army-roster-chevron">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select aria-label="정책 감사 국가 선택" id="e3cAuditNation"></select></div><div class="e3c-audit-content" id="e3cPolicyAuditContent"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section aria-label="D1A2 세계 문화 분포" class="below-card d2-culture-world-card"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div class="d2-culture-world-list" id="d2WorldCultureList"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section aria-label="D1A1 문화 인구 회계 진단" class="below-card"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button class="text-button" id="cultureAuditBtn" type="button">문화 구성·인원 검증</button><button class="text-button" id="cultureAuditJsonBtn" type="button">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section aria-label="RNG 정책 설정" class="below-card rng-options"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
+</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-launch" aria-label="G3E 세계 연결 방식">
+ <div class="seed-heading"><span class="head-icon">↔</span><div><strong>V0.9G3E · 원통형 세계</strong><small>좌우 끝을 서로 연결합니다. 북쪽/남쪽 경계는 유지하고 지형은 변경하지 않습니다.</small></div></div>
+ <div id="g3eTopologyStatus" class="scope-note" role="status">연결 방식 확인 중</div>
+ <div class="custom-map-actions"><button class="primary-button" type="button" id="g3eConvertButton">기존 평면 세계를 원통형으로 전환</button></div>
+ <small class="scope-note">G3D 이전 저장본은 기존 평면 규칙을 유지합니다. 전환 후 세계·RNG·선박·시설은 그대로이며 이후 AI의 선택은 달라질 수 있습니다. 되돌리려면 전환 전에 백업한 JSON을 불러오세요.</small>
+ </div><div class="custom-map-actions"><button class="text-button" id="riverPreviewBtn" type="button">하천 미리보기</button><button class="primary-button" disabled="" id="riverApplyBtn" type="button">이 세계에 적용/교체</button><button class="text-button" id="riverCancelBtn" type="button">미리보기 취소</button></div><div class="scope-note" id="riverStatus">현재 세계의 하천 정보를 확인합니다.</div></div><div aria-label="커스텀 맵 시작" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">▦</span><div><strong>커스텀 맵으로 시작</strong><small>에디터에서 제작한 V1/V2 맵 JSON을 가져와 새 세계를 생성합니다. 월드 세이브와는 다른 형식입니다.</small></div></div><div class="custom-map-actions"><a class="text-button custom-map-editor-link" href="editor.html" rel="noopener noreferrer" target="_blank" title="별도 맵 에디터 열기 (새 탭)">▦ 맵 에디터 열기</a><label class="text-button file-label">↑ 커스텀 맵 JSON 선택<input accept=".json,application/json" id="customMapInput" type="file"/></label><button class="primary-button" disabled="" id="customMapStartBtn" type="button">이 맵으로 새 세계 시작</button></div><div class="custom-map-preview" id="customMapPreview" role="status">커스텀 맵을 선택하지 않았습니다. 에디터에서 내보낸 JSON 파일을 사용하세요.</div></div></section><section aria-label="V0.7D3 전투 관측" class="below-card"><div class="seed-heading"><span class="head-icon">⚔</span><div><strong>V0.7D3 · 전투 관측</strong><small>국가전과 지역 봉기의 사격·전열·피해·탄약·재정 기록</small></div></div><label class="muted-line"><input id="combatObservationEnabled" type="checkbox"/> 전투 관측 켜기</label><p class="scope-note">켜 둔 동안 발생한 전투만 기록합니다. 최대 16,384행을 라운드·분기 접전의 완전한 묶음으로 보관하며 초과 시 오래된 묶음 전체를 교체합니다. JSON v2는 완료 요약 최대 1,024개와 실제 지급/미지급 누적을 별도 제공합니다. 기록은 현재 탭에서만 유지되므로 세계를 불러오거나 닫기 전에 내보내세요. 국가전의 지속 라운드와 봉기의 분기별 별도 접전을 구분합니다.</p><div class="file-actions"><button class="text-button" disabled="" id="combatObservationCsv" type="button">↓ 전투 관측 CSV</button><button class="text-button" disabled="" id="combatObservationJson" type="button">↓ 전투 관측 JSON</button><button class="text-button" disabled="" id="combatObservationSummary" type="button">↓ 요약 JSON (경량)</button><button class="text-button" disabled="" id="combatObservationGzip" type="button">↓ 상세 JSON.gz (압축)</button><button class="text-button" disabled="" id="combatObservationClear" type="button">기록 비우기</button></div><div class="scope-note" id="combatObservationStatus" role="status">관측 OFF</div></section><details aria-label="세계 정책·재정 감사 통합 도구" class="sidebar-card army-roster-collapsible e3c-audit-root" id="e3cPolicyAuditCard"><summary><span><span class="eyebrow">POLICY &amp; GOVERNANCE AUDIT</span><strong>▣ 정책·재정·군사 통합 감사</strong><small>F4A · E7C · E7A1 · E2A 진단 · 필요할 때만 실행</small></span><span aria-hidden="true" class="army-roster-chevron">⌄</span></summary><div class="army-roster-content"><div class="e3c-audit-controls"><label for="e3cAuditNation">분석 국가</label><select aria-label="정책 감사 국가 선택" id="e3cAuditNation"></select></div><div class="e3c-audit-content" id="e3cPolicyAuditContent"></div><p class="scope-note">진단은 정책 명령과 분리된 읽기·내보내기 도구입니다. 기존 E7A 진단 모드 설정은 여기에서 변경할 수 있습니다. 세계 시뮬레이션 RNG 및 정책 결정 규칙은 변경하지 않습니다.</p></div></details><section aria-label="D1A2 세계 문화 분포" class="below-card d2-culture-world-card"><div class="seed-heading"><span class="head-icon">◉</span><div><strong>D1A2 · 세계 문화 분포</strong><small>현재 민간 인구 · 존재 국가 수 · 문화는 국경과 독립적</small></div></div><div class="d2-culture-world-list" id="d2WorldCultureList"></div><p class="scope-note">민간 인구만 집계하며 훈련병·예비병·현역은 별도 군사 인구입니다. 문화 혼합도는 정치적 불안이나 문화적 불만을 뜻하지 않습니다.</p></section><section aria-label="D1A1 문화 인구 회계 진단" class="below-card"><div class="seed-heading"><span class="head-icon">♧</span><div><strong>D1A1 · 문화 인구 회계</strong><small>국가와 분리된 문화 ID · 민간·훈련·예비·현역 총량 검사</small></div></div><p class="scope-note">문화는 아직 AI·전투·경제에 영향을 주지 않습니다. C6 세이브는 문화 기록이 없어 추정 초기화합니다. 검사 버튼을 눌렀을 때만 전체 집계를 수행합니다.</p><div class="file-actions"><button class="text-button" id="cultureAuditBtn" type="button">문화 구성·인원 검증</button><button class="text-button" id="cultureAuditJsonBtn" type="button">↓ 문화 회계 JSON</button></div><div class="scope-note" id="cultureAuditResult">검사 전 · 월드에 문화 인원 회계가 적용되어 있습니다.</div></section><section aria-label="RNG 정책 설정" class="below-card rng-options"><div class="seed-heading"><span class="head-icon">⚄</span><div><strong>시뮬레이션 RNG 설정</strong><small>시드 기반 재현성이 기본값이며, 선택 시 달력 경계에서 난수를 다시 주입합니다.</small></div></div>
 <label class="rng-fixed-row"><input checked="" id="rngFixedToggle" type="checkbox"/> RNG 고정 <small>(기본 ON)</small></label>
 <label class="rng-period-row" for="rngPeriodSelect">고정 해제 시 재설정 주기 <select disabled="" id="rngPeriodSelect"><option selected="" value="120">1년 (120일)</option><option value="30">1분기 (30일)</option></select></label>
 <div aria-live="polite" class="rng-description" id="rngPolicyStatus">고정 RNG · 같은 시드와 같은 초기 조건에서 동일한 역사를 재현합니다.</div></section><section aria-label="E3E2 세계 인구와 식량 균형" class="sidebar-card"><div class="card-heading"><div><div class="eyebrow">POPULATION &amp; FOOD · E3E2</div><h2>세계 인구·식량 균형</h2></div><span class="small-label">최근 4분기·1년</span></div><div class="world-era-list" id="e3e2WorldDemography"></div><div class="file-actions"><button class="text-button" id="e3e2WorldJson" type="button">↓ 인구·식량 JSON</button><button class="text-button" id="e3e2WorldCsv" type="button">↓ 인구·식량 CSV</button></div><p class="scope-note">이관 시 과거 분기는 소급 생성하지 않습니다. 기아 사망은 4개 실측 분기와 2분기 연속 부족 이후 연말에 발생합니다.</p></section><section aria-label="E3E3 자원 생산·물류" class="sidebar-card"><div class="card-heading"><div><div class="eyebrow">RESOURCE SUPPLY · E3E3</div><h2>목재 회복·국제 물류</h2></div><span class="small-label">최근 4분기</span></div><div class="world-era-list" id="e3e3WorldSupply"></div><div class="file-actions"><button class="text-button" id="e3e3SupplyJson" type="button">↓ 자원·물류 JSON</button><button class="text-button" id="e3e3SupplyCsv" type="button">↓ 자원·물류 CSV</button></div></section><section class="sidebar-card" aria-label="G2 산업·군대 현대화 진단" id="g1DiagnosticsCard"><div class="card-heading"><div><div class="eyebrow">V0.7G2 · INDUSTRY / REARM AUDIT</div><h2>산업 수요·재무장·AP 감사</h2></div><span class="small-label">G5 전열 교리 · 부분 재무장</span></div><p class="scope-note">세이브에 없는 과거 재무장 실패는 추정하지 않습니다. ON 이후의 실제 AI 판단·산업 분기만 기록합니다. 관측 기록은 세이브에 포함되지 않으므로 탭을 닫기 전에 내보내세요. 재무장 가능 인원은 실제 계획이 아닌 가상 상한입니다.</p><label class="muted-line"><input type="checkbox" id="g1ObserveToggle"/> G5 진단 기록 ON</label><div class="file-actions"><button class="text-button" type="button" id="g1ObserveRefresh">↻ 현황 갱신</button><button class="text-button" type="button" id="g1ObserveJson">↓ G3 통합 JSON</button><button class="text-button" type="button" id="g1IndustryCsv">↓ 산업 현황 CSV</button><button class="text-button" type="button" id="g1RearmCsv">↓ 재무장 이력 CSV</button><button class="text-button" type="button" id="g2AuditCsv">↓ G3 AP·국가별 판단 CSV</button> <button id="g3OrderCsv" type="button">G3 주문 생명주기 CSV</button> <button id="g3PerfCsv" type="button">G3 재무장 판단 시간 CSV</button> <button id="g5DoctrineCsv" type="button">G5 전열 편제 CSV</button> <button id="g5HistoryCsv" type="button">G5 재배치·부분 재무장 CSV</button><button class="text-button" type="button" id="g1ObserveClear">관측 기록 비우기</button></div><p class="scope-note" id="g1ObserveStatus">관측 OFF</p><div id="g1NationSummary"></div></section><section aria-label="문명 시대 분포" class="sidebar-card era-world-card"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION ERAS</div><h2>세계 문명 시대</h2></div><span class="small-label" id="worldEraTotal">0개국</span></div><div class="world-era-list" id="worldEraList"></div></section><section class="sidebar-card trade-world-card"><div class="card-heading"><div><div class="eyebrow">INTERNATIONAL TRADE</div><h2>국제 교역 현황</h2></div><span class="small-label" id="worldTradeTotal">최근 0건</span></div><div class="trade-log-list" id="worldTradeList"></div><p class="scope-note">직접 육상 교역과 유상 간접 국제시장 거래를 지원합니다. 간접교역은 우선 식량에 최대 70%, 비식량 상품에 남은 운송량을 배분한 뒤 미사용 여력을 식량에 돌립니다. 교역로·외교 관계·안전 재고·분기 운송 한도를 유지합니다.</p></section><section aria-label="AI 프로필 편집기" class="below-card ai-editor-card" id="aiEditorRoot"></section><section class="sidebar-card notes-card"><div class="card-heading"><div><div class="eyebrow">DEVELOPMENT</div><h2>V0.7E3D · 편제별 병종 아이콘·훈장·전적 시각화</h2></div><span class="small-label">0.7E3D</span></div>
@@ -945,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3D'; // independent dedicated merchant marine, shared physical naval engine
+const VERSION = 'V0.9G3E'; // cylindrical east-west topology; merchant marine retained
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -2923,7 +2928,7 @@ function h2jValid(w){
 function h2jRearSafe(w,a){
  if(!atSafeSettlement(w,a))return false;
  const start=w.tiles[a.tileId];if(!start)return false;
- for(const t of w.tiles){if(Math.abs(start.x-t.x)+Math.abs(start.y-t.y)>2)continue;
+ for(const t of w.tiles){if(g3eManhattan(w,start,t)>2)continue;
   if(t.ownerId!==null&&t.ownerId!==a.nationId&&w.nations[t.ownerId]?.active)return false;
   if(t.occupiedBy!==null&&t.occupiedBy!==a.nationId)return false;
  }
@@ -3163,7 +3168,7 @@ function h1dFindReturn(w,n){
  for(const a of candidates.slice(0,8)){
   const targets=cores.slice().sort((x,y)=>{
    const p=pointOf(a.tileId,w.size),q=pointOf(x,w.size),r=pointOf(y,w.size);
-   return (Math.abs(p.x-q.x)+Math.abs(p.y-q.y))-(Math.abs(p.x-r.x)+Math.abs(p.y-r.y))||x-y;
+   return g3eManhattan(w,p,q)-g3eManhattan(w,p,r)||x-y;
   });
   let target=null;
   for(const id of targets.slice(0,10))if(landRoute(w,a.tileId,id,t=>t.ownerId===n.id&&t.occupiedBy===null,n.id)){target=id;break;}
@@ -3528,7 +3533,7 @@ function iReachable(w,n,sourceTiles,siteTiles){
  for(const id of sourceTiles){if(!seen.has(id)){seen.add(id);queue.push(id);}}
  for(let at=0;at<queue.length;at++){
   const id=queue[at];
-  for(const nb of neighbors4(id,w.size,w.height)){
+  for(const nb of neighbors4(id,w.size,w.height,w)){
    if(seen.has(nb))continue;
    const t=w.tiles[nb];
    if(t?.ownerId!==n.id||!TERRAINS[t.terrain]?.passable||!(t.roadLevel>0||endpoints.has(nb)))continue;
@@ -3814,7 +3819,7 @@ function i1RoadPath(w,n,fromSid,toSid){
  const start=from.coreTileId,goal=to.coreTileId,seen=new Set([start]),queue=[start],parent=new Map();
  for(let at=0;at<queue.length;at++){
   const id=queue[at];if(id===goal)break;
-  for(const nb of neighbors4(id,w.size,w.height)){
+  for(const nb of neighbors4(id,w.size,w.height,w)){
    const t=w.tiles[nb];if(seen.has(nb)||t?.ownerId!==n.id||!TERRAINS[t.terrain]?.passable||t.occupiedBy!==null)continue;
    const current=w.tiles[id],insideSame=(current.settlementId===t.settlementId)&&
       (current.settlementId===fromSid||current.settlementId===toSid);
@@ -4757,7 +4762,7 @@ function getTerritoryMetrics(world,nationId){
   }
   for(let i=0;i<queue.length;i++){
     const id=queue[i],nextDist=distances[id]+1;
-    for(const near of neighbors4(id,world.size,world.height)){
+    for(const near of neighbors4(id,world.size,world.height,world)){
       if(world.tiles[near].ownerId===nationId&&distances[near]<0){distances[near]=nextDist;queue.push(near);}
     }
   }
@@ -4788,17 +4793,17 @@ function getTerritoryMetrics(world,nationId){
  * A narrow chain is measured from the candidate back toward the nearest junction.
  * Geography may justify a natural one-tile pass; this is a preference, not a ban. */
 function claimShape(world,nationId,targetTileId){
-  const adjacent=neighbors4(targetTileId,world.size,world.height).filter(id=>world.tiles[id].ownerId===nationId);
+  const adjacent=neighbors4(targetTileId,world.size,world.height,world).filter(id=>world.tiles[id].ownerId===nationId);
   const target=world.tiles[targetTileId];
   if(!target)return {adjacentOwned:0,tendrilDepth:0,naturalPassage:false};
-  const surrounds=neighbors4(targetTileId,world.size,world.height);
+  const surrounds=neighbors4(targetTileId,world.size,world.height,world);
   const naturalPassage=surrounds.filter(id=>!TERRAINS[world.tiles[id].terrain]?.passable).length>=2;
   if(adjacent.length!==1)return {adjacentOwned:adjacent.length,tendrilDepth:0,naturalPassage};
   let prev=targetTileId,current=adjacent[0],depth=0;
   const seen=new Set([prev]);
   while(depth<6&&!seen.has(current)){
     seen.add(current);
-    const links=neighbors4(current,world.size,world.height).filter(id=>world.tiles[id].ownerId===nationId);
+    const links=neighbors4(current,world.size,world.height,world).filter(id=>world.tiles[id].ownerId===nationId);
     // Stop at a town or a widened front, rather than classing it as a thin tail.
     if(world.tiles[current].settlementId!==null||links.length>=3)break;
     depth++;
@@ -4812,7 +4817,7 @@ function claimShape(world,nationId,targetTileId){
 function getClaimCost(world,nationId,targetTileId,metrics=null){
   const tile=world.tiles[targetTileId];
   if(!tile||!TERRAINS[tile.terrain]?.passable||tile.ownerId!==null)return null;
-  const adjacent=neighbors4(targetTileId,world.size,world.height).filter(id=>world.tiles[id].ownerId===nationId);
+  const adjacent=neighbors4(targetTileId,world.size,world.height,world).filter(id=>world.tiles[id].ownerId===nationId);
   if(adjacent.length===0)return null;
   const travel=metrics?.nationId===nationId?metrics:getTerritoryMetrics(world,nationId);
   const best=Math.min(...adjacent.map(id=>travel.distances[id]>=0?travel.distances[id]+1:world.size*2));
@@ -6209,14 +6214,14 @@ function v08jArmorFronts(w,nid){
  if(!opponents.size)return [];
  const fronts=[];
  for(const t of w.tiles){if(t.ownerId!==nid||t.terrain==='water'||t.occupiedBy!==null||t.terrain==='mountain')continue;
-  if(neighbors4(t.id,w.size,w.height).some(id=>opponents.has(w.tiles[id]?.ownerId)))fronts.push(t);
+  if(neighbors4(t.id,w.size,w.height,w).some(id=>opponents.has(w.tiles[id]?.ownerId)))fronts.push(t);
  }
  return fronts.slice(0,120); // bounded deterministic candidate search
 }
 function v08jArmorCandidate(w,n,a,fronts){
  if(!fronts.length)return {army:a,score:a.morale/100,frontTileId:null,distance:null,reason:'PEACETIME'};
  const ax=a.tileId%w.size,ay=Math.floor(a.tileId/w.size);
- const closest=fronts.map(t=>({tile:t,dist:Math.abs(t.x-ax)+Math.abs(t.y-ay)}))
+ const closest=fronts.map(t=>({tile:t,dist:g3eManhattan(w,t,{x:ax,y:ay})}))
   .sort((x,y)=>x.dist-y.dist||x.tile.id-y.tile.id).slice(0,5);
  for(const item of closest){
   const route=landRoute(w,a.tileId,item.tile.id,t=>t.ownerId===n.id&&t.occupiedBy===null&&t.terrain!=='mountain',n.id);
@@ -6246,7 +6251,7 @@ function v08fQuarter(w){
    executeNationAction(w,n.id,{type:'TANK_CREW',armyId:refill.armyId,tankId:refill.id});continue;
   }
   const frontline=v08jArmorFronts(w,n.id);
-  const distances=a=>frontline.length?Math.min(...frontline.map(t=>Math.abs(t.x-a.tileId%w.size)+Math.abs(t.y-Math.floor(a.tileId/w.size)))):0;
+  const distances=a=>frontline.length?Math.min(...frontline.map(t=>g3eManhattan(w,t,w.tiles[a.tileId]))):0;
   const choices=w.armies.filter(a=>a.nationId===n.id&&v08fSafeArmy(w,a)&&v08fEscort(a)>=30&&v08fTanks(w,a).length<2&&v08fActionLegal(w,n.id,{type:'TANK_DEPLOY',armyId:a.id}))
    .sort((a,b)=>distances(a)-distances(b)||a.id-b.id).slice(0,10)
    .map(a=>v08jArmorCandidate(w,n,a,frontline)).sort((a,b)=>b.score-a.score||v08fTanks(w,a.army).length-v08fTanks(w,b.army).length||a.army.id-b.army.id);
@@ -7020,7 +7025,7 @@ function fortificationNetwork(w){
     const t=w.tiles[d.tileId];
     return {id:d.tileId,missing:!t,status:d.status,healthy:d.hp>0,
       owner:t?.ownerId,occupied:t?.occupiedBy,
-      flanks:t?neighbors4(d.tileId,w.size,w.height).map(id=>
+      flanks:t?neighbors4(d.tileId,w.size,w.height,w).map(id=>
         ({id,owner:w.tiles[id].ownerId,occupied:w.tiles[id].occupiedBy})):[]};
   });
   const forts=new Map(),blocked=new Map(),lines=[],links=[];
@@ -7038,10 +7043,10 @@ function fortificationNetwork(w){
     // Orthogonal shortest path length one or two. The first safe midpoint by
     // ascending tile ID deterministically resolves the 2-route diagonal tie.
     const candidates=new Map();
-    for(const mid of neighbors4(start,w.size,w.height).sort((a,b)=>a-b)){
+    for(const mid of neighbors4(start,w.size,w.height,w).sort((a,b)=>a-b)){
       if(!isSafe(mid,owner))continue;
       if(mid>start&&forts.get(mid)===owner)candidates.set(mid,[start,mid]);
-      for(const end of neighbors4(mid,w.size,w.height)){
+      for(const end of neighbors4(mid,w.size,w.height,w)){
         if(end<=start||forts.get(end)!==owner||!isSafe(end,owner))continue;
         if(!candidates.has(end))candidates.set(end,[start,mid,end]);
       }
@@ -7118,7 +7123,7 @@ function shortestRoadPath(w,start,end,allowed,mode='march',canExpand=null,nation
   while(heap.length){
     const [rank,u]=pop();if(rank>cost[u]+estimate(u)+1e-8)continue;if(u===end)break;
     if(canExpand&&u!==start&&!canExpand(u))continue;
-    for(const v of (mode==='military'?neighborsMilitary8(u,size,w.height):neighbors4(u,size,w.height))){
+    for(const v of (mode==='military'?neighborsMilitary8(u,size,w.height,w):neighbors4(u,size,w.height,w))){
       const t=w.tiles[v];if(!TERRAINS[t.terrain].passable||!allowed(t))continue;
       if(mode==='military'&&!militaryStepPermitted(w,u,v,nationId,fortNet))continue;
       // G2A tactical A*: both actual road/tech speed and sqrt(2) diagonal cost.
@@ -7150,7 +7155,7 @@ function roadConnections(w,nationId){
     for(let k=0;k<queue.length;k++){
       const id=queue[k],tile=w.tiles[id];count++;if(tile.roadLevel===2)advanced++;
       if(coreSet.has(id))segment.push(id);
-      for(const next of neighbors4(id,w.size,w.height)){
+      for(const next of neighbors4(id,w.size,w.height,w)){
         const t=w.tiles[next];
         if(visited.has(next)||t.ownerId!==nationId||t.occupiedBy!==null||roadLevel(t)===0)continue;
         visited.add(next);queue.push(next);
@@ -7171,7 +7176,7 @@ function isRoadSupplied(w,army){
   const queue=[army.tileId],seen=new Set(queue);
   for(let k=0;k<queue.length;k++){
     const id=queue[k];if(targetCores.has(id))return true;
-    for(const nb of neighbors4(id,w.size,w.height)){
+    for(const nb of neighbors4(id,w.size,w.height,w)){
       const x=w.tiles[nb];if(seen.has(nb)||x.ownerId!==army.nationId||x.occupiedBy!==null||roadLevel(x)===0)continue;
       seen.add(nb);queue.push(nb);
     }
@@ -7198,7 +7203,7 @@ function roadCandidate(w,nationId){
     const nearest=[];
     for(const t of mine){
       const b=t.coreTileId;if(a===b||component.get(a)===component.get(b))continue;
-      const dist=Math.abs(ax-b%w.size)+Math.abs(ay-Math.floor(b/w.size));
+      const dist=g3eManhattan(w,{x:ax,y:ay},w.tiles[b]);
       if(dist>160)continue;
       nearest.push({a:Math.min(a,b),b:Math.max(a,b),dist});
     }
@@ -7232,7 +7237,7 @@ function roadCandidate(w,nationId){
     if(bestNet){
       const important=new Set(bestNet.cores);
       const close=new Set(bestNet.cores);
-      for(const core of bestNet.cores)for(const tid of neighbors4(core,w.size,w.height))close.add(tid);
+      for(const core of bestNet.cores)for(const tid of neighbors4(core,w.size,w.height,w))close.add(tid);
       const candidate=w.tiles.find(t=>t.ownerId===nationId&&t.roadLevel===1&&t.occupiedBy===null&&close.has(t.id)&&roadLegal(w,nationId,{type:'UPGRADE_ROAD',targetTileId:t.id}));
       if(candidate)return {action:{type:'UPGRADE_ROAD',targetTileId:candidate.id},utility:.70+Math.min(3,bestNet.cores.length)*.02};
     }
@@ -7872,7 +7877,7 @@ function tradeRoute(w,a,b){
   for(const t of starts){queue.push({id:t.id,neutral:0,dist:0,roads:t.roadLevel||0});visited.add(`${t.id}:0`);}
   for(let i=0;i<queue.length;i++){
     const at=queue[i];if(at.dist>12)continue;
-    for(const id of neighbors4(at.id,w.size,w.height)){
+    for(const id of neighbors4(at.id,w.size,w.height,w)){
       const t=w.tiles[id];if(t.terrain==='water'||t.occupiedBy!==null||![null,a,b].includes(t.ownerId))continue;
       const neutral=at.neutral+(t.ownerId===null?1:0);if(neutral>4)continue;
       if(t.ownerId===b){
@@ -8676,7 +8681,7 @@ function i2LineOnline(w,line){const a=i2Station(w,line.from),b=i2Station(w,line.
  for(let k=0;k<line.path.length;k++){const t=w.tiles[line.path[k]];
   if(!t||t.ownerId!==line.ownerId||t.occupiedBy!==null||w.occupations.some(o=>o.tileId===t.id))return false;
   if(k){const prev=w.tiles[line.path[k-1]],sameTown=prev.settlementId===t.settlementId&&[line.from,line.to].includes(t.settlementId);
-   if(!neighbors4(t.id,w.size,w.height).includes(prev.id)||!sameTown&&!(prev.roadLevel>0&&t.roadLevel>0))return false;}
+   if(!neighbors4(t.id,w.size,w.height,w).includes(prev.id)||!sameTown&&!(prev.roadLevel>0&&t.roadLevel>0))return false;}
  }
  return true;
 }
@@ -10864,7 +10869,7 @@ function e3e2RenderStatsDemography(){
 
 
 
-const footprintDistance=(a,b,size)=>{const p=pointOf(a,size),q=pointOf(b,size);return Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
+const footprintDistance=(a,b,size,world=null)=>{const p=pointOf(a,size),q=pointOf(b,size);return world?g3eManhattan(world,p,q):Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
 const TYPES_BY_RESOURCE={food:'farm',wood:'lumber',stone:'quarry',iron:'mine'};
 
 function openBuildingSites(world,settlement,kind=null,siteUsage=null){
@@ -10903,10 +10908,10 @@ function settlementExpansionCandidate(world,s,tid,demand=null){
   const tile=world.tiles[tid];
   if(!s||!tile||s.tileIds.length>=settlementFootprintCapacity(world,s.ownerId).maxTiles||tile.ownerId!==s.ownerId||tile.settlementId!==null||tile.occupiedBy!==null)return null;
   if(navyF5PortCount(world,s.id)&&world.buildings.some(b=>b.typeId==='port'&&b.tileId===tid))return null;
-  const radius=footprintDistance(tid,s.coreTileId,world.size);
+  const radius=footprintDistance(tid,s.coreTileId,world.size,world);
   if(radius>settlementFootprintCapacity(world,s.ownerId).maxRadius)return null;
   const members=new Set(s.tileIds);
-  const contacts=neighbors4(tid,world.size,world.height).filter(id=>members.has(id)).length;
+  const contacts=neighbors4(tid,world.size,world.height,world).filter(id=>members.has(id)).length;
   if(!contacts)return null;
   const need=demand||settlementExpansionDemand(world,s);
   if(!need.needed)return null;
@@ -10936,12 +10941,12 @@ function settlementMergeAssessment(world,a,b){
   if(a.tileIds.length+b.tileIds.length>cap.maxTiles)return null;
   if((a.formerCapitalOf?.length||0)&&(b.formerCapitalOf?.length||0))return null;
   const primary=settlementMergePrimary(world,a,b);
-  const coreDistance=footprintDistance(a.coreTileId,b.coreTileId,world.size);
+  const coreDistance=footprintDistance(a.coreTileId,b.coreTileId,world.size,world);
   if(coreDistance>cap.maxRadius)return null;
-  if([...a.tileIds,...b.tileIds].some(id=>footprintDistance(id,primary.coreTileId,world.size)>cap.maxRadius))return null;
+  if([...a.tileIds,...b.tileIds].some(id=>footprintDistance(id,primary.coreTileId,world.size,world)>cap.maxRadius))return null;
   const bTiles=new Set(b.tileIds);
   let sharedEdges=0;
-  for(const tid of a.tileIds)for(const nid of neighbors4(tid,world.size,world.height))if(bTiles.has(nid))sharedEdges++;
+  for(const tid of a.tileIds)for(const nid of neighbors4(tid,world.size,world.height,world))if(bTiles.has(nid))sharedEdges++;
   if(sharedEdges===0)return null;
   const housingA=settlementHousing(world,a),housingB=settlementHousing(world,b);
   const crowdedA=a.population/housingA>=.85,crowdedB=b.population/housingB>=.85;
@@ -11577,12 +11582,7 @@ function applyLosses(army,loss,phase,politicalDay=null,world=null,attackChannels
   return removed;
 }
 function writeBattleEvent(world,text){world.events.push({dayIndex:world.dayIndex,text,kind:'battle'});if(world.events.length>180)world.events.shift();}
-function adjacent(id,size,height=size){
-  const x=id%size,y=Math.floor(id/size),out=[];
-if(x>0)out.push(id-1);if(x<size-1)out.push(id+1);
-  if(y>0)out.push(id-size);if(y<height-1)out.push(id+size);
-  return out;
-}
+function adjacent(id,size,height=size,world=null){return neighbors4(id,size,height,world);}
 function blockedByEnemies(world,nationId,id){
   return world.armies.some(a=>a.tileId===id&&a.nationId!==nationId&&!allyAccess(world,nationId,a.nationId)&&hCombatPresence(world,a)>0&&a.status!=='DESTROYED');
 }
@@ -11610,7 +11610,7 @@ function planRetreat(world,army,{repatriation=false,excludeTileId=null}={}){
     if(id!==excludeTileId&&safeCore.has(id)&&tile.occupiedBy===null&&!retreatBlockedByArmies(world,army,id)){
       destination=id;break;
     }
-    for(const nb of neighborsMilitary8(id,world.size,world.height)){
+    for(const nb of neighborsMilitary8(id,world.size,world.height,world)){
       if(parents[nb]!==-1||!militaryStepPermitted(world,id,nb,army.nationId))continue;
       const t=world.tiles[nb];
       if(!TERRAINS[t.terrain].passable||t.occupiedBy!==null&&t.occupiedBy!==army.nationId||retreatBlockedByArmies(world,army,nb))continue;
@@ -11763,7 +11763,7 @@ function h1EnsureMembers(w,e){
 function h1Eligible(w,war,e,a,side){
   const tileId=side==='attackers'?e.attackerOriginTileId:e.tileId;
   const legalAttack=side!=='attackers'||e.attackerOriginTileId===e.tileId||
-    (neighbors4(e.attackerOriginTileId,w.size,w.height).includes(e.tileId)&&
+    (neighbors4(e.attackerOriginTileId,w.size,w.height,w).includes(e.tileId)&&
       canPassMilitaryTile(w,a.nationId,w.tiles[e.tileId])&&
       !fortLineBlocks(w,e.tileId,a.nationId)&&
       !hostileFortUncaptured(w,e.attackerOriginTileId,a.nationId));
@@ -12213,7 +12213,7 @@ function h1FinishMulti(w,e,winnerSide,withdrawn=false,conditions=[]){
   for(const m of winners){
     const a=h1Army(w,m.armyId);if(!a)continue;
     a.engagementId=null;a.status='READY';a.morale=battleClamp(a.morale+8,0,100);a.nextMoveDay=w.dayIndex+8;
-    if(winnerSide==='attackers'&&a.tileId!==e.tileId&&neighbors4(a.tileId,w.size,w.height).includes(e.tileId)&&
+    if(winnerSide==='attackers'&&a.tileId!==e.tileId&&neighbors4(a.tileId,w.size,w.height,w).includes(e.tileId)&&
       canPassMilitaryTile(w,a.nationId,w.tiles[e.tileId])&&!fortLineBlocks(w,e.tileId,a.nationId)&&
       !hostileFortUncaptured(w,a.tileId,a.nationId))a.tileId=e.tileId;
   }
@@ -12524,7 +12524,7 @@ function hasSupplyLine(w,a){
   const queue=[a.tileId],seen=new Set(queue);
   for(let k=0;k<queue.length;k++){
     const tileId=queue[k];if(safeCores.has(tileId))return true;
-    for(const next of neighbors4(tileId,w.size,w.height)){
+    for(const next of neighbors4(tileId,w.size,w.height,w)){
       const tile=w.tiles[next];
       if(seen.has(next)||!TERRAINS[tile.terrain].passable)continue;
       const occupant=tile.occupiedBy;
@@ -12543,7 +12543,7 @@ function hasSupplyLineF4B1Legacy(w,a){
   const queue=[a.tileId],seen=new Set(queue);
   for(let k=0;k<queue.length;k++){
     const id=queue[k];if(safeCores.has(id))return true;
-    for(const next of neighbors4(id,w.size,w.height)){
+    for(const next of neighbors4(id,w.size,w.height,w)){
       const t=w.tiles[next];if(seen.has(next)||!TERRAINS[t.terrain].passable)continue;
       if(t.occupiedBy!==null&&t.occupiedBy!==a.nationId&&!(warsOfNation(w,a.nationId).some(v=>warSide(v,t.occupiedBy)===warSide(v,a.nationId))))continue;
       if(!allyAccess(w,a.nationId,t.ownerId)&&t.occupiedBy!==a.nationId&&!(t.occupiedBy!==null&&warsOfNation(w,a.nationId).some(v=>warSide(v,t.occupiedBy)===warSide(v,a.nationId))))continue;
@@ -12592,7 +12592,7 @@ function f1SupplyMatrix(w,nationId){
     if(permitted[core]&&!reachable[core]){reachable[core]=1;queue.push(core);}
   }
   for(let k=0;k<queue.length;k++){
-    for(const next of neighbors4(queue[k],w.size,w.height)){
+    for(const next of neighbors4(queue[k],w.size,w.height,w)){
       if(permitted[next]&&!reachable[next]){reachable[next]=1;queue.push(next);}
     }
   }
@@ -12615,7 +12615,7 @@ function f1SupplyConnected(w,a){
   if(!safeCores.size)return false;
   // Original BFS checks its starting tile before enforcing entry conditions.
   if(safeCores.has(a.tileId)||reachable[a.tileId])return true;
-  for(const next of neighbors4(a.tileId,w.size,w.height))if(reachable[next])return true;
+  for(const next of neighbors4(a.tileId,w.size,w.height,w))if(reachable[next])return true;
   return false;
 }
 function militaryLosses(a,n,politicalReason='SUPPLY',politicalDay=null){
@@ -13156,7 +13156,7 @@ function adjustRelation(w,a,b,delta){
   w.changeSeq++;
 }
 function hasSharedBorder(w,a,b){
-  return w.tiles.some(t=>t.ownerId===a&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].ownerId===b));
+  return w.tiles.some(t=>t.ownerId===a&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].ownerId===b));
 }
 /** E1: reuse a single nation frontier scan for this quarter's diplomacy. */
 function quarterBorderPairs(w){
@@ -13374,9 +13374,9 @@ function aiCallDecision(w,call,prospectiveWar=null){
  const n=w.nations[call.allyId],foe=w.nations[war.attackerId],p=w.aiProfiles[n.aiProfileId];
  const ally=w.nations[call.defenderId];
  const own=nationManpower(w,n.id),enemy=nationManpower(w,foe.id);
- const dist=Math.abs(w.tiles[n.capitalId].x-w.tiles[ally.capitalId].x)+Math.abs(w.tiles[n.capitalId].y-w.tiles[ally.capitalId].y);
+ const dist=g3eManhattan(w,w.tiles[n.capitalId],w.tiles[ally.capitalId]);
  // Only actually reachable LAND defenders may volunteer in E1. E2 expands coalition transport.
- const connected=w.tiles.some(t=>t.ownerId===n.id&&neighbors4(t.id,w.size,w.height).some(x=>w.tiles[x].ownerId===ally.id));
+ const connected=w.tiles.some(t=>t.ownerId===n.id&&neighbors4(t.id,w.size,w.height,w).some(x=>w.tiles[x].ownerId===ally.id));
  const fiscal=strategicReport(w,n.id)?.financial;
  const confidence=(p?.diplomacy?.cooperation??50)*.33+relationOf(w,n.id,ally.id)*.37+
    (p?.military?.defensivePreference??50)*.19+v06aDefenseWeight(w,n.id,ally.id)+Math.min(18,own/Math.max(30,enemy)*12)-(dist>45?22:0)-(fiscal?.balance<0?15:0);
@@ -13903,14 +13903,14 @@ function c2FrontPriority(w,a,war){
   const at=w.tiles[a.tileId],opponents=warOpponents(war,a.nationId);
   let distance=Infinity;
   for(const id of opponents){const capital=w.tiles[w.nations[id]?.capitalId];
-    if(capital)distance=Math.min(distance,Math.abs(at.x-capital.x)+Math.abs(at.y-capital.y));}
+    if(capital)distance=Math.min(distance,g3eManhattan(w,at,capital));}
   const defensive=warSide(war,a.nationId)==='defenders';
   const ownCap=w.tiles[w.nations[a.nationId].capitalId];
   const crisis=defensive&&ownCap&&opponents.some(id=>w.armies.some(b=>b.nationId===id&&
-    Math.abs(w.tiles[b.tileId].x-ownCap.x)+Math.abs(w.tiles[b.tileId].y-ownCap.y)<8));
+    g3eManhattan(w,w.tiles[b.tileId],ownCap)<8));
   const ward=defensive&&v06bSubjectOf(w,war.defenderId)?.overlordId===a.nationId;
   const wardCap=ward?w.tiles[w.nations[war.defenderId].capitalId]:null;
-  const nearWard=wardCap?Math.abs(at.x-wardCap.x)+Math.abs(at.y-wardCap.y):Infinity;
+  const nearWard=wardCap?g3eManhattan(w,at,wardCap):Infinity;
   const protectorBonus=ward?24+Math.max(0,30-nearWard*1.4):0;
   return (war.kind==='INDEPENDENCE'?35:0)+(crisis?85:0)+(defensive?18:0)+protectorBonus+Math.max(0,35-distance*1.4);
 }
@@ -13928,7 +13928,7 @@ function c6LandComponents(w,nationId,fortNet){
     const q=[i];labels[i]=nextComponent;
     for(let k=0;k<q.length;k++){
       const id=q[k];if(hostileFortUncaptured(w,id,nationId,fortNet))continue;
-      for(const nb of neighborsMilitary8(id,w.size,w.height)){
+      for(const nb of neighborsMilitary8(id,w.size,w.height,w)){
         if(!open[nb]||labels[nb]!==-1||!militaryStepPermitted(w,id,nb,nationId,fortNet))continue;
         labels[nb]=nextComponent;q.push(nb);
       }
@@ -14553,7 +14553,7 @@ function buildGeopoliticalReports(w,force=false){
   // Edge-sharing only; each pair counted once even if both sides have many border cells.
   for(const t of w.tiles){
     const a=t.ownerId;if(a===null||!stats.has(a))continue;
-    for(const id of neighbors4(t.id,w.size,w.height)){
+    for(const id of neighbors4(t.id,w.size,w.height,w)){
       const b=w.tiles[id].ownerId;if(b===null||a>=b||!stats.has(b))continue;
       borders.set(key(a,b),(borders.get(key(a,b))||0)+1);
     }
@@ -14582,9 +14582,9 @@ function buildGeopoliticalReports(w,force=false){
       const trade=tradeVolume.get(key(n.id,foe.id))||0;
       const tradeShare=geoClamp(trade/Math.max(60,(s.quarterIncome||1)*4),0,1);
       const threat=geoClamp(100*(.29*hostility+.24*enemyThreat+.18*(foeProfile?.military?.aggression??50)/100+.15*historical+.14*geoClamp(contact/5,0,1)),0,100);
-      const ourBorder=w.tiles.filter(t=>t.ownerId===n.id&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].ownerId===foe.id));
+      const ourBorder=w.tiles.filter(t=>t.ownerId===n.id&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].ownerId===foe.id));
       // Defense burden is a property of actual frontier positions, not combat strength again.
-      const foeBorder=w.tiles.filter(t=>t.ownerId===foe.id&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].ownerId===n.id));
+      const foeBorder=w.tiles.filter(t=>t.ownerId===foe.id&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].ownerId===n.id));
       const resistance=foeBorder.length?foeBorder.reduce((sum,t)=>sum+regionalMilitaryStats(w,t.id).resistance,0)/foeBorder.length:0;
       const siegeBurden=geoClamp(Math.log1p(resistance/100)/Math.log(5),0,1);
       const accessible=foeBorder.some(t=>TERRAINS[t.terrain].passable);
@@ -14616,7 +14616,7 @@ function buildGeopoliticalReports(w,force=false){
 function geopoliticalGoalScore(w,attackerId,defenderId,tileId,settlement=null){
   const t=w.tiles[tileId],own=w.nations[attackerId],foe=w.nations[defenderId],p=d1dEffectiveProfile(w,attackerId);
   if(!t||t.ownerId!==defenderId)return -Infinity;
-  const ownBorder=neighbors4(tileId,w.size,w.height).filter(id=>w.tiles[id].ownerId===attackerId).length;
+  const ownBorder=neighbors4(tileId,w.size,w.height,w).filter(id=>w.tiles[id].ownerId===attackerId).length;
   const s=settlement||w.settlements.find(v=>v.coreTileId===tileId&&v.ownerId===defenderId);
   const population=s?.population||0,development=s?.development||0;
   const terrainValue={plain:4,grass:3,forest:4,rock:3,mountain:1}[t.terrain]||0;
@@ -14624,8 +14624,8 @@ function geopoliticalGoalScore(w,attackerId,defenderId,tileId,settlement=null){
   const core=foe.capitalId===tileId?9:0;
   const stat=regionalMilitaryStats(w,tileId);
   const defensePenalty=Math.min(16,Math.log1p(stat.resistance/65)*6+Math.log1p(stat.firepower/65)*4);
-  const distance=w.tiles.filter(v=>v.ownerId===attackerId&&neighbors4(v.id,w.size,w.height).some(id=>w.tiles[id].ownerId===defenderId));
-  const nearest=distance.length?Math.min(...distance.map(v=>Math.abs(v.x-t.x)+Math.abs(v.y-t.y))):15;
+  const distance=w.tiles.filter(v=>v.ownerId===attackerId&&neighbors4(v.id,w.size,w.height,w).some(id=>w.tiles[id].ownerId===defenderId));
+  const nearest=distance.length?Math.min(...distance.map(v=>g3eManhattan(w,v,t))):15;
   return (ownBorder*7+terrainValue+core+cultural+Math.min(13,population/300)+development/20-
     defensePenalty-nearest*(.9+(100-(p?.behavior?.riskTolerance??50))/220));
 }
@@ -14642,12 +14642,12 @@ function validateStrategicReports(w){
 /** Lightweight war objectives and transparent war-result evaluation. */
 
 const warGoalClamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-function warGoalDistance(w,x,y){const a=w.tiles[x],b=w.tiles[y];return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);}
+function warGoalDistance(w,x,y){return g3eManhattan(w,w.tiles[x],w.tiles[y]);}
 function chooseWarGoal(w,attackerId,defenderId){
-  const frontier=w.tiles.filter(t=>t.ownerId===defenderId&&neighbors4(t.id,w.size,w.height).some(nb=>w.tiles[nb].ownerId===attackerId));
+  const frontier=w.tiles.filter(t=>t.ownerId===defenderId&&neighbors4(t.id,w.size,w.height,w).some(nb=>w.tiles[nb].ownerId===attackerId));
   const towns=w.settlements.filter(s=>s.ownerId===defenderId);
   const accessible=new Set(frontier.map(t=>t.id)),queue=[...accessible];
-  for(let i=0;i<queue.length;i++)for(const id of neighbors4(queue[i],w.size,w.height)){const t=w.tiles[id];if(t.ownerId===defenderId&&!accessible.has(id)&&TERRAINS[t.terrain].passable){accessible.add(id);queue.push(id);}}
+  for(let i=0;i<queue.length;i++)for(const id of neighbors4(queue[i],w.size,w.height,w)){const t=w.tiles[id];if(t.ownerId===defenderId&&!accessible.has(id)&&TERRAINS[t.terrain].passable){accessible.add(id);queue.push(id);}}
   const options=[];
   for(const town of towns){
     if(!accessible.has(town.coreTileId))continue;
@@ -14868,8 +14868,8 @@ const MAX_SEA_TILES=24;
 function seaLandingRoute(w,originId,destId,maxWater=MAX_SEA_TILES){
   const start=w.tiles[originId],end=w.tiles[destId];
   if(!start||!end||start.terrain==='water'||end.terrain==='water'||start.id===end.id)return null;
-  const starts=neighbors4(originId,w.size,w.height).filter(id=>w.tiles[id].terrain==='water');
-  const ends=new Set(neighbors4(destId,w.size,w.height).filter(id=>w.tiles[id].terrain==='water'));
+  const starts=neighbors4(originId,w.size,w.height,w).filter(id=>w.tiles[id].terrain==='water');
+  const ends=new Set(neighbors4(destId,w.size,w.height,w).filter(id=>w.tiles[id].terrain==='water'));
   if(!starts.length||!ends.size)return null;
   const visited=new Int16Array(w.tiles.length).fill(-1),previous=new Int32Array(w.tiles.length).fill(-1),queue=[];
   for(const id of starts){visited[id]=1;queue.push(id);}
@@ -14877,21 +14877,21 @@ function seaLandingRoute(w,originId,destId,maxWater=MAX_SEA_TILES){
     const id=queue[qi],depth=visited[id];
     if(ends.has(id)){const path=[id];let c=id;while(previous[c]>=0){c=previous[c];path.push(c);}path.reverse();return path;}
     if(depth>=maxWater)continue;
-    for(const nb of neighbors4(id,w.size,w.height))if(visited[nb]===-1&&w.tiles[nb].terrain==='water'){
+    for(const nb of neighbors4(id,w.size,w.height,w))if(visited[nb]===-1&&w.tiles[nb].terrain==='water'){
       visited[nb]=depth+1;previous[nb]=id;queue.push(nb);
     }
   }
   return null;
 }
 function maritimeContact(w,nationId,otherId){
-  const shores=w.tiles.filter(t=>t.ownerId===nationId&&t.terrain!=='water'&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].terrain==='water'));
-  const targetCoasts=new Set(w.tiles.filter(t=>t.ownerId===otherId&&t.terrain!=='water'&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].terrain==='water')).map(t=>t.id));
+  const shores=w.tiles.filter(t=>t.ownerId===nationId&&t.terrain!=='water'&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].terrain==='water'));
+  const targetCoasts=new Set(w.tiles.filter(t=>t.ownerId===otherId&&t.terrain!=='water'&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].terrain==='water')).map(t=>t.id));
   if(!shores.length||!targetCoasts.size)return false;
   const visited=new Uint8Array(w.tiles.length),queue=[];
-  for(const t of shores)for(const id of neighbors4(t.id,w.size,w.height))if(w.tiles[id].terrain==='water'&&!visited[id]){visited[id]=1;queue.push(id);}
+  for(const t of shores)for(const id of neighbors4(t.id,w.size,w.height,w))if(w.tiles[id].terrain==='water'&&!visited[id]){visited[id]=1;queue.push(id);}
   for(let i=0;i<queue.length;i++){
     const id=queue[i],depth=visited[id];
-    for(const nb of neighbors4(id,w.size,w.height)){
+    for(const nb of neighbors4(id,w.size,w.height,w)){
       if(targetCoasts.has(nb))return true;
       if(depth<MAX_SEA_TILES&&w.tiles[nb].terrain==='water'&&!visited[nb]){visited[nb]=depth+1;queue.push(nb);}
     }
@@ -14983,7 +14983,7 @@ function isMilitaryActionLegal(w,nationId,act){
       if(!target?.active||target.id===nationId||atWar(w,nationId,target.id)||!c2CanStartWar(w,[nationId],[target.id]))return false;
       if((n.truces?.[target.id]||0)>w.dayIndex||(target.truces?.[nationId]||0)>w.dayIndex)return false;
       if(!w.armies.some(a=>a.nationId===nationId&&hCombatPresence(w,a)>=12))return false;
-      return w.tiles.some(t=>t.ownerId===nationId&&neighborsMilitary8(t.id,w.size,w.height).some(x=>w.tiles[x].ownerId===target.id&&militaryStepPermitted(w,t.id,x,nationId)))||(w.size===100&&maritimeContact(w,nationId,target.id));
+      return w.tiles.some(t=>t.ownerId===nationId&&neighborsMilitary8(t.id,w.size,w.height,w).some(x=>w.tiles[x].ownerId===target.id&&militaryStepPermitted(w,t.id,x,nationId)))||(w.size===100&&maritimeContact(w,nationId,target.id));
     }
     case 'OFFER_PEACE':{
       const war=c2PeaceWar(w,nationId,act);
@@ -15048,13 +15048,13 @@ function planPeaceCessions(w,winnerId,loserId,tier){
     candidates.push({id:`t${t.id}`,settlementId:null,tileIds:[t.id],size:1});
   const accepted=[],allocated=new Set(),included=new Set(w.tiles.filter(t=>t.ownerId===winnerId).map(t=>t.id));
   const totalCandidateTiles=new Set(candidates.flatMap(c=>c.tileIds)).size;
-  const adjacency=c=>c.tileIds.reduce((sum,id)=>sum+neighbors4(id,w.size,w.height).filter(nb=>included.has(nb)).length,0);
+  const adjacency=c=>c.tileIds.reduce((sum,id)=>sum+neighbors4(id,w.size,w.height,w).filter(nb=>included.has(nb)).length,0);
   // Theoretical eligibility without cap: expansion through fully occupied groups only.
   const possible=new Set(included);let change=true;
   while(change){change=false;
     for(const c of candidates){
       if(c.tileIds.every(id=>possible.has(id)))continue;
-      if(c.tileIds.some(id=>neighbors4(id,w.size,w.height).some(nb=>possible.has(nb)))){
+      if(c.tileIds.some(id=>neighbors4(id,w.size,w.height,w).some(nb=>possible.has(nb)))){
         for(const id of c.tileIds)possible.add(id);change=true;
       }
     }
@@ -15070,7 +15070,7 @@ function planPeaceCessions(w,winnerId,loserId,tier){
       // Reward nearby occupied clusters and fully taken towns, but do not favor map ID.
       // A bigger footprint is an atomic investment, so compare border efficiency per tile.
       const goal=c.tileIds.includes(goalTile);
-      const singleFaces=c.tileIds.reduce((sum,id)=>sum+neighbors4(id,w.size,w.height).filter(nb=>included.has(nb)).length,0);
+      const singleFaces=c.tileIds.reduce((sum,id)=>sum+neighbors4(id,w.size,w.height,w).filter(nb=>included.has(nb)).length,0);
       const score=(goal?20:0)+(c.settlementId!==null?4:0)+singleFaces*2.7/Math.sqrt(c.size)+contact*.5-c.size*.13;
       if(score>bestScore||(score===bestScore&&c.tileIds[0]<(best?.tileIds[0]??Infinity))){best=c;bestScore=score;}
     }
@@ -15145,7 +15145,7 @@ function planCoalitionPeaceCessions(w,war,winnerId,loserId,tier,shares){
   const reachable=new Set(recipients.flatMap(id=>[...included[id]]));
   let added=true;while(added){added=false;
     for(const c of candidates){if(c.tileIds.every(id=>reachable.has(id)))continue;
-      if(c.tileIds.some(id=>neighbors4(id,w.size,w.height).some(nb=>reachable.has(nb)))){
+      if(c.tileIds.some(id=>neighbors4(id,w.size,w.height,w).some(nb=>reachable.has(nb)))){
         for(const id of c.tileIds)reachable.add(id);added=true;
       }
     }
@@ -15157,7 +15157,7 @@ function planCoalitionPeaceCessions(w,war,winnerId,loserId,tier,shares){
     let choice=null,best=-Infinity;
     for(const c of candidates){if(c.selected||acquired+c.size>max||c.tileIds.some(tid=>allocated.has(tid)))continue;
       for(const id of recipients){
-        const contact=c.tileIds.reduce((sum,tileId)=>sum+neighbors4(tileId,w.size,w.height).filter(nb=>included[id].has(nb)).length,0);
+        const contact=c.tileIds.reduce((sum,tileId)=>sum+neighbors4(tileId,w.size,w.height,w).filter(nb=>included[id].has(nb)).length,0);
         if(!contact)continue;
         const local=c.tileIds.filter(tileId=>w.tiles[tileId].occupiedBy===id).length/c.size;
         const goal=c.tileIds.includes(war.goal?.targetTileId)&&id===war.attackerId;
@@ -15540,7 +15540,7 @@ function processMilitaryDay(w,execute){
       if(!Array.isArray(a.retreatPath))a.retreatPath=[];
       if(a.retreatPath.length){
         const next=a.retreatPath[0];
-        const adjacent=neighborsMilitary8(a.tileId,w.size,w.height).includes(next)&&militaryStepPermitted(w,a.tileId,next,a.nationId);
+        const adjacent=neighborsMilitary8(a.tileId,w.size,w.height,w).includes(next)&&militaryStepPermitted(w,a.tileId,next,a.nationId);
         const tile=w.tiles[next];
         const blocked=retreatBlockedByArmies(w,a,next);
         if(!adjacent||!TERRAINS[tile.terrain].passable||blocked||(tile.occupiedBy!==null&&tile.occupiedBy!==a.nationId)||!retreatTilePermitted(w,a,tile)){
@@ -15673,7 +15673,7 @@ function nextMilitaryDay(w){
 }
 function borderEnemies(w,nationId){
   const ids=new Set();for(const t of w.tiles){if(t.ownerId!==nationId)continue;
-    for(const near of neighborsMilitary8(t.id,w.size,w.height)){const o=w.tiles[near].ownerId;if(o!==null&&o!==nationId&&w.nations[o].active&&militaryStepPermitted(w,t.id,near,nationId))ids.add(o);}
+    for(const near of neighborsMilitary8(t.id,w.size,w.height,w)){const o=w.tiles[near].ownerId;if(o!==null&&o!==nationId&&w.nations[o].active&&militaryStepPermitted(w,t.id,near,nationId))ids.add(o);}
   }return [...ids];
 }
 /** E2: a short, war-wide shared objective list calculated once per tactical refresh.
@@ -15696,7 +15696,7 @@ function coalitionFrontPlan(w,war){
    const friendlyOwner=friends.has(t.ownerId);
    if(!hostileOwner&&!friendlyOwner||!hostileOwner&&!hostileOccupier)continue;
    let neighboring=0;
-   for(const nb of neighborsMilitary8(t.id,w.size,w.height)){
+   for(const nb of neighborsMilitary8(t.id,w.size,w.height,w)){
     if(!militaryStepPermitted(w,nb,t.id))continue;
     const v=w.tiles[nb];if(friends.has(v.ownerId)||friends.has(v.occupiedBy))neighboring++;
    }
@@ -15757,7 +15757,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=
   for(const target of sharedTargets)propose(target.id,target.role,target.value+2);
    // G2A: after a completed occupation, favor reachable local continuation rather than
    // repeatedly returning to distant strategic cores. This is a preference only.
-   for(const id of neighborsMilitary8(army.tileId,w.size,w.height)){
+   for(const id of neighborsMilitary8(army.tileId,w.size,w.height,w)){
      const t=w.tiles[id];
      if(!militaryStepPermitted(w,army.tileId,id,army.nationId,fortNet)||!canPassMilitaryTile(w,army.nationId,t))continue;
      if(hostiles.has(t.ownerId)&&!friends.has(t.occupiedBy))propose(id,'LOCAL_PUSH',16+aggression*2);
@@ -15774,7 +15774,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=
   }
   // Intercept invaders threatening our own territory; do not retarget friendly garrisons.
   for(const enemy of enemySoldiers){
-    const t=w.tiles[enemy.tileId];if(friends.has(t.ownerId)||hostiles.has(t.occupiedBy)&&neighborsMilitary8(t.id,w.size,w.height).some(id=>friends.has(w.tiles[id].ownerId)))
+    const t=w.tiles[enemy.tileId];if(friends.has(t.ownerId)||hostiles.has(t.occupiedBy)&&neighborsMilitary8(t.id,w.size,w.height,w).some(id=>friends.has(w.tiles[id].ownerId)))
       propose(t.id,'INTERCEPT',11+defensive*7);
   }
   for(const s of w.settlements){
@@ -15792,7 +15792,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=
   // Enemy-owned frontier tiles make an advancing front instead of endlessly revisiting a core.
   for(const t of w.tiles){
     if(hostiles.has(t.ownerId)&&!friends.has(t.occupiedBy)){
-      const friendlyEdge=neighborsMilitary8(t.id,w.size,w.height).filter(id=>militaryStepPermitted(w,id,t.id,army.nationId,fortNet)&& (friends.has(w.tiles[id].ownerId)||friends.has(w.tiles[id].occupiedBy))).length;
+      const friendlyEdge=neighborsMilitary8(t.id,w.size,w.height,w).filter(id=>militaryStepPermitted(w,id,t.id,army.nationId,fortNet)&& (friends.has(w.tiles[id].ownerId)||friends.has(w.tiles[id].occupiedBy))).length;
       // Hold and widen an occupied front instead of drawing a single thin invasion line.
       // Even an undefended road to the enemy capital has a real opportunity cost.
       propose(t.id,'OCCUPY',8+Math.min(4,friendlyEdge)*1.45+aggression*2);
@@ -15824,7 +15824,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=
     for(let qi=0;qi<queue.length;qi++){
       const u=queue[qi];
       if(u!==army.tileId&&hostileFortUncaptured(w,u,army.nationId,fortNet))continue;
-      for(const v of neighborsMilitary8(u,w.size,w.height)){
+      for(const v of neighborsMilitary8(u,w.size,w.height,w)){
         if(found.has(v))continue;
         const t=w.tiles[v];
         if(!TERRAINS[t.terrain].passable||!canPassMilitaryTile(w,army.nationId,t)||
@@ -15857,7 +15857,7 @@ function chooseOperation(w,army,war,profile,reserved,sharedTargets=[],c6Context=
     // Duplicate strategic targets may receive several troops; no imaginary joint power.
     const advantage=defenders===0?1.0:relative<.85?1.4:0;
     const occupiedByFriend=friends.has(w.tiles[entry.id].occupiedBy);
-    const borderFaces=neighborsMilitary8(entry.id,w.size,w.height).filter(id=>{
+    const borderFaces=neighborsMilitary8(entry.id,w.size,w.height,w).filter(id=>{
        if(!militaryStepPermitted(w,id,entry.id,army.nationId,fortNet))return false;
       const t=w.tiles[id];return friends.has(t.ownerId)&&!hostiles.has(t.occupiedBy)||friends.has(t.occupiedBy);
     }).length;
@@ -16317,7 +16317,7 @@ function warDecision(w,nationId){
 function garrisonDistances(w,start,nationId){
  const distances=new Int32Array(w.tiles.length).fill(-1),queue=[start];distances[start]=0;
  for(let i=0;i<queue.length;i++){
-   const at=queue[i];for(const next of neighbors4(at,w.size,w.height)){
+   const at=queue[i];for(const next of neighbors4(at,w.size,w.height,w)){
      const t=w.tiles[next];if(distances[next]>=0||!TERRAINS[t.terrain].passable||t.ownerId!==nationId||t.occupiedBy!==null)continue;
      distances[next]=distances[at]+1;queue.push(next);
    }
@@ -16332,7 +16332,7 @@ function peacetimeBorderPosts(w,nationId){
   const foeReadiness=new Map(),ownReport=strategicReport(w,nationId),settlementCores=new Set(w.settlements.filter(s=>s.ownerId===nationId).map(s=>s.coreTileId));
   for(const t of w.tiles){
     if(t.ownerId!==nationId||t.occupiedBy!==null||!TERRAINS[t.terrain].passable)continue;
-    const threats=neighbors4(t.id,w.size,w.height).map(id=>w.tiles[id].ownerId)
+    const threats=neighbors4(t.id,w.size,w.height,w).map(id=>w.tiles[id].ownerId)
       .filter(id=>id!==null&&id!==nationId&&w.nations[id]?.active);
     if(!threats.length)continue;
     const unique=[...new Set(threats)];
@@ -17291,7 +17291,7 @@ function b4aValidate(w,fail){
 
 const costs=Object.freeze({INSTALL_WORKSHOP_POWER:1,SET_WORKSHOP_MODE:1,REDEVELOP_FACILITY:1,CLAIM_TILE:18,FOUND_SETTLEMENT:40,DEVELOP_SETTLEMENT:22,EXPAND_SETTLEMENT:16,INVEST_KNOWLEDGE:28,MERGE_SETTLEMENTS:15,TRADE_BUY:0,TRADE_SELL:0,BUILD_FACILITY:1,UPGRADE_FACILITY:1,REPAIR_FORT:1,BUILD_ROAD:1,UPGRADE_ROAD:1,START_RESEARCH:1});
 const limit=(v,a,b)=>Math.max(a,Math.min(b,v));
-const distance=(a,b,size)=>{const p=pointOf(a,size),q=pointOf(b,size);return Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
+const distance=(a,b,size,world=null)=>{const p=pointOf(a,size),q=pointOf(b,size);return world?g3eManhattan(world,p,q):Math.abs(p.x-q.x)+Math.abs(p.y-q.y);};
 const findSettlement=(world,id)=>world.settlements.find(s=>s.id===id);
 const tilesOwned=(world,id)=>world.tiles.some(t=>t.ownerId===id);
 function getNationActionCost(world,nationId,action,metrics=null){
@@ -17329,7 +17329,7 @@ function isNationActionLegal(world,nationId,action,metrics=null){
     case 'UPGRADE_FACILITY':return upgradeSiteLegal(world,nationId,action);
     case 'REPAIR_FORT':return fortRepairLegal(world,nationId,action.buildingId);
     case 'CLAIM_TILE': return getClaimCost(world,nationId,action.targetTileId,metrics)!==null;
-    case 'FOUND_SETTLEMENT':return Boolean(tile&&tile.ownerId===nationId&&tile.settlementId===null&&world.nations[nationId].settlementIds.length<settlementCapacity(world,nationId,metrics).limit&&world.settlements.every(s=>s.ownerId!==nationId||distance(s.coreTileId,tile.id,world.size)>=3));
+    case 'FOUND_SETTLEMENT':return Boolean(tile&&tile.ownerId===nationId&&tile.settlementId===null&&world.nations[nationId].settlementIds.length<settlementCapacity(world,nationId,metrics).limit&&world.settlements.every(s=>s.ownerId!==nationId||distance(s.coreTileId,tile.id,world.size,world)>=3));
     case 'DEVELOP_SETTLEMENT':return Boolean(s&&s.ownerId===nationId&&s.development<100);
     case 'EXPAND_SETTLEMENT':return Boolean(s&&s.ownerId===nationId&&settlementExpansionCandidate(world,s,action.targetTileId,metrics?.footprintDemands?.get(s.id))); 
     case 'INVEST_KNOWLEDGE':return n.researchLevel<100;
@@ -17592,7 +17592,7 @@ function makeLeader(world,nationId){
   return c;
 }
 function getLeader(world,n){return world.characters.find(c=>c.id===n.leaderId&&c.alive);}
-function nearby(world,tid){return neighbors4(tid,world.size,world.height).map(id=>world.tiles[id]);}
+function nearby(world,tid){return neighbors4(tid,world.size,world.height,world).map(id=>world.tiles[id]);}
 // V0.5A · Economic Recovery V1. One lightweight national assessment per AI quarter.
 // No resource transfer, building creation, route changes, or added daily ticks.
 const V05A_HISTORY_WINDOW=12;
@@ -17729,7 +17729,7 @@ function candidatesForNation(world,n,territory,recovery=null){
     for(const site of sites){
       if(chosen.length>=24)break;
       const pos=pointOf(site.action.targetTileId,world.size);
-      if(chosen.some(v=>{const p=pointOf(v.action.targetTileId,world.size);return Math.abs(p.x-pos.x)+Math.abs(p.y-pos.y)<5;}))continue;
+      if(chosen.some(v=>{const p=pointOf(v.action.targetTileId,world.size);return g3eManhattan(world,p,pos)<5;}))continue;
       site.developmentPressure=territory.developmentPressure;
       chosen.push(site);
     }
@@ -17791,7 +17791,7 @@ function strategicFortCandidates(w,n){
   const towns=w.settlements.filter(s=>s.ownerId===n.id).sort((a,b)=>
     (b.coreTileId===n.capitalId?1:0)-(a.coreTileId===n.capitalId?1:0)||b.population-a.population||a.id-b.id);
   const frontier=[];
-  for(const t of owned)if(neighbors4(t.id,w.size,w.height).some(id=>{
+  for(const t of owned)if(neighbors4(t.id,w.size,w.height,w).some(id=>{
     const v=w.tiles[id];return v.ownerId!==null&&v.ownerId!==n.id&&
       (warAgainst(w,n.id,v.ownerId)||relationOf(w,n.id,v.ownerId)<15);
   }))frontier.push(t.id);
@@ -17805,7 +17805,7 @@ function strategicFortCandidates(w,n){
   for(const id of frontier){threatDist[id]=0;queue.push(id);}
   for(let i=0;i<queue.length;i++){
     const id=queue[i],d=threatDist[id];if(d>=8)continue;
-    for(const nb of neighbors4(id,w.size,w.height)){
+    for(const nb of neighbors4(id,w.size,w.height,w)){
       const tile=w.tiles[nb];if(threatDist[nb]!==-1||tile.ownerId!==n.id||tile.occupiedBy!==null||!TERRAINS[tile.terrain]?.passable)continue;
       threatDist[nb]=d+1;queue.push(nb);
     }
@@ -17813,7 +17813,7 @@ function strategicFortCandidates(w,n){
   const pathVisits=new Uint8Array(w.tiles.length);
   const strategicCores=towns.slice(0,3);
   const entrances=frontier.slice().sort((a,b)=>{
-    const distance=id=>Math.min(...strategicCores.map(s=>Math.abs(id%w.size-s.coreTileId%w.size)+Math.abs(Math.floor(id/w.size)-Math.floor(s.coreTileId/w.size))));
+    const distance=id=>Math.min(...strategicCores.map(s=>g3eManhattan(w,w.tiles[id],w.tiles[s.coreTileId])));
     return distance(a)-distance(b)||a-b;
   }).slice(0,w.tiles.length>4000?2:3);
   for(const start of entrances)for(const s of strategicCores.slice(0,w.tiles.length>4000?2:3)){
@@ -17824,18 +17824,18 @@ function strategicFortCandidates(w,n){
   const sites=[];
   for(const t of owned){
     if(already.has(t.id)||defenseTileSlotsUsed(w,t.id)>=DEFENSE_TILE_SLOTS)continue;
-    const d=threatDist[t.id],minCore=Math.min(...strategicCores.map(s=>Math.abs(t.x-w.tiles[s.coreTileId].x)+Math.abs(t.y-w.tiles[s.coreTileId].y)));
+    const d=threatDist[t.id],minCore=Math.min(...strategicCores.map(s=>g3eManhattan(w,t,w.tiles[s.coreTileId])));
     if((d<0||d>6)&&minCore>3)continue;
-    const adjacent=neighbors4(t.id,w.size,w.height),ownExits=adjacent.filter(id=>w.tiles[id].ownerId===n.id&&w.tiles[id].occupiedBy===null&&TERRAINS[w.tiles[id].terrain]?.passable).length;
+    const adjacent=neighbors4(t.id,w.size,w.height,w),ownExits=adjacent.filter(id=>w.tiles[id].ownerId===n.id&&w.tiles[id].occupiedBy===null&&TERRAINS[w.tiles[id].terrain]?.passable).length;
     const closeForts=active.filter(f=>{
-      const ft=w.tiles[f.tileId],dist=Math.abs(ft.x-t.x)+Math.abs(ft.y-t.y);
+      const ft=w.tiles[f.tileId],dist=g3eManhattan(w,ft,t);
       return dist<=2&&dist>0;
     });
     let linkCount=0;
     for(const f of closeForts){
       const ft=w.tiles[f.tileId];
-      if(neighbors4(t.id,w.size,w.height).includes(ft.id)||
-        neighbors4(t.id,w.size,w.height).some(mid=>w.tiles[mid].ownerId===n.id&&w.tiles[mid].occupiedBy===null&&TERRAINS[w.tiles[mid].terrain]?.passable&&neighbors4(mid,w.size,w.height).includes(ft.id)))linkCount++;
+      if(neighbors4(t.id,w.size,w.height,w).includes(ft.id)||
+        neighbors4(t.id,w.size,w.height,w).some(mid=>w.tiles[mid].ownerId===n.id&&w.tiles[mid].occupiedBy===null&&TERRAINS[w.tiles[mid].terrain]?.passable&&neighbors4(mid,w.size,w.height,w).includes(ft.id)))linkCount++;
     }
     // Weighted terms (30 / 25 / 20 / 15 / 10) are inspectable dimensions.
     const gate=Math.min(1,Math.max(pathVisits[t.id]/4,ownExits<=2&&d>=0&&d<=3?.7:0,d===0?.45:0));
@@ -17847,7 +17847,7 @@ function strategicFortCandidates(w,n){
     // Already protected line tiles are a poor new fort site unless they add
     // meaningful interception or link several existing strongholds.
     if(currentLines.has(t.id)&&gate<.55&&linkCount<2)continue;
-    const redundant=existing.some(f=>Math.abs(w.tiles[f.tileId].x-t.x)+Math.abs(w.tiles[f.tileId].y-t.y)===1);
+    const redundant=existing.some(f=>g3eManhattan(w,w.tiles[f.tileId],t)===1);
     const utility=(.3+value*9.4)*(atWar?1.15:.9)*(redundant?.70:1)/(1+Math.max(0,existing.length-4)*.12);
     if(utility<1.2)continue;
     sites.push({action:{type:'BUILD_FACILITY',buildingType:'fort',settlementId:t.settlementId,targetTileId:t.id},facility:'fort',utility,
@@ -19016,7 +19016,7 @@ function d2bAssignSuppression(w,execute){
        a.assignedWarId==null&&manpower(a)>0&&!a.order&&!targeted.has(a.id)&&
        w.tiles[a.tileId]?.ownerId===n.id).sort((a,b)=>{
          const ta=w.tiles[a.tileId],tb=w.tiles[b.tileId],goal=w.tiles[s.coreTileId];
-         return (Math.abs(ta.x-goal.x)+Math.abs(ta.y-goal.y))-(Math.abs(tb.x-goal.x)+Math.abs(tb.y-goal.y))||a.id-b.id;
+         return g3eManhattan(w,ta,goal)-g3eManhattan(w,tb,goal)||a.id-b.id;
        });
      let assigned=false;
      for(const a of eligible.slice(0,6)){
@@ -21644,18 +21644,37 @@ const CLAMP=(n,a,b)=>Math.max(a,Math.min(b,n));
 const dir4=[[1,0],[-1,0],[0,1],[0,-1]];
 // G2A: deterministic 8-way tactical neighbors; ordinary territory/roads stay 4-way.
 const militaryDir8=[[1,0],[-1,0],[0,1],[0,-1],[1,-1],[1,1],[-1,-1],[-1,1]];
+// V0.9G3E: world-specific east-west cylindrical adjacency. New games opt in by default;
+// existing G3D saves are imported as PLANE until the user explicitly converts them.
+const G3E_PLANE='PLANE', G3E_CYLINDER_X='CYLINDER_X';
+function g3eTopology(w){return w?.worldTopology===G3E_CYLINDER_X?G3E_CYLINDER_X:G3E_PLANE;}
+function g3eWrapX(x,width,world){return g3eTopology(world)===G3E_CYLINDER_X?((x%width)+width)%width:x;}
+function g3eDX(x1,x2,w){const dx=Math.abs(x1-x2);return g3eTopology(w)===G3E_CYLINDER_X?Math.min(dx,w.size-dx):dx;}
+function g3eDistance(w,a,b){return Math.hypot(g3eDX(a.x,b.x,w),a.y-b.y);}
+function g3eManhattan(w,a,b){return g3eDX(a.x,b.x,w)+Math.abs(a.y-b.y);}
+function g3eNeighborValid(w,from,to,diagonal=false){
+ if(!w?.tiles?.[from]||!w.tiles[to])return false;
+ return (diagonal?neighborsMilitary8(from,w.size,w.height,w):neighbors4(from,w.size,w.height,w)).includes(to);
+}
+
 function tileId(x,y,size=MAP_SIZE){return y*size+x;}
 function pointOf(id,size=MAP_SIZE){return {x:id%size,y:Math.floor(id/size)};}
 function timeAt(dayIndex){return {year:Math.floor(dayIndex/DAYS_PER_YEAR)+1,quarter:Math.floor(dayIndex%DAYS_PER_YEAR/DAYS_PER_QUARTER)+1,day:dayIndex%DAYS_PER_QUARTER+1};}
-function neighbors4(id,size=MAP_SIZE,height=size){
-  const {x,y}=pointOf(id,size),ans=[];
-  for(const [dx,dy] of dir4){const xx=x+dx, yy=y+dy;if(xx>=0&&yy>=0&&xx<size&&yy<height)ans.push(tileId(xx,yy,size));}
-  return ans;
+function neighbors4(id,size=MAP_SIZE,height=size,world=null){
+ const x=id%size,y=Math.floor(id/size),out=[];
+ for(const [dx,dy] of dir4){const yy=y+dy;if(yy<0||yy>=height)continue;
+  const xx=g3eWrapX(x+dx,size,world);if(xx<0||xx>=size)continue;
+  const next=yy*size+xx;if(next!==id&&!out.includes(next))out.push(next);
+ }
+ return out;
 }
-function neighborsMilitary8(id,size=MAP_SIZE,height=size){
-  const x=id%size,y=Math.floor(id/size),ans=[];
-  for(const [dx,dy] of militaryDir8){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<size&&yy<height)ans.push(yy*size+xx);}
-  return ans;
+function neighborsMilitary8(id,size=MAP_SIZE,height=size,world=null){
+ const x=id%size,y=Math.floor(id/size),out=[];
+ for(const [dx,dy] of militaryDir8){const yy=y+dy;if(yy<0||yy>=height)continue;
+  const xx=g3eWrapX(x+dx,size,world);if(xx<0||xx>=size)continue;
+  const next=yy*size+xx;if(next!==id&&!out.includes(next))out.push(next);
+ }
+ return out;
 }
 function militaryDiagonal(from,to,size){return from%size!==to%size&&Math.floor(from/size)!==Math.floor(to/size);}
 /** Diagonal land crossing cannot tunnel through a water-water corner.
@@ -21663,10 +21682,12 @@ function militaryDiagonal(from,to,size){return from%size!==to%size&&Math.floor(f
  * A complete pair of hostile protected fort-line shoulders is also not bypassed. */
 function militaryStepPermitted(w,from,to,nationId=null,fortNet=null){
   const a=w.tiles[from],b=w.tiles[to];if(!a||!b||!TERRAINS[b.terrain]?.passable)return false;
-  const dx=b.x-a.x,dy=b.y-a.y;
+  const rawDx=b.x-a.x,dy=b.y-a.y;
+  const dx=g3eTopology(w)===G3E_CYLINDER_X&&Math.abs(rawDx)===w.size-1?-Math.sign(rawDx):rawDx;
   if(Math.max(Math.abs(dx),Math.abs(dy))!==1)return false;
   if(!dx||!dy)return true;
-  const p=w.tiles[a.y*w.size+b.x],q=w.tiles[b.y*w.size+a.x];
+  const p=w.tiles[a.y*w.size+g3eWrapX(a.x+dx,w.size,w)];
+  const q=w.tiles[b.y*w.size+a.x];
   if((!TERRAINS[p.terrain]?.passable)&&(!TERRAINS[q.terrain]?.passable))return false;
   if(nationId!==null){
     const guarded=t=>fortLineBlocks(w,t.id,nationId,fortNet)||hostileFortUncaptured(w,t.id,nationId,fortNet);
@@ -21851,7 +21872,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
     name:`${n.name} 수도`,founderNationId:n.id,formerCapitalOf:[n.id],tileIds:[n.capitalId],population:17,development:12,level:1}));
   for(const t of tiles)t.roadLevel=0;
   for(const s of settlements){tiles[s.coreTileId].ownerId=s.ownerId;tiles[s.coreTileId].settlementId=s.id;}
-  const world={schema:'vilob-light-v03d',version:VERSION,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
+  const world={schema:'vilob-light-v03d',version:VERSION,worldTopology:G3E_CYLINDER_X,barracksEvents:[],seed:seedString,size,height,dayIndex:0,setupLocked:false,rngState:hash32(seed^0x71a78b09)||1,
     rngPolicy:{fixed:true,intervalDays:120,lastReseedDay:null,reseedCount:0},
     tiles,riverSchemaVersion:RIVER_SCHEMA_VERSION,riverSegments:generateRiverSegments(seedString,size,height,tiles),nations,settlements,trade:initialTrade(),market:e3eInitialMarket(),diplomacy:createDiplomacy(nations),peaceHistory:[],warHistory:[],buildings:[],defenses:[],nextBuildingId:0,aiProfiles:configuredProfiles,characters:[],pastLeaders:[],pastCommanders:[],nextCharacterId:0,armies:[],wars:[],engagements:[],occupations:[],battleHistory:[],nextArmyId:0,nextWarId:0,nextEngagementId:0,
     navy:navyNew(),e2Artillery:{produced:0,destroyed:0,stocks:{}},v08fArmor:{schema:1,nextId:1,produced:0,destroyed:0,stocks:{},vehicles:[],history:[]},e2aPolicyAIEnabled:true,e3FiscalAIEnabled:true,e7bFiscalStabilityEnabled:true,v06e5Violence:v06e5NewWorldState(),v06e6Policy:v06e6NewWorldState(),nextSettlementId:settlements.length,changeSeq:0,c6ArmyHistory:{entries:[],dropped:0,byReason:{}},c6StrategyStats:{frontReviews:0,unreachableChecks:0,pathChecks:0,noReachableOrders:0},aiDecisions:[],warDecisionDiagnostics:v06b4NewDiagnostics(),strategyReports:{dayIndex:0,nations:{}},historicalChronicle:initialHistoricalChronicle(),events:[{dayIndex:0,text:`${count}개 국가가 세계에 정착했습니다.`,kind:'world'}]};
@@ -21901,6 +21922,7 @@ function f3ValidCoalitionPlan(w,entry){
 function validateWorld(w){
   const fail=what=>{throw Error('월드 검증 실패: '+what);};
   if(!w||w.schema!=='vilob-light-v03d'||w.version!==VERSION)fail('세이브 형식');
+  if(![G3E_PLANE,G3E_CYLINDER_X].includes(w.worldTopology))fail('G3E 세계 연결 방식');
   if(w.v08eRecovery&&(w.v08eRecovery.schema!==1||w.v08eRecovery.kind!=='AUDITED_TERRITORIAL_F2B_79530'||w.v08eRecovery.sourceVersion!=='V0.8D'||w.v08eRecovery.originDay!==79530||w.v08eRecovery.machineParts!==6||w.v08eRecovery.steel!==16||w.v08eRecovery.donorNationId!==6||w.v08eRecovery.receiverNationId!==10||!Number.isSafeInteger(w.v08eRecovery.dayIndex)||w.v08eRecovery.dayIndex>w.dayIndex))fail('V0.8E 산업 회계 복구 기록');
   navyValidate(w,fail);
  if(!hValidate(w))fail('H 오토마톤 실물·파츠 회계');
@@ -22134,7 +22156,7 @@ function validateWorld(w){
       if(a.engagementId!==null||!Array.isArray(a.retreatPath)||a.retreatPath.length>w.tiles.length||!Number.isInteger(a.nextMoveDay)||!Number.isInteger(a.regroupDays))fail('후퇴 상태');
       let previous=a.tileId;
       for(const next of a.retreatPath){
-        if(!w.tiles[next]||!TERRAINS[w.tiles[next].terrain].passable||!neighborsMilitary8(previous,w.size,w.height).includes(next)||!militaryStepPermitted(w,previous,next))fail('후퇴 경로');
+        if(!w.tiles[next]||!TERRAINS[w.tiles[next].terrain].passable||!neighborsMilitary8(previous,w.size,w.height,w).includes(next)||!militaryStepPermitted(w,previous,next))fail('후퇴 경로');
         previous=next;
       }
     }
@@ -22227,10 +22249,13 @@ function validateTradeLegacyForMigration(w){
 /** D1B1 uses a new social schema; older saves are intentionally not migrated. */
 function deserializeWorld(json){
  const parsed=JSON.parse(json);
+ const g3eImportedVersion=parsed?.version;
+ // Legacy worlds retain original planar movement until explicit one-way conversion.
+ if(g3eImportedVersion!=='V0.9G3E')parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22239,7 +22264,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22396,7 +22421,7 @@ function createWorldFromMap(input){
       const core=first?cap:remaining.values().next().value;
       const ids=[core];remaining.delete(core);
       for(let q=0;q<ids.length&&ids.length<maxTiles;q++){
-        for(const neighbor of neighbors4(ids[q],width,height)){
+        for(const neighbor of neighbors4(ids[q],width,height,w)){
           if(remaining.has(neighbor)&&ids.length<maxTiles){remaining.delete(neighbor);ids.push(neighbor);}
         }
       }
@@ -24063,17 +24088,26 @@ const p=this.point(e),wasDrag=this.drag;
     ctx.lineCap='round';
     for(const t of tiles){
       if(!(t.roadLevel>0)||t.terrain==='water'||t.ownerId===null)continue;
-      const adj=neighbors4(t.id,size,height).filter(id=>{
+      const adj=neighbors4(t.id,size,height,world).filter(id=>{
         const n=ts[id];return n.ownerId===t.ownerId&&n.roadLevel>0;
       });
       const cx=t.x+.5,cy=t.y+.5;
       for(const id of adj){
         if(id<t.id&&ts[id].roadLevel>0)continue;
         const other=ts[id],dx=other.x-t.x,dy=other.y-t.y;
-        ctx.strokeStyle='rgba(29,38,37,.82)';ctx.lineWidth=t.roadLevel===2?.15:.12;
-        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+dx,cy+dy);ctx.stroke();
-        ctx.strokeStyle=t.roadLevel===2?'#f7e4a7':'#cbb78b';ctx.lineWidth=t.roadLevel===2?.08:.06;
-        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+dx,cy+dy);ctx.stroke();
+        const seam=g3eTopology(world)===G3E_CYLINDER_X&&Math.abs(dx)===size-1;
+        const drawLine=()=>{
+          ctx.beginPath();
+          if(seam){
+            const edgeA=dx>0?0:size,edgeB=dx>0?size:0;
+            const midY=(cy+other.y+.5)/2;
+            ctx.moveTo(cx,cy);ctx.lineTo(edgeA,midY);
+            ctx.moveTo(edgeB,midY);ctx.lineTo(other.x+.5,other.y+.5);
+          }else{ctx.moveTo(cx,cy);ctx.lineTo(other.x+.5,other.y+.5);}
+          ctx.stroke();
+        };
+        ctx.strokeStyle='rgba(29,38,37,.82)';ctx.lineWidth=t.roadLevel===2?.15:.12;drawLine();
+        ctx.strokeStyle=t.roadLevel===2?'#f7e4a7':'#cbb78b';ctx.lineWidth=t.roadLevel===2?.08:.06;drawLine();
       }
       ctx.fillStyle=t.roadLevel===2?'#fbe5a7':'#d7c3a0';ctx.beginPath();ctx.arc(cx,cy,.06,0,Math.PI*2);ctx.fill();
     }
@@ -24139,7 +24173,7 @@ const p=this.point(e),wasDrag=this.drag;
         if(t.ownerId!==nation.id||used[t.id])continue;
         const queue=[t.id];used[t.id]=1;
         for(let h=0;h<queue.length;h++){
-          for(const j of neighbors4(queue[h],width,height))if(!used[j]&&w.tiles[j].ownerId===nation.id){used[j]=1;queue.push(j);}
+          for(const j of neighbors4(queue[h],width,height,w))if(!used[j]&&w.tiles[j].ownerId===nation.id){used[j]=1;queue.push(j);}
         }
         if(queue.length>largest.length)largest=queue;
       }
@@ -24747,7 +24781,7 @@ function mountPlayerControls(box,{world:w,nationId,selectedTileId,onSwitch,onAct
    if(['RAISE_ARTILLERY','REINFORCE_ARMY','MOVE_ARMY','LAND_ARMY','DISBAND_ARMY','REARM_ARMY','TRAIN_FORMATION'].includes(type))armyChoice();
    if(type==='EMERGENCY_MUSTER')tileChoice(t=>w.settlements.some(s=>s.id===draft.settlementId&&s.tileIds.includes(t.id))&&t.ownerId===n.id&&t.occupiedBy===null);
    if(type==='REARM_ARMY'){options('unitType','재무장 병종',Object.values(UNIT_TYPES).filter(v=>v.branch!=='artillery'&&loadoutLegal(w,n.id,v.id)).map(v=>[v.id,v.label]));options('armorId','재무장 갑옷',Object.entries(ARMORS).filter(([id])=>rearmArmorLegal(w,n.id,id)).map(([id,a])=>[id,a.label]),defaultArmorFor(w,n.id,draft.unitType));}
-   if(type==='LAND_ARMY')tileChoice(t=>neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id].terrain==='water')&&(t.ownerId===n.id||t.occupiedBy===n.id||canPassMilitaryTile(w,n.id,t)));
+   if(type==='LAND_ARMY')tileChoice(t=>neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id].terrain==='water')&&(t.ownerId===n.id||t.occupiedBy===n.id||canPassMilitaryTile(w,n.id,t)));
    if(type==='MOVE_ARMY')tileChoice(t=>t.ownerId===n.id||t.occupiedBy===n.id||canPassMilitaryTile(w,n.id,t));
    if(['TRAIN_RESERVES','RECRUIT_ARMY','REINFORCE_ARMY','EMERGENCY_MUSTER'].includes(type)){
      const input=E('input','player-input');input.type='number';input.min=type==='REINFORCE_ARMY'?'1':'12';input.max=type==='TRAIN_RESERVES'?String(trainingRate(w,n.id)):type==='RECRUIT_ARMY'?'150':type==='EMERGENCY_MUSTER'?'40':'100';input.step='1';
@@ -25343,16 +25377,16 @@ function navyLog(w,status,nationId,details=''){
  if(nv.events.length>100){const drop=nv.events.length-100;nv.events.splice(0,drop);nv.cEventsDropped=(nv.cEventsDropped||0)+drop;}
  w.changeSeq++;
 }
-function navyIsCoast(w,tid){return !!w.tiles[tid]&&w.tiles[tid].terrain!=='water'&&neighbors4(tid,w.size,w.height).some(id=>w.tiles[id].terrain==='water');}
+function navyIsCoast(w,tid){return !!w.tiles[tid]&&w.tiles[tid].terrain!=='water'&&neighbors4(tid,w.size,w.height,w).some(id=>w.tiles[id].terrain==='water');}
 function navyWaterAtPort(w,b){if(!b||b.typeId!=='port'||!['ACTIVE','UPGRADING'].includes(b.status)||b.disconnected)return null;
  const tile=w.tiles[b.tileId],s=w.settlements.find(s=>s.id===b.settlementId);
  if(!tile||!s||tile.ownerId!==s.ownerId||tile.occupiedBy!==null)return null;
- return neighbors4(tile.id,w.size,w.height).filter(id=>w.tiles[id].terrain==='water').sort((a,b)=>a-b)[0]??null;
+ return neighbors4(tile.id,w.size,w.height,w).filter(id=>w.tiles[id].terrain==='water').sort((a,b)=>a-b)[0]??null;
 }
 function navyCoastDistance(w,tileId){if(w.tiles[tileId]?.terrain!=='water')return Infinity;
- if(neighbors4(tileId,w.size,w.height).some(id=>w.tiles[id].terrain!=='water'))return 0;
+ if(neighbors4(tileId,w.size,w.height,w).some(id=>w.tiles[id].terrain!=='water'))return 0;
  let nodes=[tileId],seen=new Set(nodes);
- for(let d=1;d<=3;d++){const next=[];for(const id of nodes)for(const nb of neighbors4(id,w.size,w.height)){
+ for(let d=1;d<=3;d++){const next=[];for(const id of nodes)for(const nb of neighbors4(id,w.size,w.height,w)){
   if(w.tiles[nb].terrain!=='water')return d-1;
   if(!seen.has(nb)){seen.add(nb);next.push(nb);}
  }nodes=next;}return 3;
@@ -25362,7 +25396,7 @@ function navyPath(w,start,target,coast=Infinity){
  if(start===target)return [start];
  const previous=new Map([[start,-1]]),queue=[start];
  for(let at=0;at<queue.length;at++){
-  const id=queue[at];for(const next of neighbors4(id,w.size,w.height)){
+  const id=queue[at];for(const next of neighbors4(id,w.size,w.height,w)){
    if(previous.has(next)||w.tiles[next]?.terrain!=='water'||navyCoastDistance(w,next)>coast)continue;
    previous.set(next,id);if(next===target){const path=[target];for(let cur=id;cur!==-1;cur=previous.get(cur))path.push(cur);return path.reverse();}
    queue.push(next);
@@ -25372,7 +25406,7 @@ function navyPath(w,start,target,coast=Infinity){
 }
 function navyWaterSize(w,tileId,cap=10001){
  if(w.tiles[tileId]?.terrain!=='water')return 0;
- const seen=new Set([tileId]),q=[tileId];for(let at=0;at<q.length&&q.length<cap;at++)for(const nb of neighbors4(q[at],w.size,w.height))if(!seen.has(nb)&&w.tiles[nb].terrain==='water'){seen.add(nb);q.push(nb);}return q.length;
+ const seen=new Set([tileId]),q=[tileId];for(let at=0;at<q.length&&q.length<cap;at++)for(const nb of neighbors4(q[at],w.size,w.height,w))if(!seen.has(nb)&&w.tiles[nb].terrain==='water'){seen.add(nb);q.push(nb);}return q.length;
 }
 function navyPortLegal(w,nationId,settlementId,tileId){
  const s=w.settlements.find(s=>s.id===settlementId&&s.ownerId===nationId);
@@ -25480,7 +25514,7 @@ function navyPortCandidates(w,nationId){
   }
  }return out;
 }
-function navyWaterAtLand(w,tid){return neighbors4(tid,w.size,w.height).filter(id=>w.tiles[id].terrain==='water').sort((a,b)=>a-b)[0]??null;}
+function navyWaterAtLand(w,tid){return neighbors4(tid,w.size,w.height,w).filter(id=>w.tiles[id].terrain==='water').sort((a,b)=>a-b)[0]??null;}
 function navyQuarterUpkeep(w){const nv=navyEnsure(w);
  for(const n of w.nations){if(!n.active)continue;
   const ports=w.buildings.filter(b=>b.typeId==='port'&&['ACTIVE','UPGRADING'].includes(b.status)&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id);
@@ -25509,7 +25543,7 @@ function navyAIQuarter(w){if(w.dayIndex%120!==0)return;const nv=navyEnsure(w);nv
   for(const f of fleet){if(navyF3FleetReserved(w,f)||f.status!=='DOCKED'||!f.shipIds.every(id=>nv.ships.find(s=>s.id===id)?.status==='READY'))continue;
    const dock=navyWaterAtPort(w,p),coast=Math.min(...f.shipIds.map(id=>NAVY_SHIP_TYPES[nv.ships.find(s=>s.id===id).typeId].coast));
    if(f.tileId!==dock){if(navyActionLegal(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:dock}))navyActionExecute(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:dock});}
-   else if(!navyBHasDemand(w,n.id)){const neighbors=neighbors4(dock,w.size,w.height).filter(id=>w.tiles[id].terrain==='water'&&navyCoastDistance(w,id)<=coast).sort((a,b)=>a-b);const intercept=neighbors.find(tid=>nv.fleets.some(other=>other.nationId!==n.id&&other.tileId===tid&&v04dWarBetween(w,n.id,other.nationId)));const target=intercept??neighbors[0];
+   else if(!navyBHasDemand(w,n.id)){const neighbors=neighbors4(dock,w.size,w.height,w).filter(id=>w.tiles[id].terrain==='water'&&navyCoastDistance(w,id)<=coast).sort((a,b)=>a-b);const intercept=neighbors.find(tid=>nv.fleets.some(other=>other.nationId!==n.id&&other.tileId===tid&&v04dWarBetween(w,n.id,other.nationId)));const target=intercept??neighbors[0];
      if(target!==undefined&&navyActionLegal(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:target}))navyActionExecute(w,n.id,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:target});}
   }
  }
@@ -26365,7 +26399,7 @@ function navyDControl(w){
    power+=contribution;
   }
   if(power<=0)continue;
-  const wet=[f.tileId,...neighbors4(f.tileId,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water')];
+  const wet=[f.tileId,...neighbors4(f.tileId,w.size,w.height,w).filter(id=>w.tiles[id]?.terrain==='water')];
   for(const id of wet){let row=claims.get(id);if(!row){row=new Map();claims.set(id,row);}row.set(n.id,(row.get(n.id)||0)+power*(id===f.tileId?1:.55));}
  }
  const tiles=new Map();for(const [tid,rows] of claims){const ranked=[...rows].sort((a,b)=>b[1]-a[1]||a[0]-b[0]);let contested=false;
@@ -26377,7 +26411,7 @@ function navyDControl(w){
   const port=navyBPort(w,f.dTargetPortId),nid=navyBPortNation(w,port);
   if(nid==null||!navyPortOwner(w,port,nid)||!v04dWarBetween(w,f.nationId,nid))continue;
   const water=navyWaterAtPort(w,port);
-  if(water===null||!(f.tileId===water||neighbors4(water,w.size,w.height).includes(f.tileId)))continue;
+  if(water===null||!(f.tileId===water||neighbors4(water,w.size,w.height,w).includes(f.tileId)))continue;
   const area=tiles.get(water),own=area?.ranked.find(x=>x[0]===f.nationId)?.[1]||0;
   const opposition=area?.ranked.filter(x=>v04dWarBetween(w,x[0],f.nationId)).reduce((s,x)=>s+x[1],0)||0;
   if(own<12||own<=opposition*1.20)continue;
@@ -26630,7 +26664,7 @@ function navyDAppendInspector(box,w,tileId){const t=w.tiles[tileId];if(!t)return
  if(port){
   const blockade=ctl.blockades.get(port.id);line('항구 봉쇄',blockade?`${w.nations[blockade.nationId]?.name} · 실물 해상 운송만 차단`:'없음');
   const water=navyWaterAtPort(w,port);
-  if(water!=null){const wet=[water,...neighbors4(water,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water')];
+  if(water!=null){const wet=[water,...neighbors4(water,w.size,w.height,w).filter(id=>w.tiles[id]?.terrain==='water')];
    showFleets(nv.fleets.filter(f=>wet.includes(f.tileId)),'항구 접근 해역');}
  }
  box.append(section);
@@ -26685,14 +26719,14 @@ function navyERecord(w,f,kind,detail='',jobOverride=null){
  return row;
 }
 function navyECoastalTargets(w,nid){return w.tiles.filter(t=>t.terrain!=='water'&&t.ownerId!=null&&t.ownerId!==nid&&
- v04dWarBetween(w,nid,t.ownerId)&&neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id]?.terrain==='water')&&
+ v04dWarBetween(w,nid,t.ownerId)&&neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id]?.terrain==='water')&&
  canLandAt(w,nid,t));}
 function navyEApproach(w,f,target){if(!target||target.terrain==='water')return null;
  const ships=navyBShips(w,f);
  if(!ships.length||ships.some(s=>!s||!NAVY_SHIP_TYPES[s.typeId]))return null;
  const coast=Math.min(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
  let best=null;
- for(const id of neighbors4(target.id,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)){
+ for(const id of neighbors4(target.id,w.size,w.height,w).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)){
   const path=navyPath(w,f.tileId,id,coast);
   if(path&&(!best||path.length<best.length||path.length===best.length&&id<best[best.length-1]))best=path;
  }
@@ -26756,7 +26790,7 @@ function navyEFinishLanding(w,f){const job=f.bAssignment;
     delete f.bAssignment;return true;}
   throw Error('V0.9E 승선군·함대 연결 불일치');
  }
- if(f.tileId!==job.eApproachWaterId||!target||!neighbors4(target.id,w.size,w.height).includes(f.tileId)){
+ if(f.tileId!==job.eApproachWaterId||!target||!neighbors4(target.id,w.size,w.height,w).includes(f.tileId)){
   navyERecord(w,f,'ABORTED','접안 수역이 다름 · 실제 귀항 필요');navyEEnsure(w).eStats.aborted++;navyBReturn(w,f);return false;
  }
  if(target.ownerId==null||!v04dWarBetween(w,f.nationId,target.ownerId)||!canLandAt(w,f.nationId,target)){
@@ -26900,7 +26934,7 @@ function navyEValidate(w,fail){const nv=navyEEnsure(w);
     army.seaTransit?.navalFleetId!==f.id||army.seaTransit.eOperationId!==a.eOperationId||
     army.seaTransit.destinationId!==a.eTargetTileId||!w.tiles[a.eTargetTileId]||
     w.tiles[a.eApproachWaterId]?.terrain!=='water'||
-    !neighbors4(a.eTargetTileId,w.size,w.height).includes(a.eApproachWaterId)||
+    !neighbors4(a.eTargetTileId,w.size,w.height,w).includes(a.eApproachWaterId)||
     !['OUTBOUND','RETURNING','RETURN_PENDING'].includes(a.phase))return fail('E 상륙 계약 참조');
  }
  for(const army of w.armies)if(army.seaTransit?.eOperationId&&!nv.fleets.some(f=>f.bAssignment?.eOperationId===army.seaTransit.eOperationId&&f.bAssignment.armyId===army.id))return fail('E 고아 상륙군');
@@ -27001,7 +27035,7 @@ function navyF0PeriodAdd(a,day,sample){const year=navyF0Period(day,120);
 function navyF0WaterComponents(w){const id=new Int32Array(w.tiles.length);id.fill(-1);let next=0;
  for(const tile of w.tiles){if(tile.terrain!=='water'||id[tile.id]>=0)continue;
   const queue=[tile.id];id[tile.id]=next;
-  for(let at=0;at<queue.length;at++)for(const nb of neighbors4(queue[at],w.size,w.height))
+  for(let at=0;at<queue.length;at++)for(const nb of neighbors4(queue[at],w.size,w.height,w))
    if(w.tiles[nb]?.terrain==='water'&&id[nb]<0){id[nb]=next;queue.push(nb);}
   next++;
  }
@@ -27011,7 +27045,7 @@ function navyF0WarsFor(w,nid){return w.wars.filter(war=>[...(war.sides?.attacker
 function navyF0TargetsOfWar(w,war,nid){const attackers=war.sides?.attackers||[war.attackerId],defenders=war.sides?.defenders||[war.defenderId];
  const enemy=attackers.includes(nid)?defenders:attackers;
  return w.tiles.filter(t=>t.terrain!=='water'&&enemy.includes(t.ownerId)&&
-  neighbors4(t.id,w.size,w.height).some(id=>w.tiles[id]?.terrain==='water')&&canLandAt(w,nid,t));
+  neighbors4(t.id,w.size,w.height,w).some(id=>w.tiles[id]?.terrain==='water')&&canLandAt(w,nid,t));
 }
 function navyF0AuditNation(w,nid,components){const n=w.nations[nid],nv=navyEnsure(w),wars=navyF0WarsFor(w,nid);
  const result={dayIndex:w.dayIndex,nationId:nid,warIds:wars.map(z=>z.id),warCount:wars.length,
@@ -27025,7 +27059,7 @@ function navyF0AuditNation(w,nid,components){const n=w.nations[nid],nv=navyEnsur
  if(![...targetsByWar.values()].some(z=>z.length))flag('NO_TARGET_COAST');
  const portComponents=new Set(ports.map(p=>components[navyWaterAtPort(w,p)]).filter(v=>v>=0));
  for(const war of wars){const targets=targetsByWar.get(war.id)||[];
-  if(targets.some(t=>neighbors4(t.id,w.size,w.height).some(id=>portComponents.has(components[id]))))
+  if(targets.some(t=>neighbors4(t.id,w.size,w.height,w).some(id=>portComponents.has(components[id]))))
     result.geographicWarIds.push(war.id);
  }
  result.geographic=result.geographicWarIds.length>0;
@@ -27415,8 +27449,7 @@ function navyF2Pick(w,nid,reserved){const a=navyF2Ensure(w),n=w.nations[nid],war
   for(const fleet of fleets){const portList=byWater.get(fleet.tileId)||[],passengerLimit=navyBCapacity(w,fleet,'ARMY');
    // Bound A* and water BFS. Coasts are ranked by defensibility and proximity before path checks.
    const coastsForFleet=coasts.slice().sort((x,y)=>(defenderCounts.get(x.id)||0)-(defenderCounts.get(y.id)||0)||
-     Math.abs(x.x-w.tiles[fleet.tileId].x)+Math.abs(x.y-w.tiles[fleet.tileId].y)-
-     Math.abs(y.x-w.tiles[fleet.tileId].x)-Math.abs(y.y-w.tiles[fleet.tileId].y)||x.id-y.id).slice(0,NAVY_F2_COAST_LIMIT);
+     g3eManhattan(w,x,w.tiles[fleet.tileId])-g3eManhattan(w,y,w.tiles[fleet.tileId])||x.id-y.id).slice(0,NAVY_F2_COAST_LIMIT);
    for(const port of portList){for(const army of armies){const passengers=manpower(army)+hCount(w,army,true);
      if(passengers>passengerLimit)continue;capacity=true;
      const sk=`${army.id}:${port.id}`;let staging=stageCache.get(sk);
@@ -28143,7 +28176,7 @@ function g1PortWater(w,p){
  if(!p||p.typeId!=='port'||!['ACTIVE','UPGRADING'].includes(p.status)||p.disconnected||p.settlementId==null)return null;
  const s=w.settlements.find(s=>s.id===p.settlementId),t=w.tiles[p.tileId];
  if(!s||!t||s.ownerId!==t.ownerId||!s.tileIds.includes(t.id))return null;
- return neighbors4(t.id,w.size,w.height).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)[0]??null;
+ return neighbors4(t.id,w.size,w.height,w).filter(id=>w.tiles[id]?.terrain==='water').sort((a,b)=>a-b)[0]??null;
 }
 function g1OccupiedPortLand(w,nid,p,warId=null){
  const water=g1PortWater(w,p);if(water===null)return null;
@@ -28249,7 +28282,7 @@ function g1ReachableFromPort(w,d){
  for(const a of w.armies)if(a.nationId!==nation&&warAgainst(w,nation,a.nationId)&&a.status!=='DESTROYED'&&men(a)>0)enemy[a.tileId]=1;
  const pass=t=>TERRAINS[t.terrain]?.passable&&(t.occupiedBy===nation||(t.ownerId===nation&&(t.occupiedBy===null||t.occupiedBy===nation)))&&!enemy[t.id];
  const queue=[start];reachable[start]=1;
- for(let i=0;i<queue.length;i++)for(const id of neighbors4(queue[i],w.size,w.height))if(!reachable[id]&&pass(w.tiles[id])){reachable[id]=1;queue.push(id);}
+ for(let i=0;i<queue.length;i++)for(const id of neighbors4(queue[i],w.size,w.height,w))if(!reachable[id]&&pass(w.tiles[id])){reachable[id]=1;queue.push(id);}
  if(scope?.world===w)scope.graphs.set(key,reachable);
  return reachable;
 }
@@ -28657,9 +28690,21 @@ function g3aDrawRoutes(renderer){const w=renderer.world,items=g3aVisible(w),ctx=
   for(const id of path){const t=w.tiles[id];if(!t)continue;
    const x=ox+(t.x+.5)*sc,y=oy+(t.y+.5)*sc;
    if(previous){if(Math.max(previous.x,x)>=-14&&Math.min(previous.x,x)<=renderer.width+14&&Math.max(previous.y,y)>=-14&&Math.min(previous.y,y)<=renderer.height+14){
-     ctx.moveTo(previous.x,previous.y);ctx.lineTo(x,y);drawn=true;
-     g3aMapHitBoxes.push({route:r,ax:previous.x,ay:previous.y,bx:x,by:y});}}
-   previous={x,y};
+     if(g3eTopology(w)===G3E_CYLINDER_X&&Math.abs(w.tiles[previous.id].x-t.x)===w.size-1){
+       // Draw at each screen edge; the seam must not become an enormous chord.
+       const fromRight=w.tiles[previous.id].x===w.size-1;
+       const edgeA=ox+(fromRight?w.size:0)*sc,edgeB=ox+(fromRight?0:w.size)*sc;
+       const ay=previous.y,by=y;
+       const aMid=(ay+by)/2;
+       ctx.moveTo(previous.x,ay);ctx.lineTo(edgeA,aMid);
+       ctx.moveTo(edgeB,aMid);ctx.lineTo(x,by);drawn=true;
+       g3aMapHitBoxes.push({route:r,ax:previous.x,ay:ay,bx:edgeA,by:aMid});
+       g3aMapHitBoxes.push({route:r,ax:edgeB,ay:aMid,bx:x,by:by});
+     }else{
+       ctx.moveTo(previous.x,previous.y);ctx.lineTo(x,y);drawn=true;
+       g3aMapHitBoxes.push({route:r,ax:previous.x,ay:previous.y,bx:x,by:y});
+     }}}
+   previous={x,y,id};
   }
   if(drawn)ctx.stroke();
  }
@@ -28756,7 +28801,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09b-world';
+const SAVE_KEY='vilob-light-v09g3e-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -28768,7 +28813,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -30161,6 +30206,7 @@ function setWorld(world){
   // Default wide worlds to whole-map framing instead of clipping the east/west coasts.
   atlasMapCover=world.size===19;
   map.setWorld(world);syncAtlasLayout();
+  g3eRefreshTopologyUI(world);
   $('seedInput').value=world.seed;
   $('worldSizeSelect').value=`${world.size}x${world.height}`;
   $('newNationCount').value=String(world.nations.length);
@@ -30503,6 +30549,29 @@ $('customMapStartBtn').addEventListener('click',()=>{
     showToast('커스텀 맵으로 새 세계를 시작했습니다.');
   }catch(error){showToast('커스텀 맵 실행 실패: '+error.message);}
 });
+function g3eRefreshTopologyUI(w){
+ const current=g3eTopology(w),status=$('g3eTopologyStatus'),button=$('g3eConvertButton');
+ if(!status||!button)return;
+ status.textContent=current===G3E_CYLINDER_X?
+  `현재: 원통형 · ${w.size}×${w.height} · 동서 연결 ON · 지형 원본 유지`:
+  `현재: 기존 평면 · ${w.size}×${w.height} · 동서 연결 OFF`;
+ button.disabled=current===G3E_CYLINDER_X;
+ button.textContent=current===G3E_CYLINDER_X?'이미 원통형으로 설정됨':'현재 세계를 원통형으로 전환';
+}
+$('g3eConvertButton').addEventListener('click',()=>{
+ const w=app.world;if(!w||g3eTopology(w)===G3E_CYLINDER_X)return;
+ if(!window.confirm('현재 세계의 좌우 경계를 연결합니다. 변경 전 월드 JSON 백업을 권장합니다. 전환 후 되돌리려면 이전 백업을 다시 불러와야 합니다. 계속할까요?'))return;
+ const oldSeq=w.changeSeq;
+ try{
+  w.worldTopology=G3E_CYLINDER_X;
+  w.changeSeq++;
+  validateWorld(w);
+  map.staticAtlasCache=null;
+  map.draw();
+  g3eRefreshTopologyUI(w);updateStats();
+  showToast('좌우 경계 연결 완료 · 세계 지형·국가·선박·RNG는 그대로 유지됩니다.');
+ }catch(error){w.worldTopology=G3E_PLANE;w.changeSeq=oldSeq;map.staticAtlasCache=null;g3eRefreshTopologyUI(w);showToast('연결 방식 변경 실패: '+error.message);}
+});
 $('importInput').addEventListener('change',async e=>{
   const file=e.target.files?.[0];e.target.value='';if(!file)return;
   if(file.size>80_000_000){showToast('월드 파일은 80MB를 초과할 수 없습니다.');return;}
@@ -30540,7 +30609,7 @@ document.addEventListener('keydown',e=>{
   if(!editing&&e.code==='Space'&&!e.repeat){e.preventDefault();setRunning(!app.running);}
   if(!editing&&e.target===$('worldCanvas')&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
     e.preventDefault();const t=app.world.tiles[app.selectedId],d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
-    const x=t.x+d[0],y=t.y+d[1];if(x>=0&&x<app.world.size&&y>=0&&y<app.world.height)selectTile(y*app.world.size+x);
+    const x=g3eWrapX(t.x+d[0],app.world.size,app.world),y=t.y+d[1];if(x>=0&&x<app.world.size&&y>=0&&y<app.world.height)selectTile(y*app.world.size+x);
   }
 });
 $('worldCanvas').setAttribute('tabindex','0');
