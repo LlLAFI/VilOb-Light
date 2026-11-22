@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9G3H</title>
+<title>VILOB Light · V0.9H1</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -950,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3H'; // factory maintenance supply via real I1 regional freight; G3G diagnostics retained
+const VERSION = 'V0.9H1'; // H1 naval strategy decision: G4 economy/combat/naval legality unchanged
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -22303,11 +22303,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22316,7 +22316,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22392,6 +22392,8 @@ function deserializeWorld(json){
  validateWorld(parsed);return parsed;
 }
 function serializeWorld(world){
+ // G4: canonicalize optional empty tank IDs before persisting new armies.
+ for(const a of world.armies||[])a.v08fTankIds??=[];
  navyEnsure(world);navyBEnsure(world);navyCEnsure(world);navyF2Ensure(world);i2Ensure(world);i3aEnsure(world);g3fEnsure(world);
  for(const n of world.nations){i1Reconcile(world,n);i1aSyncPreviousQuarter(i1Ensure(n,world));}
  navyF2Reconcile(world); // F3 reservation checks do not issue commands during save.
@@ -26574,6 +26576,126 @@ function navyDAccountMissions(w){const nv=navyDEnsure(w);
   }
  }
 }
+// V0.9H1 — bounded, deterministic naval strategic decision layer.
+// The selector cannot move ships or consume resources; only existing NAVY_SAIL executes physical orders.
+const NAVY_H1_HISTORY_LIMIT=160, NAVY_H1_CANDIDATE_LIMIT=8;
+function navyH1Ensure(w){
+ const nv=navyDEnsure(w);
+ if(!nv.h1Strategy||nv.h1Strategy.schema!==1)nv.h1Strategy={schema:1,sinceDay:w.dayIndex,decisions:[],stats:{evaluated:0,blockade:0,intercept:0,hold:0,idle:0,failed:0}};
+ return nv.h1Strategy;
+}
+function navyH1Power(w,f){
+ return navyBShips(w,f).reduce((sum,s)=>{
+  if(!s||s.hp<=0||s.crew<=0)return sum;
+  const spec=NAVY_SHIP_TYPES[s.typeId];if(!spec)return sum;
+  const modifier=(!NAVY_D_WARSHIPS.includes(s.typeId)&&s.typeId!=='medieval_galley')?.25:1;
+  return sum+(NAVY_C_ATTACK[s.typeId]||0)*s.hp/spec.hp*s.crew/spec.crew*modifier;
+ },0);
+}
+function navyH1Traffic(w,portId){
+ // Recorded completed/commercial paths, not assumed port wealth. No new historical trades invented.
+ const routes=w.navy?.g3aTrade?.routes||[];let volume=0;
+ for(const r of routes){
+  if(r.sourcePortId!==portId&&r.destinationPortId!==portId)continue;
+  if(!Number.isSafeInteger(r.lastDepartureDay)||w.dayIndex-r.lastDepartureDay>1200)continue;
+  volume+=Math.max(0,r.deliveredUnits||0);
+ }
+ return Math.min(18,Math.floor(3*Math.log1p(volume)));
+}
+function navyH1Candidates(w,f,ports,committed){
+ const ships=navyBShips(w,f), coast=Math.min(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
+ const nv=navyDEnsure(w),ownPower=navyH1Power(w,f);
+ const output=[],rejected={};
+ const pathTo=tile=>navyPath(w,f.tileId,tile,coast);
+ function admit(row){
+  if(row.score<8){rejected.LOW_STRATEGIC_VALUE=(rejected.LOW_STRATEGIC_VALUE||0)+1;return;}
+  if(row.distance>0&&!navyActionLegal(w,f.nationId,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:row.targetTileId})){rejected.CANNOT_PAY_OR_SAIL=(rejected.CANNOT_PAY_OR_SAIL||0)+1;return;}
+  if(!Number.isFinite(row.score))return;
+  output.push(row);
+ }
+ const hostilePorts=navyBPorts(w).filter(p=>{const owner=navyBPortNation(w,p);return owner!==null&&v04dWarBetween(w,f.nationId,owner);});
+ for(const p of hostilePorts){
+  const goal=navyWaterAtPort(w,p),path=pathTo(goal);
+  if(!path){rejected.NO_SEA_ROUTE=(rejected.NO_SEA_ROUTE||0)+1;continue;}
+  if(ownPower<12){rejected.BLOCKADE_TOO_WEAK=(rejected.BLOCKADE_TOO_WEAK||0)+1;continue;}
+  // Use already physical local enemy assets as a risk estimate, not a fictitious garrison.
+  let enemyPower=0;
+  for(const enemy of nv.fleets){if(enemy.nationId===f.nationId||!v04dWarBetween(w,f.nationId,enemy.nationId)||!enemy.shipIds.length)continue;
+   if(enemy.tileId===goal||neighbors4(goal,w.size,w.height,w).includes(enemy.tileId))enemyPower+=navyH1Power(w,enemy);
+  }
+  if(enemyPower>0&&ownPower<=enemyPower*1.2){rejected.ENEMY_SEA_SUPERIORITY=(rejected.ENEMY_SEA_SUPERIORITY||0)+1;continue;}
+  const distance=path.length-1,others=committed.get(p.id)||0;
+  const score=38+navyH1Traffic(w,p.id)+Math.min(8,(p.level||1)*2)
+      -distance*1.5-Math.min(32,others*21)
+      +(f.dMission==='BLOCKADE'&&f.dTargetPortId===p.id?12:0);
+  admit({mission:'BLOCKADE',targetPortId:p.id,targetFleetId:null,targetTileId:goal,distance,score:+score.toFixed(2),reason:others?'COMMERCIAL_PORT_DECONFLICT':'COMMERCIAL_PORT'});
+ }
+ const ownPorts=ports.map(p=>navyWaterAtPort(w,p)).filter(x=>x!==null);
+ for(const enemy of nv.fleets){
+  if(enemy.nationId===f.nationId||!v04dWarBetween(w,f.nationId,enemy.nationId)||!enemy.shipIds.length||!navyH1Power(w,enemy))continue;
+  // Civilian transports and dedicated merchant hulls are not an H1 defensive military threat.
+  if(!navyBShips(w,enemy).some(s=>s&&(NAVY_D_WARSHIPS.includes(s.typeId)||s.typeId==='medieval_galley')))continue;
+  const path=pathTo(enemy.tileId);if(!path){rejected.NO_INTERCEPT_ROUTE=(rejected.NO_INTERCEPT_ROUTE||0)+1;continue;}
+  const distance=path.length-1;
+  let nearHome=false;
+  for(const friendlyPortTile of ownPorts){const toHome=navyPath(w,enemy.tileId,friendlyPortTile,coast);
+   if(toHome&&toHome.length-1<=7){nearHome=true;break;}
+  }
+  const threat=navyH1Power(w,enemy);
+  if(ownPower<threat*.65){rejected.INTERCEPT_TOO_WEAK=(rejected.INTERCEPT_TOO_WEAK||0)+1;continue;}
+  // Prioritize protecting an actual home port over a distant discretionary blockade.
+  const score=25+(nearHome?46:0)+Math.min(14,threat*.12)-distance*1.4
+       +(f.dMission==='INTERCEPT'&&f.h1TargetFleetId===enemy.id?10:0);
+  admit({mission:'INTERCEPT',targetPortId:null,targetFleetId:enemy.id,targetTileId:enemy.tileId,distance,score:+score.toFixed(2),reason:nearHome?'HOME_PORT_THREAT':'HOSTILE_FLEET'});
+ }
+ output.sort((a,b)=>b.score-a.score||a.distance-b.distance||a.mission.localeCompare(b.mission)||(a.targetPortId??a.targetFleetId)-(b.targetPortId??b.targetFleetId));
+ return {candidates:output,top:output.slice(0,NAVY_H1_CANDIDATE_LIMIT),rejected,ownPower:+ownPower.toFixed(2)};
+}
+function navyH1Record(w,f,decision,inspection,result){
+ const h=navyH1Ensure(w);h.stats.evaluated++;
+ const mission=decision?.mission||'IDLE';
+ if(!result)h.stats.failed++;else if(mission==='BLOCKADE')h.stats.blockade++;
+ else if(mission==='INTERCEPT')h.stats.intercept++;else if(mission==='IDLE')h.stats.idle++;
+ if(decision&&decision.distance===0&&result)h.stats.hold++;
+ h.decisions.push({day:w.dayIndex,nationId:f.nationId,fleetId:f.id,mission,
+  targetPortId:decision?.targetPortId??null,targetFleetId:decision?.targetFleetId??null,
+  score:decision?.score??null,reason:result?(decision?.reason||'NO_REACHABLE_TARGET'):'ORDER_REJECTED',
+  distance:decision?.distance??null,ownPower:inspection.ownPower,
+  candidates:inspection.top.map(c=>({mission:c.mission,port:c.targetPortId,fleet:c.targetFleetId,score:c.score,distance:c.distance})),
+  rejected:inspection.rejected,executed:!!result});
+ if(h.decisions.length>NAVY_H1_HISTORY_LIMIT)h.decisions.splice(0,h.decisions.length-NAVY_H1_HISTORY_LIMIT);
+}
+function navyH1ChooseAndExecute(w,f,ports,committed){
+ const inspection=navyH1Candidates(w,f,ports,committed);
+ for(const decision of inspection.candidates){
+  const fleet=navyBFleet(w,f.nationId,f.id);if(!fleet||fleet.status!=='DOCKED')break;
+  if(decision.distance>0&&!navyActionLegal(w,f.nationId,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:decision.targetTileId}))continue;
+  // Do not mutate mission if movement fails. Preserve physical fuel and route accounting.
+  let ok=true;
+  if(decision.distance>0){const moved=navyActionExecute(w,f.nationId,{type:'NAVY_SAIL',fleetId:f.id,targetTileId:decision.targetTileId});ok=moved.ok===true;}
+  if(!ok)continue;
+  const priorMission=f.dMission,priorPort=f.dTargetPortId;
+  navyDSetMission(w,f,decision.mission,decision.targetPortId);
+  // The existing sea-control cache keys on changeSeq; a new H1 order is a real mission change.
+  if(priorMission!==f.dMission||priorPort!==f.dTargetPortId)w.changeSeq++;
+  f.h1TargetFleetId=decision.targetFleetId;
+  if(decision.mission==='BLOCKADE')committed.set(decision.targetPortId,(committed.get(decision.targetPortId)||0)+1);
+  navyH1Record(w,f,decision,inspection,true);
+  return true;
+ }
+ const priorMission=f.dMission,priorPort=f.dTargetPortId;
+ navyDSetMission(w,f,'IDLE');if(priorMission!==f.dMission||priorPort!==f.dTargetPortId)w.changeSeq++;
+ f.h1TargetFleetId=null;
+ navyH1Record(w,f,null,inspection,true);
+ return false;
+}
+function navyH1Validate(w,fail){
+ const h=navyH1Ensure(w),integer=n=>Number.isSafeInteger(n)&&n>=0;
+ if(h.schema!==1||!integer(h.sinceDay)||!Array.isArray(h.decisions)||h.decisions.length>NAVY_H1_HISTORY_LIMIT||!Object.values(h.stats).every(integer))return fail('H1 해군 전략 관측 원장');
+ for(const r of h.decisions)if(!integer(r.day)||!integer(r.fleetId)||!NAVY_D_MISSIONS.includes(r.mission)||!Number.isFinite(r.ownPower)||!Array.isArray(r.candidates)||r.candidates.length>NAVY_H1_CANDIDATE_LIMIT)return fail('H1 해군 전략 결정');
+ return true;
+}
+
 function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockades(w);const nv=navyDEnsure(w);nv.lastAIDay=w.dayIndex;
  navyDAccountMissions(w);
  for(const n of w.nations){if(!n.active||n.controller!=='AI'||!hasTech(w,n.id,'timber_processing'))continue;
@@ -26599,6 +26721,8 @@ function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockade
   if(newReady.length>=1)for(const old of ships.filter(s=>s.typeId==='coastal_galley'&&s.status==='READY')){
    if(navyActionLegal(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id})){const r=navyActionExecute(w,n.id,{type:'NAVY_DECOMMISSION',shipId:old.id});if(r.ok){nv.dStats.modernizations++;navyLog(w,'NAVAL_MODERNIZED',n.id,`retired ${old.id}, newer hull ready`);}break;}
   }
+  const h1Committed=new Map();
+  for(const other of nv.fleets.filter(x=>x.nationId===n.id&&x.dMission==='BLOCKADE'&&!g3dDedicatedFleet(w,x)))if(other.dTargetPortId!=null)h1Committed.set(other.dTargetPortId,(h1Committed.get(other.dTargetPortId)||0)+1);
   for(const f of nv.fleets.filter(f=>f.nationId===n.id&&!g3dDedicatedFleet(w,f)).sort((a,b)=>a.id-b.id)){
    if(navyF3FleetReserved(w,f)||g2FleetReserved(w,f))continue; // Keep F2/3 assault & G2 return fleets committed.
    if(f.cEngagementId||f.bAssignment||f.status!=='DOCKED'||!navyBReady(w,n.id,f))continue;
@@ -26608,13 +26732,9 @@ function navyDQuarter(w){if(w.dayIndex%120!==0)return;navyDExpireInvalidBlockade
    }
    const isCombat=navyBShips(w,f).some(s=>NAVY_D_WARSHIPS.includes(s.typeId)||s.typeId==='medieval_galley');
    if(navyDThreat(w,n.id)&&isCombat){
-    const dest=navyDWartimeTarget(w,f);if(dest){navyDSetMission(w,f,'BLOCKADE',dest.p.id);
-     if(dest.dist>0)navyDSetDestination(w,f,dest.goal,'BLOCKADE');continue;}
-    const coast=Math.min(...navyBShips(w,f).map(s=>NAVY_SHIP_TYPES[s.typeId].coast));
-    const hostile=nv.fleets.filter(e=>e.nationId!==n.id&&v04dWarBetween(w,n.id,e.nationId)&&e.shipIds.length)
-       .map(e=>({e,path:navyPath(w,f.tileId,e.tileId,coast)})).filter(x=>x.path&&x.path.length>1)
-       .sort((a,b)=>a.path.length-b.path.length||a.e.id-b.e.id)[0];
-    if(hostile&&navyDSetDestination(w,f,hostile.e.tileId,'INTERCEPT'))continue;
+    // Exclude this fleet's current mission from duplication penalty.
+    if(f.dMission==='BLOCKADE'&&f.dTargetPortId!=null)h1Committed.set(f.dTargetPortId,Math.max(0,(h1Committed.get(f.dTargetPortId)||0)-1));
+    if(navyH1ChooseAndExecute(w,f,ports,h1Committed))continue;
    }
    // Protect a real domestic maritime corridor when two reachable friendly ports exist.
    // Never use adjacent-water one-step patrol just to increase the movement counter.
@@ -26636,6 +26756,7 @@ function navyDValidate(w,fail){const nv=navyDEnsure(w);
  for(const f of nv.fleets)if(f.dMission!==undefined&&!NAVY_D_MISSIONS.includes(f.dMission))return fail('D 해군 임무');
  for(const s of nv.ships)if(NAVY_D_WARSHIPS.includes(s.typeId)&&!NAVY_SHIP_TYPES[s.typeId])return fail('D 신형 함종');
  for(const row of nv.dYearly){if(!Number.isSafeInteger(row.year)||!row.nations||Object.values(row.nations).some(x=>Object.values(x).some(v=>!Number.isSafeInteger(v)||v<0)))return fail('D 해군 연간 원장');}
+ if(navyH1Validate(w,fail)===false)return false;
  return true;
 }
 function navyDDrawFleetGlyph(ctx,x,y,r,f,w){
@@ -26742,6 +26863,18 @@ function navyDRenderPanel(w,n,host){const nv=navyDEnsure(w),ctl=navyDControl(w),
   }
  }
  const exportBtn=document.createElement('button');exportBtn.type='button';exportBtn.className='jump-button';exportBtn.textContent='해군 연간 실적 CSV';exportBtn.addEventListener('click',()=>navyDExport(w));section.append(exportBtn);
+ const h1=navyH1Ensure(w),mine=h1.decisions.filter(d=>d.nationId===n.id).slice(-6).reverse();
+ const h1Head=document.createElement('p');h1Head.className='muted-line';h1Head.textContent=`H1 해군 전략 · 판단 ${h1.stats.evaluated}회 · 봉쇄 ${h1.stats.blockade} · 요격 ${h1.stats.intercept} · 최근 ${mine.length}건`;section.append(h1Head);
+ for(const d of mine){const line=document.createElement('p');line.className='muted-line';line.textContent=`${d.day}일 · 함대 #${d.fleetId} · ${d.mission} · ${d.reason} · 점수 ${d.score??'-'} · 거리 ${d.distance??'-'} · 실행 ${d.executed?'성공':'실패'}`;section.append(line);}
+ for(const format of ['JSON','CSV']){const b=document.createElement('button');b.type='button';b.className='jump-button';b.textContent=`H1 해군 전략 ${format}`;b.addEventListener('click',()=>navyH1Export(w,format));section.append(b);}
+
+}
+function navyH1Export(w,format){
+ const h=navyH1Ensure(w),rows=h.decisions;
+ const data=format==='JSON'?JSON.stringify({schema:'vilob-h1-naval-strategy-v1',version:w.version,dayIndex:w.dayIndex,sinceDay:h.sinceDay,stats:h.stats,decisions:rows},null,2)
+   :navyCCSV(rows.map(r=>({day:r.day,nationId:r.nationId,fleetId:r.fleetId,mission:r.mission,targetPortId:r.targetPortId??'',targetFleetId:r.targetFleetId??'',score:r.score??'',reason:r.reason,distance:r.distance??'',ownPower:r.ownPower,executed:r.executed,rejected:JSON.stringify(r.rejected),candidates:JSON.stringify(r.candidates)})),['day','nationId','fleetId','mission','targetPortId','targetFleetId','score','reason','distance','ownPower','executed','rejected','candidates']);
+ const blob=new Blob([data],{type:format==='JSON'?'application/json;charset=utf-8':'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=`vilob-h1-naval-strategy-day${w.dayIndex}.${format.toLowerCase()}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function navyDExport(w){const nv=navyDEnsure(w),rows=[];
  for(const row of nv.dYearly)for(const [nid,vals] of Object.entries(row.nations))rows.push({period:'YEAR',startYear:row.year,nationId:nid,...vals});
@@ -28858,7 +28991,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09g3h-world';
+const SAVE_KEY='vilob-light-v09h1-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -28870,7 +29003,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -32220,7 +32353,7 @@ for(const [label,ext,mime,body] of [
 </script>
 
 <script>
-// V0.9G3H — Factory Maintenance Freight V1.
+// V0.9G3H compatibility in V0.9H1 — Factory Maintenance Freight V1. (rules unchanged)
 // Only the iDemand(factory).machine_parts quantity above changes the simulation.
 // All code below is bounded observation/UI/validation. Never create cargo or stock here.
 const G3H_SCHEMA=1,G3H_HISTORY_LIMIT=12;
