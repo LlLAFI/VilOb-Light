@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9G3F</title>
+<title>VILOB Light · V0.9G3G</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -950,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3F'; // audit-only seven-good maritime, vessel and I3A power observability
+const VERSION = 'V0.9G3G'; // observational industrial demand / production / power diagnostics, G3F1 hotfix retained
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -7582,6 +7582,7 @@ b.lastOperatedDay=world.dayIndex;if(precision){r.precisionOperated++;r.precision
   return results;
 }
 function runEconomyQuarter(world){
+  g3gBeginQuarter(world);
   f2bOpenQuarter(world);
   f2cOpenQuarter(world);
   const e3e3WoodStarts=e3e3StartEconomyQuarter(world);
@@ -9180,7 +9181,7 @@ function f2b1ValidateCoalSeams(w){
 }
 
 let f1QuarterPlan=null,f1QuarterPlanDay=-1,f1ReservedSteamGold=null;
-function f1EmptyQuarter(day){return {dayIndex:day,coalProduced:0,coalConsumed:0,coalImported:0,coalExported:0,coalTerritoryIn:0,coalTerritoryOut:0,coalStart:0,coalEnd:0,coalOtherSpent:0,coalPotential:0,coalDepletionLoss:0,powerProduced:0,powerUsed:0,powerUnused:0,laborSaved:0,steamSites:0,steamOperatingGold:0,coalSites:0};}
+function f1EmptyQuarter(day){return {dayIndex:day,coalProduced:0,coalConsumed:0,coalImported:0,coalSeaReturns:0,coalExported:0,coalTerritoryIn:0,coalTerritoryOut:0,coalStart:0,coalEnd:0,coalOtherSpent:0,coalPotential:0,coalDepletionLoss:0,powerProduced:0,powerUsed:0,powerUnused:0,laborSaved:0,steamSites:0,steamOperatingGold:0,coalSites:0};}
 function f1NewIndustry(){return {schema:1,coalMinedEver:false,steamOperatedEver:false,lastQuarter:f1EmptyQuarter(0),history:[]};}
 function f1EnsureIndustry(n){return n.f1Industry||(n.f1Industry=f1NewIndustry());}
 function f1Devices(b){return b.powerDevices||{mechanical:false,waterwheel:false,steam:false};}
@@ -9334,9 +9335,9 @@ function f1TrackI1TerritoryQuarter(w,from,to,good,amount){
 function f1FinishEconomyQuarter(w){
  for(const n of w.nations){if(!n.active)continue;
   const i=f1EnsureIndustry(n),r=i.lastQuarter,m=(w.market.lastNation||[]).find(x=>x.id===n.id);
-  r.coalImported=(m?.bought?.coal||0)+(i.g3c1SeaCoalImports||0);r.coalExported=m?.sold?.coal||0;r.coalEnd=n.resources.coal;
-  delete i.g3c1SeaCoalImports;
-  r.coalOtherSpent=r.coalStart+r.coalProduced+r.coalImported+(r.coalTerritoryIn||0)-r.coalExported-(r.coalTerritoryOut||0)-r.coalConsumed-r.coalEnd;
+  r.coalImported=(m?.bought?.coal||0)+(i.g3c1SeaCoalImports||0);r.coalSeaReturns=i.g3f1SeaCoalReturns||0;r.coalExported=m?.sold?.coal||0;r.coalEnd=n.resources.coal;
+  delete i.g3c1SeaCoalImports;delete i.g3f1SeaCoalReturns;
+  r.coalOtherSpent=r.coalStart+r.coalProduced+r.coalImported+(r.coalSeaReturns||0)+(r.coalTerritoryIn||0)-r.coalExported-(r.coalTerritoryOut||0)-r.coalConsumed-r.coalEnd;
   i.history.push({...r});if(i.history.length>F1_HISTORY_WINDOW)i.history.shift();
  }
  f1QuarterPlan=null;f1QuarterPlanDay=-1;f1ReservedSteamGold=null;
@@ -9440,21 +9441,21 @@ function f1ValidateWorld(w){
    // audited figures; never compare all history against today's tech state.
    // Each fully completed quarter uses one fixed steam rate (2 or 3).
    const validSteamCoal=q.coalConsumed===q.steamSites*3||q.coalConsumed===q.steamSites*2;
-   if(['coalTerritoryIn','coalTerritoryOut'].some(k=>q[k]!==undefined&&(!Number.isSafeInteger(q[k])||q[k]<0))||['coalPotential','coalDepletionLoss'].some(k=>q[k]!==undefined&&(!Number.isSafeInteger(q[k])||q[k]<0))||q.coalPotential!==undefined&&q.coalPotential!==q.coalProduced+(q.coalDepletionLoss||0)||q.powerProduced!==q.powerUsed+q.powerUnused||!validSteamCoal||q.steamOperatingGold!==q.steamSites*12||q.coalStart+q.coalProduced+q.coalImported+(q.coalTerritoryIn||0)!==q.coalConsumed+q.coalExported+(q.coalTerritoryOut||0)+q.coalEnd+q.coalOtherSpent)return false;
+   if(['coalTerritoryIn','coalTerritoryOut','coalSeaReturns'].some(k=>q[k]!==undefined&&(!Number.isSafeInteger(q[k])||q[k]<0))||['coalPotential','coalDepletionLoss'].some(k=>q[k]!==undefined&&(!Number.isSafeInteger(q[k])||q[k]<0))||q.coalPotential!==undefined&&q.coalPotential!==q.coalProduced+(q.coalDepletionLoss||0)||q.powerProduced!==q.powerUsed+q.powerUnused||!validSteamCoal||q.steamOperatingGold!==q.steamSites*12||q.coalStart+q.coalProduced+q.coalImported+(q.coalSeaReturns||0)+(q.coalTerritoryIn||0)!==q.coalConsumed+q.coalExported+(q.coalTerritoryOut||0)+q.coalEnd+q.coalOtherSpent)return false;
   }
  }
  if(w.buildings.some(b=>b.typeId==='coal_pit'&&b.level!==1)||!f2b1ValidateCoalSeams(w))return false;
  return true;
 }
 function f1IndustrySummary(w){return {version:VERSION,dayIndex:w.dayIndex,nations:w.nations.map(n=>({id:n.id,name:n.name,era:civilizationLabel(n),coal:n.resources.coal,coalSeams:f2b1CoalSeamSummary(w,n.id),coalMinedEver:f1EnsureIndustry(n).coalMinedEver,steamOperatedEver:f1EnsureIndustry(n).steamOperatedEver,lastQuarter:f1EnsureIndustry(n).lastQuarter,workshops:w.buildings.filter(b=>b.typeId==='workshop'&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>({id:b.id,powerDevices:b.powerDevices,project:b.powerProject||null,lastPower:b.lastPower||null}))}))};}
-function f1IndustryCsv(w){const keys=['dayIndex','coalStart','coalProduced','coalPotential','coalDepletionLoss','coalImported','coalExported','coalTerritoryIn','coalTerritoryOut','coalConsumed','coalEnd','coalOtherSpent','powerProduced','powerUsed','powerUnused','laborSaved','steamSites','steamOperatingGold','coalSites'];const rows=[['nationId','nation',...keys]];for(const n of w.nations)for(const h of f1EnsureIndustry(n).history)rows.push([n.id,n.name,...keys.map(k=>h[k]??(k==='coalPotential'?(h.coalProduced||0):0))]);return '\ufeff'+rows.map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');}
+function f1IndustryCsv(w){const keys=['dayIndex','coalStart','coalProduced','coalPotential','coalDepletionLoss','coalImported','coalSeaReturns','coalExported','coalTerritoryIn','coalTerritoryOut','coalConsumed','coalEnd','coalOtherSpent','powerProduced','powerUsed','powerUnused','laborSaved','steamSites','steamOperatingGold','coalSites'];const rows=[['nationId','nation',...keys]];for(const n of w.nations)for(const h of f1EnsureIndustry(n).history)rows.push([n.id,n.name,...keys.map(k=>h[k]??(k==='coalPotential'?(h.coalProduced||0):0))]);return '\ufeff'+rows.map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');}
 // --- V0.7F2B: resource-conserving steelworks, steam pumps, industrial materials. ---
 // State is bounded to 48 quarterly entries. Industrial sites remain ordinary building
 // objects; industrialSlot only bypasses a single general tile slot (at most one/town).
 const F2B_HISTORY_LIMIT=48, F2B_MAX_STOCK=1000000;
 function f2bEmptyQuarter(day,parts=0,steel=0){return {dayIndex:day,
- machine_parts:{start:parts,produced:0,imports:0,exports:0,used:0,construction:0,transfersIn:0,transfersOut:0,otherSpent:0,end:parts},
- steel:{start:steel,produced:0,imports:0,exports:0,used:0,construction:0,transfersIn:0,transfersOut:0,otherSpent:0,end:steel},
+ machine_parts:{start:parts,produced:0,imports:0,seaReturns:0,exports:0,used:0,construction:0,transfersIn:0,transfersOut:0,otherSpent:0,end:parts},
+ steel:{start:steel,produced:0,imports:0,seaReturns:0,exports:0,used:0,construction:0,transfersIn:0,transfersOut:0,otherSpent:0,end:steel},
  steelworksSites:0,steelworksOperated:0,pumpSites:0,pumpsOperated:0,pumpExtraFood:0,
  ironUsed:0,coalUsed:0,goldUsed:0};}
 function f2bNewIndustry(day=0,parts=0,steel=0){return {schema:1,introducedDay:day,
@@ -9537,34 +9538,41 @@ function f2bRunSteelworksQuarter(w,projections){
   const n=w.nations[w.tiles[b.tileId]?.ownerId],spec=v08jSteelSpec(b.level),s=f2bServiceLegal(w,b,n,spec.labor);
   if(!n?.active)continue;
   const q=f2bEnsure(n).lastQuarter;q.steelworksSites++;
-  if(!s||!f2c2cCanProduce(n,'steel'))continue;
+  if(!s){g3gSteelNote(w,b,n,'SITE_OFFLINE');continue;}
+  if(!f2c2cCanProduce(n,'steel')){g3gSteelNote(w,b,n,'DEMAND_HOLD');continue;}
   const local=projections.get(n.id)?.regionalEconomy?.towns?.get(s.id);
   const steelOutput=spec.output+techBonus(w,n.id,'steelworksYield');
-  if(!local||local.workers<spec.labor||n.resources.iron<spec.iron||n.resources.coal<spec.coal||n.gold<spec.gold||n.resources.steel+steelOutput>F2B_MAX_STOCK)continue;
+  if(!local){g3gSteelNote(w,b,n,'LOCAL_FREIGHT_SHORT');continue;}
+  if(local.workers<spec.labor){g3gSteelNote(w,b,n,'LABOR_SHORT',{workers:local.workers,requiredLabor:spec.labor});continue;}
+  if(n.resources.iron<spec.iron||n.resources.coal<spec.coal){g3gSteelNote(w,b,n,'MATERIAL_SHORT',{ironNeed:spec.iron,coalNeed:spec.coal});continue;}
+  if(n.gold<spec.gold){g3gSteelNote(w,b,n,'GOLD_SHORT',{goldNeed:spec.gold});continue;}
+  if(n.resources.steel+steelOutput>F2B_MAX_STOCK){g3gSteelNote(w,b,n,'STOCK_LIMIT');continue;}
   const runs=(b.f2bRuns||0)+1,maintenance=runs%spec.maintEvery===0?1:0;
   const bill={iron:spec.iron,coal:spec.coal,machine_parts:maintenance};
-  if(n.resources.machine_parts<maintenance||!i1Can(w,n,b,bill))continue;
+  if(n.resources.machine_parts<maintenance){g3gSteelNote(w,b,n,'MATERIAL_SHORT',{maintenance});continue;}
+  if(!i1Can(w,n,b,bill)){g3gSteelNote(w,b,n,'LOCAL_FREIGHT_SHORT',{ironNeed:spec.iron,coalNeed:spec.coal,maintenance});continue;}
   n.resources.iron-=spec.iron;n.resources.coal-=spec.coal;n.gold-=spec.gold;n.resources.machine_parts-=maintenance;
   i1Debit(w,n,b,bill);
   n.resources.steel+=steelOutput;i1Credit(w,n,b,'steel',steelOutput);q.steel.produced+=steelOutput;q.machine_parts.used+=maintenance;
   q.ironUsed+=spec.iron;q.coalUsed+=spec.coal;q.goldUsed+=spec.gold;q.steelworksOperated++;
+  g3gSteelNote(w,b,n,'PRODUCING',{output:steelOutput,labor:spec.labor,requiredLabor:spec.labor});
   b.f2bRuns=runs;b.f2bOperatingDay=w.dayIndex;
  }
 }
 function f2bCloseQuarter(w){
  const reports=new Map((w.market?.lastNation||[]).map(r=>[r.id,r]));
  for(const n of w.nations){if(!n.active)continue;
-  const st=f2bEnsure(n),q=st.lastQuarter,r=reports.get(n.id)||{},sea=st.g3c1SeaImports||{};
+  const st=f2bEnsure(n),q=st.lastQuarter,r=reports.get(n.id)||{},sea=st.g3c1SeaImports||{},seaReturns=st.g3f1SeaReturns||{};
   for(const g of ['machine_parts','steel']){
-   const row=q[g];row.imports=(r.bought?.[g]||0)+(sea[g]||0);row.exports=r.sold?.[g]||0;
+   const row=q[g];row.imports=(r.bought?.[g]||0)+(sea[g]||0);row.seaReturns=seaReturns[g]||0;row.exports=r.sold?.[g]||0;
    if(g==='machine_parts'){
     row.produced=f2Ensure(n).lastQuarter.produced||0;
     row.used+=f2Ensure(n).lastQuarter.used||0;
    }
    row.end=n.resources[g]||0;
-   row.otherSpent=row.start+row.produced+row.imports+row.transfersIn-row.exports-row.used-row.construction-row.transfersOut-row.end;
+   row.otherSpent=row.start+row.produced+row.imports+(row.seaReturns||0)+row.transfersIn-row.exports-row.used-row.construction-row.transfersOut-row.end;
   }
-  delete st.g3c1SeaImports;
+  delete st.g3c1SeaImports;delete st.g3f1SeaReturns;
   st.history.push(structuredClone(q));if(st.history.length>F2B_HISTORY_LIMIT)st.history.shift();
  }
 }
@@ -9655,8 +9663,8 @@ function f2bValidate(w){
   for(const q of [...s.history,s.lastQuarter]){
    if(!Number.isSafeInteger(q.dayIndex)||q.dayIndex>w.dayIndex||q.dayIndex<0)return false;
    for(const g of ['machine_parts','steel']){
-    const r=q[g];if(!r||['start','produced','imports','exports','used','construction','transfersIn','transfersOut','otherSpent','end'].some(k=>!Number.isSafeInteger(r[k])||r[k]<0))return false;
-    if(r.start+r.produced+r.imports+r.transfersIn!==r.exports+r.used+r.construction+r.transfersOut+r.otherSpent+r.end)return false;
+    const r=q[g];if(!r||['start','produced','imports','exports','used','construction','transfersIn','transfersOut','otherSpent','end'].some(k=>!Number.isSafeInteger(r[k])||r[k]<0)||(r.seaReturns!==undefined&&(!Number.isSafeInteger(r.seaReturns)||r.seaReturns<0)))return false;
+    if(r.start+r.produced+r.imports+(r.seaReturns||0)+r.transfersIn!==r.exports+r.used+r.construction+r.transfersOut+r.otherSpent+r.end)return false;
    }
    for(const k of ['steelworksSites','steelworksOperated','pumpSites','pumpsOperated','pumpExtraFood','ironUsed','coalUsed','goldUsed'])if(!Number.isSafeInteger(q[k])||q[k]<0)return false;
   }
@@ -9934,8 +9942,9 @@ function f2FactoryPower(w,n,b){
 }
 // V0.7J: one bounded, current-quarter per-factory production status. Old runs are not backfilled.
 function f2jProductionNote(b,w,reason,extra={}){
+ if(reason!=='STOCK_SURPLUS')g3gFactoryNote(w,b,reason,extra);
  if(b.level!==4)return;
- b.f2jLastQuarter={dayIndex:w.dayIndex,reason,operated:reason==='PRODUCING',...extra};
+ b.f2jLastQuarter={dayIndex:w.dayIndex,reason,operated:reason==='PRODUCING',...Object.fromEntries(Object.entries(extra).filter(([key])=>reason==='PRODUCING'?['parts','localPU','externalPU','labor'].includes(key):reason==='LABOR_SHORT'?key==='workers':reason==='GRID_SHORT'?key==='missingPU':false))};
 }
 function f2jEnsure(n){return n.f2jIndustry||(n.f2jIndustry={schema:1,lastDecision:null,lastUpgradeYear:-1});}
 function f2jLabel(reason){return ({NO_REAL_DEMAND:'실수요 부족',HISTORY_SHORT:'관측 이력 부족',LOW_UTILIZATION:'기존 공장 저가동',CAPACITY_SUFFICIENT:'현 생산능력 충분',TECH_LOCKED:'기술·시대 조건 미충족',PROJECT_PENDING:'공사 진행 중',FOOD_RISK:'식량 안전 조건 미충족',FISCAL_RISK:'재정 위험',MATERIAL_SHORT:'건설 자재 부족',REGIONAL_FREIGHT_SHORT:'지역 자원·물류 부족',LABOR_SHORT:'현장 노동력 부족',GRID_SHORT:'확보 가능한 동력 부족',ROI_LOW:'개량 수익성 부족',NO_ELIGIBLE_FACTORY:'개량 대상 공장 없음',UPGRADE_STARTED:'Lv.4 개량 착수',NEW_FACTORY_PREFERRED:'신규 공장 투자 우선',NO_FACTORY:'공장 없음',STOCK_SURPLUS:'부품 재고 충분',INPUT_SHORT:'생산 원료 부족',PRODUCING:'정상 생산',OFFLINE:'가동 조건 미충족'})[reason]||reason||'미평가';}
@@ -9957,16 +9966,16 @@ function f2RunFactoryQuarter(w,projections){
   const t=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId),n=s?.ownerId===t?.ownerId?w.nations[s.ownerId]:null;
   if(!n?.active)continue;const q=out.get(n.id);q.sites++;
   f2jProductionNote(b,w,'STOCK_SURPLUS');
-  if(!f2c2cCanProduce(n,'machine_parts'))continue;
+  if(!f2c2cCanProduce(n,'machine_parts')){g3gFactoryNote(w,b,'DEMAND_HOLD');continue;}
   if(b.status!=='ACTIVE'||b.disconnected||t.occupiedBy!==null||occupied.has(t.id)||s.population<1||!f2FactoryUnlocked(w,n.id)){f2jProductionNote(b,w,'OFFLINE');continue;}
   const local=projections.get(n.id)?.regionalEconomy?.towns?.get(s.id),spec=F2_FACTORY_LEVELS[b.level];
-  if(!local||!spec||!local.roadNetwork&&t.roadLevel===0&&w.tiles[s.coreTileId]?.roadLevel===0){f2jProductionNote(b,w,'REGIONAL_FREIGHT_SHORT');continue;}
+  if(!local||!spec||!local.roadNetwork&&t.roadLevel===0&&w.tiles[s.coreTileId]?.roadLevel===0){f2jProductionNote(b,w,'REGIONAL_FREIGHT_SHORT',{g3gReason:!local||!spec?'LOCAL_FREIGHT_SHORT':'ROAD_BLOCKED'});continue;}
   // Labour is a finite allocation ceiling, not automatically granted by installed machines.
   const workerPool=Math.min(Math.max(0,Math.floor(local.workers||0)),Math.max(0,s.population));
   const workRatio=Math.min(1,workerPool/Math.max(1,local.demand||spec.labor));
   const staffed=Math.floor(spec.labor*workRatio);
   const baseParts=Math.floor(spec.parts*workRatio);
-  if(staffed<1||baseParts<1){f2jProductionNote(b,w,'LABOR_SHORT',{workers:workerPool});continue;}
+  if(staffed<1||baseParts<1){f2jProductionNote(b,w,'LABOR_SHORT',{workers:workerPool,staffed,requiredLabor:spec.labor});continue;}
   const productivity=(hasTech(w,n.id,'industrial_process_standardization')?1:0)+(hasTech(w,n.id,'precision_machine_standardization')?1:0);
   const bonusTenths=(b.f2c2cBonusTenths||0)+baseParts*productivity;
   const parts=baseParts+Math.floor(bonusTenths/10);
@@ -9974,20 +9983,21 @@ function f2RunFactoryQuarter(w,projections){
   const coal=spec.coal,gold=Math.ceil(spec.gold*baseParts/spec.parts);
   const steamCoal=3-techBonus(w,n.id,'industrialSteamCoalSaving');
   const power=f2FactoryPower(w,n,b);
-  if(n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)||n.gold<gold+12*(power.steam>0)||n.resources.machine_parts+parts>1000000){f2jProductionNote(b,w,n.gold<gold+12*(power.steam>0)?'FISCAL_RISK':'INPUT_SHORT');continue;}
+  if(n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)||n.gold<gold+12*(power.steam>0)||n.resources.machine_parts+parts>1000000){f2jProductionNote(b,w,n.gold<gold+12*(power.steam>0)?'FISCAL_RISK':'INPUT_SHORT',{g3gReason:n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)?'MATERIAL_SHORT':n.gold<gold+12*(power.steam>0)?'GOLD_SHORT':'STOCK_LIMIT',ironNeed:iron,woodNeed:wood,coalNeed:coal+steamCoal*(power.steam>0),goldNeed:gold+12*(power.steam>0),requiredPU:spec.pu,ownAvailablePU:power.supplied});continue;}
   // Machinery needs a real consumable spare part every fourth operating quarter.
   const maintenance=((b.factoryRuns||0)+1)%4===0?1:0;
-  if(n.resources.machine_parts<maintenance){f2jProductionNote(b,w,'INPUT_SHORT');continue;}
-  if(!i1Can(w,n,b,{iron,coal:coal+steamCoal*(power.steam>0),machine_parts:maintenance})){f2jProductionNote(b,w,'REGIONAL_FREIGHT_SHORT');continue;}
+  if(n.resources.machine_parts<maintenance){f2jProductionNote(b,w,'INPUT_SHORT',{g3gReason:'MATERIAL_SHORT',maintenance});continue;}
+  if(!i1Can(w,n,b,{iron,coal:coal+steamCoal*(power.steam>0),machine_parts:maintenance})){f2jProductionNote(b,w,'REGIONAL_FREIGHT_SHORT',{g3gReason:'LOCAL_FREIGHT_SHORT',ironNeed:iron,coalNeed:coal+steamCoal*(power.steam>0),maintenance});continue;}
   const missing=Math.max(0,spec.pu-power.supplied);
-  if(missing&&i2Pull(w,n,s.id,missing,b.id)!==missing){f2jProductionNote(b,w,'GRID_SHORT',{missingPU:missing});continue;}
+  const pulled=missing?i2Pull(w,n,s.id,missing,b.id):0;
+  if(missing&&pulled!==missing){f2jProductionNote(b,w,'GRID_SHORT',{g3gReason:'POWER_SHORT',missingPU:missing,requiredPU:spec.pu,ownPU:Math.min(power.supplied,spec.pu),externalPU:pulled,unmetPU:Math.max(0,missing-pulled),powerEvaluated:true});continue;}
   const localPowerUsed=Math.min(power.supplied,spec.pu);
   n.resources.wood-=wood;n.resources.iron-=iron;n.resources.coal-=coal+steamCoal*(power.steam>0);
   n.gold-=gold+12*(power.steam>0);
   i1Debit(w,n,b,{iron,coal:coal+steamCoal*(power.steam>0),machine_parts:maintenance});
   n.resources.machine_parts+=parts-maintenance;i1Credit(w,n,b,'machine_parts',parts);b.f2c2cBonusTenths=bonusTenths%10;b.factoryRuns=(b.factoryRuns||0)+1;b.lastFactoryOperatedDay=w.dayIndex;if(b.level===4)b.kLevel4OperatedDay=w.dayIndex;
   b.lastPower={dayIndex:w.dayIndex,source:power.source,demand:Math.max(spec.pu,power.supplied),supplied:power.supplied,used:localPowerUsed,unused:power.supplied-localPowerUsed,externalPowerUsed:missing,totalPowerUsed:spec.pu};
-  f2jProductionNote(b,w,'PRODUCING',{parts,localPU:localPowerUsed,externalPU:missing,labor:staffed});
+  f2jProductionNote(b,w,'PRODUCING',{parts,localPU:localPowerUsed,ownPU:localPowerUsed,externalPU:missing,requiredPU:spec.pu,unmetPU:0,powerEvaluated:true,labor:staffed,requiredLabor:spec.labor});
   q.operated++;q.produced+=parts;q.used+=maintenance;q.woodUsed+=wood;q.ironUsed+=iron;q.coalUsed+=coal+steamCoal*(power.steam>0);q.goldSpent+=gold+12*(power.steam>0);
   q.laborRequired+=spec.labor;q.laborSupplied+=staffed;q.powerProduced+=power.supplied;q.powerUsed+=localPowerUsed;q.powerUnused+=power.supplied-localPowerUsed;
   const f=f1EnsureIndustry(n).lastQuarter;f.coalOtherSpent+=coal+steamCoal*(power.steam>0);f.powerProduced+=power.supplied;f.powerUsed+=localPowerUsed;f.powerUnused+=power.supplied-localPowerUsed;
@@ -22293,11 +22303,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9G3E','V0.9G3E1','V0.9G3F'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22306,7 +22316,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22377,6 +22387,7 @@ function deserializeWorld(json){
   b.kLevel4OperatedDay=b.f2jLastQuarter.dayIndex;
  }
  g3fEnsure(parsed);
+ if(g3eImportedVersion==='V0.9G3F')g3f1RepairAudited80940Returns(parsed);
  if(g3eImportedVersion!==VERSION&&parsed.g3fObservation.sourceVersion===VERSION&&parsed.g3fObservation.sinceDay===parsed.dayIndex)parsed.g3fObservation.sourceVersion=g3eImportedVersion;
  validateWorld(parsed);return parsed;
 }
@@ -28847,7 +28858,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09g3f-world';
+const SAVE_KEY='vilob-light-v09g3g-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -28859,7 +28870,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -29672,7 +29683,7 @@ function renderNationOverview(){
   const tabs=[['overview','개요·경제'],['freight','산업·동력망'],['governance','정책'],['strategy','지정학 전략'],['research','기술'],['projects','국가 프로젝트'],['diplomacy','외교'],['settlements','정착지'],['culture','사회·문화'],['military','군사'],['adaptation','AI 적응']];
   if(!tabs.some(([id])=>id===app.nationSubtab))app.nationSubtab='overview';
   const tabBar=make('div',{class:'nation-subtabs',role:'tablist','aria-label':n.name+' 세부 정보'});
-  const panels={freight:[i3aPanel(w,n),i2Panel(w,n),i1Panel(w,n),iPanel(w,n)],overview:[grid,leadership,demographyPanel,trading,supplyPanel,c3development,recoverySection,procurement],governance:[],strategy:[strategic],research:[research,c3development],projects:[kProjectsPanel(w,n)],diplomacy:[diplomacy],settlements:[places]};
+  const panels={freight:[i3aPanel(w,n),i2Panel(w,n),i1Panel(w,n),iPanel(w,n)],overview:[grid,leadership,demographyPanel,trading,supplyPanel,c3development,recoverySection,procurement,...(typeof g3gIndustryPanel==='function'?[g3gIndustryPanel(w,n)]:[])],governance:[],strategy:[strategic],research:[research,c3development],projects:[kProjectsPanel(w,n)],diplomacy:[diplomacy],settlements:[places]};
   if(app.nationSubtab==='governance')panels.governance=[e1GovernancePanel(w,n)];
   if(app.nationSubtab==='culture')panels.culture=[d1bNationPanel(w,n),d2aNationPanel(w,n),d2bNationPanel(w,n),d2MakeNationCulturePanel(w,n)];
   if(app.nationSubtab==='military')panels.military=[makeNationMilitaryPanel(w,n)];
@@ -32021,6 +32032,189 @@ for(const [id,ext,mime,body] of [
  ['g3fReportJson','json','application/json',w=>JSON.stringify(g3fReport(w),null,2)],
  ['g3fReportCsv','csv','text/csv;charset=utf-8',w=>g3fCsv(w)]]){
  document.getElementById(id)?.addEventListener('click',()=>{const w=app?.world;if(w)download(`vilob-g3f-observatory-day${w.dayIndex}.${ext}`,body(w),mime);});
+}
+</script>
+<script>
+// V0.9G3F1 — audited, event-backed SEA RETURN attribution.
+// Do not change physical stocks, market exchange, Gold, RNG, ships or AI.
+function g3f1RecordReturn(w,job,quantity){
+ if(job?.kind!=='TRADE'||job.phase!=='RETURNING'||!Number.isSafeInteger(quantity)||quantity<1)return;
+ const n=w.nations[job.sellerNationId];if(!n)return;
+ if(job.good==='coal'){
+  const st=f1EnsureIndustry(n),v=(st.g3f1SeaCoalReturns||0)+quantity;
+  if(!Number.isSafeInteger(v))throw Error('G3F1 석탄 해상 반송 정수 초과');
+  st.g3f1SeaCoalReturns=v;
+ }else if(job.good==='machine_parts'||job.good==='steel'){
+  const st=f2bEnsure(n,w.dayIndex),a=st.g3f1SeaReturns??=( {machine_parts:0,steel:0} );
+  const v=(a[job.good]||0)+quantity;
+  if(!Number.isSafeInteger(v))throw Error('G3F1 산업재 해상 반송 정수 초과');
+  a[job.good]=v;
+ }
+}
+// The preceding dock handler performs the authoritative physical return.
+// Only a successfully finalized RETURNING trade with matching stock delta is credited.
+const g3f1PriorDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){
+ const job=f.bAssignment;
+ const eligible=job?.kind==='TRADE'&&job.phase==='RETURNING'&&
+  ['coal','machine_parts','steel'].includes(job.good)&&Number.isSafeInteger(job.amount)&&job.amount>0;
+ const seller=eligible?w.nations[job.sellerNationId]:null;
+ const before=eligible&&seller?(seller.resources[job.good]||0):null;
+ const result=g3f1PriorDock(w,f);
+ if(eligible&&seller&&!f.bAssignment&&seller.resources[job.good]-before===job.amount)
+  g3f1RecordReturn(w,job,job.amount);
+ return result;
+};
+// One uniquely documented legacy case, not a general residual-masking migration.
+// Exact G3B return records + exact historical F2B stock rows are both necessary.
+function g3f1RepairAudited80940Returns(w){
+ if(w.g3f1HistoricReturnRepair||w.seed!=='vilob-light-01'||w.size!==39||w.height!==21||
+    w.dayIndex<80400||w.worldTopology!=='CYLINDER_X')return false;
+ const n=w.nations[8];if(n?.name!=='노르바')return false;
+ const events=w.market?.g3b?.events||[],history=n.f2bIndustry?.history||[];
+ const specs=[
+  {id:5700,depart:80220,finish:80352,quarter:80370,quantity:7,start:107,end:113,otherSpent:-6},
+  {id:5702,depart:80250,finish:80382,quarter:80400,quantity:8,start:113,end:121,otherSpent:-8}
+ ];
+ const fixes=[];
+ for(const x of specs){
+  const matches=events.filter(e=>e?.id===x.id),quarters=[...history,n.f2bIndustry?.lastQuarter].filter(q=>q?.dayIndex===x.quarter);
+  if(matches.length!==1||quarters.length!==1)return false;
+  const e=matches[0],q=quarters[0],r=q.machine_parts;
+  if(e.status!=='RETURNED'||e.seller!==8||e.buyer!==10||e.good!=='machine_parts'||
+   e.dayIndex!==x.depart||e.finishedDay!==x.finish||e.loaded!==x.quantity||
+   e.returned!==x.quantity||e.lost!==0||r?.start!==x.start||r?.end!==x.end||
+   r.otherSpent!==x.otherSpent||r.imports!==0||(r.seaReturns||0)!==0||
+   r.produced!==0||r.exports!==0||r.used!==0||r.construction!==0||
+   r.transfersIn!==0||r.transfersOut!==0||
+   r.start+r.produced+r.imports+(r.seaReturns||0)+r.transfersIn!==
+     r.exports+r.used+r.construction+r.transfersOut+r.otherSpent+r.end)return false;
+  fixes.push({eventId:e.id,quarter:x.quarter,quantity:x.quantity,row:r});
+ }
+ // Mutate audit rows only AFTER all checks. No physical stock or currency mutation.
+ for(const x of fixes){x.row.seaReturns=x.quantity;x.row.otherSpent+=x.quantity;}
+ w.g3f1HistoricReturnRepair={schema:1,kind:'AUDITED_G3B_SEA_RETURN_5700_5702',sourceVersion:'V0.9G3F',
+  repairedDay:w.dayIndex,nationId:8,good:'machine_parts',entries:fixes.map(({eventId,quarter,quantity})=>({eventId,quarter,quantity}))};
+ return true;
+}
+const g3f1OldValidate=validateWorld;
+validateWorld=function(w){
+ for(const n of w.nations||[]){
+  const p=n.f2bIndustry?.g3f1SeaReturns;
+  if(p&&(['machine_parts','steel'].some(g=>!Number.isSafeInteger(p[g])||p[g]<0)||
+    Object.keys(p).some(g=>!['machine_parts','steel'].includes(g))))throw Error('G3F1 산업재 반송 미결산 장부');
+  const c=n.f1Industry?.g3f1SeaCoalReturns;
+  if(c!==undefined&&(!Number.isSafeInteger(c)||c<0))throw Error('G3F1 석탄 반송 미결산 장부');
+ }
+ const audit=w.g3f1HistoricReturnRepair;
+ if(audit&&(audit.schema!==1||audit.kind!=='AUDITED_G3B_SEA_RETURN_5700_5702'||
+   !Array.isArray(audit.entries)||audit.entries.length!==2||audit.entries[0].quantity!==7||audit.entries[1].quantity!==8))
+  throw Error('G3F1 이력 복구 감사 필드');
+ return g3f1OldValidate(w);
+};
+</script>
+
+<script>
+// V0.9G3G — Read-only audit of actual F2C2C / F2B / I2 production decision sites.
+// Never trigger a second material availability test, i2Pull, production run, or RNG call.
+const G3G_REASONS=['PRODUCING','DEMAND_SATISFIED','HYSTERESIS_HOLD','SITE_OFFLINE','ROAD_BLOCKED','LOCAL_FREIGHT_SHORT','LABOR_SHORT','MATERIAL_SHORT','GOLD_SHORT','POWER_SHORT','STOCK_LIMIT'];
+const G3G_REASON_KO={PRODUCING:'정상 생산',DEMAND_SATISFIED:'목표 재고 충족',HYSTERESIS_HOLD:'재가동 문턱 대기',SITE_OFFLINE:'시설 가동 불가',ROAD_BLOCKED:'도로 연결 차단',LOCAL_FREIGHT_SHORT:'지역 물자·접근 실패',LABOR_SHORT:'노동력 부족',MATERIAL_SHORT:'원료·유지부품 부족',GOLD_SHORT:'운영 Gold 부족',POWER_SHORT:'실제 외부 동력 부족',STOCK_LIMIT:'재고 상한'};
+function g3gEnsure(w){return w.g3gIndustry??=( {schema:1,sinceDay:w.dayIndex,latest:null,history:[]} );}
+function g3gBeginQuarter(w){const st=g3gEnsure(w);st.latest={dayIndex:w.dayIndex,facilities:[],nations:[]};}
+function g3gDemandReason(n,good){const st=f2c2cEnsure(n),stock=n.resources[good]||0,target=st.plan?.[good]||0;
+ return st.mode[good]&&stock>=target||stock>=target?'DEMAND_SATISFIED':'HYSTERESIS_HOLD';}
+function g3gSite(w,b,n,kind,reason,extra={}){
+ const st=g3gEnsure(w);if(!st.latest||st.latest.dayIndex!==w.dayIndex)g3gBeginQuarter(w);
+ if(reason==='DEMAND_HOLD')reason=g3gDemandReason(n,kind==='factory'?'machine_parts':'steel');
+ const prev=st.latest.facilities.findIndex(x=>x.buildingId===b.id);
+ const int=x=>Number.isSafeInteger(x)&&x>=0?x:0;
+ const rec={buildingId:b.id,nationId:n.id,settlementId:b.settlementId,kind,level:b.level,reason,
+   output:int(extra.parts??extra.output),workers:int(extra.workers??extra.labor),requiredLabor:int(extra.requiredLabor),
+   powerEvaluated:extra.powerEvaluated===true,requiredPU:extra.powerEvaluated?int(extra.requiredPU):0,
+   ownPU:extra.powerEvaluated?int(extra.ownPU??extra.localPU):0,
+   externalPU:extra.powerEvaluated?int(extra.externalPU):0,
+   unmetPU:extra.powerEvaluated?int(extra.unmetPU):0,
+   // Separate potential installed capacity from actual consumed PU.
+   ...(extra.ownAvailablePU!=null?{ownAvailablePU:int(extra.ownAvailablePU)}:{})};
+ if(prev>=0)st.latest.facilities[prev]=rec;else st.latest.facilities.push(rec);
+}
+function g3gFactoryNote(w,b,reason,extra={}){
+ const t=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId),n=s?.ownerId===t?.ownerId?w.nations[s.ownerId]:null;
+ if(!n?.active)return;
+ const mapped=extra.g3gReason||({STOCK_SURPLUS:'DEMAND_HOLD',OFFLINE:'SITE_OFFLINE',REGIONAL_FREIGHT_SHORT:'LOCAL_FREIGHT_SHORT',INPUT_SHORT:'MATERIAL_SHORT',FISCAL_RISK:'GOLD_SHORT',GRID_SHORT:'POWER_SHORT'}[reason]||reason);
+ g3gSite(w,b,n,'factory',mapped,extra);
+}
+function g3gSteelNote(w,b,n,reason,extra={}){g3gSite(w,b,n,'steelworks',reason,extra);}
+function g3gFinalizeQuarter(w){const st=g3gEnsure(w),last=st.latest;if(!last||last.dayIndex!==w.dayIndex)return;
+ for(const n of w.nations){if(!n.active)continue;
+  const d=n.f2c2cDemand?.lastQuarter,fac=last.facilities.filter(b=>b.nationId===n.id);
+  const categories={factory:fac.filter(b=>b.kind==='factory'),steelworks:fac.filter(b=>b.kind==='steelworks')};
+  const summary={};for(const [kind,rows] of Object.entries(categories)){
+   const reasons={};for(const r of rows)reasons[r.reason]=(reasons[r.reason]||0)+1;
+   const demand=rows.filter(r=>!['DEMAND_SATISFIED','HYSTERESIS_HOLD'].includes(r.reason));
+   summary[kind]={sites:rows.length,needed:demand.length,producing:reasons.PRODUCING||0,reasons,
+     powerEvaluated:rows.filter(r=>r.powerEvaluated).length,requiredPU:rows.reduce((a,r)=>a+r.requiredPU,0),
+     ownPU:rows.reduce((a,r)=>a+r.ownPU,0),externalPU:rows.reduce((a,r)=>a+r.externalPU,0),
+     unmetPU:rows.reduce((a,r)=>a+r.unmetPU,0)};
+  }
+  const g3fPower=g3fEnsure(w).power.history.at(-1),workshop=g3fPower?.dayIndex===w.dayIndex?g3fPower.demand[n.id]:null;
+  const market=(w.market?.lastNation||[]).find(x=>x.id===n.id);
+  last.nations.push({nationId:n.id,resources:{parts:n.resources.machine_parts||0,steel:n.resources.steel||0},
+   target:{parts:d?.partsTarget||0,steel:d?.steelTarget||0},
+   mode:{parts:d?.partsActive||false,steel:d?.steelActive||false},
+   demandPerQuarter:{parts:d?.partsDemand||0,steel:d?.steelDemand||0},
+   production:{parts:d?.partsOutput||0,steel:d?.steelOutput||0},
+   consumption:{parts:n.f2bIndustry?.lastQuarter?.machine_parts?.used||0,steel:n.f2bIndustry?.lastQuarter?.steel?.used||0},
+   marketImports:{parts:market?.bought?.machine_parts||0,steel:market?.bought?.steel||0},
+   factory:summary.factory,steelworks:summary.steelworks,
+   workshopPower:workshop?{...workshop}:null});
+ }
+ st.history.push({dayIndex:w.dayIndex,nations:last.nations.map(({nationId,resources,target,mode,demandPerQuarter,production,consumption,marketImports,factory,steelworks,workshopPower})=>
+ ({nationId,resources,target,mode,demandPerQuarter,production,consumption,marketImports,factory,steelworks,workshopPower}))});
+ if(st.history.length>12)st.history.shift();
+}
+const g3gBeforeRunQuarter=runQuarter;
+runQuarter=function(w){const r=g3gBeforeRunQuarter(w);g3gFinalizeQuarter(w);return r;};
+function g3gValidate(w){const st=g3gEnsure(w),int=x=>Number.isSafeInteger(x)&&x>=0;
+ if(st.schema!==1||!int(st.sinceDay)||st.sinceDay>w.dayIndex||!Array.isArray(st.history)||st.history.length>12||st.latest!==null&&(!int(st.latest.dayIndex)||st.latest.dayIndex>w.dayIndex||!Array.isArray(st.latest.facilities)||!Array.isArray(st.latest.nations)))return false;
+ const check=x=>x===null||x===undefined||x.dayIndex<=w.dayIndex&&Array.isArray(x.facilities)&&new Set(x.facilities.map(r=>r.buildingId)).size===x.facilities.length&&x.facilities.every(r=>
+  int(r.buildingId)&&int(r.nationId)&&int(r.settlementId)&&['factory','steelworks'].includes(r.kind)&&int(r.level)&&G3G_REASONS.includes(r.reason)&&
+  ['output','workers','requiredLabor','requiredPU','ownPU','externalPU','unmetPU'].every(k=>int(r[k]))&&typeof r.powerEvaluated==='boolean'&&
+  (!r.powerEvaluated||r.ownPU+r.externalPU+r.unmetPU===r.requiredPU))&&Array.isArray(x.nations);
+ if(!check(st.latest)||st.history.some((q,i)=>!int(q.dayIndex)||q.dayIndex>w.dayIndex||q.dayIndex%30!==0||!Array.isArray(q.nations)||i>0&&st.history[i-1].dayIndex>=q.dayIndex))return false;
+ return true;
+}
+const g3gBeforeValidate=validateWorld;
+validateWorld=function(w){if(!g3gValidate(w))throw Error('월드 검증 실패: G3G 산업 수요·동력 관측');return g3gBeforeValidate(w);};
+function g3gIndustryReport(w){const st=g3gEnsure(w);return {schema:'vilob-g3g-industry-observatory-v1',version:VERSION,dayIndex:w.dayIndex,sinceDay:st.sinceDay,
+ notes:['F2C2C 생산 목표 및 75% 히스테리시스 불변','공장 자체·외부 동력은 실제 생산 검사 단계 도달 시에만 계산','제철소는 현행 엔진에서 별도의 PU 배전 소비가 없음','시설별 최신 분기와 국가별 최근 12분기만 유지','과거 분기는 소급 복원하지 않음'],observation:st};}
+function g3gIndustryCsv(w){const st=g3gEnsure(w),r=['type,dayIndex,nationId,buildingId,kind,level,reason,output,requiredLabor,workers,powerEvaluated,requiredPU,ownPU,externalPU,unmetPU,partsStock,partsTarget,partsMode,partsOutput,steelStock,steelTarget,steelMode,steelOutput'];
+ const csv=x=>'"'+String(x??'').replaceAll('"','""')+'"';
+ for(const q of st.history)for(const n of q.nations)r.push(['nation',q.dayIndex,n.nationId,'','','','', '', '', '', '', '', '', '', '',n.resources.parts,n.target.parts,n.mode.parts,n.production.parts,n.resources.steel,n.target.steel,n.mode.steel,n.production.steel].map(csv).join(','));
+ for(const b of st.latest?.facilities||[])r.push(['site',st.latest.dayIndex,b.nationId,b.buildingId,b.kind,b.level,b.reason,b.output,b.requiredLabor,b.workers,b.powerEvaluated,b.requiredPU,b.ownPU,b.externalPU,b.unmetPU,...Array(8).fill('')].map(csv).join(','));
+ return '\uFEFF'+r.join('\n');}
+function g3gIndustryPanel(w,n){const st=g3gEnsure(w),area=make('section',{class:'overview-section'},[make('h3',{text:'G3G · 산업 수요·생산·동력 진단'})]);
+ const latest=st.latest,ns=latest?.nations.find(x=>x.nationId===n.id);
+ area.append(make('p',{class:'muted-line',text:`관측 시작 ${st.sinceDay}일 · 생산·경제·AI 판단은 변경하지 않음. 시설별 기록은 마지막 결산 분기만 보존.`}));
+ if(!ns){area.append(make('p',{class:'muted-line',text:'다음 분기 결산부터 공장·제철소의 실제 생산 중단 원인을 기록합니다.'}));return area;}
+ const desc=(label,x)=>`${label} 설치 ${x.sites} / 수요 발생 ${x.needed} / 실제 생산 ${x.producing} · ${Object.entries(x.reasons).map(([reason,num])=>`${G3G_REASON_KO[reason]||reason} ${num}`).join(' · ')||'기록 없음'}`;
+ area.append(make('p',{class:'muted-line',text:`${latest.dayIndex}일 · 기계 부품 재고 ${ns.resources.parts}/${ns.target.parts} · 생산모드 ${ns.mode.parts?'ON':'OFF'} · 생산 ${ns.production.parts} / 수입 ${ns.marketImports.parts} · 분기 소비 ${ns.consumption.parts}`}));
+ area.append(make('p',{class:'muted-line',text:`강철 재고 ${ns.resources.steel}/${ns.target.steel} · 생산모드 ${ns.mode.steel?'ON':'OFF'} · 생산 ${ns.production.steel} / 수입 ${ns.marketImports.steel} · 분기 소비 ${ns.consumption.steel}`}));
+ area.append(make('p',{class:'muted-line',text:desc('공장',ns.factory)}),make('p',{class:'muted-line',text:desc('제철소',ns.steelworks)}));
+ area.append(make('p',{class:'muted-line',text:`공장 실제 동력 검사 ${ns.factory.powerEvaluated}곳 · 요구 ${ns.factory.requiredPU} PU / 자체 ${ns.factory.ownPU} PU / 외부 수신 ${ns.factory.externalPU} PU / 미충족 ${ns.factory.unmetPU} PU` }));
+ if(ns.workshopPower)area.append(make('p',{class:'muted-line',text:`공방 전용 기존 G3F 관측: 표본 ${ns.workshopPower.sampleWorkshops}개 · 자체 ${ns.workshopPower.ownPU} PU · 외부 ${ns.workshopPower.externalPU} PU · 부족 ${ns.workshopPower.unmetPU} PU` }));
+ const sites=latest.facilities.filter(x=>x.nationId===n.id).sort((a,b)=>a.kind.localeCompare(b.kind)||a.buildingId-b.buildingId);
+ for(const b of sites)area.append(make('p',{class:'muted-line',text:`${b.kind==='factory'?'공장':'제철소'} #${b.buildingId} Lv.${b.level} · ${G3G_REASON_KO[b.reason]||b.reason}${b.powerEvaluated?` · 동력 ${b.ownPU}+${b.externalPU}/${b.requiredPU} PU · 부족 ${b.unmetPU} PU`:''}` }));
+ area.append(make('p',{class:'scope-note',text:'제철소에 공장 전력 수요를 임의 부여하지 않았으며, 원료·노동 문제로 동력 검사에 이르지 않은 공장은 전력 부족으로 분류하지 않습니다.'}));
+ return area;}
+// Export buttons live beside the G3F observatory exports in the World panel.
+for(const [label,ext,mime,body] of [
+ ['↓ G3G 산업 진단 JSON','json','application/json',w=>JSON.stringify(g3gIndustryReport(w),null,2)],
+ ['↓ G3G 산업 진단 CSV','csv','text/csv;charset=utf-8',w=>g3gIndustryCsv(w)]]){
+ const anchor=document.getElementById('g3fReportCsv');if(!anchor?.parentElement)break;
+ const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent=label;
+ button.addEventListener('click',()=>{const w=app?.world;if(w)download(`vilob-g3g-industry-day${w.dayIndex}.${ext}`,body(w),mime);});
+ anchor.parentElement.append(button);
 }
 </script>
 </body>
