@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9G3G</title>
+<title>VILOB Light · V0.9G3H</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -950,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3G'; // observational industrial demand / production / power diagnostics, G3F1 hotfix retained
+const VERSION = 'V0.9G3H'; // factory maintenance supply via real I1 regional freight; G3G diagnostics retained
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3518,7 +3518,7 @@ function iActiveSites(w,n){
 function iDemand(b){
  if(b.typeId==='factory'){
   const a=F2_FACTORY_LEVELS[b.level]||F2_FACTORY_LEVELS[1];
-  return {coal:a.coal+(b.powerDevices?.steam?3:0),iron:a.iron,steel:0,machine_parts:0};
+  return {coal:a.coal+(b.powerDevices?.steam?3:0),iron:a.iron,steel:0,machine_parts:((b.factoryRuns||0)+1)%4===0?1:0}; // G3H: next actual operating quarter requires one maintenance part
  }
  if(b.typeId==='steelworks'){const spec=v08jSteelSpec(b.v08jSteelSupplyPlan&&b.level===1?2:b.level);return {coal:spec.coal,iron:spec.iron,steel:0,machine_parts:1};} // one physical maintenance part reserved
  if(b.typeId==='arsenal')return {coal:2,iron:6,steel:3,machine_parts:1};
@@ -9997,7 +9997,7 @@ function f2RunFactoryQuarter(w,projections){
   i1Debit(w,n,b,{iron,coal:coal+steamCoal*(power.steam>0),machine_parts:maintenance});
   n.resources.machine_parts+=parts-maintenance;i1Credit(w,n,b,'machine_parts',parts);b.f2c2cBonusTenths=bonusTenths%10;b.factoryRuns=(b.factoryRuns||0)+1;b.lastFactoryOperatedDay=w.dayIndex;if(b.level===4)b.kLevel4OperatedDay=w.dayIndex;
   b.lastPower={dayIndex:w.dayIndex,source:power.source,demand:Math.max(spec.pu,power.supplied),supplied:power.supplied,used:localPowerUsed,unused:power.supplied-localPowerUsed,externalPowerUsed:missing,totalPowerUsed:spec.pu};
-  f2jProductionNote(b,w,'PRODUCING',{parts,localPU:localPowerUsed,ownPU:localPowerUsed,externalPU:missing,requiredPU:spec.pu,unmetPU:0,powerEvaluated:true,labor:staffed,requiredLabor:spec.labor});
+  f2jProductionNote(b,w,'PRODUCING',{parts,maintenanceSpent:maintenance,localPU:localPowerUsed,ownPU:localPowerUsed,externalPU:missing,requiredPU:spec.pu,unmetPU:0,powerEvaluated:true,labor:staffed,requiredLabor:spec.labor});
   q.operated++;q.produced+=parts;q.used+=maintenance;q.woodUsed+=wood;q.ironUsed+=iron;q.coalUsed+=coal+steamCoal*(power.steam>0);q.goldSpent+=gold+12*(power.steam>0);
   q.laborRequired+=spec.labor;q.laborSupplied+=staffed;q.powerProduced+=power.supplied;q.powerUsed+=localPowerUsed;q.powerUnused+=power.supplied-localPowerUsed;
   const f=f1EnsureIndustry(n).lastQuarter;f.coalOtherSpent+=coal+steamCoal*(power.steam>0);f.powerProduced+=power.supplied;f.powerUsed+=localPowerUsed;f.powerUnused+=power.supplied-localPowerUsed;
@@ -22303,11 +22303,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22316,7 +22316,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -28858,7 +28858,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09g3g-world';
+const SAVE_KEY='vilob-light-v09g3h-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -28870,7 +28870,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -32135,7 +32135,8 @@ function g3gSite(w,b,n,kind,reason,extra={}){
    externalPU:extra.powerEvaluated?int(extra.externalPU):0,
    unmetPU:extra.powerEvaluated?int(extra.unmetPU):0,
    // Separate potential installed capacity from actual consumed PU.
-   ...(extra.ownAvailablePU!=null?{ownAvailablePU:int(extra.ownAvailablePU)}:{})};
+   ...(extra.ownAvailablePU!=null?{ownAvailablePU:int(extra.ownAvailablePU)}:{}),
+   ...(kind==='factory'?{g3h:g3hFactoryDiagnosis(w,b,n,reason,extra)}:{})};
  if(prev>=0)st.latest.facilities[prev]=rec;else st.latest.facilities.push(rec);
 }
 function g3gFactoryNote(w,b,reason,extra={}){
@@ -32195,7 +32196,7 @@ function g3gIndustryCsv(w){const st=g3gEnsure(w),r=['type,dayIndex,nationId,buil
  return '\uFEFF'+r.join('\n');}
 function g3gIndustryPanel(w,n){const st=g3gEnsure(w),area=make('section',{class:'overview-section'},[make('h3',{text:'G3G · 산업 수요·생산·동력 진단'})]);
  const latest=st.latest,ns=latest?.nations.find(x=>x.nationId===n.id);
- area.append(make('p',{class:'muted-line',text:`관측 시작 ${st.sinceDay}일 · 생산·경제·AI 판단은 변경하지 않음. 시설별 기록은 마지막 결산 분기만 보존.`}));
+ area.append(make('p',{class:'muted-line',text:`G3G 관측 시작 ${st.sinceDay}일 · G3H 정비부품 물류 수요 적용 · 시설별 마지막 분기만 보존.`}));
  if(!ns){area.append(make('p',{class:'muted-line',text:'다음 분기 결산부터 공장·제철소의 실제 생산 중단 원인을 기록합니다.'}));return area;}
  const desc=(label,x)=>`${label} 설치 ${x.sites} / 수요 발생 ${x.needed} / 실제 생산 ${x.producing} · ${Object.entries(x.reasons).map(([reason,num])=>`${G3G_REASON_KO[reason]||reason} ${num}`).join(' · ')||'기록 없음'}`;
  area.append(make('p',{class:'muted-line',text:`${latest.dayIndex}일 · 기계 부품 재고 ${ns.resources.parts}/${ns.target.parts} · 생산모드 ${ns.mode.parts?'ON':'OFF'} · 생산 ${ns.production.parts} / 수입 ${ns.marketImports.parts} · 분기 소비 ${ns.consumption.parts}`}));
@@ -32214,6 +32215,113 @@ for(const [label,ext,mime,body] of [
  const anchor=document.getElementById('g3fReportCsv');if(!anchor?.parentElement)break;
  const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent=label;
  button.addEventListener('click',()=>{const w=app?.world;if(w)download(`vilob-g3g-industry-day${w.dayIndex}.${ext}`,body(w),mime);});
+ anchor.parentElement.append(button);
+}
+</script>
+
+<script>
+// V0.9G3H — Factory Maintenance Freight V1.
+// Only the iDemand(factory).machine_parts quantity above changes the simulation.
+// All code below is bounded observation/UI/validation. Never create cargo or stock here.
+const G3H_SCHEMA=1,G3H_HISTORY_LIMIT=12;
+function g3hMaintenanceDue(b){return b?.typeId==='factory'&&((b.factoryRuns||0)+1)%4===0?1:0;}
+function g3hEnsure(w){return w.g3hFreight??={schema:G3H_SCHEMA,sinceDay:w.dayIndex,history:[]};}
+function g3hFactoryDiagnosis(w,b,n,reason,extra={}){
+ const due=g3hMaintenanceDue(b),st=i1Ensure(n,w),sid=b.settlementId;
+ const active=i1Active(w,n),local=active?i1Available(w,n,sid,'machine_parts'):(n.resources.machine_parts||0);
+ const inbound=active?st.transit.filter(p=>p.to===sid&&p.good==='machine_parts').reduce((a,p)=>a+p.amount,0):0;
+ // Report only actual requested inputs when the real producer reached i1Can and failed.
+ const blockedGoods=[];
+ if(reason==='LOCAL_FREIGHT_SHORT')for(const [good,amount] of Object.entries({iron:extra.ironNeed||0,coal:extra.coalNeed||0,machine_parts:extra.maintenance??due})){
+  const here=active?i1Available(w,n,sid,good):(n.resources[good]||0);
+  if(amount>here)blockedGoods.push({good,required:amount,available:here,shortage:amount-here});
+ }
+ let routeStatus='NOT_REQUIRED';
+ if(due){
+  if(local>=due)routeStatus='LOCAL_READY';
+  else if(!active)routeStatus='I1_INACTIVE';
+  else if(inbound>=due-local)routeStatus='IN_TRANSIT';
+  else {
+   routeStatus='NO_FREE_SOURCE';
+   const sources=[...Object.keys(st.regional).map(Number),st.anchor].filter((x,i,a)=>x!=null&&x!==sid&&a.indexOf(x)===i).sort((a,b)=>a-b);
+   let hadSource=false;
+   for(const from of sources){
+    const available=(st.regional[String(from)]?.machine_parts||0)+(from===st.anchor?i1Central(n,'machine_parts'):0);
+    if(available<=0)continue;hadSource=true;
+    if(i1RoadPath(w,n,from,sid)){routeStatus='ROAD_CONNECTED';break;}
+   }
+   if(hadSource&&routeStatus!=='ROAD_CONNECTED')routeStatus='ROAD_BLOCKED';
+  }
+ }
+ return {maintenanceDue:!!due,maintenanceRequired:due,maintenanceConsumed:extra.maintenanceSpent||0,localMachineParts:local,
+  incomingMachineParts:inbound,maintenanceShortage:Math.max(0,due-local),
+  freightBlockedGoods:blockedGoods,freightRouteStatus:routeStatus};
+}
+function g3hFinalizeQuarter(w){
+ const s=g3hEnsure(w),last=w.g3gIndustry?.latest;
+ if(!last||last.dayIndex!==w.dayIndex||s.history.at(-1)?.dayIndex===w.dayIndex)return;
+ const factories=last.facilities.filter(x=>x.kind==='factory');
+ const nations=[];
+ for(const n of w.nations){if(!n.active)continue;
+  const sites=factories.filter(x=>x.nationId===n.id),due=sites.filter(x=>x.g3h?.maintenanceDue),blocked=sites.filter(x=>x.reason==='LOCAL_FREIGHT_SHORT');
+  const st=i1Ensure(n,w),dueDestinations=new Set(due.map(x=>x.settlementId));
+  const departed=st.transit.filter(p=>p.good==='machine_parts'&&p.departDay===w.dayIndex&&dueDestinations.has(p.to));
+  const delivered=st.recent.filter(e=>e.kind==='DELIVERED'&&e.good==='machine_parts'&&e.dayIndex===w.dayIndex&&sites.some(x=>x.settlementId===e.to));
+  nations.push({nationId:n.id,maintenanceDueSites:due.length,localFreightBlockedSites:blocked.length,
+   blockedMaintenanceSites:blocked.filter(x=>x.g3h?.freightBlockedGoods.some(z=>z.good==='machine_parts')).length,
+   awaitingIncoming:due.filter(x=>x.g3h?.freightRouteStatus==='IN_TRANSIT').length,
+   maintenanceConsumed:sites.reduce((a,x)=>a+(x.g3h?.maintenanceConsumed||0),0),
+   maintenanceFreightDeparted:departed.reduce((a,p)=>a+p.amount,0),
+   factoryPartsDelivered:delivered.reduce((a,e)=>a+e.amount,0)});
+ }
+ s.history.push({dayIndex:w.dayIndex,nations});if(s.history.length>G3H_HISTORY_LIMIT)s.history.shift();
+}
+// I1 dispatches after runQuarter at the advanceDays quarter boundary.
+// Summarize *after* real freight dispatch so departure counts are exact.
+const g3hPreviousI1CloseQuarter=i1CloseQuarter;
+i1CloseQuarter=function(w){const result=g3hPreviousI1CloseQuarter(w);g3hFinalizeQuarter(w);return result;};
+function g3hValidate(w){
+ const s=g3hEnsure(w),int=x=>Number.isSafeInteger(x)&&x>=0;
+ if(s.schema!==G3H_SCHEMA||!int(s.sinceDay)||s.sinceDay>w.dayIndex||!Array.isArray(s.history)||s.history.length>G3H_HISTORY_LIMIT)return false;
+ if(s.history.some((h,i)=>!int(h.dayIndex)||h.dayIndex>w.dayIndex||h.dayIndex%30!==0||i>0&&s.history[i-1].dayIndex>=h.dayIndex||!Array.isArray(h.nations)||h.nations.some(n=>!int(n.nationId)||['maintenanceDueSites','localFreightBlockedSites','blockedMaintenanceSites','awaitingIncoming','maintenanceConsumed','maintenanceFreightDeparted','factoryPartsDelivered'].some(k=>!int(n[k])))))return false;
+ for(const r of w.g3gIndustry?.latest?.facilities||[])if(r.kind==='factory'&&r.g3h){
+  const x=r.g3h;if(typeof x.maintenanceDue!=='boolean'||!int(x.maintenanceRequired)||!int(x.maintenanceConsumed)||!int(x.localMachineParts)||!int(x.incomingMachineParts)||!int(x.maintenanceShortage)||
+    !Array.isArray(x.freightBlockedGoods)||!['NOT_REQUIRED','LOCAL_READY','I1_INACTIVE','IN_TRANSIT','NO_FREE_SOURCE','ROAD_CONNECTED','ROAD_BLOCKED'].includes(x.freightRouteStatus)||
+    x.freightBlockedGoods.some(g=>!I_GOODS.includes(g.good)||!int(g.required)||!int(g.available)||!int(g.shortage)||g.required-g.available!==g.shortage))return false;
+ }
+ return true;
+}
+const g3hBeforeValidate=validateWorld;
+validateWorld=function(w){if(!g3hValidate(w))throw Error('월드 검증 실패: G3H 공장 정비 물류 관측');return g3hBeforeValidate(w);};
+function g3hReport(w){return {schema:'vilob-g3h-factory-maintenance-freight-v1',version:VERSION,dayIndex:w.dayIndex,
+ notes:['G3H 물류 수요=다음 실제 공장 가동에서 정비가 필요할 경우 1단위, I1 지역 목표=2단위',
+ '물자 출고·도착·운송 시간·도로 용량·생산 제어 및 정비 주기는 기존 엔진 그대로',
+ '현지 재고·운송 중·부족 품목은 기존 원장의 실제 상태를 읽은 진단이며 자동 지급이 아님'],
+ summary:g3hEnsure(w),latest:(w.g3gIndustry?.latest?.facilities||[]).filter(x=>x.kind==='factory').map(x=>({dayIndex:w.g3gIndustry.latest.dayIndex,nationId:x.nationId,buildingId:x.buildingId,settlementId:x.settlementId,reason:x.reason,...x.g3h,liveIncomingMachineParts:(w.nations[x.nationId]?.i1Freight?.transit||[]).filter(p=>p.good==='machine_parts'&&p.to===x.settlementId).reduce((a,p)=>a+p.amount,0)}))};}
+function g3hCsv(w){const rows=['type,dayIndex,nationId,buildingId,settlementId,reason,maintenanceDue,required,localParts,incomingParts,shortage,routeStatus,blockedGoods,neededSites,blockedSites,maintenanceBlockedSites,freightDeparted,partsDelivered,maintenanceConsumed,liveIncoming'];
+ const csv=a=>'"'+String(a??'').replaceAll('"','""')+'"';
+ for(const h of g3hEnsure(w).history)for(const n of h.nations)rows.push(['nation',h.dayIndex,n.nationId,'','','','','','','','','','',n.maintenanceDueSites,n.localFreightBlockedSites,n.blockedMaintenanceSites,n.maintenanceFreightDeparted,n.factoryPartsDelivered,n.maintenanceConsumed,''].map(csv).join(','));
+ for(const r of g3hReport(w).latest)rows.push(['factory',r.dayIndex,r.nationId,r.buildingId,r.settlementId,r.reason,r.maintenanceDue,r.maintenanceRequired,r.localMachineParts,r.incomingMachineParts,r.maintenanceShortage,r.freightRouteStatus,r.freightBlockedGoods.map(z=>z.good+':'+z.shortage).join('|'),'','','','','',r.maintenanceConsumed,r.liveIncomingMachineParts].map(csv).join(','));
+ return '\uFEFF'+rows.join('\n');
+}
+const g3hBeforeG3GPanel=g3gIndustryPanel;
+g3gIndustryPanel=function(w,n){const panel=g3hBeforeG3GPanel(w,n),state=g3hEnsure(w),sites=(w.g3gIndustry?.latest?.facilities||[]).filter(x=>x.kind==='factory'&&x.nationId===n.id);
+ panel.append(make('h3',{text:'G3H · 공장 정비부품 지역 물류'}));
+ panel.append(make('div',{class:'muted-line',text:`정비 물류 관측 시작 ${state.sinceDay}일 · 물자를 생성하지 않고 I1 실제 출고/수송을 사용` }));
+ for(const r of sites){const d=r.g3h;if(!d)continue;
+  const actualIncoming=i1Ensure(n,w).transit.filter(p=>p.good==='machine_parts'&&p.to===r.settlementId).reduce((sum,p)=>sum+p.amount,0);
+  const labels={NOT_REQUIRED:'추가 정비 불필요',LOCAL_READY:'현장 확보',I1_INACTIVE:'국내 물류 미활성',IN_TRANSIT:'정비부품 운송 중',NO_FREE_SOURCE:'가용 출고지 없음',ROAD_CONNECTED:'출고 가능 도로 연결',ROAD_BLOCKED:'출고 경로 단절'};
+  const lacks=d.freightBlockedGoods.map(z=>`${I_GOOD_NAMES[z.good]} ${z.shortage}개 부족`).join(' · ');
+  panel.append(make('div',{class:'muted-line',text:`공장 #${r.buildingId} · 다음 가동 정비 ${d.maintenanceDue?'필요 1개':'불필요'} · 생산 판정 시 현지 ${d.localMachineParts}개 / 현재 운송 중 ${actualIncoming}개 · 이번 분기 정비 소비 ${d.maintenanceConsumed}개 · ${labels[d.freightRouteStatus]||d.freightRouteStatus}${lacks?' · 실제 부족 '+lacks:''}`}));
+ }
+ return panel;
+};
+for(const [label,ext,mime,body] of [
+ ['↓ G3H 정비 물류 JSON','json','application/json',w=>JSON.stringify(g3hReport(w),null,2)],
+ ['↓ G3H 정비 물류 CSV','csv','text/csv;charset=utf-8',w=>g3hCsv(w)]]){
+ const anchor=document.getElementById('g3fReportCsv');if(!anchor?.parentElement)break;
+ const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent=label;
+ button.addEventListener('click',()=>{const w=app?.world;if(w)download(`vilob-g3h-maintenance-day${w.dayIndex}.${ext}`,body(w),mime);});
  anchor.parentElement.append(button);
 }
 </script>
