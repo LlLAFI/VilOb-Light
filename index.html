@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9F7</title>
+<title>VILOB Light · V0.9G3F</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -912,8 +912,8 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div class="military-list" id="warHistoryList"></div><nav aria-label="종전 기록 페이지" class="war-history-pager" id="warHistoryPager"></nav></section>
-</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-launch" aria-label="G3E 세계 연결 방식">
- <div class="seed-heading"><span class="head-icon">↔</span><div><strong>V0.9G3E · 원통형 세계</strong><small>좌우 끝을 서로 연결합니다. 북쪽/남쪽 경계는 유지하고 지형은 변경하지 않습니다.</small></div></div>
+</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="g3fReportJson" type="button">↓ G3F 해상·동력 JSON</button><button class="text-button" id="g3fReportCsv" type="button">↓ G3F 통계 CSV</button><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-launch" aria-label="G3E 세계 연결 방식">
+ <div class="seed-heading"><span class="head-icon">↔</span><div><strong>V0.9G3E1 · 원통형 세계</strong><small>좌우 끝을 서로 연결합니다. 북쪽/남쪽 경계는 유지하고 지형은 변경하지 않습니다.</small></div></div>
  <div id="g3eTopologyStatus" class="scope-note" role="status">연결 방식 확인 중</div>
  <div class="custom-map-actions"><button class="primary-button" type="button" id="g3eConvertButton">기존 평면 세계를 원통형으로 전환</button></div>
  <small class="scope-note">G3D 이전 저장본은 기존 평면 규칙을 유지합니다. 전환 후 세계·RNG·선박·시설은 그대로이며 이후 AI의 선택은 달라질 수 있습니다. 되돌리려면 전환 전에 백업한 JSON을 불러오세요.</small>
@@ -950,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9G3E'; // cylindrical east-west topology; merchant marine retained
+const VERSION = 'V0.9G3F'; // audit-only seven-good maritime, vessel and I3A power observability
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -8483,6 +8483,43 @@ function i3aDamageAt(w,tid,progress){if(!w.i3Power||!Number.isFinite(progress)||
   const before=p.hp;p.hp=Math.max(0,p.hp-loss);if(p.hp!==before){w.changeSeq++;if(p.hp===0){delete p.repair;i3aLog(w,'DESTROYED',{id:p.id,tileId:tid});recordHistoricalEvent(w,'war',`중앙 동력소 #${p.id}이(가) 전투로 파괴되었습니다.`,[p.ownerId]);}}
  }}
 function i3aOnTransfer(w,sid,oldOwner,newOwner){const p=i3aPlant(w,sid);if(p){p.ownerId=newOwner;delete p.repair;w.changeSeq++;i3aLog(w,'TRANSFER',{id:p.id,oldOwner,newOwner});}}
+// V0.9G3E1: physical site retirement when its settlement core disappears.
+// An absorbed site cannot be moved to the surviving core for free.
+function i3aOnSettlementMerge(w,primaryId,secondaryId){
+ if(!w.i3Power)return 0;
+ const plants=w.i3Power.plants,retired=plants.filter(p=>p.settlementId===secondaryId);
+ if(!retired.length)return 0;
+ w.i3Power.plants=plants.filter(p=>p.settlementId!==secondaryId);
+ for(const p of retired)i3aLog(w,'MERGE_POWER_HOUSE_RETIRED',{
+  id:p.id,type:p.type,fromSettlementId:secondaryId,intoSettlementId:primaryId,tileId:p.tileId});
+ w.changeSeq++;
+ return retired.length;
+}
+// Strict recovery of authentic G3E merge orphans. Only repair a power house
+// whose *original tile* still belongs to an existing same-owner survivor,
+// with the tile in that survivor's physical tileIds and not its new core.
+// Anything unexplained remains invalid; never coerce the world to "pass".
+function i3aRepairAbsorbedOrphans(w){
+ const st=w.i3Power;if(!st||!Array.isArray(st.plants))return {retired:0};
+ const known=new Set(w.settlements.map(s=>s.id)),retired=[];
+ for(const p of st.plants){
+  if(known.has(p.settlementId))continue;
+  const t=w.tiles[p.tileId];
+  const survivor=t&&w.settlements.find(s=>s.id===t.settlementId);
+  if(!survivor||t.ownerId!==p.ownerId||survivor.ownerId!==p.ownerId||
+     !survivor.tileIds.includes(p.tileId)||p.tileId===survivor.coreTileId)continue;
+  retired.push({p,survivor});
+ }
+ if(retired.length){
+  const ids=new Set(retired.map(({p})=>p.id));
+  st.plants=st.plants.filter(p=>!ids.has(p.id));
+  for(const {p,survivor} of retired)i3aLog(w,'LEGACY_MERGE_POWER_HOUSE_RETIRED',{
+   id:p.id,type:p.type,fromSettlementId:p.settlementId,intoSettlementId:survivor.id,tileId:p.tileId});
+  w.changeSeq++;
+ }
+ return {retired:retired.length};
+}
+
 function i3aStartQuarter(w){const state=i3aEnsure(w);state.lastQuarter=i3aEmptyQuarter(w.dayIndex);state.lastQuarter.activePlants=state.plants.filter(p=>i3aOnline(w,p)).length;}
 function i3aPrepareOffers(w,projections){if(!i2Runtime||i2Runtime.world!==w||i2Runtime.day!==w.dayIndex)return;
  const state=i3aEnsure(w);i2Runtime.i3aEligibility=new Map();
@@ -8770,6 +8807,10 @@ function i2DamageAt(w,tileId,progress){i3aDamageAt(w,tileId,progress);if(!w.i2Po
 // primary core. Remove its obsolete station and paid lines terminating there.
 // No refunds or historical-quarter rewrites: the construction was real.
 function i2OnSettlementMerge(w,primaryId,secondaryId){
+ // G3E1: a central power house is anchored to its physical settlement core.
+ // When that core is absorbed, it must retire along with its I2 station, not
+ // teleport to the survivor. No refund, invented power, or historical edits.
+ i3aOnSettlementMerge(w,primaryId,secondaryId);
  if(!w.i2Power)return {stations:0,lines:0};
  const st=w.i2Power;
  const obsoleteStations=st.stations.filter(x=>x.settlementId===secondaryId);
@@ -21591,6 +21632,7 @@ function advanceSimulation(world,days,entropySource=null){
     const fortIn=nextFortEvent-world.dayIndex;
     const militaryIn=nextMilitaryEvent-world.dayIndex;
     const jump=Math.min(until,remaining,militaryIn>0?militaryIn:until,fortIn>0?fortIn:until,nextSpecialistEvent>world.dayIndex?nextSpecialistEvent-world.dayIndex:until,nextNavalEvent>world.dayIndex?nextNavalEvent-world.dayIndex:until,nextG1SupplyEvent>world.dayIndex?nextG1SupplyEvent-world.dayIndex:until);
+    g3fAccrueDays(world,jump); // G3F observer-only elapsed duty, no additional sim event
     c3AdvanceTraining(world,jump);
     world.dayIndex+=jump;remaining-=jump;
     d1cPruneCommanderHistory(world); // H1: exact 360-day retention, even on non-quarter days.
@@ -22251,11 +22293,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
- if(g3eImportedVersion!=='V0.9G3E')parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9G3E','V0.9G3E1','V0.9G3F'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22264,7 +22306,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22328,14 +22370,18 @@ function deserializeWorld(json){
  navyF4Ensure(parsed);g1Ensure(parsed); // G1: historical worlds start with empty, strictly conserved logistics ledger.
   navyF5Migrate(parsed,v08eSourceVersion); // F4 evidenced emergency-only: physical passenger/port recovery before strict validation.
  i3aEnsure(parsed); // I3A starts with no fabricated historical production
+ // G3E1 audited repair: only physically proven absorbed-core orphans.
+ if(['V0.9G3E','V0.9G3E1'].includes(v08eSourceVersion))i3aRepairAbsorbedOrphans(parsed);
  // An older J save may contain one authentic Lv.4 quarter; never infer it from Lv.3 factoryRuns.
  for(const b of parsed.buildings||[])if(b.typeId==='factory'&&b.level===4&&b.kLevel4OperatedDay==null&&b.f2jLastQuarter?.operated===true){
   b.kLevel4OperatedDay=b.f2jLastQuarter.dayIndex;
  }
+ g3fEnsure(parsed);
+ if(g3eImportedVersion!==VERSION&&parsed.g3fObservation.sourceVersion===VERSION&&parsed.g3fObservation.sinceDay===parsed.dayIndex)parsed.g3fObservation.sourceVersion=g3eImportedVersion;
  validateWorld(parsed);return parsed;
 }
 function serializeWorld(world){
- navyEnsure(world);navyBEnsure(world);navyCEnsure(world);navyF2Ensure(world);i2Ensure(world);i3aEnsure(world);
+ navyEnsure(world);navyBEnsure(world);navyCEnsure(world);navyF2Ensure(world);i2Ensure(world);i3aEnsure(world);g3fEnsure(world);
  for(const n of world.nations){i1Reconcile(world,n);i1aSyncPreviousQuarter(i1Ensure(n,world));}
  navyF2Reconcile(world); // F3 reservation checks do not issue commands during save.
  navyF3Ensure(world);navyF4Ensure(world);navyF5Ensure(world);navyF6Ensure(world);g1Ensure(world);
@@ -28801,7 +28847,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09g3e-world';
+const SAVE_KEY='vilob-light-v09g3f-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -28813,7 +28859,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -31781,6 +31827,201 @@ navyBRenderPanel=function(w,n,host){g3dOldPanel(w,n,host);
  const ships=navyEnsure(w).ships.filter(s=>s.nationId===n.id&&g3dDedicatedType(s.typeId));const line=document.createElement('p');line.className='muted-line';
  line.textContent=`전용 상선 ${ships.length}척 · 건조 ${ships.filter(s=>s.status==='BUILDING').length}척 · 상선 AI 누적 건조 ${navyEnsure(w).g3d?.builds||0}회 · 기존 겸용 수송선은 시장 계약 중에만 상업 용선`;el.append(line);host.append(el);
 };
+</script>
+
+<script>
+// V0.9G3F — Maritime Trade & Power Observatory V1.
+// READ-ONLY observability: no AI, RNG, movement, pricing, stock, ship missions or power dispatch changes.
+// All values are measured from G3F adoption day; old bounded voyage detail is NOT lifetime backfilled.
+const G3F_SCHEMA=1, G3F_GOODS=Object.freeze(['food','wood','stone','iron','coal','machine_parts','steel']);
+const G3F_DAYS=Object.freeze(['cargoDays','returnDays','idleDays','otherDays','unavailableDays']);
+const G3F_ROWS=Object.freeze(['loaded','carryIn','delivered','returned','lost','unresolved','trips','returnedTrips','lostTrips','marketBuyerPaid','marketSellerReceived','marketFeeSink','marketPortIncome']);
+function g3fZeroGood(){return Object.fromEntries(G3F_ROWS.map(x=>[x,0]));}
+function g3fNew(w){const good=Object.fromEntries(G3F_GOODS.map(x=>[x,g3fZeroGood()]));
+ const st={schema:G3F_SCHEMA,sinceDay:w.dayIndex,sourceVersion:w.version,
+  maritime:{goods:good,partners:{},active:{},shipActivity:{},hullTotals:{},history:[],carryInTrips:0},
+  power:{history:[],sampleStartDay:w.dayIndex}};
+ // Carry-over contracts are real stock loaded BEFORE observation begins.
+ for(const t of w.navy?.g3aTrade?.active||[]){if(!good[t.good])continue;
+  const remaining=Math.max(0,t.initialAmount-t.lostAmount);
+  st.maritime.active[t.id]={id:t.id,good:t.good,seller:t.sellerNationId,buyer:t.buyerNationId,
+   fleetId:t.fleetId,shipIds:g3fShipIds(w,t.fleetId),hull:g3fHullForFleet(w,t.fleetId),
+   openedDay:t.startedDay,remaining,lastLost:t.lostAmount,carry:true,freight:t.freight};
+  good[t.good].carryIn+=remaining;g3fPairRow(st,t.sellerNationId,t.buyerNationId,t.good).carryIn+=remaining;st.maritime.carryInTrips++;
+ }
+ return st;}
+function g3fEnsure(w){return w.g3fObservation??=(g3fNew(w));}
+function g3fPairRow(st,seller,buyer,good){const key=`${seller}:${buyer}:${good}`;return st.maritime.partners[key]??=g3fZeroGood();}
+function g3fShipIds(w,fid){return w.navy?.fleets.find(f=>f.id===fid)?.shipIds.slice()||[];}
+function g3fHullForFleet(w,fid){const ids=g3fShipIds(w,fid),types=ids.map(id=>w.navy.ships.find(s=>s.id===id)?.typeId).filter(Boolean);
+ return types.length===1?types[0]:types.length>1&&types.every(x=>x===types[0])?types[0]:'mixed';}
+function g3fHullRow(st,type){return st.maritime.hullTotals[type]??=( {loaded:0,delivered:0,trips:0,freightCapacity:0,cargoDays:0,returnDays:0,idleDays:0,otherDays:0,unavailableDays:0} );}
+function g3fShipRow(w,s){const st=g3fEnsure(w),old=st.maritime.shipActivity[s.id];
+ if(old)return old;
+ return st.maritime.shipActivity[s.id]={shipId:s.id,typeId:s.typeId,nationId:s.nationId,
+  sinceDay:w.dayIndex,cargoDays:0,returnDays:0,idleDays:0,otherDays:0,unavailableDays:0,loaded:0,delivered:0,completedTrips:0};}
+function g3fAccrueDays(w,days){if(days<=0)return;
+ const st=g3fEnsure(w),nav=w.navy;if(!nav)return;
+ const fleets=new Map();for(const f of nav.fleets)for(const id of f.shipIds)fleets.set(id,f);
+ for(const s of nav.ships){const f=fleets.get(s.id),job=f?.bAssignment;
+  const status=s.status==='BUILDING'||s.status==='UNCREWED'?'unavailableDays':
+   f?.status==='SAILING'?(job?.kind==='TRADE'&&job.phase==='OUTBOUND'?'cargoDays':
+    job?.kind==='TRADE'&&job.phase==='RETURNING'||f.g3bReturnPortId?'returnDays':'otherDays'):
+   job?.kind==='TRADE'?'otherDays':f?.status==='DOCKED'?'idleDays':'otherDays';
+  g3fShipRow(w,s)[status]+=days;
+  g3fHullRow(st,s.typeId)[status]+=days;
+ }
+}
+function g3fStart(w,t){const st=g3fEnsure(w),m=st.maritime,r=m.goods[t.good];if(!r||m.active[t.id])return;
+ const shipIds=g3fShipIds(w,t.fleetId),hull=g3fHullForFleet(w,t.fleetId);
+ m.active[t.id]={id:t.id,good:t.good,seller:t.sellerNationId,buyer:t.buyerNationId,fleetId:t.fleetId,
+  shipIds,hull,openedDay:w.dayIndex,remaining:t.initialAmount,lastLost:0,carry:false,freight:t.freight};
+ r.loaded+=t.initialAmount;g3fPairRow(st,t.sellerNationId,t.buyerNationId,t.good).loaded+=t.initialAmount;
+ const h=g3fHullRow(st,hull),f=w.navy?.fleets.find(x=>x.id===t.fleetId);h.loaded+=t.initialAmount;h.freightCapacity+=(f?navyBCapacity(w,f,'CARGO'):0);h.freightUsed=(h.freightUsed||0)+t.freight;h.departures=(h.departures||0)+1;
+ // Per-ship freight is allocated in proportion to actual hull capacity (integer, sum-preserving).
+ const ships=shipIds.map(id=>w.navy.ships.find(s=>s.id===id)).filter(Boolean),weights=ships.map(s=>NAVY_B_CARGO[s.typeId]||0);
+ const sum=weights.reduce((a,b)=>a+b,0);let rest=t.initialAmount;
+ ships.forEach((ship,i)=>{const share=i===ships.length-1?rest:sum?Math.floor(t.initialAmount*weights[i]/sum):Math.floor(t.initialAmount/ships.length);
+  g3fShipRow(w,ship).loaded+=share;rest-=share;});
+}
+function g3fSyncLoss(w,t){if(!t)return;const st=g3fEnsure(w),a=st.maritime.active[t.id];if(!a)return;
+ const delta=t.lostAmount-a.lastLost;if(delta<=0)return;
+ const lost=Math.min(delta,a.remaining);a.lastLost=t.lostAmount;a.remaining-=lost;st.maritime.goods[a.good].lost+=lost;g3fPairRow(st,a.seller,a.buyer,a.good).lost+=lost;
+}
+function g3fFinish(w,t,status,amount){const st=g3fEnsure(w),a=st.maritime.active[t.id];if(!a)return;
+ g3fSyncLoss(w,t);const good=st.maritime.goods[a.good],pair=g3fPairRow(st,a.seller,a.buyer,a.good);
+ const qty=Math.min(Math.max(0,amount||0),a.remaining);
+ if(status==='DELIVERED'){good.delivered+=qty;good.trips++;pair.delivered+=qty;pair.trips++;g3fHullRow(st,a.hull).delivered+=qty;g3fHullRow(st,a.hull).trips++;}
+ else if(status==='RETURNED'){good.returned+=qty;good.returnedTrips++;pair.returned+=qty;pair.returnedTrips++;}
+ else if(status==='LOST'){good.lostTrips++;pair.lostTrips++;}
+ // Any unclassified cancellation is counted separately, NEVER made into fabricated delivered goods.
+ const unresolved=Math.max(0,a.remaining-qty);good.unresolved+=unresolved;pair.unresolved+=unresolved;
+ if(status==='DELIVERED'){
+  const ships=a.shipIds.map(id=>w.navy?.ships.find(s=>s.id===id)).filter(Boolean),weights=ships.map(s=>NAVY_B_CARGO[s.typeId]||0),sum=weights.reduce((x,y)=>x+y,0);
+  let rest=qty;ships.forEach((ship,i)=>{const share=i===ships.length-1?rest:sum?Math.floor(qty*weights[i]/sum):Math.floor(qty/ships.length);
+   const row=g3fShipRow(w,ship);row.delivered+=share;row.completedTrips++;rest-=share;});
+ }
+ delete st.maritime.active[t.id];
+}
+function g3fRecordMarketCash(w,job,phase){if(!job?.g3bMarket||phase!=='OUTBOUND'||job.amount<1)return;
+ const g=g3fEnsure(w).maritime.goods[job.good];if(!g)return;
+ const receipt=g3bSellerReceipt(job),paid=job.escrowGold;
+ g.marketBuyerPaid+=paid;g.marketSellerReceived+=receipt;g.marketFeeSink+=paid-receipt;
+ const r=g3fPairRow(g3fEnsure(w),job.sellerNationId,job.buyerNationId,job.good);r.marketBuyerPaid+=paid;r.marketSellerReceived+=receipt;r.marketFeeSink+=paid-receipt;
+}
+function g3fObserveQuarter(w){const st=g3fEnsure(w),m=st.maritime;
+ const sums={};for(const good of G3F_GOODS){const r=m.goods[good];sums[good]={delivered:r.delivered,trips:r.trips,lost:r.lost,returned:r.returned};}
+ m.history.push({dayIndex:w.dayIndex,goods:sums});if(m.history.length>13)m.history.shift();
+ const plants=[],status={};for(const p of w.i3Power?.plants||[]){const spec=I3A_TYPES[p.type],op=p.lastOperation;
+  const reason=op?.dayIndex===w.dayIndex?op.reason:'UNOBSERVED',sent=op?.dayIndex===w.dayIndex?op.sent:0;
+  plants.push({id:p.id,ownerId:p.ownerId,type:p.type,capacity:spec.pu,online:i3aOnline(w,p),sent,reason});status[reason]=(status[reason]||0)+1;
+ }
+ const demand={};for(const b of w.buildings){if(b.typeId!=='workshop'||b.status!=='ACTIVE'||b.disconnected||b.lastPower?.dayIndex!==w.dayIndex)continue;
+  const p=i3a1WorkshopPowerDemand(w,b);if(!p)continue;
+  const nid=w.tiles[b.tileId]?.ownerId;if(nid===null||nid===undefined)continue;
+  const row=demand[nid]??=( {sampleWorkshops:0,ownPU:0,externalPU:0,unmetPU:0,demandPU:0} );
+  row.sampleWorkshops++;row.ownPU+=p.ownPU;row.externalPU+=p.externalPU;row.unmetPU+=p.unmetPU;row.demandPU+=p.demandPU;
+ }
+ const q=w.i3Power?.lastQuarter||i3aEmptyQuarter(w.dayIndex);
+ st.power.history.push({dayIndex:w.dayIndex,generated:q.generated,exported:q.exported,delivered:q.delivered,loss:q.loss,
+  goldSpent:q.goldSpent,coalUsed:q.coalUsed,plants,status,demand});
+ if(st.power.history.length>12)st.power.history.shift();
+ // Persist only active ship rows: finished hulls are rolled up in hull totals.
+ const live=new Set(w.navy?.ships.map(s=>String(s.id))||[]);
+ for(const id of Object.keys(m.shipActivity))if(!live.has(id))delete m.shipActivity[id];
+}
+// Event wrappers observe AFTER original, authoritative settlement; never issue a second transaction.
+const g3fOldDepart=g3aDepart;
+g3aDepart=function(w,f,result){g3fEnsure(w);const out=g3fOldDepart(w,f,result);const t=g3aActive(w,f);if(t)g3fStart(w,t);return out;};
+const g3fOldFinish=g3aFinish;
+g3aFinish=function(w,t,status,amount=0,settledGold=null){if(w.g3fObservation)g3fFinish(w,t,status,amount);
+ return g3fOldFinish(w,t,status,amount,settledGold);};
+const g3fOldSink=navyCShipLoadLoss;
+navyCShipLoadLoss=function(w,f,s){const t=g3aActive(w,f),ret=g3fOldSink(w,f,s);if(t&&w.g3fObservation)g3fSyncLoss(w,t);return ret;};
+const g3fOldMarketFinish=g3bOnFinish;
+g3bOnFinish=function(w,job,phase){const ret=g3fOldMarketFinish(w,job,phase);if(w.g3fObservation)g3fRecordMarketCash(w,job,phase);return ret;};
+// G3C redistributes market fees AFTER G3B settlement, from sink to actual port incomes.
+const g3fOldPortSettlement=g3cPortFeeSettlement;
+g3cPortFeeSettlement=function(w,job){const g=g3bEnsure(w),before=g.stats.portIncome||0;
+ const ret=g3fOldPortSettlement(w,job),income=(g.stats.portIncome||0)-before;
+ if(income&&w.g3fObservation&&job?.g3bMarket){const st=g3fEnsure(w),row=st.maritime.goods[job.good],pair=g3fPairRow(st,job.sellerNationId,job.buyerNationId,job.good);
+  row.marketFeeSink-=income;row.marketPortIncome+=income;pair.marketFeeSink-=income;pair.marketPortIncome+=income;
+ }return ret;};
+const g3fOldQuarter=runQuarter;
+runQuarter=function(w){const ret=g3fOldQuarter(w);g3fObserveQuarter(w);return ret;};
+function g3fValidate(w){const st=g3fEnsure(w),int=x=>Number.isSafeInteger(x)&&x>=0;
+ if(st.schema!==1||!int(st.sinceDay)||st.sinceDay>w.dayIndex||!st.maritime||!st.power||!Array.isArray(st.maritime.history)||st.maritime.history.length>13||!Array.isArray(st.power.history)||st.power.history.length>12)return false;
+ for(const good of G3F_GOODS){const r=st.maritime.goods[good];if(!r||G3F_ROWS.some(k=>!int(r[k]))||r.marketBuyerPaid!==r.marketSellerReceived+r.marketFeeSink+r.marketPortIncome)return false;
+  const active=Object.values(st.maritime.active).filter(x=>x.good===good).reduce((sum,x)=>sum+x.remaining,0);
+  if(r.carryIn+r.loaded!==r.delivered+r.returned+r.lost+r.unresolved+active)return false;
+ }
+ for(const [key,r] of Object.entries(st.maritime.partners)){const parts=key.split(':');if(parts.length!==3||!int(Number(parts[0]))||!int(Number(parts[1]))||!G3F_GOODS.includes(parts[2])||G3F_ROWS.some(k=>!int(r[k]))||r.marketBuyerPaid!==r.marketSellerReceived+r.marketFeeSink+r.marketPortIncome)return false;
+  const active=Object.values(st.maritime.active).filter(x=>`${x.seller}:${x.buyer}:${x.good}`===key).reduce((v,x)=>v+x.remaining,0);
+  if(r.carryIn+r.loaded!==r.delivered+r.returned+r.lost+r.unresolved+active)return false;}
+ for(const a of Object.values(st.maritime.active))if(!int(a.id)||!int(a.fleetId)||!st.maritime.goods[a.good]||!int(a.remaining)||!int(a.lastLost)||!Array.isArray(a.shipIds)||
+  !w.navy?.g3aTrade?.active.some(x=>x.id===a.id&&x.good===a.good)||a.openedDay>w.dayIndex)return false;
+ const dayFields=G3F_DAYS;
+ for(const [id,r] of Object.entries(st.maritime.shipActivity))if(!int(Number(id))||!int(r.shipId)||
+  !int(r.sinceDay)||dayFields.some(k=>!int(r[k]))||!int(r.loaded)||!int(r.delivered)||!int(r.completedTrips))return false;
+ for(const row of st.power.history)if(!int(row.dayIndex)||row.dayIndex> w.dayIndex||row.dayIndex%30!==0||
+   !int(row.generated)||!int(row.exported)||!int(row.delivered)||!int(row.loss)||row.generated!==row.exported||row.exported!==row.delivered+row.loss||
+   !Array.isArray(row.plants)||!row.status||!row.demand)return false;
+ return true;
+}
+const g3fOldValidate=validateWorld;
+validateWorld=function(w){g3fEnsure(w);if(!g3fValidate(w))throw Error('월드 검증 실패: G3F 관측 원장');return g3fOldValidate(w);};
+function g3fReport(w){const st=g3fEnsure(w);
+ return {schema:'vilob-g3f-observatory-report-v1',version:VERSION,dayIndex:w.dayIndex,sinceDay:st.sinceDay,
+  legacyLifetime:{g3aStats:{...w.navy.g3aTrade.stats},g3bStats:{...g3bEnsure(w).stats},note:'기존 수치는 전체 기간 합계이며 자원별 G3F 수치는 sinceDay부터. 이관 중 항해는 carryIn으로 별도 계상'},
+  observed:st};}
+function g3fCsv(w){const st=g3fEnsure(w),head='section,dayIndex,good,loaded,carryIn,delivered,returned,lost,unresolved,trips,returnedTrips,lostTrips,marketBuyerPaid,marketSellerReceived,marketFeeSink,marketPortIncome',rows=[head];
+ const csv=x=>'"'+String(x??'').replaceAll('"','""')+'"';
+ for(const g of G3F_GOODS){const r=st.maritime.goods[g];rows.push(['goods',st.sinceDay,g,...G3F_ROWS.map(k=>r[k])].map(csv).join(','));}
+ rows.push('section,dayIndex,shipId,typeId,nationId,cargoDays,returnDays,idleDays,otherDays,unavailableDays,loaded,delivered,completedTrips');
+ for(const s of Object.values(st.maritime.shipActivity))rows.push(['ship',s.sinceDay,s.shipId,s.typeId,s.nationId,...G3F_DAYS.map(k=>s[k]),s.loaded,s.delivered,s.completedTrips].map(csv).join(','));
+ rows.push('section,dayIndex,plantId,ownerId,type,capacity,online,sent,reason,generated,delivered,loss,goldSpent,coalUsed');
+ for(const q of st.power.history)for(const p of q.plants)rows.push(['power',q.dayIndex,p.id,p.ownerId,p.type,p.capacity,p.online,p.sent,p.reason,q.generated,q.delivered,q.loss,q.goldSpent,q.coalUsed].map(csv).join(','));
+ return '\uFEFF'+rows.join('\n');}
+function g3fTradeStatsUI(w){const st=g3fEnsure(w),a=document.createElement('section');a.className='e3e-market-detail';
+ a.append(make('h3',{text:'G3F · 7품목 해상무역 관측 (이관 이후)'}),make('p',{class:'e3e-market-hint',text:`집계 시작 ${st.sinceDay}일 · 이전 누적값은 소급 배분하지 않음 · 이관 중 계약 ${st.maritime.carryInTrips}건은 carry-in으로 별도 기록.`}));
+ const table=make('div',{class:'h1b-auto-tablewrap'}),el=make('table',{class:'h1b-auto-table'}),hdr=make('tr');
+ for(const name of ['품목','신규 선적','이관 중','정상 인도','유실','반송','완료'])hdr.append(make('th',{text:name}));el.append(hdr);
+ for(const good of G3F_GOODS){const r=st.maritime.goods[good],tr=make('tr');for(const v of [E3E_MARKET_LABELS[good],r.loaded,r.carryIn,r.delivered,r.lost,r.returned,r.trips])tr.append(make('td',{text:typeof v==='number'?v.toLocaleString('ko-KR'):v}));el.append(tr);}
+ table.append(el);a.append(table);
+ const partners=Object.entries(st.maritime.partners).map(([key,r])=>{const [seller,buyer,good]=key.split(':');return {seller:+seller,buyer:+buyer,good,...r};}).filter(x=>x.delivered).sort((x,y)=>y.delivered-x.delivered).slice(0,5);
+ if(partners.length){a.append(make('h3',{text:'이관 이후 주요 국가 간 실물 운송'}));for(const p of partners)a.append(make('p',{class:'muted-line',text:`${w.nations[p.seller]?.name||p.seller} → ${w.nations[p.buyer]?.name||p.buyer} · ${E3E_MARKET_LABELS[p.good]} · ${p.delivered.toLocaleString('ko-KR')}개 / ${p.trips}회`}));}
+ const h=st.maritime.history;
+ if(h.length>=2){const current=h.at(-1),previous=h[Math.max(0,h.length-13)];const trend=G3F_GOODS.map(g=>`${E3E_MARKET_LABELS[g]} ${(current.goods[g].delivered-previous.goods[g].delivered).toLocaleString('ko-KR')}`).join(' · ');
+  a.append(make('p',{class:'e3e-market-hint',text:`최근 관측 ${Math.min(12,h.length-1)}분기 인도량 · ${trend}`}));}
+ a.append(make('p',{class:'e3e-market-hint',text:'이관 중 선적은 신규 선적에 중복 포함하지 않습니다. 미완료 잔량·분실·반송까지 별도로 보존하며, 시장 거래 Gold는 실물 인도 시점에만 집계합니다.'}));return a;}
+const g3fOldMarketPanel=e3eRenderMarketPanel;
+e3eRenderMarketPanel=function(){const ret=g3fOldMarketPanel();if(app?.world){const parent=document.getElementById('e3eMarketBody');parent?.append(g3fTradeStatsUI(app.world));}return ret;};
+const g3fOldNavyPanel=navyBRenderPanel;
+navyBRenderPanel=function(w,n,host){const ret=g3fOldNavyPanel(w,n,host),st=g3fEnsure(w),nav=w.navy;
+ const section=document.createElement('section');section.className='army-detail';section.append(make('strong',{text:'G3F · 상선 운용 효율 (이관 이후)'}));
+ const ships=nav.ships.filter(s=>s.nationId===n.id&&g3dDedicatedType(s.typeId));
+ let days=0,cargo=0,retDay=0,idle=0,delivered=0;for(const s of ships){const p=st.maritime.shipActivity[s.id];if(!p)continue;
+  days+=G3F_DAYS.reduce((x,k)=>x+p[k],0);cargo+=p.cargoDays;retDay+=p.returnDays;idle+=p.idleDays;delivered+=p.delivered;
+  const r=make('p',{class:'muted-line',text:`상선 #${s.id} · ${NAVY_SHIP_TYPES[s.typeId].label} · 화물 ${p.cargoDays}일 / 귀항 ${p.returnDays}일 / 정박 ${p.idleDays}일 · 인도 ${p.delivered}개`});section.append(r);
+ }
+ section.insertBefore(make('p',{class:'muted-line',text:`해당 국가 전용 상선 ${ships.length}척 · 관측 기준 운항(화물+귀항) ${cargo+retDay} 선박·일 / 정박 ${idle} 선박·일 · 실물 인도 ${delivered}개 · 운항 시간 비중 ${days?(100*(cargo+retDay)/days).toFixed(1):'—'}%`}),section.children[1]||null);
+ const allHulls=Object.entries(st.maritime.hullTotals).filter(([type])=>g3dDedicatedType(type));
+ const totalFreightUsed=allHulls.reduce((a,[,h])=>a+(h.freightUsed||0),0),totalFreightCapacity=allHulls.reduce((a,[,h])=>a+(h.freightCapacity||0),0);
+ if(totalFreightCapacity)section.append(make('p',{class:'muted-line',text:`전 세계 전용 상선의 신규 선적 기준 적재 효율 ${ (100*totalFreightUsed/totalFreightCapacity).toFixed(1)}% (${totalFreightUsed}/${totalFreightCapacity} freight) · 이관 중 계약은 신규 선적 분모·분자에서 제외`}));
+ host.append(section);return ret;};
+const g3fOldPowerPanel=i3aPanel;
+i3aPanel=function(w,n){const area=g3fOldPowerPanel(w,n),st=g3fEnsure(w),hist=st.power.history;
+ area.append(make('h3',{text:'G3F · 동력 활용률 진단 (관측 전용)'}));
+ const last=hist.at(-1);if(!last){area.append(make('p',{class:'muted-line',text:'이관 이후 아직 분기별 새 관측이 없습니다. 다음 분기 결산부터 시작합니다.'}));return area;}
+ const plants=last.plants.filter(p=>p.ownerId===n.id),d=last.demand[n.id]||{sampleWorkshops:0,ownPU:0,externalPU:0,unmetPU:0,demandPU:0};
+ area.append(make('p',{class:'muted-line',text:`${last.dayIndex}일 · 동력소 ${plants.length}개 · 설비 최대 ${plants.reduce((x,p)=>x+(p.online?p.capacity:0),0)} PU/분기 · 실제 송출 ${plants.reduce((x,p)=>x+p.sent,0)} PU. 공방 실제 표본 ${d.sampleWorkshops}개 / 자체 충당 ${d.ownPU} PU / 외부 사용 ${d.externalPU} PU / 국가 전체 부족 ${d.unmetPU} PU (연결 가능성 반영 전)`}));
+ for(const p of plants)area.append(make('p',{class:'muted-line',text:`동력소 #${p.id} ${p.type} · ${p.sent}/${p.capacity} PU · ${i3a2OperationLabel(p.reason)}`}));
+ area.append(make('p',{class:'scope-note',text:'공방 전체 부족량은 동력소와 연결된 수신 수요를 뜻하지 않습니다. 기존 I3A의 설비·연료·운영·경제성 조건은 변경하지 않았습니다.'}));return area;};
+for(const [id,ext,mime,body] of [
+ ['g3fReportJson','json','application/json',w=>JSON.stringify(g3fReport(w),null,2)],
+ ['g3fReportCsv','csv','text/csv;charset=utf-8',w=>g3fCsv(w)]]){
+ document.getElementById(id)?.addEventListener('click',()=>{const w=app?.world;if(w)download(`vilob-g3f-observatory-day${w.dayIndex}.${ext}`,body(w),mime);});
+}
 </script>
 </body>
 </html>
