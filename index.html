@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9H4</title>
+<title>VILOB Light · V0.9I1A</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -950,7 +950,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9H4'; // H3 physical commerce raiding; no new damage or escrow rules
+const VERSION = 'V0.9I1A'; // I1A: isolated, opt-in repeatable performance benchmarking
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -21362,10 +21362,13 @@ function e2bPanel(w,n,section){
 }
 
 function runQuarter(world){
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('start',world);
   const h1dPerfBegin=h1dTelemetry.enabled?performance.now():0;
   refreshApCaps(world);
   completeBuildings(world);
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('economyStart',world);
   runEconomyQuarter(world);
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('economyEnd',world);
   iQuarter(world); // I: read-only freight demand planning; never move or charge inventory.
   kQuarter(world); // pay projects only after real economic bills and payroll.
   for(const n of world.nations)if(n.active&&n.controller==='AI')kAutoChoose(world,n);
@@ -21392,6 +21395,7 @@ function runQuarter(world){
   v08jIndustrialPowerAIQuarter(world);
   v08jSteelAIQuarter(world);
   navyDPreQuarter(world);navyBQuarter(world);navyAIQuarter(world); // V0.9D: paid logistics and real convoy escorts before strategic decisions
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('civilStart',world);
   const followUp=[];
   for(const n of world.nations){
     if(!n.active||n.controller!=='AI')continue;
@@ -21497,13 +21501,16 @@ const chosen=remoteFounding&&remoteFoundingScore>bestScore*1.05?remoteFounding:b
     }
     followUp.push({id:n.id,chosen:deferred?chosen:null,score:chosen===remoteFounding?remoteFoundingScore:bestScore,top:diagnosticCandidates,barracksDiag,auxOptions,original:chosen,recoverEntry});
   }
+  if(window.__vilobI1QuarterMark){window.__vilobI1QuarterMark('civilEnd',world);window.__vilobI1QuarterMark('militaryStart',world);}
   const h1dPerfBeforeMilitary=h1dTelemetry.enabled?performance.now():0;
   const h2b1EarlyCompleted=new Set();
   if(H2B_AI_ENABLED)for(const n of world.nations)if(h2b1PriorityRefit(world,n))h2b1EarlyCompleted.add(n.id);
   runMilitaryQuarter(world,executeNationAction);
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('automatonStart',world);
   const h1dPerfBeforeAuto=h1dTelemetry.enabled?performance.now():0;
   hQuarter(world,h2b1EarlyCompleted);
   v08fQuarter(world);
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('postStart',world);
   const h1dPerfAfterAuto=h1dTelemetry.enabled?performance.now():0;
   for(const entry of followUp){
     const n=world.nations[entry.id];if(!n.active)continue;
@@ -21554,6 +21561,7 @@ if(!apRecord)continue; // E4B: a valid minor action may proceed without a primar
   processCivilizationEraQuarter(world);
   v06e7aQuarter(world);
   navyQuarterUpkeep(world);
+  if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('end',world);
   if(h1dTelemetry.enabled){const t=performance.now(),q={dayIndex:world.dayIndex,totalMs:+(t-h1dPerfBegin).toFixed(2),preMilitaryMs:+(h1dPerfBeforeMilitary-h1dPerfBegin).toFixed(2),militaryMs:+(h1dPerfBeforeAuto-h1dPerfBeforeMilitary).toFixed(2),automatonMs:+(h1dPerfAfterAuto-h1dPerfBeforeAuto).toFixed(2),postMs:+(t-h1dPerfAfterAuto).toFixed(2)};h1dTelemetry.quarters++;h1dTelemetry.lastQuarterMs=q.totalMs;h1dTelemetry.maxQuarterMs=Math.max(h1dTelemetry.maxQuarterMs,q.totalMs);h1dTelemetry.samples.push(q);if(h1dTelemetry.samples.length>32)h1dTelemetry.samples.shift();}
 }
 /** E3 AI action: candidate selection only, uses the same paid SET_WORKSHOP_MODE. */
@@ -22303,11 +22311,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22316,7 +22324,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22389,6 +22397,8 @@ function deserializeWorld(json){
  g3fEnsure(parsed);
  if(g3eImportedVersion==='V0.9G3F')g3f1RepairAudited80940Returns(parsed);
  if(g3eImportedVersion!==VERSION&&parsed.g3fObservation.sourceVersion===VERSION&&parsed.g3fObservation.sinceDay===parsed.dayIndex)parsed.g3fObservation.sourceVersion=g3eImportedVersion;
+ // H5A: one-time, evidence-based migration for active H3 battles only.
+ navyH5aRestoreContactFlags(parsed);
  validateWorld(parsed);return parsed;
 }
 function serializeWorld(world){
@@ -26579,6 +26589,42 @@ function navyDAccountMissions(w){const nv=navyDEnsure(w);
 }
 // V0.9H1 — bounded, deterministic naval strategic decision layer.
 // The selector cannot move ships or consume resources; only existing NAVY_SAIL executes physical orders.
+// H5A telemetry ownership: T0 active simulation state, T1 cumulative counters,
+// T2 bounded human-facing diagnostics. Never disable T2 before removing all execution reads.
+function navyH5aDiagnosticAppend(rows,entry,limit){
+ rows.push(entry);
+ if(rows.length>limit)rows.splice(0,rows.length-limit);
+}
+function navyH5aRestoreContactFlags(w){
+ const active=w.navy?.cEngagements||[],recent=w.navy?.h3Raid?.recent||[];
+ if(!active.length||!recent.length)return;
+ const contactIds=new Set(recent.filter(r=>
+  (r.kind==='MERCHANT_CONTACT'||r.kind==='ESCORT_CONTACT')&&Number.isSafeInteger(r.battleId)).map(r=>r.battleId));
+ for(const battle of active)if(contactIds.has(battle.id)&&battle.h5aRaidContact===undefined)
+  battle.h5aRaidContact=true;
+}
+function navyH5aValidateContactFlags(w){
+ return (w.navy?.cEngagements||[]).every(e=>e.h5aRaidContact===undefined||e.h5aRaidContact===true);
+}
+function navyH5aTelemetryReport(w){
+ const n=w.navy||{};
+ const count=(obj,key)=>Array.isArray(obj?.[key])?obj[key].length:0;
+ return {schema:'vilob-h5a-telemetry-ownership-v1',version:VERSION,dayIndex:w.dayIndex,
+  t0:{description:'Executable physical state / planning cache; never disabled',
+   activeEscorts:count(n.h2Escort,'active'),activeBattles:count(n,'cEngagements'),
+   evidencedRaidContacts:(n.cEngagements||[]).filter(e=>e.h5aRaidContact===true).length,
+   nationalPlans:Object.keys(n.h4Strategy?.plans||{}).length,
+   returnRecoveryLastReviewDay:n.h4aReturnRecovery?.lastReviewDay??null},
+  t1:{description:'Cumulative accounting; always preserved',
+   h1:n.h1Strategy?.stats??{},h2:n.h2Escort?.stats??{},h3:n.h3Raid?.stats??{},
+   h4:n.h4Strategy?.stats??{},h4a:n.h4aReturnRecovery?.stats??{}},
+  t2:{description:'Bounded diagnosis; legacy event schemas unchanged',
+   h1:count(n.h1Strategy,'decisions'),h2:count(n.h2Escort,'recent'),
+   h3:count(n.h3Raid,'recent'),h4:count(n.h4Strategy,'recent'),
+   h4a:count(n.h4aReturnRecovery,'recent')},
+  t3:{description:'Performance measurements are external, not written to world save'}};
+}
+
 const NAVY_H1_HISTORY_LIMIT=160, NAVY_H1_CANDIDATE_LIMIT=8;
 function navyH1Ensure(w){
  const nv=navyDEnsure(w);
@@ -26658,13 +26704,12 @@ function navyH1Record(w,f,decision,inspection,result){
  if(!result)h.stats.failed++;else if(mission==='BLOCKADE')h.stats.blockade++;
  else if(mission==='INTERCEPT')h.stats.intercept++;else if(mission==='IDLE')h.stats.idle++;
  if(decision&&decision.distance===0&&result)h.stats.hold++;
- h.decisions.push({day:w.dayIndex,nationId:f.nationId,fleetId:f.id,mission,
+ navyH5aDiagnosticAppend(h.decisions,{day:w.dayIndex,nationId:f.nationId,fleetId:f.id,mission,
   targetPortId:decision?.targetPortId??null,targetFleetId:decision?.targetFleetId??null,
   score:decision?.score??null,reason:result?(decision?.reason||'NO_REACHABLE_TARGET'):'ORDER_REJECTED',
   distance:decision?.distance??null,ownPower:inspection.ownPower,
   candidates:inspection.top.map(c=>({mission:c.mission,port:c.targetPortId,fleet:c.targetFleetId,score:c.score,distance:c.distance})),
-  rejected:inspection.rejected,executed:!!result});
- if(h.decisions.length>NAVY_H1_HISTORY_LIMIT)h.decisions.splice(0,h.decisions.length-NAVY_H1_HISTORY_LIMIT);
+  rejected:inspection.rejected,executed:!!result},NAVY_H1_HISTORY_LIMIT);
 }
 function navyH1ChooseAndExecute(w,f,ports,committed){
  const inspection=navyH1Candidates(w,f,ports,committed);
@@ -28995,7 +29040,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09h4-world';
+const SAVE_KEY='vilob-light-v09i1a-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -29007,7 +29052,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -31667,8 +31712,7 @@ navyBOnFleetDock=function(w,f){const job=f.bAssignment,phase=job?.phase;
  if(job?.g3bMarket&&!f.bAssignment){g3bOnFinish(w,job,phase);if(phase==='OUTBOUND')g3bReturnShip(w,f,job);}
  return result;
 };
-const g3bPreviousBQuarter=navyBQuarter;
-navyBQuarter=function(w){g3bAutoReturnQuarter(w);return g3bPreviousBQuarter(w);};
+const navyH5bBaseBQuarter=navyBQuarter; // original B-quarter handler, before G3B/G3C/G3D/H4A
 const g3bPreviousMarketSummary=e3eMarketSummary;
 e3eMarketSummary=function(w){const s=g3bPreviousMarketSummary(w);const g=g3bEnsure(w);
  s.g3b={stats:{...g.stats},reasons:{...g.reasons},recent:g.events.slice(-25)};return s;
@@ -31753,8 +31797,7 @@ navyBOnFleetDock=function(w,f){const j=f.bAssignment,commercial=j?.kind==='TRADE
 function g3cRetryWaiting(w){for(const f of navyEnsure(w).fleets){const j=f.bAssignment;
  if(j?.g3cDockWait&&f.status==='DOCKED'&&!f.cEngagementId)navyBOnFleetDock(w,f);
 }}
-const g3cPreviousQuarter=navyBQuarter;
-navyBQuarter=function(w){g3cRetryWaiting(w);return g3cPreviousQuarter(w);};
+// H5B: G3C retry is called by the single final quarter dispatcher.
 const g3cPreviousUpkeep=navyQuarterUpkeep;
 navyQuarterUpkeep=function(w){const c=g3cEnsure(w);for(const p of w.buildings){if(p.typeId!=='port'||!['ACTIVE','UPGRADING'].includes(p.status)||p.disconnected)continue;
  const n=w.tiles[p.tileId]?.ownerId;if(n==null||!w.nations[n]?.active)continue;
@@ -31958,8 +32001,7 @@ function g3dMerchantQuarter(w){
   }
  }
 }
-const g3dOldQuarter=navyBQuarter;
-navyBQuarter=function(w){const r=g3dOldQuarter(w);g3dMerchantQuarter(w);return r;};
+// H5B: G3D merchant construction/crew logic stays AFTER the base B-quarter call.
 const g3dOldValidate=navyValidate;
 navyValidate=function(w,fail){if(g3dOldValidate(w,fail)===false)return false;const nv=navyEnsure(w);
  if(nv.g3d&&(nv.g3d.schema!==1||['builds','crews','buildDecisions'].some(k=>!Number.isSafeInteger(nv.g3d[k])||nv.g3d[k]<0)))return fail('G3D 상선 AI 상태');
@@ -32478,8 +32520,7 @@ function navyH2Row(w,f){const s=w.navy?.h2Escort;if(!s)return null;return s.acti
 function navyH2IsCombat(w,f){return Boolean(f&&f.shipIds.length&&!g3dDedicatedFleet(w,f)&&navyBShips(w,f).every(s=>s&&NAVY_H2_COMBAT_TYPES.has(s.typeId)&&s.hp>0&&s.crew===NAVY_SHIP_TYPES[s.typeId].crew));}
 function navyH2AtWar(w,nid){return w.nations.some(n=>n.active&&n.id!==nid&&v04dWarBetween(w,nid,n.id));}
 function navyH2Log(w,kind,row,detail=''){
- const s=navyH2Ensure(w);s.recent.push({day:w.dayIndex,kind,tripId:row?.tripId??null,merchantFleetId:row?.merchantFleetId??null,escortFleetId:row?.escortFleetId??null,detail});
- if(s.recent.length>NAVY_H2_HISTORY_MAX)s.recent.splice(0,s.recent.length-NAVY_H2_HISTORY_MAX);
+ const s=navyH2Ensure(w);navyH5aDiagnosticAppend(s.recent,{day:w.dayIndex,kind,tripId:row?.tripId??null,merchantFleetId:row?.merchantFleetId??null,escortFleetId:row?.escortFleetId??null,detail},NAVY_H2_HISTORY_MAX);
 }
 function navyH2Stop(w,row,reason){
  const s=navyH2Ensure(w);if(!s.active.includes(row))return;
@@ -32581,6 +32622,7 @@ function navyH2AfterMove(w,before){
 }
 const navyH2OriginalProcessDay=navyProcessDay;
 navyProcessDay=function(w){
+  navyH3Expire(w); // H5B: original H3 outer wrapper ran before H2 before-move
  navyH2BeforeMove(w);
  const s=w.navy?.h2Escort,before=new Map();
  if(s)for(const row of s.active){const m=navyH2Fleet(w,row.merchantFleetId);if(m)before.set(row.tripId,{tile:m.tileId});}
@@ -32648,8 +32690,7 @@ function navyH2Validate(w){
  }
  return true;
 }
-const navyH2BaseValidateWorld=validateWorld;
-validateWorld=function(w){if(!navyH2Validate(w))throw Error('월드 검증 실패: H2 전용 상선 호위 원장');return navyH2BaseValidateWorld(w);};
+const navyH5bBaseValidateWorld=validateWorld; // last pre-H2 world validator, includes G3H and older checks
 function navyH2Report(w){const h=navyH2Ensure(w);return {schema:'vilob-h2-dedicated-merchant-escort-v1',version:VERSION,dayIndex:w.dayIndex,sinceDay:h.sinceDay,stats:h.stats,active:h.active,recent:h.recent};}
 function navyH2CSV(w){const h=navyH2Ensure(w),columns=['day','kind','tripId','merchantFleetId','escortFleetId','detail'];
  return '\uFEFF'+navyCCSV(h.recent.map(r=>({day:r.day,kind:r.kind,tripId:r.tripId??'',merchantFleetId:r.merchantFleetId??'',escortFleetId:r.escortFleetId??'',detail:r.detail??''})),columns);
@@ -32685,11 +32726,10 @@ function navyH3Ensure(w){
    cargoLost:0,goldRefunded:0,battlesFinished:0,missionDays:0}};
 }
 function navyH3Log(w,kind,row={},detail=''){
- const h=navyH3Ensure(w);h.recent.push({day:w.dayIndex,kind,nationId:row.nationId??null,
+ const h=navyH3Ensure(w);navyH5aDiagnosticAppend(h.recent,{day:w.dayIndex,kind,nationId:row.nationId??null,
   raiderFleetId:row.raiderFleetId??null,enemyFleetId:row.enemyFleetId??null,
   tripId:row.tripId??null,routeKey:row.routeKey??null,battleId:row.battleId??null,
-  targetTileId:row.targetTileId??null,detail});
- if(h.recent.length>NAVY_H3_HISTORY_LIMIT)h.recent.splice(0,h.recent.length-NAVY_H3_HISTORY_LIMIT);
+  targetTileId:row.targetTileId??null,detail},NAVY_H3_HISTORY_LIMIT);
 }
 function navyH3Enemy(w,a,b){return a!==b&&Number.isInteger(b)&&w.nations[b]?.active&&v04dWarBetween(w,a,b);}
 function navyH3MerchantTrip(w,f){return f?.bAssignment?.kind==='TRADE'&&(w.navy?.g3aTrade?.active||[]).find(t=>t.fleetId===f.id)||null;}
@@ -32800,8 +32840,7 @@ function navyH3Expire(w){if(!w.navy)return;
   navyH3Log(w,'EXPIRED',{nationId:f.nationId,raiderFleetId:f.id},`peace or invalid enemy ${enemy}`);
  }
 }
-const navyH3PreviousProcessDay=navyProcessDay;
-navyProcessDay=function(w){navyH3Expire(w);return navyH3PreviousProcessDay(w);};
+// H5B: H3 expiration is integrated at entry of H2 daily dispatcher above.
 // Single contact record for real C-engine engagement. H2 interception has already
 // selected the physical guard ship when this wrapper observes the engagement.
 function navyH3Contact(w,e){
@@ -32811,6 +32850,7 @@ function navyH3Contact(w,e){
   const trip=navyH3MerchantTrip(w,opponent),h2=navyH2Row(w,opponent);
   const isEscort=h2?.escortFleetId===opponent.id&&h2.merchantFleetId!=null;
   if(!trip&&!isEscort)continue;
+  e.h5aRaidContact=true; // T0 active battle evidence survives T2 160-row eviction.
   const h=navyH3Ensure(w);h.stats.contacts++;
   h.stats[trip?'merchantContacts':'escortContacts']++;
   const row={nationId:raider.nationId,raiderFleetId:raider.id,
@@ -32853,9 +32893,8 @@ navyCShipLoadLoss=function(w,f,ship){
  }return out;
 };
 const navyH3PreviousEnd=navyCEnd;
-navyCEnd=function(w,e,reason){const isRaid=(w.navy?.fleets||[]).some(f=>
-  (f.id===e.fleetAId||f.id===e.fleetBId)&&navyH3Raider(w,f))||
-  !!w.navy?.h3Raid?.recent?.some(r=>r.battleId===e.id&&(r.kind==='ESCORT_CONTACT'||r.kind==='MERCHANT_CONTACT'));
+navyCEnd=function(w,e,reason){const isRaid=e.h5aRaidContact===true||
+  (w.navy?.fleets||[]).some(f=>(f.id===e.fleetAId||f.id===e.fleetBId)&&navyH3Raider(w,f));
  const out=navyH3PreviousEnd(w,e,reason);
  if(isRaid){navyH3Ensure(w).stats.battlesFinished++;
   navyH3Log(w,'BATTLE_END',{battleId:e.id},`actual reason ${reason}, winner ${e.winnerNationId??'DRAW'}`);}
@@ -32883,8 +32922,7 @@ function navyH3Validate(w){const h=w.navy?.h3Raid;if(!h)return true;
  for(const r of h.recent){if(!int(r.day)||r.day>w.dayIndex||typeof r.kind!=='string')return false;}
  return true;
 }
-const navyH3PreviousValidateWorld=validateWorld;
-validateWorld=function(w){if(!navyH3Validate(w))throw Error('월드 검증 실패: H3 통상파괴 전략 원장');return navyH3PreviousValidateWorld(w);};
+// H5B: H3 validation is run by the final unified H-series validator.
 function navyH3Report(w){const h=navyH3Ensure(w),fleets=w.navy.fleets.filter(f=>f.dMission==='RAID');
  return {schema:'vilob-h3-commerce-raiding-v1',version:VERSION,dayIndex:w.dayIndex,sinceDay:h.sinceDay,
   stats:h.stats,active:fleets.map(f=>({nationId:f.nationId,fleetId:f.id,status:f.status,
@@ -32921,8 +32959,7 @@ function navyH4Ensure(w){
 }
 function navyH4Log(w,kind,nid,fid,detail,extra={}){
  const h=navyH4Ensure(w);
- h.recent.push({day:w.dayIndex,kind,nationId:nid,fleetId:fid??null,detail:String(detail),...extra});
- if(h.recent.length>NAVY_H4_HISTORY_LIMIT)h.recent.splice(0,h.recent.length-NAVY_H4_HISTORY_LIMIT);
+ navyH5aDiagnosticAppend(h.recent,{day:w.dayIndex,kind,nationId:nid,fleetId:fid??null,detail:String(detail),...extra},NAVY_H4_HISTORY_LIMIT);
 }
 function navyH4CombatReady(w,nid,f){
  return f&&f.nationId===nid&&!g3dDedicatedFleet(w,f)&&navyBReady(w,nid,f)&&
@@ -33102,8 +33139,7 @@ function navyH4Validate(w){const h=w.navy?.h4Strategy;if(!h)return true;
   !int(f.h4PrepositionDay)||f.h4PrepositionDay>w.dayIndex))return false;}
  return true;
 }
-const navyH4PreviousValidateWorld=validateWorld;
-validateWorld=function(w){if(!navyH4Validate(w))throw Error('월드 검증 실패: H4 국가 해군 전략 원장');return navyH4PreviousValidateWorld(w);};
+// H5B: H4 validation is run by the final unified H-series validator.
 function navyH4Report(w){const h=navyH4Ensure(w);
  return {schema:'vilob-h4-integrated-naval-strategy-v1',version:VERSION,dayIndex:w.dayIndex,
   stats:h.stats,plans:h.plans,recent:h.recent};
@@ -33132,6 +33168,487 @@ navyDRenderPanel=function(w,n,host){const out=navyH4PriorPanel(w,n,host),h=navyH
  return out;
 };
 
+</script>
+<script>
+// V0.9H4A — Safe AI recovery of physically retained RETURN_PENDING sea contracts.
+// Only issues the same NAVY_REROUTE action available to players; no new resource or escrow settlement path.
+const NAVY_H4A_SCHEMA=1, NAVY_H4A_RECENT_LIMIT=64;
+function navyH4aEnsure(w){
+ const nv=navyBEnsure(w);
+ return nv.h4aReturnRecovery??={schema:NAVY_H4A_SCHEMA,sinceDay:w.dayIndex,lastReviewDay:null,
+  stats:{reviews:0,pendingSeen:0,retries:0,started:0,returned:0,blocked:0,failed:0},reasons:{},recent:[]};
+}
+function navyH4aRecord(w,kind,f,job,reason){
+ const r=navyH4aEnsure(w),nid=f.nationId;
+ navyH5aDiagnosticAppend(r.recent,{day:w.dayIndex,kind,nationId:nid,fleetId:f.id,sourcePortId:job.sourcePortId,
+  contractKind:job.kind,contractId:job.g3bMarket?.ledgerId??job.shipmentId??null,
+  ageDays:Math.max(0,w.dayIndex-(job.startedDay??w.dayIndex)),reason:String(reason||'')},NAVY_H4A_RECENT_LIMIT);
+}
+function navyH4aBlockedReason(w,f,job){
+ const n=w.nations[f.nationId],port=navyBPort(w,job.sourcePortId);
+ if(!n?.active)return 'NATION_INACTIVE';
+ if(f.cEngagementId)return 'ENGAGED';
+ if(f.status!=='DOCKED')return 'FLEET_NOT_DOCKED';
+ if(!port||!navyPortOwner(w,port,job.kind==='TRADE'?job.sellerNationId:f.nationId))return 'SOURCE_PORT_UNAVAILABLE';
+ const ships=navyBShips(w,f);
+ if(!ships.length||ships.some(s=>!s||s.status!=='READY'||s.repairPlan||s.crew!==NAVY_SHIP_TYPES[s.typeId].crew||s.tileId!==f.tileId))return 'SHIP_NOT_READY';
+ const water=navyWaterAtPort(w,port);
+ if(water===null)return 'SOURCE_PORT_NO_WATER';
+ const path=navyPath(w,f.tileId,water,Math.min(...ships.map(s=>NAVY_SHIP_TYPES[s.typeId].coast)));
+ if(!path)return 'NO_SEA_ROUTE';
+ if((n.resources.coal||0)<navyBCoalCost(w,f,path))return 'INSUFFICIENT_COAL';
+ return 'ACTION_NOT_LEGAL';
+}
+function navyH4aReviewPending(w){
+ if(w.dayIndex%30!==0)return;
+ const a=navyH4aEnsure(w);
+ // Defensive idempotency if a caller accidentally runs the quarter callback twice.
+ if(a.lastReviewDay===w.dayIndex)return;
+ a.lastReviewDay=w.dayIndex;a.stats.reviews++;
+ for(const f of [...navyBEnsure(w).fleets].sort((x,y)=>x.id-y.id)){
+  const job=f.bAssignment,n=w.nations[f.nationId];
+  if(job?.phase!=='RETURN_PENDING'||!n?.active||n.controller!=='AI')continue;
+  a.stats.pendingSeen++;
+  const action={type:'NAVY_REROUTE',fleetId:f.id,destPortId:job.sourcePortId};
+  // Manual legality does not fully preflight crew/repair readiness; avoid a futile executable attempt.
+  const ships=navyBShips(w,f);
+  const notReady=!ships.length||ships.some(s=>!s||s.status!=='READY'||s.repairPlan||
+    s.crew!==NAVY_SHIP_TYPES[s.typeId].crew||s.tileId!==f.tileId);
+  if(notReady||!navyActionLegal(w,n.id,action)){
+   const why=navyH4aBlockedReason(w,f,job);
+   a.stats.blocked++;a.reasons[why]=(a.reasons[why]||0)+1;
+   // Keep only bounded detailed history, not repeated unbounded log events.
+   navyH4aRecord(w,'BLOCKED',f,job,why);continue;
+  }
+  a.stats.retries++;
+  // Marker survives a save while sailing and lets the normal dock callback certify settlement.
+  job.h4aAutoReturnDay=w.dayIndex;
+  const result=navyActionExecute(w,n.id,action);
+  if(result?.ok){a.stats.started++;navyH4aRecord(w,'STARTED',f,job,'LEGAL_NAVY_REROUTE');}
+  else{
+   if(f.bAssignment===job)delete job.h4aAutoReturnDay;
+   a.stats.failed++;a.reasons.EXECUTION_FAILED=(a.reasons.EXECUTION_FAILED||0)+1;
+   navyH4aRecord(w,'FAILED',f,job,result?.reason||'EXECUTION_FAILED');
+  }
+ }
+}
+// H5B single B-quarter dispatcher; preserves each historical callback's call order.
+navyBQuarter=function(w){
+ navyH4aReviewPending(w); // formerly outermost H4A BEFORE handler
+ g3cRetryWaiting(w);      // G3C BEFORE G3B and baseline
+ g3bAutoReturnQuarter(w); // G3B BEFORE baseline
+ const result=navyH5bBaseBQuarter(w);
+ g3dMerchantQuarter(w);  // G3D AFTER baseline, including exact return value
+ return result;
+};
+const navyH4aPriorDock=navyBOnFleetDock;
+navyBOnFleetDock=function(w,f){
+ const job=f.bAssignment,fromRecovery=job?.phase==='RETURNING'&&Number.isSafeInteger(job.h4aAutoReturnDay);
+ const result=navyH4aPriorDock(w,f);
+ if(fromRecovery&&!f.bAssignment){
+  const a=navyH4aEnsure(w);a.stats.returned++;
+  navyH4aRecord(w,'RETURNED',f,job,'EXISTING_SETTLEMENT');
+ }
+ return result;
+};
+function navyH4aValidate(w){
+ const a=navyH4aEnsure(w),validInt=v=>Number.isSafeInteger(v)&&v>=0;
+ if(a.schema!==NAVY_H4A_SCHEMA||!validInt(a.sinceDay)||a.sinceDay>w.dayIndex||
+   !(a.lastReviewDay===null||validInt(a.lastReviewDay)&&a.lastReviewDay<=w.dayIndex&&a.lastReviewDay%30===0)||
+   !a.stats||!['reviews','pendingSeen','retries','started','returned','blocked','failed'].every(k=>validInt(a.stats[k]))||
+   a.stats.returned>a.stats.started||a.stats.started>a.stats.retries||
+   !a.reasons||Object.values(a.reasons).some(v=>!validInt(v))||!Array.isArray(a.recent)||
+   a.recent.length>NAVY_H4A_RECENT_LIMIT)return false;
+ for(const row of a.recent)if(!validInt(row.day)||row.day>w.dayIndex||!validInt(row.fleetId)||
+   !validInt(row.nationId)||typeof row.kind!=='string'||typeof row.reason!=='string')return false;
+ for(const f of w.navy?.fleets||[]){const job=f.bAssignment;
+  if(job?.h4aAutoReturnDay!==undefined&&(!validInt(job.h4aAutoReturnDay)||job.h4aAutoReturnDay>w.dayIndex||!['RETURNING','RETURN_PENDING'].includes(job.phase)))return false;
+ }
+ return true;
+}
+// H5B static runtime inspection: no side effects and no saved telemetry.
+function navyH5bDispatchReport(){return {
+ schema:'vilob-h5b-dispatch-v1',version:VERSION,
+ daily:['H3 expire','H2 escort before','legacy G2/F-series daily','H2 escort after'],
+ quarter:['H4A recovery review','G3C dock retry','G3B auto return','baseline B quarter','G3D merchant quarter'],
+ validation:['H4A','H5A','H4','H3','H2','legacy G3H and earlier']
+};}
+// H5B: one H-series validator, preserving outer-to-inner error precedence exactly.
+validateWorld=function(w){
+ if(!navyH4aValidate(w))throw Error('월드 검증 실패: H4A 자동 귀항 진단');
+ if(!navyH5aValidateContactFlags(w))throw Error('월드 검증 실패: H5A 해전 접촉 상태');
+ if(!navyH4Validate(w))throw Error('월드 검증 실패: H4 국가 해군 전략 원장');
+ if(!navyH3Validate(w))throw Error('월드 검증 실패: H3 통상파괴 전략 원장');
+ if(!navyH2Validate(w))throw Error('월드 검증 실패: H2 전용 상선 호위 원장');
+ return navyH5bBaseValidateWorld(w);
+};
+const navyH4aPriorSummary=navySummary;
+navySummary=function(w){const s=navyH4aPriorSummary(w),a=navyH4aEnsure(w);
+ s.h4aReturnRecovery={...a,stats:{...a.stats},reasons:{...a.reasons},recent:a.recent.map(x=>({...x}))};return s;};
+function navyH4aCSV(w){const cols=['day','kind','nationId','fleetId','sourcePortId','contractKind','contractId','ageDays','reason'];
+ return '\uFEFF'+navyCCSV(navyH4aEnsure(w).recent.map(r=>Object.fromEntries(cols.map(k=>[k,r[k]??'']))),cols);}
+const navyH4aPriorPanel=navyDRenderPanel;
+navyDRenderPanel=function(w,n,host){const ret=navyH4aPriorPanel(w,n,host),a=navyH4aEnsure(w);
+ const section=document.createElement('section');section.className='army-detail';host.append(section);
+ const title=document.createElement('strong');title.textContent='V0.9H4A · 해운 계약 자동 귀항 복구';section.append(title);
+ const pending=w.navy.fleets.filter(f=>f.nationId===n.id&&f.bAssignment?.phase==='RETURN_PENDING');
+ const info=document.createElement('p');info.className='muted-line';
+ info.textContent=`현재 귀항 대기 ${pending.length}건 · 자동 재시도 ${a.stats.retries}회 · 출항 ${a.stats.started}회 · 정산 ${a.stats.returned}건 · 차단 ${a.stats.blocked}회`;section.append(info);
+ for(const f of pending.slice(0,5)){const line=document.createElement('p');line.className='muted-line';
+  line.textContent=`함대 #${f.id} · 출발항 #${f.bAssignment.sourcePortId} · 계약 유지 ${Math.max(0,w.dayIndex-(f.bAssignment.startedDay??w.dayIndex))}일`;section.append(line);}
+ for(const fmt of ['JSON','CSV']){const button=document.createElement('button');button.type='button';button.className='jump-button';
+  button.textContent=`H4A 귀항 복구 기록 ${fmt}`;
+  button.addEventListener('click',()=>download(`vilob-h4a-return-recovery-day${w.dayIndex}.${fmt.toLowerCase()}`,
+   fmt==='JSON'?JSON.stringify({schema:'vilob-h4a-return-recovery-v1',version:VERSION,dayIndex:w.dayIndex,...navyH4aEnsure(w)},null,2):navyH4aCSV(w),
+   fmt==='JSON'?'application/json':'text/csv;charset=utf-8'));section.append(button);}
+ const telemetry=document.createElement('button');telemetry.type='button';telemetry.className='jump-button';
+ telemetry.textContent='H5A 텔레메트리 계층 T0~T3 JSON';
+ telemetry.addEventListener('click',()=>download(`vilob-h5a-telemetry-day${w.dayIndex}.json`,
+  JSON.stringify(navyH5aTelemetryReport(w),null,2),'application/json'));section.append(telemetry);
+ return ret;
+};
+
+</script>
+<!-- V0.9I1: opt-in CPU hotpath profiler. Runtime-only; no world/RNG/storage mutations. -->
+<script>
+(function(){
+'use strict';
+const SCHEMA='vilob-i1-runtime-profiler-v1', LIMIT=128, PATH_STRIDE=16;
+let enabled=false, captures=Object.create(null), hooks=[], stack=[], batch=null;
+let batches=[],quarters=[],quarter=null,phaseTotals=Object.create(null);
+let beginDay=null,startedAt=null,lastError='', markerPrior;
+const time=()=>performance.now();
+const routes=[
+ ['SIM.batch','batch',()=>measureSimBatch,f=>{measureSimBatch=f;}],
+ ['SIM.advanceDays','simulation',()=>advanceDays,f=>{advanceDays=f;}],
+ ['SIM.runQuarter','quarter',()=>runQuarter,f=>{runQuarter=f;}],
+ ['NAVY.processDay','navy',()=>navyProcessDay,f=>{navyProcessDay=f;}],
+ ['NAVY.quarter','navy',()=>navyBQuarter,f=>{navyBQuarter=f;}],
+ ['NAVY.path','navy',()=>navyPath,f=>{navyPath=f;}],
+ ['NAVY.seaControl','navy',()=>navyDControl,f=>{navyDControl=f;}],
+ ['CHECK.validateWorld','verification',()=>validateWorld,f=>{validateWorld=f;}],
+ ['SAVE.serializeWorld','storage',()=>serializeWorld,f=>{serializeWorld=f;}],
+ ['UI.refreshSimulationView','ui',()=>refreshSimulationView,f=>{refreshSimulationView=f;}],
+ ['UI.canvasDraw','ui',()=>map.draw,f=>{map.draw=f;}],
+ ['MIL.processDay','military',()=>processMilitaryDay,f=>{processMilitaryDay=f;}],
+ ['MIL.quarter','military',()=>runMilitaryQuarter,f=>{runMilitaryQuarter=f;}],
+ ['MIL.assignOrders','military',()=>assignWarOrders,f=>{assignWarOrders=f;}],
+ ['MIL.landPath','land-path',()=>shortestRoadPath,f=>{shortestRoadPath=f;}],
+ ['MIL.supplySweep','military',()=>updateArmySupply,f=>{updateArmySupply=f;}],
+ ['COMBAT.round','combat',()=>resolveEngagementRound,f=>{resolveEngagementRound=f;}],
+ ['ECO.quarter','economy',()=>runEconomyQuarter,f=>{runEconomyQuarter=f;}],
+ ['ECO.tradeQuarter','economy',()=>runTradeQuarter,f=>{runTradeQuarter=f;}],
+ ['AI.researchQuarter','ai',()=>processResearchQuarter,f=>{processResearchQuarter=f;}]
+].map(([key,unit,get,set])=>({key,unit,get,set,stride:key==='MIL.landPath'?PATH_STRIDE:1}));
+const phaseKeys=['preMilitary','military','automaton','post','economyDirect','civilAI','otherPre'];
+function getMetric(r){return captures[r.key]||(captures[r.key]={unit:r.unit,calls:0,measuredCalls:0,errors:0,totalMs:0,exclusiveMeasuredMs:0,minMs:null,maxMs:0,lastMs:0,recentMs:[],totalBatchDays:0,stride:r.stride});}
+function percentage(values,p){if(!values.length)return null;const sorted=[...values].sort((a,b)=>a-b);return sorted[Math.ceil(p*sorted.length)-1];}
+function num(v){return v===null?null:+v.toFixed(3);}
+function worldInfo(w){return w?{dayIndex:w.dayIndex,wars:w.wars?.length??0,armies:w.armies?.length??0,tiles:w.tiles?.length??0}:null;}
+function startBatch(r,args){
+ if(batch)return null;
+ const w=r.key==='SIM.advanceDays'?args[0]:app.world;
+ const info=worldInfo(w);
+ const b={source:r.key,daysRequested:r.key==='SIM.batch'?args[1]:args[1],world:w,start:info,at:time(),functions:Object.create(null),phases:Object.create(null),quarterCount:0};
+ batch=b;return b;
+}
+function markBatchCall(key){
+ if(!batch)return;
+ const v=batch.functions[key]||(batch.functions[key]={calls:0,measuredCalls:0,measuredMs:0});
+ v.calls++;
+}
+function addBatchMeasure(key,ms){
+ if(!batch)return;
+ const v=batch.functions[key]||(batch.functions[key]={calls:0,measuredCalls:0,measuredMs:0});
+ v.measuredCalls++;v.measuredMs+=ms;
+}
+function finishBatch(b,elapsed,failed){
+ if(!b)return;
+ const finish=worldInfo(b.world);
+ const functions=Object.entries(b.functions).map(([key,v])=>({key,...v,measuredMs:num(v.measuredMs),
+  estimatedMs:v.measuredCalls?num(v.measuredMs/v.measuredCalls*v.calls):null,
+  sampling:routes.find(r=>r.key===key)?.stride>1})).sort((a,c)=>c.measuredMs-a.measuredMs);
+ const phases=Object.fromEntries(Object.entries(b.phases).map(([k,v])=>[k,num(v)]));
+ batches.push({source:b.source,daysRequested:b.daysRequested,startDay:b.start?.dayIndex??null,endDay:finish?.dayIndex??null,
+  daysElapsed:(finish&&b.start)?finish.dayIndex-b.start.dayIndex:null,warCountStart:b.start?.wars??null,warCountEnd:finish?.wars??null,
+  armiesStart:b.start?.armies??null,armiesEnd:finish?.armies??null,tiles:finish?.tiles??null,
+  totalMs:num(elapsed),quarterCount:b.quarterCount,failed,functions,phases});
+ if(batches.length>LIMIT)batches.shift();if(batch===b)batch=null;
+}
+function record(r,c,ms,exclusive,error,args){
+ c.measuredCalls++;c.errors+=error?1:0;c.totalMs+=ms;c.exclusiveMeasuredMs+=Math.max(0,exclusive);c.lastMs=ms;
+ c.minMs=c.minMs===null?ms:Math.min(c.minMs,ms);c.maxMs=Math.max(c.maxMs,ms);
+ if(c.recentMs.length===LIMIT)c.recentMs.shift();c.recentMs.push(ms);
+ if(r.key==='SIM.batch'&&Number.isSafeInteger(args[1])&&args[1]>0)c.totalBatchDays+=args[1];
+ if(batch&&r.key!=='SIM.batch'&&r.key!=='SIM.advanceDays')addBatchMeasure(r.key,ms);
+}
+function wrapRoute(r,original){
+ return function(...args){
+  const c=getMetric(r);const call=++c.calls;
+  if(batch&&r.key!=='SIM.batch'&&r.key!=='SIM.advanceDays')markBatchCall(r.key);
+  if(call%r.stride!==0)return original.apply(this,args);
+  const ownBatch=(r.key==='SIM.batch'||r.key==='SIM.advanceDays')?startBatch(r,args):null;
+  const t=time(),frame={key:r.key,children:0};stack.push(frame);let failed=false;
+  try{return original.apply(this,args)}catch(e){failed=true;throw e}finally{
+   const ms=Math.max(0,time()-t);
+   stack.pop();if(stack.length)stack[stack.length-1].children+=ms;
+   record(r,c,ms,ms-frame.children,failed,args);
+   if(r.key==='SIM.runQuarter'&&quarter){quarter=null;}
+   if(ownBatch)finishBatch(ownBatch,ms,failed);
+  }
+ };
+}
+function phaseRecord(name,ms){
+ if(!Number.isFinite(ms)||ms<0)return;
+ const a=phaseTotals[name]||(phaseTotals[name]={calls:0,totalMs:0,maxMs:0,recentMs:[]});
+ a.calls++;a.totalMs+=ms;a.maxMs=Math.max(ms,a.maxMs);
+ if(a.recentMs.length===LIMIT)a.recentMs.shift();a.recentMs.push(ms);
+ if(batch)batch.phases[name]=(batch.phases[name]||0)+ms;
+}
+function quarterMark(stage,w){
+ const t=time();
+ if(stage==='start'){quarter={dayIndex:w.dayIndex,at:t,marks:{start:t}};return;}
+ if(!quarter)return;
+ quarter.marks[stage]=t;
+ if(stage!=='end')return;
+ const m=quarter.marks;
+ if(!['start','militaryStart','automatonStart','postStart','end','economyStart','economyEnd','civilStart','civilEnd'].every(k=>Number.isFinite(m[k]))){quarter=null;return;}
+ const phases={preMilitary:m.militaryStart-m.start,military:m.automatonStart-m.militaryStart,
+  automaton:m.postStart-m.automatonStart,post:m.end-m.postStart,
+  economyDirect:m.economyEnd-m.economyStart,civilAI:m.civilEnd-m.civilStart};
+ phases.otherPre=Math.max(0,phases.preMilitary-phases.economyDirect-phases.civilAI);
+ for(const k of phaseKeys)phaseRecord(k,phases[k]);
+ quarters.push({dayIndex:quarter.dayIndex,totalMs:num(m.end-m.start),...Object.fromEntries(phaseKeys.map(k=>[k+'Ms',num(phases[k])]))});
+ if(quarters.length>LIMIT)quarters.shift();if(batch)batch.quarterCount++;
+ quarter=null;
+}
+function attach(){
+ const inserted=[];
+ try{
+  if(window.__vilobI1QuarterMark!=null)throw Error('분기 계측 소유권 충돌');
+  for(const r of routes){const original=r.get();if(typeof original!=='function')throw Error('함수 누락: '+r.key);
+   const wrapped=wrapRoute(r,original);r.set(wrapped);inserted.push({r,original,wrapped});}
+  markerPrior=window.__vilobI1QuarterMark;
+  window.__vilobI1QuarterMark=quarterMark;
+  hooks=inserted;
+ }catch(e){for(let i=inserted.length-1;i>=0;i--){const x=inserted[i];if(x.r.get()===x.wrapped)x.r.set(x.original);}throw e;}
+}
+function detach(){
+ for(let i=hooks.length-1;i>=0;i--){const x=hooks[i];if(x.r.get()===x.wrapped)x.r.set(x.original);}
+ hooks=[];if(window.__vilobI1QuarterMark===quarterMark)window.__vilobI1QuarterMark=markerPrior;
+ stack=[];batch=null;quarter=null;
+}
+function start(){if(enabled)return true;attach();enabled=true;startedAt=Date.now();beginDay=app.world?.dayIndex??null;lastError='';updateView();return true;}
+function stop(){if(!enabled)return false;detach();enabled=false;updateView();return true;}
+function reset(){captures=Object.create(null);batches=[];quarters=[];phaseTotals=Object.create(null);beginDay=app.world?.dayIndex??null;startedAt=enabled?Date.now():null;lastError='';updateView();}
+function metricSnapshot(){return Object.keys(captures).sort().map(key=>{
+ const c=captures[key],a=c.measuredCalls,avg=a?c.totalMs/a:null;
+ return {key,unit:c.unit,calls:c.calls,measuredCalls:a,sampleStride:c.stride,sampled:c.stride>1,errors:c.errors,
+  totalMs:num(c.totalMs),measuredMs:num(c.totalMs),estimatedTotalMs:num(avg===null?null:avg*c.calls),
+  exclusiveMeasuredMs:num(c.exclusiveMeasuredMs),avgMs:num(avg),minMs:num(c.minMs),maxMs:num(a?c.maxMs:null),lastMs:num(a?c.lastMs:null),
+  recentP50Ms:num(percentage(c.recentMs,.5)),recentP95Ms:num(percentage(c.recentMs,.95)),recentSampleCount:c.recentMs.length,totalBatchDays:c.totalBatchDays};
+ });}
+function phaseSnapshot(){return phaseKeys.map(key=>{const p=phaseTotals[key];return {key,calls:p?.calls||0,totalMs:num(p?.totalMs||0),maxMs:num(p?.maxMs||0),recentP50Ms:num(percentage(p?.recentMs||[],.5)),recentP95Ms:num(percentage(p?.recentMs||[],.95))};});}
+function snapshot(){const memory=typeof performance.memory?.usedJSHeapSize==='number'?performance.memory.usedJSHeapSize:null;
+ return {schema:SCHEMA,version:VERSION,source:'runtime-only',enabled,dayIndex:app.world?.dayIndex??null,beginDay,startedAt,generatedAt:new Date().toISOString(),
+  interpretation:'Function totals are inclusive; nested calls overlap. exclusiveMeasuredMs excludes only measured direct/descendant wrappers. Sampled paths use measuredMs and non-authoritative estimatedTotalMs. 4 quarter primary phases partition runQuarter only. A user PC x10 SIM/BATCH is a separate performance target.',
+  browser:{userAgent:navigator.userAgent,hardwareConcurrency:navigator.hardwareConcurrency||null,usedJSHeapBytes:memory},
+  metricLimit:LIMIT,pathSampleStride:PATH_STRIDE,metrics:metricSnapshot(),quarterPhases:phaseSnapshot(),recentQuarters:quarters.slice(),recentBatches:batches.slice()};
+}
+function esc(v){let s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
+function csvRows(columns,items){return '\ufeff'+[columns.join(','),...items.map(row=>columns.map(k=>esc(row[k])).join(','))].join('\n');}
+function csv(){const columns=['key','unit','calls','errors','totalMs','avgMs','minMs','maxMs','lastMs','recentP50Ms','recentP95Ms','recentSampleCount','totalBatchDays','measuredCalls','sampleStride','sampled','estimatedTotalMs','exclusiveMeasuredMs'];return csvRows(columns,metricSnapshot());}
+function batchCsv(){const columns=['source','daysRequested','startDay','endDay','daysElapsed','warCountStart','warCountEnd','armiesStart','armiesEnd','tiles','totalMs','quarterCount','failed','functionsJSON','phasesJSON'];
+ return csvRows(columns,batches.map(b=>({...b,functionsJSON:JSON.stringify(b.functions),phasesJSON:JSON.stringify(b.phases)})));}
+function quarterCsv(){return csvRows(['dayIndex','totalMs',...phaseKeys.map(k=>k+'Ms')],quarters);}
+const panel=document.createElement('dialog');panel.id='h5cT3Panel';panel.setAttribute('aria-label','I1 CPU 성능 계측');
+panel.style.cssText='background:#152231;color:#f0f5f9;border:1px solid #6c8094;border-radius:12px;padding:16px;width:min(700px,94vw);max-height:82vh;overflow:auto;box-shadow:0 20px 45px #0008;font:13px/1.55 sans-serif';
+panel.innerHTML='<strong style="font-size:16px">I1 · CPU 병목 관측 T3</strong><p style="margin:6px 0 12px">기본 OFF · 세계 저장과 분리 · 원래 RNG/AI/경제 규칙 유지</p><div id="h5cT3Controls" style="display:flex;flex-wrap:wrap;gap:7px"></div><pre id="h5cT3Output" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1420;padding:12px;border-radius:8px;max-height:48vh;overflow:auto;margin:10px 0">아직 측정하지 않았습니다.</pre><p style="font-size:11px;color:#c4cfda">함수 포함시간은 중첩되므로 합산 금지. MIL.landPath는 16회 중 1회 측정하며 예상 시간은 추정값입니다. 분기 4단계 시간만 서로 배타적입니다.</p>';
+document.body.appendChild(panel);
+const opener=document.createElement('button');opener.id='h5cT3Open';opener.type='button';opener.textContent='I1 성능';
+opener.title='I1 CPU 계측(기본 OFF)';opener.style.cssText='position:fixed;right:12px;bottom:12px;z-index:2100;padding:7px 11px;background:#21394b;color:white;border:1px solid #9aacc1;border-radius:8px;font:12px sans-serif;cursor:pointer;box-shadow:0 3px 12px #0005';document.body.appendChild(opener);
+const controls=panel.querySelector('#h5cT3Controls'),out=panel.querySelector('#h5cT3Output');
+const makeButton=(label,handler)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText='border:1px solid #8fa5b8;border-radius:6px;background:#2d4557;color:white;padding:6px 9px;cursor:pointer';b.addEventListener('click',handler);controls.appendChild(b);return b;};
+const toggle=makeButton('측정 시작',()=>{try{enabled?stop():start();}catch(e){lastError=String(e);updateView();}});
+makeButton('갱신',()=>updateView());makeButton('초기화',()=>reset());
+makeButton('JSON',()=>download('vilob-i1-t3-day'+(app.world?.dayIndex??0)+'.json',JSON.stringify(snapshot(),null,2),'application/json'));
+makeButton('함수 CSV',()=>download('vilob-i1-functions-day'+(app.world?.dayIndex??0)+'.csv',csv(),'text/csv;charset=utf-8'));
+makeButton('배치 CSV',()=>download('vilob-i1-batches-day'+(app.world?.dayIndex??0)+'.csv',batchCsv(),'text/csv;charset=utf-8'));
+makeButton('분기 CSV',()=>download('vilob-i1-quarters-day'+(app.world?.dayIndex??0)+'.csv',quarterCsv(),'text/csv;charset=utf-8'));
+makeButton('닫기',()=>panel.close());
+function updateView(){
+ opener.textContent=enabled?'I1 측정 중':'I1 성능';opener.setAttribute('aria-pressed',String(enabled));toggle.textContent=enabled?'측정 중지':'측정 시작';
+ const r=snapshot(),fmt=m=>`${m.key}: ${m.calls}회${m.sampled?' (실측 '+m.measuredCalls+')':''} · 실측 ${m.totalMs.toFixed(1)}ms${m.sampled?' · 추정 '+(m.estimatedTotalMs??0).toFixed(1)+'ms':''} · 최근 P95 ${(m.recentP95Ms??0).toFixed(2)}ms`;
+ const top=batches.slice().sort((a,b)=>b.totalMs-a.totalMs).slice(0,4).map(b=>`${b.startDay}→${b.endDay} · ${b.totalMs.toFixed(1)}ms · 전쟁 ${b.warCountStart}→${b.warCountEnd}`);
+ out.textContent=[`상태: ${enabled?'ON':'OFF'} · 날짜 ${r.dayIndex} · 계측 ${r.metrics.length}종 · 배치 ${batches.length}개 · 분기 ${quarters.length}개`,lastError,
+  '--- 함수 (포괄 시간) ---',...r.metrics.map(fmt),'--- 분기 단계 (서로 배타적인 4단계) ---',...r.quarterPhases.filter(p=>p.calls).map(p=>`${p.key}: ${p.calls}회 · ${p.totalMs.toFixed(1)}ms`),
+  '--- 느린 관측 배치 TOP 4 ---',...top].filter(Boolean).join('\n')||'아직 측정하지 않았습니다.';
+}
+opener.addEventListener('click',()=>{updateView();if(!panel.open)panel.showModal();});
+window.vilobT3=Object.freeze({get enabled(){return enabled;},start,stop,reset,report:snapshot,toCSV:csv,toBatchCSV:batchCsv,toQuarterCSV:quarterCsv});
+updateView();
+})();
+</script>
+<!-- V0.9I1A — isolated checkpoint benchmark; no game policy or RNG changes. -->
+<script>
+(function(){
+'use strict';
+const SCHEMA='vilob-i1a-auto-benchmark-v1';
+let active=false,cancelRequested=false,last=null,sourceFile=null;
+const PAD='padding:7px 9px;border:1px solid #648398;border-radius:6px;background:#263e51;color:#edf5f7;font:12px sans-serif';
+const panel=document.createElement('dialog');panel.id='i1aBenchDialog';
+panel.style.cssText='background:#142434;color:#e9f3f7;border:1px solid #62849b;border-radius:13px;padding:18px;width:min(680px,96vw);max-height:88dvh;overflow:auto;box-shadow:0 16px 48px #0009;font:13px/1.55 sans-serif';
+const heading=document.createElement('h2');heading.textContent='I1A · 자동 성능 벤치마크';heading.style.cssText='font-size:18px;margin:0 0 8px';panel.append(heading);
+const desc=document.createElement('p');desc.textContent='동일한 시작 체크포인트의 복사본으로 10일 배치 측정. 현재 게임 세계를 진행·덮어쓰지 않으며, 계측 결과는 별도 다운로드합니다.';desc.style.cssText='margin:0 0 12px;color:#b7cbd6;font-size:12px';panel.append(desc);
+const form=document.createElement('div');form.style.cssText='display:grid;gap:11px';panel.append(form);
+function field(label,element){const row=document.createElement('label');row.style.cssText='display:grid;gap:4px;font-size:12px;color:#cfe0e8';const s=document.createElement('strong');s.textContent=label;row.append(s,element);form.append(row);return element;}
+function select(options,defaultValue){const sel=document.createElement('select');sel.style.cssText=PAD;for(const [value,title] of options){const opt=document.createElement('option');opt.value=value;opt.textContent=title;sel.append(opt);}sel.value=defaultValue;return sel;}
+const source=field('출발 체크포인트',select([['live','현재 세계를 복사하여 측정'],['file','JSON / JSON.gz 체크포인트 파일 불러오기']],'live'));
+const upload=document.createElement('input');upload.type='file';upload.accept='.json,.gz,.json.gz,application/json,application/gzip';upload.style.cssText=PAD;upload.setAttribute('aria-label','측정용 체크포인트 파일');upload.disabled=true;form.append(upload);
+source.addEventListener('change',()=>{upload.disabled=active||source.value!=='file';});upload.addEventListener('change',()=>{sourceFile=upload.files?.[0]||null;});
+const period=field('계측 기간',select([['90','90일 (9 × 10일)'],['360','360일 (36 × 10일)']],'90'));
+const repeat=field('반복 횟수',select([['1','1회'],['3','3회'],['5','5회']],'3'));
+const variants=field('계측 구성',select([['compare','I1 OFF + I1 ON 비교 (권장)'],['off','I1 OFF만 측정'],['on','I1 ON만 측정']],'compare'));
+const warmLabel=document.createElement('label');warmLabel.style.cssText='display:flex;gap:8px;align-items:center;color:#bdd1db;font-size:12px';const warm=document.createElement('input');warm.type='checkbox';warm.checked=true;warmLabel.append(warm,document.createTextNode('별도 복제본에서 10일 예열(본 측정 제외)'));form.append(warmLabel);
+const buttons=document.createElement('div');buttons.style.cssText='display:flex;flex-wrap:wrap;gap:7px;margin:13px 0';panel.append(buttons);
+function btn(label,fn){const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText=PAD+';cursor:pointer';b.addEventListener('click',fn);buttons.append(b);return b;}
+const status=document.createElement('pre');status.id='i1aBenchStatus';status.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;background:#091824;border:1px solid #284354;border-radius:8px;padding:11px;max-height:230px;overflow:auto;margin:8px 0;color:#c7e5ed';status.textContent='준비됨 · 기존 I1 수동 측정은 중지한 상태에서 실행하세요.';panel.append(status);
+const note=document.createElement('p');note.textContent='반복은 동일 브라우저에서 독립 세계 복사본으로 실행합니다(독립 Chromium 프로세스 실험과 다름). 실행 중 게임은 일시정지하며, 브라우저 탭을 닫으면 작업이 종료됩니다. 고정 RNG 세계만 허용합니다.';note.style.cssText='color:#9eb8c7;font-size:11px;margin:9px 0 0';panel.append(note);
+const launcher=document.createElement('button');launcher.id='i1aBenchOpen';launcher.type='button';launcher.textContent='I1A 자동 벤치';launcher.style.cssText='position:fixed;right:12px;bottom:53px;z-index:2100;padding:7px 11px;border:1px solid #9eb4c8;border-radius:8px;background:#17544f;color:#f1fffa;font:12px sans-serif;cursor:pointer;box-shadow:0 3px 12px #0005';document.body.append(launcher);
+launcher.addEventListener('click',()=>{if(!panel.open)panel.showModal();});
+panel.addEventListener('cancel',e=>{if(active){e.preventDefault();write('측정 중입니다. 중단하려면 「중단 요청」을 사용하세요.');}});
+document.body.append(panel);
+const write=s=>{status.textContent=s;};
+const fmt=v=>Number.isFinite(v)?+v.toFixed(3):null;
+const sortedPct=(v,p)=>v.length?[...v].sort((a,b)=>a-b)[Math.ceil(v.length*p)-1]:null;
+const mean=v=>v.length?v.reduce((a,b)=>a+b,0)/v.length:null;
+function fingerprint(str){let a=2166136261,b=324508639;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);a=Math.imul(a^c,16777619);b=Math.imul(b^c,16777619);}return (a>>>0).toString(16).padStart(8,'0')+(b>>>0).toString(16).padStart(8,'0')+':'+str.length;}
+// Portable SHA-256: WebCrypto if available, pure-JS fallback for non-secure preview contexts.
+const SHA256_K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function sha256Fallback(input){const n=input.length,pad=((n+9+63)>>6)<<6,msg=new Uint8Array(pad);msg.set(input);msg[n]=0x80;
+ const sizeView=new DataView(msg.buffer);sizeView.setUint32(pad-8,Math.floor(n/0x20000000),false);sizeView.setUint32(pad-4,(n*8)>>>0,false);
+ const h=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);const w=new Uint32Array(64);
+ const rot=(x,k)=>(x>>>k)|(x<<(32-k));
+ for(let off=0;off<pad;off+=64){for(let j=0;j<16;j++)w[j]=sizeView.getUint32(off+j*4,false);
+  for(let j=16;j<64;j++){const a=w[j-15],b=w[j-2];w[j]=(w[j-16]+(rot(a,7)^rot(a,18)^(a>>>3))+w[j-7]+(rot(b,17)^rot(b,19)^(b>>>10)))>>>0;}
+  let [a,b,c,d,e,f,g,k]=h;
+  for(let j=0;j<64;j++){const t1=(k+(rot(e,6)^rot(e,11)^rot(e,25))+((e&f)^(~e&g))+SHA256_K[j]+w[j])>>>0;
+   const t2=((rot(a,2)^rot(a,13)^rot(a,22))+((a&b)^(a&c)^(b&c)))>>>0;
+   k=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;}
+  for(const [i,v] of [a,b,c,d,e,f,g,k].entries())h[i]=(h[i]+v)>>>0;
+ }
+ return Array.from(h,x=>x.toString(16).padStart(8,'0')).join('');}
+async function sha256Text(text){const encoded=new TextEncoder().encode(text);
+ if(globalThis.crypto?.subtle){const result=await crypto.subtle.digest('SHA-256',encoded);return Array.from(new Uint8Array(result),b=>b.toString(16).padStart(2,'0')).join('');}
+ return sha256Fallback(encoded);
+}
+async function normalizedWorldHash(w){const cp=JSON.parse(JSON.stringify(w));delete cp.version;return sha256Text(JSON.stringify(cp));}
+
+const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
+async function readFile(file){if(!file)throw Error('JSON 또는 JSON.gz 체크포인트 파일을 선택하세요.');if(file.name.toLowerCase().endsWith('.gz')){
+ if(typeof DecompressionStream!=='function')throw Error('이 브라우저는 .gz 압축 해제를 지원하지 않습니다. JSON을 사용하세요.');
+ return await new Response(file.stream().pipeThrough(new DecompressionStream('gzip'))).text();
+ }return await file.text();}
+function commaCsv(columns,rows){const esc=v=>{const s=String(v??'');return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};return '\ufeff'+[columns.join(','),...rows.map(row=>columns.map(k=>esc(row[k])).join(','))].join('\n');}
+function csvRuns(data){const cols=['trial','mode','startDay','endDay','elapsedDays','rngStart','rngEnd','startHash','endHash','valid','totalMs','mean10DayMs','p50_10DayMs','p95_10DayMs','max10DayMs','warCountStart','warCountEnd','armyCountStart','armyCountEnd','quarterCount'];
+ return commaCsv(cols,data.runs.map(r=>Object.fromEntries(cols.map(k=>[k,r[k]??null]))));}
+function csvBatches(data){const cols=['trial','mode','batchIndex','startDay','endDay','ms','warCountStart','warCountEnd','armyCountStart','armyCountEnd','hasQuarter'];const rows=[];
+ for(const r of data.runs)for(const b of r.batches)rows.push({trial:r.trial,mode:r.mode,...b});return commaCsv(cols,rows);}
+function csvProfiles(data){const cols=['trial','mode','key','calls','measuredCalls','measuredMs','estimatedTotalMs','exclusiveMeasuredMs','recentP95Ms','sampleStride'];const rows=[];
+ for(const r of data.runs)for(const m of r.profile?.metrics||[])rows.push({trial:r.trial,mode:r.mode,...m});return commaCsv(cols,rows);}
+function crc32(bytes){let crc=-1;for(const c of bytes){crc^=c;for(let k=0;k<8;k++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}return (crc^-1)>>>0;}
+function zip(entries){const encoder=new TextEncoder(),parts=[],central=[];let offset=0;
+ function record(size){const d=new DataView(new ArrayBuffer(size));return {d,b:new Uint8Array(d.buffer)};}
+ for(const [filename,content] of entries){const name=encoder.encode(filename),data=encoder.encode(content),crc=crc32(data),local=record(30),cd=record(46);
+ local.d.setUint32(0,0x04034b50,true);local.d.setUint16(4,20,true);local.d.setUint16(8,0,true);local.d.setUint32(14,crc,true);local.d.setUint32(18,data.length,true);local.d.setUint32(22,data.length,true);local.d.setUint16(26,name.length,true);
+ parts.push(local.b,name,data);
+ cd.d.setUint32(0,0x02014b50,true);cd.d.setUint16(4,20,true);cd.d.setUint16(6,20,true);cd.d.setUint32(16,crc,true);cd.d.setUint32(20,data.length,true);cd.d.setUint32(24,data.length,true);cd.d.setUint16(28,name.length,true);cd.d.setUint32(42,offset,true);
+ central.push(cd.b,name);offset+=local.b.length+name.length+data.length;
+ }
+ const centralSize=central.reduce((s,p)=>s+p.length,0),footer=record(22);
+ footer.d.setUint32(0,0x06054b50,true);footer.d.setUint16(8,entries.length,true);footer.d.setUint16(10,entries.length,true);footer.d.setUint32(12,centralSize,true);footer.d.setUint32(16,offset,true);
+ return new Blob([...parts,...central,footer.b],{type:'application/zip'});
+}
+function summarize(runs){const groups={};for(const mode of ['off','on']){
+ const a=runs.filter(r=>r.mode===mode),v=a.map(r=>r.totalMs),batch=a.flatMap(r=>r.batches.map(b=>b.ms));
+ if(a.length)groups[mode]={runs:a.length,medianRunMs:fmt(sortedPct(v,.5)),meanRunMs:fmt(mean(v)),p95RunMs:fmt(sortedPct(v,.95)),maxRunMs:fmt(Math.max(...v)),mean10DayMs:fmt(mean(batch)),p95_10DayMs:fmt(sortedPct(batch,.95)),max10DayMs:fmt(Math.max(...batch))};
+ }const pairs=[];for(const trial of new Set(runs.map(r=>r.trial))){const off=runs.find(r=>r.trial===trial&&r.mode==='off'),on=runs.find(r=>r.trial===trial&&r.mode==='on');
+ if(off&&on)pairs.push({trial,identical:off.endHash===on.endHash&&off.rngEnd===on.rngEnd&&off.endDay===on.endDay,offMs:off.totalMs,onMs:on.totalMs,relativeOnPct:fmt(100*(on.totalMs/off.totalMs-1))});}
+ return {groups,paired:pairs,allPairsIdentical:pairs.length?pairs.every(p=>p.identical):null,medianOnVsOffPct:groups.off&&groups.on?fmt(100*(groups.on.medianRunMs/groups.off.medianRunMs-1)):null};}
+function exportData(){if(!last)throw Error('내보낼 측정 데이터가 없습니다.');return last;}
+function exportZip(){const d=exportData(),entries=[['report.json',JSON.stringify(d,null,2)],['runs.csv',csvRuns(d)],['batches.csv',csvBatches(d)],['functions.csv',csvProfiles(d)],['README.txt','VILOB Light I1A benchmark: report.json/runs.csv/batches.csv/functions.csv\nElapsed time is CPU simulation loop on the same browser, excludes clone/validate/JSON/export.\nI1 ON time includes profiling cost. Runs use independent world clones, not independent browsers.\n']];
+ download('vilob-i1a-benchmark-day'+d.startDay+'-'+d.status+'.zip',zip(entries),'application/zip');}
+async function run(options={}){
+ if(active)throw Error('이미 벤치마크를 실행 중입니다.');
+ const days=Number(options.days??period.value),count=Number(options.repeats??repeat.value),mode=options.mode??variants.value,origin=options.source??source.value;
+ if(![90,360].includes(days)||![1,3,5].includes(count)||!['compare','off','on'].includes(mode)||!['live','file'].includes(origin))throw Error('유효하지 않은 벤치마크 설정입니다.');
+ if(window.vilobT3.enabled)throw Error('수동 I1 성능 측정이 켜져 있습니다. 결과를 내보내고 측정 중지 후 자동 벤치를 시작하세요.');
+ active=true;cancelRequested=false;last=null;launcher.disabled=true;startButton.disabled=true;downloadButton.disabled=true;cancelButton.disabled=false;
+ for(const input of [source,upload,period,repeat,variants,warm])input.disabled=true;
+ const wasRunning=app.running;
+ try{
+  // The live World object and original save data are never advanced by this runner.
+  setRunning(false);
+  const raw=origin==='file'?await readFile(options.file||sourceFile):JSON.stringify(app.world);
+  write('원본 세계 검사 및 스냅샷 준비 중…');await tick();
+  const probe=deserializeWorld(raw);validateWorld(probe);
+  if(probe.rngPolicy?.fixed!==true)throw Error('고정 RNG 설정이 아닌 세계입니다. 시드 재추첨에 의해 반복 결과가 달라지므로 측정을 차단했습니다.');
+  const seed=probe.seed,startDay=probe.dayIndex,beginHash=await normalizedWorldHash(probe),beginRng=probe.rngState;
+  const runs=[],total=count*(mode==='compare'?2:1),sourceHash=await sha256Text(raw);
+  const result={schema:SCHEMA,version:VERSION,status:'running',generatedAt:new Date().toISOString(),source:{kind:origin,filename:origin==='file'?(options.file||sourceFile)?.name:null,seed,sourceSHA256:sourceHash,normalizedWorldHashAlgorithm:'SHA-256 / version excluded',normalizedStartHash:beginHash,dayIndex:startDay,rngState:beginRng,worldSize:[probe.size,probe.height],nations:probe.nations.length,warCount:probe.wars.length},settings:{days,repeats:count,mode,warmup:options.warmup??warm.checked,batchDays:10},interpretation:'ON/OFF relative time is an observed difference, not a causal profiler overhead estimate. JIT, GC and trial order affect values. Compare same scenario with multiple alternating trials; PC x10 natural-play SIM/BATCH remains a distinct metric.',environment:{userAgent:navigator.userAgent,hardwareConcurrency:navigator.hardwareConcurrency||null,usedJSHeapBytes:performance.memory?.usedJSHeapSize??null},runs,summary:null};last=result;
+  if(result.settings.warmup){write('10일 예열 중 (별도 복사본, 측정 제외)…');await tick();const warming=deserializeWorld(raw);advanceDays(warming,10);await tick();}
+  let runN=0;
+  for(let trial=1;trial<=count;trial++){
+   const order=mode==='compare'?(trial%2?['off','on']:['on','off']):[mode];
+   for(const v of order){if(cancelRequested)break;
+    const w=deserializeWorld(raw);validateWorld(w);if(await normalizedWorldHash(w)!==beginHash||w.rngState!==beginRng)throw Error('출발 세계 재현 불일치');
+    const batches=[],warStart=w.wars.length,armyStart=w.armies.length;let elapsed=0;
+    try{
+     if(v==='on'){window.vilobT3.reset();window.vilobT3.start();}
+     for(let i=0;i<days/10;i++){
+      if(cancelRequested)break;
+      const d0=w.dayIndex,wars=w.wars.length,armies=w.armies.length,at=performance.now();
+      advanceDays(w,10);const ms=Math.max(0,performance.now()-at);elapsed+=ms;
+      batches.push({batchIndex:i+1,startDay:d0,endDay:w.dayIndex,ms:fmt(ms),warCountStart:wars,warCountEnd:w.wars.length,armyCountStart:armies,armyCountEnd:w.armies.length,hasQuarter:Math.floor(d0/30)!==Math.floor(w.dayIndex/30)});
+      write(`진행 ${runN+1}/${total} · 반복 ${trial}/${count} · I1 ${v.toUpperCase()} · ${i+1}/${days/10} 배치\n게임 날짜 ${startDay} → ${w.dayIndex}\n시뮬레이션 실행 ${fmt(elapsed)}ms · 중단 요청 가능`);
+      await tick();
+     }
+    }finally{
+     if(window.vilobT3.enabled)window.vilobT3.stop();
+    }
+    if(cancelRequested)break;
+    const profile=v==='on'?window.vilobT3.report():null;
+    if(profile){profile.dayIndex=w.dayIndex;profile.beginDay=startDay;profile.source='I1A_ISOLATED_CLONE';}
+    const valid=validateWorld(w);
+    const hash=await normalizedWorldHash(w);
+    const runResult={trial,mode:v,startDay,endDay:w.dayIndex,elapsedDays:w.dayIndex-startDay,rngStart:beginRng,rngEnd:w.rngState,startHash:beginHash,endHash:hash,valid,
+     totalMs:fmt(elapsed),mean10DayMs:fmt(mean(batches.map(b=>b.ms))),p50_10DayMs:fmt(sortedPct(batches.map(b=>b.ms),.5)),p95_10DayMs:fmt(sortedPct(batches.map(b=>b.ms),.95)),max10DayMs:fmt(Math.max(...batches.map(b=>b.ms))),
+     warCountStart:warStart,warCountEnd:w.wars.length,armyCountStart:armyStart,armyCountEnd:w.armies.length,quarterCount:batches.filter(b=>b.hasQuarter).length,batches,profile};
+    runs.push(runResult);runN++;
+    // Fail closed: a non-deterministic clone must be reported rather than silently averaged.
+    if(runs.some(r=>r.endHash!==hash||r.rngEnd!==w.rngState||r.endDay!==w.dayIndex))throw Error('반복 종료 세계 또는 RNG 불일치: 결과를 부분 실패로 보관했습니다.');
+    await tick();
+   }
+   if(cancelRequested)break;
+  }
+  result.status=cancelRequested?'cancelled':'completed';result.completedAt=new Date().toISOString();result.summary=summarize(runs);
+  write(`${result.status==='completed'?'완료':'중단'} · ${runs.length}/${total}회 · 시작 ${startDay}일\n`+
+   Object.entries(result.summary.groups).map(([k,v])=>`I1 ${k.toUpperCase()} 중앙값 ${v.medianRunMs}ms · 10일 P95 ${v.p95_10DayMs}ms · 최악 ${v.max10DayMs}ms`).join('\n')+
+   `\nOFF/ON 종료 세계·RNG 일치: ${result.summary.allPairsIdentical===null?'비교 없음':result.summary.allPairsIdentical?'PASS':'FAIL'}\n결과 ZIP을 내려받아 분석에 사용하세요.`);
+  downloadButton.disabled=runs.length===0;
+  return result;
+ }catch(e){if(last){last.status='error';last.error=String(e.message||e);last.completedAt=new Date().toISOString();last.summary=summarize(last.runs);downloadButton.disabled=!last.runs.length;}write('실패: '+String(e.message||e)+'\n원본 세계는 진행되지 않았습니다. 완료된 측정이 있으면 결과를 다운로드하세요.');throw e;
+ }finally{if(window.vilobT3.enabled)window.vilobT3.stop();active=false;launcher.disabled=false;startButton.disabled=false;cancelButton.disabled=true;for(const input of [source,upload,period,repeat,variants,warm])input.disabled=false;upload.disabled=source.value!=='file';
+  // Intentionally leave game paused: silent auto-resume could alter the user's World.
+  if(wasRunning)write(status.textContent+'\n안전 조치: 원래 실행 중이던 게임은 일시정지 상태로 유지했습니다.');
+ }
+}
+const startButton=btn('자동 측정 시작',()=>{run().catch(e=>console.warn('I1A benchmark:',e.message));});
+const cancelButton=btn('중단 요청',()=>{cancelRequested=true;write('중단 요청됨 · 현재 10일 배치 종료 후 안전하게 중단합니다.');});cancelButton.disabled=true;
+const downloadButton=btn('전체 결과 ZIP',()=>{try{exportZip();}catch(e){write(String(e.message||e));}});downloadButton.disabled=true;
+btn('닫기',()=>{if(active)write('측정 중에는 창을 닫지 마세요. 중단 버튼을 이용하세요.');else panel.close();});
+window.vilobBenchmarkI1A=Object.freeze({get active(){return active;},run,stop:()=>{cancelRequested=true;},report:()=>last,toRunsCSV:()=>csvRuns(exportData()),toBatchesCSV:()=>csvBatches(exportData()),toFunctionsCSV:()=>csvProfiles(exportData()),downloadZip:exportZip});
+})();
 </script>
 </body>
 </html>
