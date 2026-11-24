@@ -969,7 +969,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <details class="sidebar-card war-audit-card" id="b4WarDiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B4 WAR STRATEGY</span><strong>선전포고 판단 · 연합전력·패전 기억</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="b4WarDiagnostics"></div><p class="scope-note">B4 이후의 분기 평가만 누적합니다. 선전포고 승인 후보와 실제 선전포고 횟수는 다릅니다. AI의 예상 참전전력은 보수적인 추정치입니다.</p></details>
 <details class="sidebar-card war-audit-card" id="subjectB1DiagnosticsCard"><summary class="occupation-summary"><span><span class="eyebrow">B1 SUBJECT DIPLOMACY</span><strong>종속 관계 · 누적 탈락 원인</strong></span><span aria-hidden="true" class="occupation-chevron">⌄</span></summary><div class="military-economy-summary" id="subjectB1Diagnostics"></div><p class="scope-note">누적 통계는 V0.6B1 적용일부터 저장하며 과거 이벤트는 소급하지 않습니다. 최초 탈락 사유와 전체 탈락 사유를 별도로 기록합니다.</p></details>
 <section class="sidebar-card war-history-card"><div class="card-heading"><div><div class="eyebrow">WAR HISTORY</div><h2>종전 기록</h2></div><span class="small-label" id="warHistoryCount">0건</span></div><div class="military-list" id="warHistoryList"></div><nav aria-label="종전 기록 페이지" class="war-history-pager" id="warHistoryPager"></nav></section>
-</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철의 실물 국제 시세와 국가 간 주문·체결을 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="g3fReportJson" type="button">↓ G3F 해상·동력 JSON</button><button class="text-button" id="g3fReportCsv" type="button">↓ G3F 통계 CSV</button><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-launch" aria-label="G3E 세계 연결 방식">
+</div><section id="h1bAutoPage" class="h1b-page" aria-label="오토마톤 관리" hidden><div id="h1bAutoBody"></div></section></section><section class="tab-panel" id="tab-market"><div class="section-title"><div class="eyebrow">INTERNATIONAL SPOT EXCHANGE · E3E1</div><h1>국제 시장</h1><p>식량·목재·석재·철·석탄·기계부품·강철·항공연료의 국제 시세와 국가 간 실물 거래를 확인합니다. 직접 교역로가 없어도 추가 수수료를 지불하고 간접 중개 거래할 수 있습니다.</p></div><section class="below-card"><div class="seed-heading"><span class="head-icon">◇</span><div><strong>국제 현물 시장 V2</strong><small>분기 결산 · 직접 구매/판매 각 10% · 간접 구매 25%</small></div></div><div class="file-actions"><button class="text-button" id="e3eMarketCsv" type="button">↓ 48분기 시세 CSV</button><button class="text-button" id="e3eMarketJson" type="button">↓ 시장 요약 JSON</button></div><div aria-live="off" id="e3eMarketBody"></div></section></section><section class="tab-panel" id="tab-world"><div class="section-title"><div class="eyebrow">WORLD MANAGEMENT</div><h1>세계</h1><p>월드 생성·저장·불러오기와 현재 문명 시대를 관리합니다.</p></div><section aria-label="세계 만들기" class="below-card"><div class="seed-heading"><span class="head-icon">⌘</span><div><strong>새 세계 생성</strong><small>같은 시드로 생성하면 국가와 지형 배치가 같습니다.</small></div></div><div class="world-size-choice"><label for="worldSizeSelect">월드 크기</label><select aria-label="월드 크기" id="worldSizeSelect"><option value="19x19">19 × 19 · 소형</option><option selected="" value="39x21">39 × 21 · 기본 와이드</option><option value="48x27">48 × 27 · 와이드</option><option value="64x36">64 × 36 · 와이드</option><option value="80x45">80 × 45 · 와이드</option><option value="96x54">96 × 54 · 와이드 시험</option><option value="112x63">112 × 63 · 초대형 와이드 시험</option><option value="128x72">128 × 72 · 초대형 와이드 시험</option><option value="132x75">132 × 75 · 최대 와이드 시험</option><option value="50x50">50 × 50 · 대형</option><option value="100x100">100 × 100 · 초대형 시험</option><option value="80x120">80 × 120 · 세로형 시험 / 커스텀 맵</option></select></div><div class="world-count-setup"><label for="newNationCount">새 세계 기본 국가 수</label><input id="newNationCount" max="28" min="12" step="1" type="number" value="12"/><small id="newNationStatus" role="status"></small></div><div class="seed-inputs"><label class="sr-only" for="seedInput">세계 시드</label><input id="seedInput" maxlength="100" placeholder="세계 시드를 입력하세요" spellcheck="false" type="text" value="vilob-light-01"/><button class="subtle-button" id="randomSeedBtn" title="임의 시드 생성">↻ 임의</button><button class="primary-button" id="newWorldBtn">새 세계</button></div><div class="c1-world-reconfigure"><div class="seed-heading"><span class="head-icon">♜</span><div><strong>시작 전 국가 수 재구성</strong><small>현재 세계의 지형·시드를 유지하고 모든 수도와 초기 국가 배치를 공정하게 다시 선정합니다.</small></div></div><p class="scope-note" id="setupCurrentStatus"></p><div class="c1-count-row"><label for="setupNationCount">현재 세계 국가 수</label><button class="text-button" id="setupMinus" type="button">−</button><input id="setupNationCount" max="28" min="12" step="1" type="number" value="12"/><button class="text-button" id="setupPlus" type="button">＋</button><button class="primary-button" id="reconfigureWorldBtn" type="button">초기 국가 재배치</button></div><div class="scope-note" id="setupCountPreview"></div><div class="scope-note" id="setupNationPreview"></div><small class="scope-note">시뮬레이션 진행·실제 명령·조종 전환·RNG 설정 변경 후에는 잠깁니다. 저장된 이전 버전 세계도 보호를 위해 잠겨 있습니다.</small></div><div class="file-actions"><button class="text-button" id="g3fReportJson" type="button">↓ G3F 해상·동력 JSON</button><button class="text-button" id="g3fReportCsv" type="button">↓ G3F 통계 CSV</button><button class="text-button" id="exportBtn">↓ 월드 JSON 내보내기</button><button class="text-button" id="exportGzipBtn" type="button">↓ 압축 JSON.gz 내보내기</button><label class="text-button file-label">↑ 월드 JSON 불러오기<input accept=".json,.gz,.json.gz,application/json,application/gzip" id="importInput" type="file"/></label><button class="text-button" id="saveBtn">브라우저에 저장</button><button class="text-button" id="loadBtn">브라우저에서 불러오기</button></div><div aria-label="기존 세계 하천 추가" class="custom-map-launch"><div class="seed-heading"><span class="head-icon">≋</span><div><strong>V0.7A1B · 하천 미리보기 및 교체</strong><small>기존 하천은 자동 변경하지 않습니다. 새 경로를 미리 본 뒤 선택적으로 추가하거나 교체할 수 있습니다.</small></div></div><div class="custom-map-launch" aria-label="G3E 세계 연결 방식">
  <div class="seed-heading"><span class="head-icon">↔</span><div><strong>V0.9G3E1 · 원통형 세계</strong><small>좌우 끝을 서로 연결합니다. 북쪽/남쪽 경계는 유지하고 지형은 변경하지 않습니다.</small></div></div>
  <div id="g3eTopologyStatus" class="scope-note" role="status">연결 방식 확인 중</div>
  <div class="custom-map-actions"><button class="primary-button" type="button" id="g3eConvertButton">기존 평면 세계를 원통형으로 전환</button></div>
@@ -1024,7 +1024,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.10A'; // I1A2: Chronicle Lens V1 read-only history view
+const VERSION = 'V0.10B4'; // I1A2: Chronicle Lens V1 read-only history view
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3572,7 +3572,7 @@ function kProjectsPanel(w,n){
 // This is a READ-ONLY plan, not shipments. National stocks remain the single
 // authoritative account. Never subtract, reserve, or manufacture resources here.
 const I_GOODS=Object.freeze(['coal','iron','steel','machine_parts']);
-const I_GOOD_NAMES=Object.freeze({coal:'석탄',iron:'철',steel:'강철',machine_parts:'기계부품'});
+const I_GOOD_NAMES=Object.freeze({coal:'석탄',iron:'철',steel:'강철',machine_parts:'기계부품',aviation_fuel:'항공연료'});
 const I_HISTORY_LIMIT=24;
 const I_SOURCE_TYPES=Object.freeze({coal:['coal_pit'],iron:['mine'],steel:['steelworks'],machine_parts:['factory']});
 function iEmpty(dayIndex=0,status='LOCKED'){
@@ -3703,6 +3703,7 @@ function iPanel(w,n){
 }
 
 // --- V0.7I1: physically accounted regional industrial freight V1 ---
+const I1_REAL_GOODS=Object.freeze([...I_GOODS,'aviation_fuel']);
 // The existing nation.resources ledger remains the AUTHORITATIVE total.  Locations
 // are a partition of that stock, not a second copy. National non-industrial
 // consumers spend unassigned central reserve; where old spending cannot be
@@ -3724,10 +3725,10 @@ function i1Ensure(n,w=null){
 }
 function i1Active(w,n){return !!n?.active&&hasTech(w,n.id,'industrial_freight_coordination');}
 function i1Anchor(w,n){const cap=w.settlements.find(s=>s.ownerId===n.id&&s.coreTileId===n.capitalId)||w.settlements.find(s=>s.ownerId===n.id);return cap?.id??null;}
-function i1Row(st,sid){const key=String(sid);return st.regional[key]||(st.regional[key]=Object.fromEntries(I_GOODS.map(g=>[g,0])));}
+function i1Row(st,sid){const key=String(sid);return st.regional[key]||(st.regional[key]=Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0])));}
 function i1Held(st,g){let sum=0;for(const p of st.transit)if(p.good===g)sum+=p.amount;return sum;}
 function i1RegionalTotal(st,g){let sum=0;for(const r of Object.values(st.regional))sum+=r[g]||0;return sum;}
-function i1Central(n,g){const st=i1Ensure(n);return Math.max(0,(n.resources[g]||0)-i1RegionalTotal(st,g)-i1Held(st,g));}
+function i1Central(n,g){const st=i1Ensure(n);return Math.max(0,(n.resources[g]||0)-i1RegionalTotal(st,g)-i1Held(st,g)-(g==='aviation_fuel'?((n.b2Fuel?.reserved||0)+(n.b2Fuel?.inFlight||0)):0));}
 function i1Log(st,event){st.recent.push(event);if(st.recent.length>30)st.recent.shift();}
 function i1aBook(st,key,qty){if(!qty)return;
  st.lastQuarter[key]=(st.lastQuarter[key]||0)+qty;
@@ -3738,8 +3739,8 @@ function i1aBook(st,key,qty){if(!qty)return;
 function i1aSyncPreviousQuarter(st){const last=st.history?.at(-1);
  if(last?.dayIndex===st.lastQuarter.dayIndex)Object.assign(last,st.lastQuarter);
 }
-function i1Reconcile(w,n){const st=i1Ensure(n,w);for(const g of I_GOODS){
-  let excess=i1RegionalTotal(st,g)+i1Held(st,g)-(n.resources[g]||0);
+function i1Reconcile(w,n){const st=i1Ensure(n,w);for(const g of I1_REAL_GOODS){
+  let excess=i1RegionalTotal(st,g)+i1Held(st,g)+(g==='aviation_fuel'?((n.b2Fuel?.reserved||0)+(n.b2Fuel?.inFlight||0)):0)-(n.resources[g]||0);
   if(excess<=0)continue;
   // Legacy national spending is still authoritative. Debit local free inventory first.
   for(const sid of Object.keys(st.regional).sort((a,b)=>Number(b)-Number(a))){
@@ -3766,7 +3767,7 @@ function i1Activate(w,n){const st=i1Ensure(n,w);if(st.activated||!i1Active(w,n))
  for(const b of iActiveSites(w,n)){
   if(!['factory','steelworks','arsenal','steam_pump'].includes(b.typeId))continue;
   const row=i1Row(st,b.settlementId),want=iDemand(b);
-  for(const g of I_GOODS){const available=i1Central(n,g),alloc=Math.min(available,Math.max(0,(want[g]||0)*2));if(alloc)row[g]+=alloc;}
+  for(const g of I1_REAL_GOODS){const available=i1Central(n,g),alloc=Math.min(available,Math.max(0,(want[g]||0)*2));if(alloc)row[g]+=alloc;}
  }
  i1Log(st,{dayIndex:w.dayIndex,kind:'INITIAL_ALLOCATION',amount:0});
 }
@@ -3783,7 +3784,7 @@ function i1lLiveReferences(w,context='I1L'){
   if(st.anchor!=null&&!ids.has(st.anchor))throw Error(context+': 국가 '+n.id+' 중앙 비축 거점 #'+st.anchor+' 없음');
  }
 }
-function i1lPartition(st,n){return Object.fromEntries(I_GOODS.map(g=>[g,[i1RegionalTotal(st,g),i1Held(st,g),n.resources[g]||0]]));}
+function i1lPartition(st,n){return Object.fromEntries(I1_REAL_GOODS.map(g=>[g,[i1RegionalTotal(st,g),i1Held(st,g),n.resources[g]||0]]));}
 function i1OnSettlementMerge(w,nationId,primaryId,secondaryId){
  const primary=w.settlements.find(s=>s.id===primaryId),secondary=w.settlements.find(s=>s.id===secondaryId);
  if(!primary||!secondary||primaryId===secondaryId||primary.ownerId!==nationId||secondary.ownerId!==nationId)
@@ -3792,15 +3793,15 @@ function i1OnSettlementMerge(w,nationId,primaryId,secondaryId){
  const key=String(secondaryId),toKey=String(primaryId),snapshots=[];
  // Check every allocation before changing a single shipment or regional stock.
  for(const n of w.nations){const st=i1Ensure(n,w),from=st.regional[key],to=st.regional[toKey];
-  for(const row of [from,to])if(row&&I_GOODS.some(g=>!Number.isSafeInteger(row[g])||row[g]<0))
+  for(const row of [from,to])if(row&&I1_REAL_GOODS.some(g=>!Number.isSafeInteger(row[g])||row[g]<0))
    throw Error('I1L 병합 지역 재고 불량: 국가 '+n.id);
-  for(const g of I_GOODS)if(!Number.isSafeInteger((from?.[g]||0)+(to?.[g]||0)))
+  for(const g of I1_REAL_GOODS)if(!Number.isSafeInteger((from?.[g]||0)+(to?.[g]||0)))
    throw Error('I1L 병합 재고 정수 범위 초과: 국가 '+n.id+' '+g);
   snapshots.push(i1lPartition(st,n));
  }
  // No resource, cumulative counter, delivery day, or RNG draw changes.
  for(const n of w.nations){const st=i1Ensure(n,w),from=st.regional[key];
-  if(from){const into=i1Row(st,primaryId);for(const g of I_GOODS)into[g]+=from[g];delete st.regional[key];}
+  if(from){const into=i1Row(st,primaryId);for(const g of I1_REAL_GOODS)into[g]+=from[g];delete st.regional[key];}
   for(const p of st.transit){if(p.from===secondaryId)p.from=primaryId;if(p.to===secondaryId)p.to=primaryId;}
   if(st.anchor===secondaryId)st.anchor=primaryId;
  }
@@ -3808,7 +3809,7 @@ function i1OnSettlementMerge(w,nationId,primaryId,secondaryId){
   i1lLiveReferences(w,'I1L 병합 후');
   for(let i=0;i<w.nations.length;i++){
    const n=w.nations[i],after=i1lPartition(i1Ensure(n,w),n),before=snapshots[i];
-   for(const g of I_GOODS)if(after[g].some((v,j)=>v!==before[g][j]))
+   for(const g of I1_REAL_GOODS)if(after[g].some((v,j)=>v!==before[g][j]))
     throw Error('I1L 병합 보존식 위반: 국가 '+n.id+' '+g);
   }
  };
@@ -3825,7 +3826,7 @@ function i1lRepairZeroOrphans(w){
    throw Error('I1L 안전복구 거부: 국가 '+n.id+' 중앙 비축 거점 #'+st.anchor+' 없음');
   for(const [sid,row] of Object.entries(st.regional)){
    if(ids.has(Number(sid)))continue;
-   if(!row||I_GOODS.some(g=>row[g]!==0))
+   if(!row||I1_REAL_GOODS.some(g=>row[g]!==0))
     throw Error('I1L 안전복구 거부: 국가 '+n.id+' 삭제된 정착지 #'+sid+'에 미확인/비영 재고 존재');
    pruned.push({nationId:n.id,settlementId:Number(sid)});
   }
@@ -3843,7 +3844,7 @@ function i1ClaimSites(w){
  for(const n of w.nations){const st=i1Ensure(n,w);for(const [sid,row] of Object.entries(st.regional)){
   const to=w.settlements.find(s=>s.id===Number(sid))?.ownerId;
   if(to===n.id)continue;
-  for(const g of I_GOODS){const qty=row[g]||0;if(!qty)continue;
+  for(const g of I1_REAL_GOODS){const qty=row[g]||0;if(!qty)continue;
    const newOwner=w.nations[to];const move=Math.min(qty,n.resources[g]||0);
    if(move&&newOwner){n.resources[g]-=move;newOwner.resources[g]=(newOwner.resources[g]||0)+move;i1Row(i1Ensure(newOwner,w),sid)[g]+=move;f1TrackI1TerritoryQuarter(w,n,newOwner,g,move);f2bTrackI1TerritoryQuarter(w,n,newOwner,g,move);changes.push([n.id,to,sid,g,move]);}
    row[g]-=qty; // if no successor, remaining stock leaves local allocation and becomes central
@@ -3873,6 +3874,7 @@ function i1StartQuarter(w){
   i1Reconcile(w,n);
  }
  i1Receive(w);
+ b2ReceiveAtBases(w);
 }
 function i1Available(w,n,sid,g){if(!i1Active(w,n))return n.resources[g]||0;const st=i1Ensure(n,w),local=st.regional[String(sid)]?.[g]||0;return local+(st.anchor===sid?i1Central(n,g):0);}
 function i1Can(w,n,b,inputs){if(!i1Active(w,n))return true;i1Reconcile(w,n);for(const [g,amount] of Object.entries(inputs))if(amount>i1Available(w,n,b.settlementId,g)){
@@ -3881,9 +3883,9 @@ function i1Can(w,n,b,inputs){if(!i1Active(w,n))return true;i1Reconcile(w,n);for(
 // Must be called after (not instead of) the original production routine's
 // national-resource deduction, preserving the original F1/F2 fiscal ledgers.
 function i1Debit(w,n,b,inputs){if(!i1Active(w,n))return;const st=i1Ensure(n,w),row=i1Row(st,b.settlementId);
- for(const [g,amount] of Object.entries(inputs))if(I_GOODS.includes(g)&&amount>0){const local=Math.min(row[g]||0,amount);row[g]-=local;st.lastQuarter.localUsed+=amount;}
+ for(const [g,amount] of Object.entries(inputs))if(I1_REAL_GOODS.includes(g)&&amount>0){const local=Math.min(row[g]||0,amount);row[g]-=local;st.lastQuarter.localUsed+=amount;}
 }
-function i1Credit(w,n,b,g,amount){if(!i1Active(w,n)||!amount||!I_GOODS.includes(g))return;i1Row(i1Ensure(n,w),b.settlementId)[g]+=amount;i1Ensure(n,w).lastQuarter.produced+=amount;}
+function i1Credit(w,n,b,g,amount){if(!i1Active(w,n)||!amount||!I1_REAL_GOODS.includes(g))return;i1Row(i1Ensure(n,w),b.settlementId)[g]+=amount;i1Ensure(n,w).lastQuarter.produced+=amount;}
 // One route per source+target in this quarter; town interiors are traversable,
 // but all intermediate land must actually have a road. Strict national ownership.
 function i1RoadPath(w,n,fromSid,toSid){
@@ -3919,23 +3921,24 @@ function i1FreightQuarter(w){for(const n of w.nations){if(!i1Active(w,n))continu
  const targets=new Map();
  for(const b of iActiveSites(w,n)){
   if(!['factory','steelworks','arsenal','steam_pump'].includes(b.typeId))continue;
-  const row=targets.get(b.settlementId)||Object.fromEntries(I_GOODS.map(g=>[g,0]));const demand=iDemand(b);
-  for(const g of I_GOODS)row[g]+=(demand[g]||0)*2;targets.set(b.settlementId,row);
+  const row=targets.get(b.settlementId)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));const demand=iDemand(b);
+  for(const g of I1_REAL_GOODS)row[g]+=(demand[g]||0)*2;targets.set(b.settlementId,row);
  }
  // V0.8F: order genuine I1 shipments for a future armored production batch.
  for(const site of [v08fSite(w,n.id)].filter(Boolean))if(hasTech(w,n.id,'armored_combat_doctrine')){
-   const row=targets.get(site.settlementId)||Object.fromEntries(I_GOODS.map(g=>[g,0]));
+   const row=targets.get(site.settlementId)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));
    row.iron=Math.max(row.iron,50);row.steel=Math.max(row.steel,8);row.machine_parts=Math.max(row.machine_parts,10);
    targets.set(site.settlementId,row);
  }
  // I3A operating steam power houses demand *physical coal* at their home settlement.
  for(const plant of (w.i3Power?.plants||[]))if(plant.ownerId===n.id&&plant.type==='STEAM'&&plant.hp>0&&
   (plant.status==='ACTIVE'||plant.status==='CONSTRUCTING'&&plant.completeDay<=w.dayIndex+60)){
-   const row=targets.get(plant.settlementId)||Object.fromEntries(I_GOODS.map(g=>[g,0]));
+   const row=targets.get(plant.settlementId)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));
    row.coal+=I3A_TYPES.STEAM.coal*2;targets.set(plant.settlementId,row);
  }
+ b2AddFuelFreightTargets(w,n,targets);
  const capacityUsed=new Map(),routes=new Map();
- for(const [sid,want] of [...targets.entries()].sort((a,b)=>a[0]-b[0]))for(const g of I_GOODS){
+ for(const [sid,want] of [...targets.entries()].sort((a,b)=>a[0]-b[0]))for(const g of I1_REAL_GOODS){
   let need=Math.max(0,want[g]-i1Available(w,n,sid,g)-st.transit.filter(p=>p.to===sid&&p.good===g).reduce((sum,p)=>sum+p.amount,0));
   if(!need)continue;st.lastQuarter.requests+=need;
   const sources=[...Object.keys(st.regional).map(Number),st.anchor].filter((x,i,a)=>x!=null&&x!==sid&&a.indexOf(x)===i).sort((a,b)=>a-b);
@@ -3959,9 +3962,9 @@ function i1FreightQuarter(w){for(const n of w.nations){if(!i1Active(w,n))continu
 function i1CloseQuarter(w){for(const n of w.nations){i1Reconcile(w,n);}i1FreightQuarter(w);}
 function i1Valid(w){const goodAmount=x=>Number.isSafeInteger(x)&&x>=0;for(const n of w.nations){const s=n.i1Freight;if(!s||s.schema!==1||typeof s.activated!=='boolean'||!Array.isArray(s.transit)||s.transit.length>I1_TRANSIT_LIMIT||!Array.isArray(s.history)||s.history.length>I1_HISTORY_LIMIT||!Array.isArray(s.recent)||s.recent.length>30||!goodAmount(s.nextShipment)||s.nextShipment<1)return false;
   if(s.anchor!=null&&(!Number.isSafeInteger(s.anchor)||!w.settlements.some(x=>x.id===s.anchor))||Object.keys(s.regional).length>w.settlements.length+10)return false;
-  for(const [sid,r] of Object.entries(s.regional)){if(!Number.isInteger(Number(sid))||!w.settlements.some(x=>x.id===Number(sid))||I_GOODS.some(g=>!goodAmount(r[g])))return false;}
-  for(const p of s.transit)if(!goodAmount(p.amount)||!p.amount||!goodAmount(p.initialAmount)||p.initialAmount<p.amount||!I_GOODS.includes(p.good)||!goodAmount(p.departDay)||!goodAmount(p.arriveDay)||p.departDay>p.arriveDay||p.arriveDay>w.dayIndex+10000||!w.settlements.some(x=>x.id===p.from)||!w.settlements.some(x=>x.id===p.to))return false;
-  for(const g of I_GOODS)if(i1RegionalTotal(s,g)+i1Held(s,g)>(n.resources[g]||0))return false;
+  for(const [sid,r] of Object.entries(s.regional)){if(!Number.isInteger(Number(sid))||!w.settlements.some(x=>x.id===Number(sid))||I1_REAL_GOODS.some(g=>!goodAmount(r[g])))return false;}
+  for(const p of s.transit)if(!goodAmount(p.amount)||!p.amount||!goodAmount(p.initialAmount)||p.initialAmount<p.amount||!I1_REAL_GOODS.includes(p.good)||!goodAmount(p.departDay)||!goodAmount(p.arriveDay)||p.departDay>p.arriveDay||p.arriveDay>w.dayIndex+10000||!w.settlements.some(x=>x.id===p.from)||!w.settlements.some(x=>x.id===p.to))return false;
+  for(const g of I1_REAL_GOODS)if(i1RegionalTotal(s,g)+i1Held(s,g)+(g==='aviation_fuel'?((n.b2Fuel?.reserved||0)+(n.b2Fuel?.inFlight||0)):0)>(n.resources[g]||0))return false;
   if(s.lastQuarter?.dayIndex>w.dayIndex||s.history.some(x=>x.dayIndex>w.dayIndex))return false;
   if(!s.cumulative||!goodAmount(s.cumulative.sinceDay)||s.cumulative.sinceDay>w.dayIndex||
     ['departed','delivered','cargoDiverted','legacyRegionalDraw'].some(k=>!goodAmount(s.cumulative[k]))||
@@ -3970,13 +3973,13 @@ function i1Valid(w){const goodAmount=x=>Number.isSafeInteger(x)&&x>=0;for(const 
 function i1Panel(w,n){const st=i1Ensure(n,w),active=i1Active(w,n),root=make('section',{class:'overview-section'},[
  make('h3',{text:'I1 · 실물 산업 재고 및 국내 수송'}),make('p',{class:'muted-line',text:active?'국가 재고 = 중앙 비축 + 각 정착지 실물 재고 + 수송 중 물자':'산업 수송 관리체계 연구 후 실제 지역 물류 적용. 이전 경제 방식 유지.'})]);
  if(!active)return root;
- const grid=make('div',{class:'economy-grid'});for(const g of I_GOODS){const local=i1RegionalTotal(st,g),moving=i1Held(st,g),central=i1Central(n,g);
+ const grid=make('div',{class:'economy-grid'});for(const g of I1_REAL_GOODS){const local=i1RegionalTotal(st,g),moving=i1Held(st,g),central=i1Central(n,g);
   grid.append(make('div',{class:'economy-item'},[make('small',{text:I_GOOD_NAMES[g]}),make('strong',{text:`중앙 ${number.format(central)} · 지역 ${number.format(local)} · 운송 중 ${number.format(moving)}`}),make('small',{text:`국가 합계 ${number.format(n.resources[g]||0)} · 검산 ${number.format(central+local+moving)}`})]));}
  root.append(grid);
  const q=st.lastQuarter;root.append(make('p',{class:'muted-line',text:`최근 분기 · 출발 ${q.departed} · 도착 ${q.delivered} · 산업 투입 ${q.localUsed} · 생산지역 배정 ${q.produced} · 원료 부족 가동 차단 ${q.blocked}회 · 기존 국가 지출 조정 ${q.legacyDraw} (지역 ${q.legacyRegionalDraw} / 화물 취소 ${q.cargoDiverted}) · 경로 단절 ${q.disconnected}`}));
  root.append(make('p',{class:'muted-line',text:`I1A 누적 (기준 ${st.cumulative.sinceDay}일 이후) · 출발 ${st.cumulative.departed} · 도착 ${st.cumulative.delivered} · 기존 지출로 화물 취소 ${st.cumulative.cargoDiverted} · 지역 재고 조정 ${st.cumulative.legacyRegionalDraw} · 이전 기록은 소급하지 않음`}));
- const rows=Object.entries(st.regional).map(([id,stock])=>({id,stock,total:I_GOODS.reduce((a,g)=>a+(stock[g]||0),0)})).filter(x=>x.total).sort((a,b)=>b.total-a.total).slice(0,12);
- if(rows.length){root.append(make('h3',{text:'정착지별 산업 재고 · 상위 12곳'}));for(const r of rows)root.append(make('p',{class:'muted-line',text:`${w.settlements.find(s=>s.id===+r.id)?.name||'#'+r.id} · `+I_GOODS.map(g=>I_GOOD_NAMES[g]+' '+r.stock[g]).join(' / ')}));}
+ const rows=Object.entries(st.regional).map(([id,stock])=>({id,stock,total:I1_REAL_GOODS.reduce((a,g)=>a+(stock[g]||0),0)})).filter(x=>x.total).sort((a,b)=>b.total-a.total).slice(0,12);
+ if(rows.length){root.append(make('h3',{text:'정착지별 산업 재고 · 상위 12곳'}));for(const r of rows)root.append(make('p',{class:'muted-line',text:`${w.settlements.find(s=>s.id===+r.id)?.name||'#'+r.id} · `+I1_REAL_GOODS.map(g=>I_GOOD_NAMES[g]+' '+r.stock[g]).join(' / ')}));}
  if(st.transit.length){root.append(make('h3',{text:`실제 운송 중 · ${st.transit.length}건`}));for(const p of st.transit.slice(-12))root.append(make('p',{class:'muted-line',text:`#${p.id} ${I_GOOD_NAMES[p.good]} ${p.amount} · ${p.from} → ${p.to} · 도착 예정 ${p.arriveDay}일`}));}
  for(const [label,ext,mime,body] of [['실물 운송 JSON','json','application/json',()=>JSON.stringify(st,null,2)],['실물 운송 CSV','csv','text/csv;charset=utf-8',()=>i1Csv(w,n)]]){const b=make('button',{class:'jump-button',type:'button',text:label});b.addEventListener('click',()=>download(`vilob-i1-freight-day${w.dayIndex}-nation${n.id}.${ext}`,body(),mime));root.append(b);}
  return root;}
@@ -3987,8 +3990,12 @@ function i1Csv(w,n){const s=i1Ensure(n,w),rows=[['dayIndex','departed','delivere
 <script>
 // --- src/sim/technology.js ---
 /** V0.2A: nation-level research. No individual researchers, resources or RNG. */
-const AIR_V010A_TECH_IDS=new Set(['aerodynamic_theory','airfield_engineering']);
+const AIR_V010_OPTIONAL_TECH_IDS=new Set(['aerodynamic_theory','airfield_engineering','internal_combustion_engineering','synthetic_liquid_fuels','powered_aircraft_engineering']);
 const TECHNOLOGIES=Object.freeze([
+  // V0.10B1 manual-only aviation technologies: the production/flight actions begin B2-B4.
+  {id:'internal_combustion_engineering',name:'내연기관 공학',branch:'resources',tier:30,cost:74000,requires:['steam_engineering','precision_machine_standardization','industrial_quality_control'],effects:{},unlocks:['항공 동력 기반']},
+  {id:'synthetic_liquid_fuels',name:'합성 액체 연료',branch:'resources',tier:31,cost:82000,requires:['internal_combustion_engineering','coal_extraction','industrial_process_standardization'],effects:{},unlocks:['합성연료 공정 (V0.10B2)']},
+  {id:'powered_aircraft_engineering',name:'동력 항공기 제작',branch:'resources',tier:32,cost:90000,requires:['aerodynamic_theory','airfield_engineering','internal_combustion_engineering'],effects:{},unlocks:['정찰기 생산 (V0.10B4)']},
   {id:'aerodynamic_theory',name:'공기역학 연구',branch:'resources',tier:28,cost:62000,requires:['scientific_instrumentation','precision_machine_standardization'],effects:{},unlocks:['항공 기초 이론']},
   {id:'airfield_engineering',name:'비행장 공학',branch:'roads',tier:29,cost:68000,requires:['aerodynamic_theory','industrial_freight_coordination'],effects:{},unlocks:['간이 비행장 I 건설']},
   // V0.7K: researched, not retroactively unlocked on existing saves.
@@ -4116,7 +4123,7 @@ const V07D_MODERN1_TECH_IDS=new Set(['publishing_organization','commercial_accou
 const V07E1_MODERN3_TECH_IDS=new Set(['precision_workshop_methods','interregional_trade_network','scientific_instrumentation','flintlock_mechanism','large_machine_assembly']);
 const V07E2_MODERN4_TECH_IDS=new Set(['field_artillery_casting','artillery_drill_manual','military_freight_standardization']);
 const V07C_MODERN_TECH_IDS=new Set([...V07D_MODERN1_TECH_IDS,...V07D_MODERN2_TECH_IDS,...V07E1_MODERN3_TECH_IDS,...V07E2_MODERN4_TECH_IDS]);
-const ERA_TECHNOLOGIES=Object.freeze(Object.fromEntries(TECHNOLOGIES.map(t=>[t.id,(t.id==='mechanized_manufacturing'||F2C2C_INDUSTRIAL_TECH_IDS.has(t.id)||G4_INDUSTRIAL_II_TECH_IDS.has(t.id)||H_TECH_IDS.has(t.id)||I_INDUSTRIAL_III_TECH_IDS.has(t.id)||K_INDUSTRIAL_III_TECH_IDS.has(t.id)||K_INDUSTRIAL_IV_TECH_IDS.has(t.id)||AIR_V010A_TECH_IDS.has(t.id))?'industrial_modern':V07F1_TECH_IDS.has(t.id)?'early_modern':V07C_MODERN_TECH_IDS.has(t.id)?'early_modern':G_TECH_IDS.has(t.id)?'medieval':'ancient'])));
+const ERA_TECHNOLOGIES=Object.freeze(Object.fromEntries(TECHNOLOGIES.map(t=>[t.id,(t.id==='mechanized_manufacturing'||F2C2C_INDUSTRIAL_TECH_IDS.has(t.id)||G4_INDUSTRIAL_II_TECH_IDS.has(t.id)||H_TECH_IDS.has(t.id)||I_INDUSTRIAL_III_TECH_IDS.has(t.id)||K_INDUSTRIAL_III_TECH_IDS.has(t.id)||K_INDUSTRIAL_IV_TECH_IDS.has(t.id)||AIR_V010_OPTIONAL_TECH_IDS.has(t.id))?'industrial_modern':V07F1_TECH_IDS.has(t.id)?'early_modern':V07C_MODERN_TECH_IDS.has(t.id)?'early_modern':G_TECH_IDS.has(t.id)?'medieval':'ancient'])));
 
 // V0.7A: independent medieval progression; historic tier remains research difficulty.
 const MEDIEVAL_STAGE_TECH_IDS=Object.freeze({
@@ -4129,7 +4136,7 @@ const TECHNOLOGY_STAGE=Object.freeze(Object.fromEntries(Object.entries(MEDIEVAL_
 // F2A3A: Single presentation-stage mapping. Later technologies must not fall back to ancient.
 const F2A3A_RESEARCH_STAGE_LABELS=Object.freeze(['고대','중세 I','중세 II','중세 III','중세 IV','근세 I','근세 II','근세 III','근세 IV','산업 근대 I','산업 근대 II','산업 근대 III','산업 근대 IV']);
 function f2a3aResearchStage(techId){
-  if(AIR_V010A_TECH_IDS.has(techId))return 12;
+  if(AIR_V010_OPTIONAL_TECH_IDS.has(techId))return 12;
   if(K_INDUSTRIAL_IV_TECH_IDS.has(techId))return 12;
   if(K_INDUSTRIAL_III_TECH_IDS.has(techId))return 11;
   if(I_INDUSTRIAL_III_TECH_IDS.has(techId))return 11;
@@ -4157,7 +4164,7 @@ function medievalNextCore(n){const stage=n?.civilization?.era==='medieval'?n.civ
 const V04D_EXCHANGE_COST=60, V04D_EXCHANGE_BONUS=0.25;
 function techEraAllowed(n,techId){
  const era=ERA_TECHNOLOGIES[techId],order=CIVILIZATION_ERAS[n.civilization?.era]?.order??0;
- if(AIR_V010A_TECH_IDS.has(techId))return order>=3&&(n.civilization.stage||1)>=4;
+ if(AIR_V010_OPTIONAL_TECH_IDS.has(techId))return order>=3&&(n.civilization.stage||1)>=4;
  if(K_INDUSTRIAL_IV_TECH_IDS.has(techId))return order>=3&&(n.civilization.stage||1)>=4;
  if(K_INDUSTRIAL_III_TECH_IDS.has(techId))return order>=3&&(n.civilization.stage||1)>=3;
  if(I_INDUSTRIAL_III_TECH_IDS.has(techId))return order>=3&&(n.civilization.stage||1)>=3;
@@ -4192,11 +4199,11 @@ function techBonus(w,nationId,key){
 }
 function researchLegal(w,nationId,id){
   const n=w.nations[nationId],tech=TECHNOLOGY_BY_ID[id];
-  return Boolean(n?.active&&tech&&(!AIR_V010A_TECH_IDS.has(id)||n.controller==='PLAYER')&&n.technology&&!n.technology.currentResearch&&!n.technology.unlocked.includes(id)&&
+  return Boolean(n?.active&&tech&&(!AIR_V010_OPTIONAL_TECH_IDS.has(id)||n.controller==='PLAYER')&&n.technology&&!n.technology.currentResearch&&!n.technology.unlocked.includes(id)&&
     techEraAllowed(n,id)&&tech.requires.every(required=>n.technology.unlocked.includes(required)));
 }
-function g4ResearchCount(){return TECHNOLOGIES.length-AIR_V010A_TECH_IDS.size-(G4_RESEARCH_ENABLED?0:G4_INDUSTRIAL_II_TECH_IDS.size); }
-function g4ResearchUnlockedCount(n){return n.technology.unlocked.filter(id=>!AIR_V010A_TECH_IDS.has(id)).length;}
+function g4ResearchCount(){return TECHNOLOGIES.length-AIR_V010_OPTIONAL_TECH_IDS.size-(G4_RESEARCH_ENABLED?0:G4_INDUSTRIAL_II_TECH_IDS.size); }
+function g4ResearchUnlockedCount(n){return n.technology.unlocked.filter(id=>!AIR_V010_OPTIONAL_TECH_IDS.has(id)).length;}
 function validateTechnologyState(state){
   if(!state||!Array.isArray(state.unlocked)||state.unlocked.length>TECHNOLOGIES.length||
     new Set(state.unlocked).size!==state.unlocked.length||state.unlocked.some(id=>!TECHNOLOGY_BY_ID[id])||
@@ -4206,7 +4213,7 @@ function validateTechnologyState(state){
   const paused=state.pausedResearch;
   if(paused!==null&&paused!==undefined){
     const p=TECHNOLOGY_BY_ID[paused.id];
-    if(!p||known.has(paused.id)||!(G_TECH_IDS.has(paused.id)||V07C_MODERN_TECH_IDS.has(paused.id)||V07F1_TECH_IDS.has(paused.id)||F2C2C_INDUSTRIAL_TECH_IDS.has(paused.id)||G4_INDUSTRIAL_II_TECH_IDS.has(paused.id)||K_INDUSTRIAL_III_TECH_IDS.has(paused.id)||K_INDUSTRIAL_IV_TECH_IDS.has(paused.id)||AIR_V010A_TECH_IDS.has(paused.id))||
+    if(!p||known.has(paused.id)||!(G_TECH_IDS.has(paused.id)||V07C_MODERN_TECH_IDS.has(paused.id)||V07F1_TECH_IDS.has(paused.id)||F2C2C_INDUSTRIAL_TECH_IDS.has(paused.id)||G4_INDUSTRIAL_II_TECH_IDS.has(paused.id)||K_INDUSTRIAL_III_TECH_IDS.has(paused.id)||K_INDUSTRIAL_IV_TECH_IDS.has(paused.id)||AIR_V010_OPTIONAL_TECH_IDS.has(paused.id))||
        !p.requires.every(x=>known.has(x))||!Number.isSafeInteger(paused.progress)||paused.progress<0||paused.progress>=p.cost)return false;
   }
   if(state.currentResearch===null)return state.progress===0;
@@ -4458,7 +4465,7 @@ function chooseAIResearch(w,nationId){
     -(foodThreat?48:0)-(wars?30:0)):0;
   let best=null,bestScore=-Infinity;
   for(const tech of TECHNOLOGIES){
-    if(AIR_V010A_TECH_IDS.has(tech.id))continue; // V0.10A: manual-only, preserve AI research/RNG
+    if(AIR_V010_OPTIONAL_TECH_IDS.has(tech.id))continue; // V0.10A: manual-only, preserve AI research/RNG
     if(!researchLegal(w,nationId,tech.id))continue;
     const eraPriority=tech.id==='regional_governance'&&n.civilization?.era==='ancient'?
       (wars||foodThreat?20:70):0;
@@ -5038,6 +5045,7 @@ function d1ValidateCultureWorld(w,fail){
   for(const s of w.settlements)poolOK(s.culturePopulation,s.population,'정착지');
   for(const a of w.armies)for(const u of a.units)poolOK(u.culturePopulation,u.manpower,'현역 편제');
   for(const ship of w.navy?.ships||[])poolOK(ship.crewCulturePopulation,ship.crew,'해군 선원');
+  for(const a of w.air?.aircraft||[])poolOK(a.pilotCulturePopulation,a.pilotCount,'공군 조종사');
   return true;
 }
 /** Explicit diagnostics only, not called by daily simulation or Atlas redraw. */
@@ -5045,14 +5053,15 @@ function d1CultureAudit(w){
   d1ValidateCultureWorld(w,reason=>{throw Error(reason);});
   const out={version:w.version,dayIndex:w.dayIndex,bootstrap:{...w.cultureBootstrap},
     cultures:w.cultures.length,settlementGroups:0,unitGroups:0,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0,
-    navyCrew:0,byCulture:Object.fromEntries(w.cultures.map(c=>[c.id,{name:c.name,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0,navyCrew:0}]))};
+    navyCrew:0,airCrew:0,byCulture:Object.fromEntries(w.cultures.map(c=>[c.id,{name:c.name,civilians:0,trainees:0,reserves:0,soldiers:0,militia:0,navyCrew:0,airCrew:0}]))};
   function collect(pool,kind){out[kind]+=d1CultureTotal(pool);for(const [id,count] of Object.entries(pool))out.byCulture[id][kind]+=count;}
   for(const s of w.settlements){out.settlementGroups+=Object.keys(s.culturePopulation).length;collect(s.culturePopulation,'civilians');}
   for(const n of w.nations){collect(n.military.reserveCulturePopulation,'reserves');for(const t of n.military.training)collect(t.culturePopulation,'trainees');}
   for(const a of w.armies)for(const u of a.units){out.unitGroups+=Object.keys(u.culturePopulation).length;collect(u.culturePopulation,'soldiers');}
   for(const f of w.uprisings?.active||[])for(const d of f.militia)collect(d1CulturePool(d.cultureId,d.men),'militia');
   for(const ship of w.navy?.ships||[])collect(ship.crewCulturePopulation,'navyCrew');
-  out.total=out.civilians+out.trainees+out.reserves+out.soldiers+out.militia+out.navyCrew;
+  for(const a of w.air?.aircraft||[])collect(a.pilotCulturePopulation,'airCrew');
+  out.total=out.civilians+out.trainees+out.reserves+out.soldiers+out.militia+out.navyCrew+out.airCrew;
   out.verified=true;return out;
 }
 // --- end D1A1 culture-accounting ---
@@ -7481,7 +7490,7 @@ function refreshApCaps(w){
   for(const n of w.nations){n.apMaxUnits=g1ApCapFor(w,n.id,counts);n.apUnits=Math.min(n.apUnits,n.apMaxUnits);}
 }
 function newEconomy(){return {constructionProcurement:{plan:null,history:[]},economicRecovery:{history:[]},apLedger:{history:[]},civilFinance:{billedLastQuarter:0,paidLastQuarter:0,unpaidLastQuarter:0,totalPaid:0,totalUnpaid:0},iFreight:iNew(),gold:140,apUnits:50,apMaxUnits:AP_MAX_UNITS,knowledge:0,researchLevel:0,
-  resources:{food:130,wood:30,stone:20,iron:3,coal:0,machine_parts:0,steel:0,artillery_shells:0},foodPressure:1,f2bIndustry:f2bNewIndustry(),f2Factory:f2NewFactoryState(),f1Industry:f1NewIndustry(),demographyE3E2:e3e2NewDemography(),e3e3Supply:e3e3NewSupply(),
+  resources:{food:130,wood:30,stone:20,iron:3,coal:0,machine_parts:0,steel:0,aviation_fuel:0,artillery_shells:0},foodPressure:1,f2bIndustry:f2bNewIndustry(),f2Factory:f2NewFactoryState(),f1Industry:f1NewIndustry(),demographyE3E2:e3e2NewDemography(),e3e3Supply:e3e3NewSupply(),
   lastQuarter:{goldIncome:0,upkeep:0,goldNet:0,apRecovery:0,knowledgeIncome:0,produced:{food:0,wood:0,stone:0,iron:0},foodConsumed:0}};}
 function technicalBuildingPrice(w,nationId,base,recycle=false){
   if(!base)return null;const discount=Math.min(.65,techBonus(w,nationId,'materialDiscount')+(recycle?techBonus(w,nationId,'recycledBuildMaterials'):0));
@@ -7890,7 +7899,7 @@ function runEconomyQuarter(world){
 /** V0.3A1: conservation-only, quarter-based bilateral overland trade. */
 
 
-const TRADE_GOODS=Object.freeze({food:{label:'식량',price:1,freight:1},wood:{label:'목재',price:3,freight:1},stone:{label:'석재',price:4,freight:2},iron:{label:'철',price:9,freight:4},coal:{label:'석탄',price:6,freight:3},machine_parts:{label:'기계 부품',price:60,freight:3},steel:{label:'강철',price:45,freight:4}});
+const TRADE_GOODS=Object.freeze({food:{label:'식량',price:1,freight:1},wood:{label:'목재',price:3,freight:1},stone:{label:'석재',price:4,freight:2},iron:{label:'철',price:9,freight:4},coal:{label:'석탄',price:6,freight:3},machine_parts:{label:'기계 부품',price:60,freight:3},steel:{label:'강철',price:45,freight:4},aviation_fuel:{label:'항공연료',price:20,freight:2}});
 const GOODS=['food','wood','stone','iron']; // Legacy dependency/production schema stays four-core-resource only.
 const MAX_EVENTS=160;
 const tradeClamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -8263,12 +8272,12 @@ function validateTrade(w){
 const E3E_MARKET_HISTORY_LIMIT=48, E3E_MARKET_FILLS_LIMIT=120;
 const E3E_MARKET_FEE_RATE=10; // percentage charged separately to buyers and sellers
 const E3E_MARKET_PRICE_STEP=150; // 15% of current price at full one-sided order imbalance
-const E3E_GOOD_INDEX=['food','wood','stone','iron','coal','machine_parts','steel'];
+const E3E_GOOD_INDEX=['food','wood','stone','iron','coal','machine_parts','steel','aviation_fuel'];
 // E3E1: indirect brokered physical trade, no synthetic resource or pathfinder.
 const E3E1_INDIRECT_FREIGHT_LIMIT=3000, E3E1_INDIRECT_FEE_RATE=30; // G3B: broker premium for unshipped abstract trade
 function e3eInitialMarket(){
  const prices={};for(const good of E3E_GOOD_INDEX)prices[good]=TRADE_GOODS[good].price*1000;
- return {schema:2,coalIntroducedDay:0,f2bIntroducedDay:0,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
+ return {schema:2,coalIntroducedDay:0,f2bIntroducedDay:0,aviationFuelIntroducedDay:0,openedDay:null,quarterDay:null,prices,quarters:[],fills:[],nextFillId:0,pendingOrders:[],nextOrderId:0,
   totals:{volume:0,baseGold:0,buyerPaid:0,sellerReceived:0,feesSink:0,trades:0,directVolume:0,indirectVolume:0,indirectFeeGold:0,directTrades:0,indirectTrades:0},
   lastOrders:[],lastNation:[],lastBlocks:{},lastQuarter:null};
 }
@@ -8291,6 +8300,16 @@ function e3eMigrateMarket(w){
  for(const q of w.trade?.dependency?.quarters||[])for(const f of q.flows){f.indirectQuantity??=0;f.indirectGold??=0;}
  return m;
 }
+
+// V0.10B1 — forward-only market fuel activation. Do not rewrite historical quarters or sales.
+function airB1MigrateWorld(w){
+ for(const n of w.nations)n.resources.aviation_fuel??=0;
+ const m=w.market;
+ if(!m)throw Error('B1 시장 장부가 없습니다.');
+ m.aviationFuelIntroducedDay??=Math.floor(w.dayIndex/DAYS_PER_QUARTER)*DAYS_PER_QUARTER+DAYS_PER_QUARTER;
+ m.prices.aviation_fuel??=e3eBaseMilli('aviation_fuel');
+}
+
 function e3eEnsureMarket(w){if(!w.market)w.market=e3eInitialMarket();return w.market;}
 function e3eBaseMilli(good){return TRADE_GOODS[good].price*1000;}
 function e3eBoundPrice(good,v){const b=e3eBaseMilli(good);return Math.max(Math.round(b/2),Math.min(b*3,Math.round(v)));}
@@ -8306,6 +8325,7 @@ function e3eMarketEligible(w,a,b){return a!==b&&Boolean(w.nations[a]?.active&&w.
 function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',indirectUsage=null){
  const market=e3eEnsureMarket(w),from=w.nations[seller],to=w.nations[buyer],s=e3ePayment(qty,priceMilli,mode,v07cFreightUnits(w,buyer,good,qty),r?.distance||0);
  if(!e3eMarketEligible(w,seller,buyer)||qty<1||qty>10000||from.resources[good]<qty||to.gold<s.buyerPaid)return null;
+ if(good==='aviation_fuel'&&(mode!=='DIRECT'||b2FuelMarketAvailable(w,from)<qty))return null;
  const freight=v07cFreightUnits(w,buyer,good,qty),t=ensureTrade(w);
  let used=0;
  if(mode==='DIRECT'){
@@ -8315,6 +8335,7 @@ function e3eConserveTrade(w,seller,buyer,good,qty,r,priceMilli,mode='DIRECT',ind
  }else if(mode==='INDIRECT'){
   if(!indirectUsage||indirectUsage.import[buyer]+freight>e3e3IndirectLimit(w,buyer)||indirectUsage.export[seller]+freight>e3e3IndirectLimit(w,seller))return null;
  }else return null;
+ if(good==='aviation_fuel')b2FuelWithdrawMarket(w,from,qty);
  from.resources[good]-=qty;to.resources[good]+=qty;to.gold-=s.buyerPaid;from.gold+=s.sellerReceived;
  if(mode==='DIRECT')t.used[r.key]=used+freight;
  else{indirectUsage.import[buyer]+=freight;indirectUsage.export[seller]+=freight;}
@@ -8346,7 +8367,7 @@ function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloo
  const freightRemaining=mode==='DIRECT'?(r?Math.max(0,r.capacity-(ensureTrade(w).used[r.key]||0)):0):
   Math.max(0,Math.min(maxIndirect(buyer)-(indirectUsage?.import[buyer]||0),maxIndirect(seller)-(indirectUsage?.export[seller]||0)));
  let hi=Math.max(0,Math.min(10000,Math.floor(max),Math.ceil(freightRemaining/Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,buyer,'tradeFreightDiscount')))),
-   w.nations[seller].resources[good]-sellerFloor));
+   w.nations[seller].resources[good]-sellerFloor,good==='aviation_fuel'?b2FuelMarketAvailable(w,w.nations[seller]):1000000));
  let lo=0;
  while(lo<hi){const mid=Math.ceil((lo+hi)/2);
   if(v07cFreightUnits(w,buyer,good,mid)<=freightRemaining&&e3ePayment(mid,priceMilli,mode,v07cFreightUnits(w,buyer,good,mid),r?.distance||0).buyerPaid<=Math.max(0,w.nations[buyer].gold-buyerReserve))lo=mid;
@@ -8356,7 +8377,7 @@ function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloo
 }
 function e3eTargets(w,n,projections){
  const q=projections?.get(n.id)||projectedQuarter(w,n);
- const target={food:Math.max(safeStock(w,n,'food'),2*q.foodConsumed),wood:safeStock(w,n,'wood'),stone:safeStock(w,n,'stone'),iron:safeStock(w,n,'iron'),coal:safeStock(w,n,'coal'),machine_parts:f2bMarketTarget(w,n,'machine_parts'),steel:f2bMarketTarget(w,n,'steel')};
+ const target={food:Math.max(safeStock(w,n,'food'),2*q.foodConsumed),wood:safeStock(w,n,'wood'),stone:safeStock(w,n,'stone'),iron:safeStock(w,n,'iron'),coal:safeStock(w,n,'coal'),machine_parts:f2bMarketTarget(w,n,'machine_parts'),steel:f2bMarketTarget(w,n,'steel'),aviation_fuel:b2FuelTarget(w,n)};
  const intent=v05bTradeIntent(w,n);
  if(intent)for(const g of V05B_BUILD_GOODS)target[g]=Math.max(target[g],intent.price.resources[g]||0);
  return {target,intent,upkeep:(q.upkeep||0)+(q.civil?.total||0)};
@@ -8383,7 +8404,7 @@ function e3eRunMarketQuarter(w,projections=null){
   for(const n of eligible){
    if(n.controller==='PLAYER'){
     for(const pending of market.pendingOrders.filter(o=>o.nationId===n.id&&o.good===good)){
-     const max=pending.side==='SELL'?Math.max(0,n.resources[good]-safeStock(w,n,good)):n.gold>0?Math.floor(n.gold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
+     const max=pending.side==='SELL'?Math.max(0,Math.min(n.resources[good]-safeStock(w,n,good),good==='aviation_fuel'?b2FuelMarketAvailable(w,n):1000000)):n.gold>0?Math.floor(n.gold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
      const qty=Math.min(pending.remaining,max,10000);if(!qty)continue;
      const o={nationId:n.id,good,side:pending.side,requested:qty,filled:0,limitPriceMilli:pending.limitPriceMilli,pendingId:pending.id};
      orders.push(o);byId.set(`${n.id}:${pending.side}`,o);
@@ -8396,7 +8417,7 @@ function e3eRunMarketQuarter(w,projections=null){
    const urgency=lack/Math.max(1,target),cooperation=w.aiProfiles[n.aiProfileId]?.diplomacy?.cooperation??50;
    const maxPriceMilli=Math.max(priceMilli,Math.round(e3eBaseMilli(good)*(urgency>.6?3:1.5+(cooperation/300))));
    const purchaseCap=availableGold>0?Math.floor(availableGold/Math.max(1,Math.ceil(priceMilli*1.1/1000))):0;
-   const want=Math.min(10000,lack,purchaseCap),ask=Math.min(['machine_parts','steel'].includes(good)?200:10000,excess);
+   const want=Math.min(10000,lack,purchaseCap),ask=Math.min(['machine_parts','steel'].includes(good)?200:10000,excess,good==='aviation_fuel'?b2FuelMarketAvailable(w,n):1000000);
    if(want>0){const o={nationId:n.id,good,side:'BUY',requested:want,filled:0,limitPriceMilli:maxPriceMilli};orders.push(o);byId.set(`${n.id}:BUY`,o);}
    if(ask>0){const o={nationId:n.id,good,side:'SELL',requested:ask,filled:0,limitPriceMilli:e3eBaseMilli(good)/2};orders.push(o);byId.set(`${n.id}:SELL`,o);}
   }
@@ -8413,7 +8434,7 @@ function e3eRunMarketQuarter(w,projections=null){
   for(const r of requests){
    const freightFactor=Math.max(.001,TRADE_GOODS[good].freight*(1-techBonus(w,r.buyer,'tradeFreightDiscount')));
    const directFreight=r.route?Math.max(0,r.route.capacity-(w.trade.used[r.route.key]||0)):0;
-   const indirectFreight=Math.max(0,Math.min(e3e3IndirectLimit(w,r.buyer)-usage.import[r.buyer],e3e3IndirectLimit(w,r.seller)-usage.export[r.seller]));
+   const indirectFreight=good==='aviation_fuel'?0:Math.max(0,Math.min(e3e3IndirectLimit(w,r.buyer)-usage.import[r.buyer],e3e3IndirectLimit(w,r.seller)-usage.export[r.seller]));
    const possible=Math.max(0,Math.floor((directFreight+indirectFreight)/freightFactor));
    const bo=byId.get(`${r.buyer}:BUY`),so=byId.get(`${r.seller}:SELL`);
    const quantity=Math.min(possible,bo.requested,so.requested);
@@ -8456,7 +8477,7 @@ function e3eRunMarketQuarter(w,projections=null){
  for(const ctx of goodContexts)for(const r of ctx.requests)if(r.route)ctx.settle(r,'DIRECT');
  const foodContext=goodContexts.find(ctx=>ctx.good==='food');
  if(foodContext)for(const r of foodContext.requests)foodContext.settle(r,'INDIRECT',F1C2_FOOD_INITIAL_FREIGHT_SHARE);
- for(const ctx of goodContexts)if(ctx.good!=='food')for(const r of ctx.requests)ctx.settle(r,'INDIRECT');
+ for(const ctx of goodContexts)if(ctx.good!=='food'&&ctx.good!=='aviation_fuel')for(const r of ctx.requests)ctx.settle(r,'INDIRECT');
  if(foodContext)for(const r of foodContext.requests)foodContext.settle(r,'INDIRECT');
  for(const ctx of goodContexts){
   const {good,priceMilli,orders,requests,demand,supply,sums}=ctx;
@@ -8536,16 +8557,17 @@ function e3eMarketCsv(w){const m=e3eEnsureMarket(w),head=['dayIndex','good','pri
  return '\ufeff'+rows.join('\n');
 }
 function e3eValidateMarket(w){const m=w.market,integer=(x,min=0)=>Number.isSafeInteger(x)&&x>=min;
- if(!m||m.schema!==2||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!integer(m.coalIntroducedDay)||!integer(m.f2bIntroducedDay)||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
+ if(!m||m.schema!==2||!m.prices||!m.totals||!Array.isArray(m.quarters)||m.quarters.length>E3E_MARKET_HISTORY_LIMIT||!Array.isArray(m.fills)||m.fills.length>E3E_MARKET_FILLS_LIMIT||!Array.isArray(m.pendingOrders)||m.pendingOrders.length>8||!integer(m.nextOrderId)||!Array.isArray(m.lastOrders)||m.lastOrders.length>w.nations.length*E3E_GOOD_INDEX.length*2||!Array.isArray(m.lastNation)||m.lastNation.length>w.nations.length||!integer(m.nextFillId)||!integer(m.coalIntroducedDay)||!integer(m.f2bIntroducedDay)||!integer(m.aviationFuelIntroducedDay)||m.aviationFuelIntroducedDay>w.dayIndex+30||!(['number','object'].includes(typeof m.openedDay))||m.openedDay!==null&&(!integer(m.openedDay)||m.openedDay>w.dayIndex)||m.quarterDay!==null&&(!integer(m.quarterDay)||m.quarterDay>w.dayIndex))return false;
  if(E3E_GOOD_INDEX.some(g=>!integer(m.prices[g],1)||m.prices[g]!==e3eBoundPrice(g,m.prices[g])))return false;
  if(['volume','baseGold','buyerPaid','sellerReceived','feesSink','trades','directVolume','indirectVolume','directTrades','indirectTrades','indirectFeeGold'].some(k=>!integer(m.totals[k]))||(m.totals.buyerPaid!==m.totals.sellerReceived+m.totals.feesSink||m.totals.volume!==m.totals.directVolume+m.totals.indirectVolume||m.totals.trades!==m.totals.directTrades+m.totals.indirectTrades))return false;
  let day=-1;
  for(const q of m.quarters){if(!integer(q.dayIndex)||!integer(q.directVolume)||!integer(q.indirectVolume)||q.directVolume+q.indirectVolume!==q.totalVolume||!integer(q.directTrades)||!integer(q.indirectTrades)||q.directTrades+q.indirectTrades!==q.trades||!integer(q.indirectFeeGold)||q.dayIndex<=day||q.dayIndex>w.dayIndex||q.dayIndex%DAYS_PER_QUARTER!==0||!q.goods||!integer(q.availableRoutes)||!integer(q.trades)||!integer(q.totalVolume)||!integer(q.totalGold)||!integer(q.feesSink))return false;
-   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(g==='coal'&&!x&&q.dayIndex<m.coalIntroducedDay)continue;if(['machine_parts','steel'].includes(g)&&!x&&q.dayIndex<m.f2bIntroducedDay)continue;if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink||!integer(x.directVolume)||!integer(x.indirectVolume)||x.directVolume+x.indirectVolume!==x.volume||!integer(x.indirectFeeGold))return false;}
+   for(const g of E3E_GOOD_INDEX){const x=q.goods[g];if(g==='coal'&&!x&&q.dayIndex<m.coalIntroducedDay)continue;if(['machine_parts','steel'].includes(g)&&!x&&q.dayIndex<m.f2bIntroducedDay)continue;if(g==='aviation_fuel'&&!x&&q.dayIndex<m.aviationFuelIntroducedDay)continue;if(!x||!integer(x.priceMilli,1)||!integer(x.nextPriceMilli,1)||['validDemand','validSupply','requestedBuy','requestedSell','volume','trades','buyerPaid','sellerReceived','feesSink','unfilledBuy','unfilledSell'].some(k=>!integer(x[k]))||x.buyerPaid!==x.sellerReceived+x.feesSink||!integer(x.directVolume)||!integer(x.indirectVolume)||x.directVolume+x.indirectVolume!==x.volume||!integer(x.indirectFeeGold))return false;}
    day=q.dayIndex;
  }
  if(m.quarterDay!==null&&day!==m.quarterDay)return false;
- for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold||!['DIRECT','INDIRECT','SEA'].includes(e.mode)||!integer(e.indirectFeeGold)||!integer(e.baseFeeGold)||e.baseFeeGold+e.indirectFeeGold+(e.transportFeeGold||0)!==e.feeGold||e.mode==='INDIRECT'&&(e.routeDistance!==null||!integer(e.freightUsed,1)))return false;
+ if(m.lastQuarter&&m.lastQuarter.dayIndex>=m.aviationFuelIntroducedDay&&!m.lastQuarter.goods?.aviation_fuel)return false;
+ for(const e of m.fills)if(!integer(e.id)||!integer(e.dayIndex)||e.dayIndex>w.dayIndex||!w.nations[e.seller]||!w.nations[e.buyer]||e.seller===e.buyer||!TRADE_GOODS[e.good]||!integer(e.quantity,1)||!integer(e.priceMilli,1)||!integer(e.baseGold,1)||!integer(e.buyerPaid)||!integer(e.sellerReceived)||!integer(e.feeGold)||e.buyerPaid!==e.sellerReceived+e.feeGold||!['DIRECT','INDIRECT','SEA'].includes(e.mode)||!integer(e.indirectFeeGold)||!integer(e.baseFeeGold)||e.baseFeeGold+e.indirectFeeGold+(e.transportFeeGold||0)!==e.feeGold||e.mode==='INDIRECT'&&(e.good==='aviation_fuel'||e.routeDistance!==null||!integer(e.freightUsed,1)))return false;
  for(const o of m.pendingOrders)if(!integer(o.id)||!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.quantity,1)||o.quantity>10000||!integer(o.remaining,1)||o.remaining>o.quantity||!integer(o.placedDay)||!integer(o.expiresDay)||o.placedDay>w.dayIndex||o.expiresDay<o.placedDay||!integer(o.limitPriceMilli,1)||o.limitPriceMilli<e3eBaseMilli(o.good)/2||o.limitPriceMilli>e3eBaseMilli(o.good)*3)return false;
  for(const o of m.lastOrders)if(!w.nations[o.nationId]||!TRADE_GOODS[o.good]||!['BUY','SELL'].includes(o.side)||!integer(o.requested,1)||!integer(o.filled)||o.filled>o.requested||!integer(o.unfilled)||o.filled+o.unfilled!==o.requested||!integer(o.limitPriceMilli,1))return false;
  return true;
@@ -10087,7 +10109,8 @@ function f2RunFactoryQuarter(w,projections){
   const t=w.tiles[b.tileId],s=w.settlements.find(x=>x.id===b.settlementId),n=s?.ownerId===t?.ownerId?w.nations[s.ownerId]:null;
   if(!n?.active)continue;const q=out.get(n.id);q.sites++;
   f2jProductionNote(b,w,'STOCK_SURPLUS');
-  if(!f2c2cCanProduce(n,'machine_parts')){g3gFactoryNote(w,b,'DEMAND_HOLD');continue;}
+  const b2FuelMode=b2ChooseFuelMode(w,n,b);
+  if(!b2FuelMode&&!f2c2cCanProduce(n,'machine_parts')){g3gFactoryNote(w,b,'DEMAND_HOLD');continue;}
   if(b.status!=='ACTIVE'||b.disconnected||t.occupiedBy!==null||occupied.has(t.id)||s.population<1||!f2FactoryUnlocked(w,n.id)){f2jProductionNote(b,w,'OFFLINE');continue;}
   const local=projections.get(n.id)?.regionalEconomy?.towns?.get(s.id),spec=F2_FACTORY_LEVELS[b.level];
   if(!local||!spec||!local.roadNetwork&&t.roadLevel===0&&w.tiles[s.coreTileId]?.roadLevel===0){f2jProductionNote(b,w,'REGIONAL_FREIGHT_SHORT',{g3gReason:!local||!spec?'LOCAL_FREIGHT_SHORT':'ROAD_BLOCKED'});continue;}
@@ -10100,11 +10123,12 @@ function f2RunFactoryQuarter(w,projections){
   const productivity=(hasTech(w,n.id,'industrial_process_standardization')?1:0)+(hasTech(w,n.id,'precision_machine_standardization')?1:0);
   const bonusTenths=(b.f2c2cBonusTenths||0)+baseParts*productivity;
   const parts=baseParts+Math.floor(bonusTenths/10);
-  const iron=Math.ceil(spec.iron*baseParts/spec.parts),wood=Math.ceil(spec.wood*baseParts/spec.parts);
-  const coal=spec.coal,gold=Math.ceil(spec.gold*baseParts/spec.parts);
+  const fuelOut=b2FuelMode?Math.max(1,Math.floor(12*b.level*workRatio)):0;
+  const iron=b2FuelMode?0:Math.ceil(spec.iron*baseParts/spec.parts),wood=b2FuelMode?0:Math.ceil(spec.wood*baseParts/spec.parts);
+  const coal=b2FuelMode?Math.max(1,Math.ceil(8*b.level*workRatio)):spec.coal,gold=b2FuelMode?Math.max(1,Math.ceil(80*b.level*workRatio)):Math.ceil(spec.gold*baseParts/spec.parts);
   const steamCoal=3-techBonus(w,n.id,'industrialSteamCoalSaving');
   const power=f2FactoryPower(w,n,b);
-  if(n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)||n.gold<gold+12*(power.steam>0)||n.resources.machine_parts+parts>1000000){f2jProductionNote(b,w,n.gold<gold+12*(power.steam>0)?'FISCAL_RISK':'INPUT_SHORT',{g3gReason:n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)?'MATERIAL_SHORT':n.gold<gold+12*(power.steam>0)?'GOLD_SHORT':'STOCK_LIMIT',ironNeed:iron,woodNeed:wood,coalNeed:coal+steamCoal*(power.steam>0),goldNeed:gold+12*(power.steam>0),requiredPU:spec.pu,ownAvailablePU:power.supplied});continue;}
+  if(n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)||n.gold<gold+12*(power.steam>0)||(!b2FuelMode&&n.resources.machine_parts+parts>1000000)||b2FuelMode&&(n.resources.aviation_fuel||0)+fuelOut>1000000){f2jProductionNote(b,w,n.gold<gold+12*(power.steam>0)?'FISCAL_RISK':'INPUT_SHORT',{g3gReason:n.resources.iron<iron||n.resources.wood<wood||n.resources.coal<coal+steamCoal*(power.steam>0)?'MATERIAL_SHORT':n.gold<gold+12*(power.steam>0)?'GOLD_SHORT':'STOCK_LIMIT',ironNeed:iron,woodNeed:wood,coalNeed:coal+steamCoal*(power.steam>0),goldNeed:gold+12*(power.steam>0),requiredPU:spec.pu,ownAvailablePU:power.supplied});continue;}
   // Machinery needs a real consumable spare part every fourth operating quarter.
   const maintenance=((b.factoryRuns||0)+1)%4===0?1:0;
   if(n.resources.machine_parts<maintenance){f2jProductionNote(b,w,'INPUT_SHORT',{g3gReason:'MATERIAL_SHORT',maintenance});continue;}
@@ -10116,10 +10140,11 @@ function f2RunFactoryQuarter(w,projections){
   n.resources.wood-=wood;n.resources.iron-=iron;n.resources.coal-=coal+steamCoal*(power.steam>0);
   n.gold-=gold+12*(power.steam>0);
   i1Debit(w,n,b,{iron,coal:coal+steamCoal*(power.steam>0),machine_parts:maintenance});
-  n.resources.machine_parts+=parts-maintenance;i1Credit(w,n,b,'machine_parts',parts);b.f2c2cBonusTenths=bonusTenths%10;b.factoryRuns=(b.factoryRuns||0)+1;b.lastFactoryOperatedDay=w.dayIndex;if(b.level===4)b.kLevel4OperatedDay=w.dayIndex;
+  n.resources.machine_parts+=(b2FuelMode?0:parts)-maintenance;
+  if(b2FuelMode){n.resources.aviation_fuel+=fuelOut;i1Credit(w,n,b,'aviation_fuel',fuelOut);b2RecordProduction(w,n,b,fuelOut,coal,gold);}else{i1Credit(w,n,b,'machine_parts',parts);b.f2c2cBonusTenths=bonusTenths%10;} b.factoryRuns=(b.factoryRuns||0)+1;b.lastFactoryOperatedDay=w.dayIndex;if(b.level===4)b.kLevel4OperatedDay=w.dayIndex;
   b.lastPower={dayIndex:w.dayIndex,source:power.source,demand:Math.max(spec.pu,power.supplied),supplied:power.supplied,used:localPowerUsed,unused:power.supplied-localPowerUsed,externalPowerUsed:missing,totalPowerUsed:spec.pu};
-  f2jProductionNote(b,w,'PRODUCING',{parts,maintenanceSpent:maintenance,localPU:localPowerUsed,ownPU:localPowerUsed,externalPU:missing,requiredPU:spec.pu,unmetPU:0,powerEvaluated:true,labor:staffed,requiredLabor:spec.labor});
-  q.operated++;q.produced+=parts;q.used+=maintenance;q.woodUsed+=wood;q.ironUsed+=iron;q.coalUsed+=coal+steamCoal*(power.steam>0);q.goldSpent+=gold+12*(power.steam>0);
+  f2jProductionNote(b,w,'PRODUCING',{parts:b2FuelMode?0:parts,maintenanceSpent:maintenance,localPU:localPowerUsed,ownPU:localPowerUsed,externalPU:missing,requiredPU:spec.pu,unmetPU:0,powerEvaluated:true,labor:staffed,requiredLabor:spec.labor});
+  q.operated++;q.produced+=b2FuelMode?0:parts;q.used+=maintenance;q.woodUsed+=wood;q.ironUsed+=iron;q.coalUsed+=coal+steamCoal*(power.steam>0);q.goldSpent+=gold+12*(power.steam>0);
   q.laborRequired+=spec.labor;q.laborSupplied+=staffed;q.powerProduced+=power.supplied;q.powerUsed+=localPowerUsed;q.powerUnused+=power.supplied-localPowerUsed;
   const f=f1EnsureIndustry(n).lastQuarter;f.coalOtherSpent+=coal+steamCoal*(power.steam>0);f.powerProduced+=power.supplied;f.powerUsed+=localPowerUsed;f.powerUnused+=power.supplied-localPowerUsed;
   i2Offer(w,n,b,power.supplied-localPowerUsed);
@@ -19430,7 +19455,7 @@ function d2cName(w,f){
 function d2cNation(w,f,capital){
  const source=w.nations[f.authorityNationId],id=w.nations.length;
  const econ=newEconomy();econ.gold=0;econ.knowledge=0;
- for(const k of [...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells'])econ.resources[k]=0;
+ for(const k of [...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells','aviation_fuel'])econ.resources[k]=0;
  const color=c1HslHex((id*137+23)%360,72,58);
  const tech=structuredClone(source.technology);tech.currentResearch=null;tech.pausedResearch=null;tech.progress=0;
  const nation={id,name:d2cName(w,f),color,personality:source.personality,description:'지역 무장 봉기에서 성립한 신생 국가',
@@ -19444,6 +19469,7 @@ function d2cNation(w,f,capital){
     cultureId:f.cultureId,formedDay:w.dayIndex,type:f.type,status:'SECESSION'}
  };
  nation.military.reserveCulturePopulation={};nation.military.politicalHistory=[];
+ b2Ensure(nation);
  w.nations.push(nation);
  if(w.v06e7aDiagnostics)w.v06e7aDiagnostics.nations[id]=v06e7aNation();
  for(let other=0;other<id;other++)w.diplomacy.pairs[pairKey(other,id)]={relation:other===f.authorityNationId?-80:0};
@@ -19456,9 +19482,9 @@ function d2cTransferEconomy(w,old,newNation,captured){
  const basis=w.settlements.filter(s=>s.ownerId===old.id).reduce((a,s)=>a+s.population,0)+captured.reduce((a,s)=>a+s.population,0);
  const local=captured.reduce((a,s)=>a+s.population,0);
  const rate=Math.min(.25,Math.max(0,local/Math.max(1,basis))*.35);
- for(const key of ['gold',...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells']){
+ for(const key of ['gold',...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells','aviation_fuel']){
   const from=key==='gold'?old.gold:old.resources[key];
-  const amount=Math.max(0,Math.floor(from*rate));
+  const amount=Math.max(0,Math.min(Math.floor(from*rate),key==='aviation_fuel'?i1Central(old,'aviation_fuel'):Number.MAX_SAFE_INTEGER));
   if(key==='gold'){old.gold-=amount;newNation.gold+=amount;}
   else{old.resources[key]-=amount;newNation.resources[key]+=amount;f2bTrackTransfer(old,newNation,key,amount);f2cTrackTransfer(old,newNation,key,amount);}
  }
@@ -21365,7 +21391,7 @@ function e2bAssessment(w,sourceId){
   if((w.armies||[]).some(a=>a.nationId===sourceId&&(
     !['READY','REGROUP'].includes(a.status)||a.engagementId!==null||a.assignedWarId!==null||
     a.repatriation?.active||a.seaTransit||a.order||a.operation||a.retreatPath?.length)))blocks.push('ARMY_IN_TRANSIT');
-  const stores=['knowledge',...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells'];
+  const stores=['knowledge',...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells','aviation_fuel'];
   if(stores.some(k=>(k==='knowledge'?(source.knowledge||0)+(target.knowledge||0):
     (source.resources[k]||0)+(target.resources[k]||0))>1000000))blocks.push('STOCK_CAP');
   if(!Number.isSafeInteger((source.gold||0)+(target.gold||0)))blocks.push('GOLD_OVERFLOW');
@@ -21418,6 +21444,7 @@ function e2bIntegrate(w,sourceId,targetId){
  w.e2bPeacefulTransfer=true;
  try{for(const town of settlements)transferCore(w,town.id,dst.id);}
  finally{delete w.e2bPeacefulTransfer;}
+ b2IntegrateBases(w,src,dst);
  // Detached sovereign land is not part of any settlement; transfer it without minting tiles.
  for(const tile of w.tiles)if(tile.ownerId===src.id){
    if(tile.settlementId!==null)throw Error('E2B stray settlement ownership');
@@ -21425,7 +21452,7 @@ function e2bIntegrate(w,sourceId,targetId){
  }
  dst.gold+=src.gold;src.gold=0;
  dst.knowledge+=src.knowledge;src.knowledge=0;
- for(const key of [...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells']){const amount=src.resources[key];dst.resources[key]+=amount;src.resources[key]=0;f2bTrackTransfer(src,dst,key,amount);f2cTrackTransfer(src,dst,key,amount);}
+ for(const key of [...RESOURCE_KEYS,'coal','machine_parts','steel','artillery_shells','aviation_fuel']){const amount=src.resources[key];dst.resources[key]+=amount;src.resources[key]=0;f2bTrackTransfer(src,dst,key,amount);f2cTrackTransfer(src,dst,key,amount);}
  dst.researchLevel=Math.max(dst.researchLevel,src.researchLevel);
  const acquired=new Set(dst.technology.unlocked);
  for(const tech of src.technology.unlocked)acquired.add(tech);
@@ -22126,7 +22153,7 @@ function createWorld(seedText='vilob-light-01',size=MAP_SIZE,height=size,customS
   d2aInitWorld(world);
   d2bInitWorld(world);
   hInit(world);
-  for(const n of world.nations){kEnsure(n);iEnsure(n);i1Ensure(n,world);}
+  for(const n of world.nations){kEnsure(n);iEnsure(n);i1Ensure(n,world);b2Ensure(n);}
   world.diplomacy.reunification=e2bNewState();
   return world;
 }
@@ -22166,6 +22193,7 @@ function validateWorld(w){
   if(w.v08eRecovery&&(w.v08eRecovery.schema!==1||w.v08eRecovery.kind!=='AUDITED_TERRITORIAL_F2B_79530'||w.v08eRecovery.sourceVersion!=='V0.8D'||w.v08eRecovery.originDay!==79530||w.v08eRecovery.machineParts!==6||w.v08eRecovery.steel!==16||w.v08eRecovery.donorNationId!==6||w.v08eRecovery.receiverNationId!==10||!Number.isSafeInteger(w.v08eRecovery.dayIndex)||w.v08eRecovery.dayIndex>w.dayIndex))fail('V0.8E 산업 회계 복구 기록');
   navyValidate(w,fail);
   airV010Valid(w,fail);
+  b2Validate(w,fail);
  if(!hValidate(w))fail('H 오토마톤 실물·파츠 회계');
  if(!v08fValidate(w))fail('V0.8F 돌격전차 실물·승무원 보존식');
  if(!i1Valid(w))fail('I1 실물 지역 재고·수송 보존식');
@@ -22272,7 +22300,7 @@ function validateWorld(w){
       ['opening','cap','offered','received','wasted','blockedAP','main','auxiliary','mainDeferred','mainMissed','reserved'].some(k=>!Number.isSafeInteger(r[k])||r[k]<0)||
       !r.spent||['civil','military','research'].some(k=>!Number.isSafeInteger(r.spent[k])||r.spent[k]<0)||r.received+r.wasted!==r.offered))fail('AP 회계 진단');
     if(!n.civilFinance||['billedLastQuarter','paidLastQuarter','unpaidLastQuarter','totalPaid','totalUnpaid'].some(k=>!Number.isSafeInteger(n.civilFinance[k])||n.civilFinance[k]<0))fail('민간 운영비 회계');
-    if(!Number.isSafeInteger(n.apUnits)||n.apUnits<0||!Number.isSafeInteger(n.apMaxUnits)||n.apMaxUnits<0||n.apUnits>n.apMaxUnits||!Number.isSafeInteger(n.gold)||n.gold<0||!Number.isSafeInteger(n.knowledge)||n.knowledge<0||!Number.isFinite(n.researchLevel)||n.researchLevel<0||n.researchLevel>100||!validateTechnologyState(n.technology)||!n.resources||['food','wood','stone','iron','coal','machine_parts','steel','artillery_shells'].some(k=>!Number.isSafeInteger(n.resources[k])||n.resources[k]<0)||!Number.isFinite(n.foodPressure)||n.foodPressure<0||n.foodPressure>1||!Array.isArray(n.settlementIds)||!n.truces||typeof n.truces!=='object')fail('국가 상태');
+    if(!Number.isSafeInteger(n.apUnits)||n.apUnits<0||!Number.isSafeInteger(n.apMaxUnits)||n.apMaxUnits<0||n.apUnits>n.apMaxUnits||!Number.isSafeInteger(n.gold)||n.gold<0||!Number.isSafeInteger(n.knowledge)||n.knowledge<0||!Number.isFinite(n.researchLevel)||n.researchLevel<0||n.researchLevel>100||!validateTechnologyState(n.technology)||!n.resources||['food','wood','stone','iron','coal','machine_parts','steel','aviation_fuel','artillery_shells'].some(k=>!Number.isSafeInteger(n.resources[k])||n.resources[k]<0)||!Number.isFinite(n.foodPressure)||n.foodPressure<0||n.foodPressure>1||!Array.isArray(n.settlementIds)||!n.truces||typeof n.truces!=='object')fail('국가 상태');
   }
   for(const n of w.nations){const candidate=v04eBarracksCandidates(w,n.id);
     if(candidate.length>3||new Set(candidate.map(b=>b.settlementId)).size!==candidate.length)fail('병영 운영 한도');}
@@ -22492,11 +22520,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22505,7 +22533,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -22540,6 +22568,7 @@ function deserializeWorld(json){
  // E3E: start price history at import, never invent past market transactions.
  parsed.market??=e3eInitialMarket();
  e3eMigrateMarket(parsed);
+ if(g3eImportedVersion!==VERSION)airB1MigrateWorld(parsed);
  if(!e3e2NativeSave)e3e2MigrateWorld(parsed); // Older saves get an empty clock; native saves must pass strict validation.
  e3e3MigrateWorld(parsed); // Forward-only recorded quarters; never infer historical supply.
  f1MigrateWorld(parsed,f1NativeSave);
@@ -22556,6 +22585,7 @@ function deserializeWorld(json){
  hMigratePositions(parsed); // old saves retain all machines; only assign an initial tactical lane.
  h2jMigrateWorld(parsed); // one-time naming/source migration; NEVER change physical designs.
  for(const n of parsed.nations){kEnsure(n);iEnsure(n);} // historic I planning records preserved
+ b2MigrateWorld(parsed,g3eImportedVersion);
  i1lRepairZeroOrphans(parsed); // V0.7L: prune only provably empty, unreferenced orphan rows
  i1Migrate(parsed); // one-time bounded location allocation, no fabricated shipments
  i2Ensure(parsed); // I2 starts with no retroactively fabricated network
@@ -25461,14 +25491,15 @@ function e3dBuildNationRoster(w,n,armies){
 }
 let e3dRefreshDetail=()=>{};
 // V0.7E3E — International market data view.  This UI NEVER updates simulation state.
-const E3E_MARKET_LABELS={food:'식량',wood:'목재',stone:'석재',iron:'철',coal:'석탄',machine_parts:'기계 부품',steel:'강철'};
+const E3E_MARKET_LABELS={food:'식량',wood:'목재',stone:'석재',iron:'철',coal:'석탄',machine_parts:'기계 부품',steel:'강철',aviation_fuel:'항공연료'};
 let e3eSelectedGood='food',e3eSelectedNation=null;
 function e3eMarketSparkline(quarters,good){
  const xmlns='http://www.w3.org/2000/svg',svg=document.createElementNS(xmlns,'svg');
  svg.setAttribute('viewBox','0 0 620 148');svg.setAttribute('role','img');svg.setAttribute('aria-label',`${E3E_MARKET_LABELS[good]} 최근 시장가격 변화`);
  svg.classList.add('e3e-market-plot');
- const values=quarters.map(q=>({day:q.dayIndex,p:(q.pricesBefore?.[good]??e3eBaseMilli(good))/1000}));
- if(quarters.length)values.push({day:quarters.at(-1).dayIndex+30,p:(quarters.at(-1).pricesAfter?.[good]??e3eBaseMilli(good))/1000});
+ const visible=good==='aviation_fuel'?quarters.filter(q=>q.goods?.aviation_fuel):quarters;
+ const values=visible.map(q=>({day:q.dayIndex,p:(q.pricesBefore?.[good]??e3eBaseMilli(good))/1000}));
+ if(visible.length)values.push({day:visible.at(-1).dayIndex+30,p:(visible.at(-1).pricesAfter?.[good]??e3eBaseMilli(good))/1000});
  if(!values.length)return make('p',{class:'muted-line',text:'시장 관측은 첫 분기부터 시작됩니다.'});
  const mx=Math.max(...values.map(x=>x.p)),mn=Math.min(...values.map(x=>x.p)),low=Math.max(0,mn-(mx-mn||1)*.2),high=mx+(mx-mn||1)*.2;
  const scale=(i,v)=>[24+(values.length===1?0:i*(570/(values.length-1))),130-(v-low)/(high-low)*110];
@@ -25505,6 +25536,7 @@ function e3eRenderMarketPanel(){
    b.addEventListener('click',()=>{e3eSelectedGood=g;e3eRenderMarketPanel();});prices.append(b);
  }
  const q=lq?.goods?.[good],data=make('div',{class:'e3e-market-detail'});
+ if(good==='aviation_fuel')data.append(make('p',{class:'muted-line',text:'V0.10B2: 항공연료는 공장에서 실제 생산되며 육상 직접거래·실물 상선 운송이 가능합니다. 간접거래는 불허하고 비행장에는 실물 국내 배송 후 입고됩니다.'}));
  data.append(make('h3',{text:`${E3E_MARKET_LABELS[good]} · 국제 가격 추이`}),e3eMarketSparkline(m.quarters,good));
  data.append(make('div',{class:'e3e-market-grid'},[
    ...[['유효 매수 주문',q?.validDemand||0],['유효 매도 주문',q?.validSupply||0],['즉시 인도 수량',q?.volume||0],['미체결 매수',q?.unfilledBuy||0],['미체결 매도',q?.unfilledSell||0],['최근 분기 수수료',q?.feesSink||0],['직접 체결량',q?.directVolume||0],['간접 체결량',q?.indirectVolume||0]].map(([t,v])=>make('div',{class:'e3e-market-mini'},[make('small',{text:t}),make('strong',{text:number.format(v)})]))]));
@@ -25941,7 +25973,7 @@ function navyRenderPanel(){if(typeof app==='undefined'||!app.world)return;const 
 // V0.9A naval hull/crew ledger is authoritative. I1 remains authoritative for national industrial stock.
 const NAVY_B_CARGO=Object.freeze({coastal_galley:40,medieval_galley:70,sailing_transport:140,steam_transport:220,armed_sail:0,ironclad:0,escort:0,merchant_era_i:60,merchant_era_ii:190,merchant_era_iii:300});
 const NAVY_B_PASSENGERS=Object.freeze({coastal_galley:24,medieval_galley:48,sailing_transport:100,steam_transport:160,armed_sail:0,ironclad:0,escort:0,merchant_era_i:0,merchant_era_ii:0,merchant_era_iii:0});
-const NAVY_B_GOODS=Object.freeze(['food','wood','stone','coal','iron','steel','machine_parts']);
+const NAVY_B_GOODS=Object.freeze(['food','wood','stone','coal','iron','steel','machine_parts','aviation_fuel']);
 const NAVY_B_ICON_D=Object.freeze([
  ['line','M32 10 V40 M18 22 H46'],['fill','M19 24 H45 L42 37 H22 Z'],
  ['accent','M22 29 H42'],['fill','M12 42 Q32 49 52 42 L47 53 Q32 61 17 53 Z'],
@@ -26004,8 +26036,8 @@ function navyBParams(w,nid,a){
  if((n.resources.coal||0)<coal||n.gold<fee||a.type==='NAVY_FREIGHT'&&i1Ensure(n,w).transit.length>=I1_TRANSIT_LIMIT)return null;
  // I1 regional+central stock represents available physically accessible goods.
  i1Reconcile(w,n);
- if(I_GOODS.includes(a.good)&&i1Available(w,n,source.settlementId,a.good)<a.amount+(a.good==='coal'?coal:0))return null;
- if(!I_GOODS.includes(a.good)&&(n.resources[a.good]||0)<a.amount)return null;
+ if(I1_REAL_GOODS.includes(a.good)&&i1Available(w,n,source.settlementId,a.good)<a.amount+(a.good==='coal'?coal:0))return null;
+ if(!I1_REAL_GOODS.includes(a.good)&&(n.resources[a.good]||0)<a.amount)return null;
  if(a.type==='NAVY_SEA_TRADE'){
   const buyer=w.nations[destNation],marketDeal=a.g3bMarket;
   const price=marketDeal?Math.max(1,Math.floor(e3ePriceAmount(a.amount,marketDeal.priceMilli)/a.amount)):tradeUnitPrice(w,nid,destNation,a.good);
@@ -26081,7 +26113,7 @@ function navyBActionExecute(w,nid,a){
   navyLog(w,'SEA_FREIGHT_LOADED',nid,`${k.good} ×${k.amount} #${id}`);
  }else{
   const buyer=w.nations[k.destNation];
-  if(I_GOODS.includes(k.good)){const st=i1Ensure(n,w),row=i1Row(st,k.sourceSid),local=Math.min(row[k.good]||0,k.amount);row[k.good]-=local;}
+  if(I1_REAL_GOODS.includes(k.good)){const st=i1Ensure(n,w),row=i1Row(st,k.sourceSid),local=Math.min(row[k.good]||0,k.amount);row[k.good]-=local;}
   n.resources[k.good]-=k.amount;buyer.gold-=k.total;
   assignment={...assignment,kind:'TRADE',sellerNationId:nid,buyerNationId:k.destNation,good:k.good,
    amount:k.amount,escrowGold:k.total,unitPrice:k.price,...(k.marketDeal?{g3bMarket:{...k.marketDeal,initialQuantity:k.amount,initialBuyerPaid:k.total,initialSellerReceived:k.marketPay.sellerReceived}}:{})};
@@ -26115,12 +26147,12 @@ function navyBOnFleetDock(w,f){const job=f.bAssignment;if(!job)return;
   const seller=w.nations[job.sellerNationId],buyer=w.nations[job.buyerNationId];
   if(job.phase==='RETURNING'){
    seller.resources[job.good]=(seller.resources[job.good]||0)+job.amount;
-   if(I_GOODS.includes(job.good))i1Row(i1Ensure(seller,w),p.settlementId)[job.good]+=job.amount;
+   if(I1_REAL_GOODS.includes(job.good))i1Row(i1Ensure(seller,w),p.settlementId)[job.good]+=job.amount;
    buyer.gold+=job.escrowGold;
    navyLog(w,'SEA_TRADE_REFUNDED',seller.id,`${job.good} ×${job.amount}; gold ${job.escrowGold}`);
   }else{
    buyer.resources[job.good]=(buyer.resources[job.good]||0)+job.amount;
-   if(I_GOODS.includes(job.good))i1Row(i1Ensure(buyer,w),p.settlementId)[job.good]+=job.amount;
+   if(I1_REAL_GOODS.includes(job.good))i1Row(i1Ensure(buyer,w),p.settlementId)[job.good]+=job.amount;
    seller.gold+=job.g3bMarket?g3bSellerReceipt(job):job.escrowGold;navyBEnsure(w).bTrades++;navyCEnsure(w).cStats.tradeTripsCompleted++;navyCNation(w,f.nationId).tradeTrips++;
    recordDependencyTrade(w,seller.id,buyer.id,job.good,job.amount,job.g3bMarket?g3bBaseAmount(job):job.escrowGold);
    const fs=tradeStats(seller),ts=tradeStats(buyer);
@@ -29183,6 +29215,133 @@ navyDRenderPanel=function(w,n,host){g3aOriginalPanel(w,n,host);
 
 </script>
 <script>
+// V0.10B2 — Air fuel production and physically partitioned transport.
+// nation.resources.aviation_fuel is the authoritative total; location balances
+// (I1 regional, I1 transit and airbase reserves) must NOT be added to it.
+const B2_BASE_FUEL_CAP=Object.freeze({1:60,2:120,3:240});
+function b2BaseFuelCapacity(base){return B2_BASE_FUEL_CAP[base.level]||0;}
+function b2Ensure(n){return n.b2Fuel||(n.b2Fuel={schema:1,reserved:0,produced:0,coalConsumed:0,goldConsumed:0,lastFactory:null,inFlight:0});}
+function b2MigrateWorld(w,sourceVersion){
+ const old=sourceVersion!=='V0.10B2'&&sourceVersion!=='V0.10B3'&&sourceVersion!=='V0.10B4';
+ for(const n of w.nations){
+  if(sourceVersion!=='V0.10B4')b2Ensure(n).inFlight??=0;
+  if(old){n.resources.aviation_fuel??=0;b2Ensure(n);const st=i1Ensure(n,w);
+   for(const r of Object.values(st.regional))r.aviation_fuel??=0;
+  }
+ }
+ if(old&&w.air?.bases)for(const b of w.air.bases)if(b.fuelStock){const n=w.nations[b.nationId];if(n)b2Ensure(n).reserved+=b.fuelStock;}
+}
+function b2BaseReady(w,b){
+ return b.status==='ACTIVE'&&!b.damage&&w.nations[b.nationId]?.active&&
+  w.settlements.find(s=>s.id===b.settlementId)?.ownerId===b.nationId&&
+  w.tiles[b.tileId]?.ownerId===b.nationId&&!w.occupations.some(o=>o.tileId===b.tileId);
+}
+function b2FuelTarget(w,n){
+ const bases=(w.air?.bases||[]).filter(b=>b.nationId===n.id&&b2BaseReady(w,b));
+ return Math.min(1000000,bases.reduce((sum,b)=>sum+airB4BaseTarget(b),0));
+}
+function b2ShouldMakeFuel(w,n){
+ if(!hasTech(w,n.id,'synthetic_liquid_fuels'))return false;
+ const target=b2FuelTarget(w,n);
+ const net=(n.resources.aviation_fuel||0);
+ if(net<target)return true;
+ // Verified international market BUY demand from a previous quarter is a real
+ // demand signal. It may authorize a limited export batch, never blind output.
+ const hist=w.market?.quarters?.at(-1),wanted=hist?.goods?.aviation_fuel?.requestedBuy||0;
+ return wanted>0&&net<Math.min(240,target+24);
+}
+function b2ChooseFuelMode(w,n,b){
+ if(!b2ShouldMakeFuel(w,n))return false;
+ // B2 produces at most one fuel batch per nation and quarter. Existing
+ // machine-parts production may continue in other factories; no free output.
+ const state=b2Ensure(n);
+ if(state.lastFactory?.dayIndex===w.dayIndex)return false;
+ const stock=n.resources.machine_parts||0;
+ const minimum=Math.max(12,2*w.buildings.filter(x=>x.typeId==='factory'&&w.tiles[x.tileId]?.ownerId===n.id&&x.status==='ACTIVE').length);
+ return !f2c2cCanProduce(n,'machine_parts')||stock>=minimum;
+}
+function b2RecordProduction(w,n,b,amount,coal,gold){
+ const st=b2Ensure(n);st.produced+=amount;st.coalConsumed+=coal;st.goldConsumed+=gold;
+ st.lastFactory={dayIndex:w.dayIndex,buildingId:b.id,good:'aviation_fuel',amount,coal,gold};
+ b.b2LastFuel={dayIndex:w.dayIndex,produced:amount,coal,gold};
+}
+function b2AddFuelFreightTargets(w,n,targets){
+ if(!i1Active(w,n))return;
+ for(const b of w.air?.bases||[]){
+  if(b.nationId!==n.id||!b2BaseReady(w,b))continue;
+  const unmet=Math.max(0,airB4BaseTarget(b)-b.fuelStock);
+  if(!unmet)continue;
+  const row=targets.get(b.settlementId)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));
+  row.aviation_fuel=Math.max(row.aviation_fuel||0,unmet);
+  targets.set(b.settlementId,row);
+ }
+ // Verified buyer demand creates a physical export staging request at the
+ // seller's capital. Remote factories must ship excess fuel there first.
+ const st=i1Ensure(n,w),buy=w.market?.quarters?.at(-1)?.goods?.aviation_fuel?.requestedBuy||0;
+ const surplus=Math.max(0,(n.resources.aviation_fuel||0)-b2FuelTarget(w,n));
+ if(buy>0&&surplus>0&&st.anchor!=null){
+  const row=targets.get(st.anchor)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));
+  row.aviation_fuel=Math.max(row.aviation_fuel||0,Math.min(24,surplus));
+  targets.set(st.anchor,row);
+ }
+}
+function b2ReceiveAtBases(w){
+ if(!w.air?.bases?.length)return;
+ for(const b of w.air.bases){
+  if(!b2BaseReady(w,b))continue;
+  const n=w.nations[b.nationId];if(!i1Active(w,n))continue;
+  const st=i1Ensure(n,w),row=i1Row(st,b.settlementId),target=airB4BaseTarget(b);
+  let need=Math.max(0,target-b.fuelStock),take=Math.min(need,row.aviation_fuel||0);
+  if(take){row.aviation_fuel-=take;b.fuelStock+=take;b2Ensure(n).reserved+=take;need-=take;
+   i1Log(st,{dayIndex:w.dayIndex,kind:'AIR_BASE_INTAKE',baseId:b.id,settlementId:b.settlementId,good:'aviation_fuel',amount:take});}
+  if(need&&st.anchor===b.settlementId){const centralTake=Math.min(need,i1Central(n,'aviation_fuel'));
+   if(centralTake){b.fuelStock+=centralTake;b2Ensure(n).reserved+=centralTake;
+    i1Log(st,{dayIndex:w.dayIndex,kind:'AIR_BASE_INTAKE_CENTRAL',baseId:b.id,settlementId:b.settlementId,good:'aviation_fuel',amount:centralTake});}
+  }
+ }
+}
+function b2FuelMarketAvailable(w,n){
+ if(!n||!Number.isSafeInteger(n.resources.aviation_fuel||0))return 0;
+ const unreserved=Math.max(0,(n.resources.aviation_fuel||0)-(n.b2Fuel?.reserved||0)-(n.b2Fuel?.inFlight||0));
+ if(!i1Active(w,n))return unreserved;
+ const st=i1Ensure(n,w);
+ return st.anchor==null?0:Math.min(unreserved,i1Available(w,n,st.anchor,'aviation_fuel'));
+}
+function b2FuelWithdrawMarket(w,n,qty){
+ if(qty<0||b2FuelMarketAvailable(w,n)<qty)throw Error('B2 매도 가능 연료 부족');
+ if(!i1Active(w,n))return;
+ const st=i1Ensure(n,w),row=i1Row(st,st.anchor),take=Math.min(row.aviation_fuel||0,qty);
+ row.aviation_fuel-=take;
+ // The residual comes from genuinely unallocated national central reserve.
+}
+function b2IntegrateBases(w,src,dst){
+ for(const b of w.air?.bases||[])if(b.nationId===src.id){
+  b.nationId=dst.id;
+  for(const a of w.air.aircraft||[])if(a.baseId===b.id)a.nationId=dst.id;
+  for(const g of w.air.wings||[])if(g.baseId===b.id)g.nationId=dst.id;
+  b2Ensure(src).reserved-=b.fuelStock;b2Ensure(dst).reserved+=b.fuelStock;
+ }
+ for(const m of w.air?.missions||[])if(m.nationId===src.id){
+  b2Ensure(src).inFlight-=m.tankFuel;b2Ensure(dst).inFlight+=m.tankFuel;m.nationId=dst.id;
+ }
+}
+function b2Validate(w,fail){
+ for(const n of w.nations){const st=n.b2Fuel;
+  if(!st||st.schema!==1)return fail('B2 연료 장부 없음');
+  const okay=x=>Number.isSafeInteger(x)&&x>=0;
+  if(!['reserved','inFlight','produced','coalConsumed','goldConsumed'].every(k=>okay(st[k])))return fail('B2 누적 연료 장부 범위');
+  const actual=(w.air?.bases||[]).filter(b=>b.nationId===n.id).reduce((sum,b)=>sum+b.fuelStock,0);
+  if(st.reserved!==actual||st.reserved+st.inFlight>(n.resources.aviation_fuel||0))return fail('B2 기지 비축·국가 총량 불일치');
+  if(st.lastFactory&&(!okay(st.lastFactory.dayIndex)||st.lastFactory.dayIndex>w.dayIndex||
+   !okay(st.lastFactory.buildingId)||
+   !okay(st.lastFactory.amount)||!okay(st.lastFactory.coal)||!okay(st.lastFactory.gold)))return fail('B2 공장 원료 기록');
+ }
+ for(const b of w.buildings)if(b.typeId==='factory'&&b.b2LastFuel&&
+  (!Number.isSafeInteger(b.b2LastFuel.dayIndex)||b.b2LastFuel.dayIndex>w.dayIndex||
+   !Number.isSafeInteger(b.b2LastFuel.produced)||b.b2LastFuel.produced<=0))return fail('B2 연료 공장 생산 기록');
+ return true;
+}
+
 // V0.10A — Air infrastructure foundation. No sorties, combat, fuel or aircraft production.
 // This module does not draw RNG and changes existing simulation logic only after an
 // explicit paid airfield construction or explicit air research selection.
@@ -29234,7 +29393,7 @@ function airV010Build(w,nationId,tileId){
 }
 function airV010NextDay(w){
  let next=Infinity;for(const b of w.air?.bases||[])if(b.status==='CONSTRUCTING'&&b.completeDay>w.dayIndex)next=Math.min(next,b.completeDay);
- return next;
+ return Math.min(next,airB3NextDay(w),airB4NextDay(w));
 }
 function airV010Advance(w){
  if(!w.air?.bases?.length)return;
@@ -29247,13 +29406,15 @@ function airV010Advance(w){
    b.status='ACTIVE';w.air.events.push({dayIndex:w.dayIndex,kind:'BASE_COMPLETED',baseId:b.id});w.changeSeq++;
   }
  }
+ airB3Advance(w);
+ airB4Advance(w);
 }
 function airV010ResearchLegal(w,nationId,techId){
  const n=w.nations[nationId],tech=TECHNOLOGY_BY_ID[techId];
- return Boolean(n?.active&&AIR_V010A_TECH_IDS.has(techId)&&tech&&!n.technology.currentResearch&&!n.technology.unlocked.includes(techId)&&techEraAllowed(n,techId)&&tech.requires.every(r=>n.technology.unlocked.includes(r))&&n.apUnits>=3);
+ return Boolean(n?.active&&AIR_V010_OPTIONAL_TECH_IDS.has(techId)&&tech&&!n.technology.currentResearch&&!n.technology.unlocked.includes(techId)&&techEraAllowed(n,techId)&&tech.requires.every(r=>n.technology.unlocked.includes(r))&&n.apUnits>=3);
 }
 function airV010Research(w,nationId,techId){
- if(!AIR_V010A_TECH_IDS.has(techId))throw Error('A 단계 공군 연구가 아닙니다.');
+ if(!AIR_V010_OPTIONAL_TECH_IDS.has(techId))throw Error('공군 연구 대상이 아닙니다.');
  if(!airV010ResearchLegal(w,nationId,techId))throw Error('선행 기술·문명 단계·연구 상태가 맞지 않습니다.');
  const n=w.nations[nationId];
  if(!payCost(n,{apUnits:3,gold:0,knowledge:0,resources:{}},'research'))throw Error('연구를 시작할 AP가 부족합니다.');
@@ -29268,23 +29429,24 @@ function airV010Valid(w,fail){
  for(const k of ['bases','aircraft','wings','missions','events'])if(!Array.isArray(a[k]))return fail('A 장부 배열');
  if(a.bases.length>Math.max(1000,w.settlements.length)||a.events.length>5000)return fail('A 장부 크기');
  // V0.10A may hold no real aircraft, wings or missions. Later versions own their lifecycle.
- if(a.aircraft.length||a.wings.length||a.missions.length||a.produced||a.lost||a.scrapped)return fail('A 실물 비행기·임무는 아직 비활성');
+ // B4 enables strictly validated active flight missions.
  const ids=new Set(),settlements=new Set(),tiles=new Set();
  for(const b of a.bases){
+  if(b.fuelTarget!==undefined&&(!safe(b.fuelTarget)||![12,24,48,60,120,240].includes(b.fuelTarget)||b.fuelTarget>b2BaseFuelCapacity(b)))return fail('B4 비행장 연료 목표 설정');
   if(!safe(b.id)||b.id>=a.nextBaseId||ids.has(b.id))return fail('A 비행장 ID');ids.add(b.id);
   if(!Number.isInteger(b.nationId)||!w.nations[b.nationId]||!Number.isInteger(b.tileId)||!w.tiles[b.tileId]||
    !Number.isInteger(b.settlementId)||!w.settlements.some(s=>s.id===b.settlementId)||
    ![1,2,3].includes(b.level)||b.capacity!==airV010BaseCapacity(b.level)||
    !['CONSTRUCTING','ACTIVE','DAMAGED','CONTESTED','ABANDONED'].includes(b.status)||
    !safe(b.startedDay)||!safe(b.completeDay)||b.startedDay>b.completeDay||b.completeDay>w.dayIndex+10000||
-   !safe(b.damage)||b.damage>100||!safe(b.fuelStock)||b.fuelStock!==0||
+   !safe(b.damage)||b.damage>100||!safe(b.fuelStock)||b.fuelStock>b2BaseFuelCapacity(b)||
    b.paid?.gold!==AIR_V010A_BASE_COST.gold||b.paid?.apUnits!==AIR_V010A_BASE_COST.apUnits||
    Object.entries(AIR_V010A_BASE_COST.resources).some(([g,q])=>b.paid?.resources?.[g]!==q)||settlements.has(b.settlementId)||tiles.has(b.tileId))return fail('A 비행장 구조');
   // An occupied/captured field stays in the ledger; its status will be handled in B.
   settlements.add(b.settlementId);tiles.add(b.tileId);
  }
- if(a.events.some(e=>!safe(e.dayIndex)||e.dayIndex>w.dayIndex||!ids.has(e.baseId)||!['BASE_STARTED','BASE_COMPLETED'].includes(e.kind)))return fail('A 기지 사건');
- return true;
+ if(a.events.some(e=>!safe(e.dayIndex)||e.dayIndex>w.dayIndex||e.kind.startsWith('BASE_')&&!ids.has(e.baseId)))return fail('B3 공군 사건 날짜·기지');
+ return airB3Validate(w,fail)&&airB4Validate(w,fail);
 }
 function airV010Draw(renderer){
  const w=renderer.world,ctx=renderer.ctx;if(!w?.air?.bases?.length||!renderer.showAirV010)return;
@@ -29307,17 +29469,18 @@ function airV010Draw(renderer){
    }
   }
  }
+ airB4Draw(renderer);
  ctx.restore();
 }
 function airV010RenderPanel(){
  const el=document.getElementById('airV010Panel');if(!el||!app.world)return;
  const w=app.world,a=airV010Ensure(w),n=w.nations[app.selectedNationId]||w.nations[0],t=w.tiles[app.selectedId];
  const makeRow=(tag,label,cls)=>{const e=document.createElement(tag);if(cls)e.className=cls;e.textContent=label;return e;};
- el.replaceChildren();el.append(makeRow('h3','✈ 공군 · V0.10A 비행장 기반'),makeRow('p','기지·기종·항공 거리의 기반 패치입니다. 항공기 생산, 연료 거래, 출격은 V0.10B부터 가능합니다.','muted-line'));
+ el.replaceChildren();el.append(makeRow('h3','✈ 공군 · V0.10B4 실제 비행·연료·귀환'),makeRow('p','항공연료는 기존 공장의 배타적 생산 모드로 제조하며 국제시장·해상운송·국내실물 배송을 거쳐 비행장에 보관합니다. 정찰기 제작·훈련·편대에 더해 유료 훈련 비행과 비행장 간 전개를 운용합니다.','muted-line'));
  const owned=a.bases.filter(b=>b.nationId===n.id),active=owned.filter(b=>b.status==='ACTIVE').length;
- el.append(makeRow('div',`${n.name} · 비행장 ${owned.length}곳 (가동 ${active}) · 공중 전력 0대 · 실전 출격 비활성`,'muted-line'));
+ el.append(makeRow('div',`${n.name} · 비행장 ${owned.length}곳 (가동 ${active}) · 항공연료 국가 총량 ${n.resources.aviation_fuel||0} · 기지 비축 ${n.b2Fuel?.reserved||0} · 비행 중 연료 ${n.b2Fuel?.inFlight||0}`,'muted-line'));
  const techBox=makeRow('div','', 'air-v010-tech');
- for(const id of AIR_V010A_TECH_IDS){const tech=TECHNOLOGY_BY_ID[id],unlocked=hasTech(w,n.id,id),researching=n.technology.currentResearch===id;
+ for(const id of AIR_V010_OPTIONAL_TECH_IDS){const tech=TECHNOLOGY_BY_ID[id],unlocked=hasTech(w,n.id,id),researching=n.technology.currentResearch===id;
   const line=makeRow('div',`${unlocked?'✓':researching?'◷':'◇'} ${tech.name} · ${tech.cost}K · ${unlocked?'완료':researching?'연구 중':tech.requires.map(x=>TECHNOLOGY_BY_ID[x]?.name||x).join(' + ')}`,'muted-line');
   if(!unlocked&&!researching){const btn=makeRow('button','연구 시작','jump-button');btn.type='button';btn.disabled=!airV010ResearchLegal(w,n.id,id);btn.addEventListener('click',()=>{try{airV010Research(w,n.id,id);showToast(tech.name+' 연구를 시작했습니다.');airV010RenderPanel();}catch(e){showToast(e.message);}});line.append(' ',btn);}
   techBox.append(line);
@@ -29329,8 +29492,382 @@ function airV010RenderPanel(){
  const build=makeRow('button','선택 타일에 유료 비행장 착공','jump-button');build.type='button';build.disabled=!!reason;
  build.addEventListener('click',()=>{try{const b=airV010Build(w,n.id,app.selectedId);showToast('비행장 착공 · #'+b.id);map.draw();renderInspector();airV010RenderPanel();}catch(e){showToast(e.message);}});el.append(build);
  if(reason)el.append(makeRow('small','건설 불가: '+reason,'muted-line'));
- if(owned.length){const list=makeRow('div','','air-v010-list');for(const b of owned){const tt=w.tiles[b.tileId];list.append(makeRow('p',`#${b.id} · (${tt?.x}, ${tt?.y}) · ${b.status==='ACTIVE'?'가동':b.status==='CONSTRUCTING'?'공사 중 '+Math.max(0,b.completeDay-w.dayIndex)+'일 남음':b.status} · 0/${b.capacity}대`,'muted-line'));}el.append(list);}
+ if(owned.length){const list=makeRow('div','','air-v010-list');for(const b of owned){const tt=w.tiles[b.tileId];list.append(makeRow('p',`#${b.id} · (${tt?.x}, ${tt?.y}) · ${b.status==='ACTIVE'?'가동':b.status==='CONSTRUCTING'?'공사 중 '+Math.max(0,b.completeDay-w.dayIndex)+'일 남음':b.status} · ${airB3CountAt(w,b.id)}/${b.capacity}대 · 연료 ${b.fuelStock}/${b2BaseFuelCapacity(b)} (비축 목표 ${airB4BaseTarget(b)})`,'muted-line'));}el.append(list);}
+ airB3RenderExtra(el,w,n,makeRow);
  el.append(makeRow('p','초기 기종: 정찰기 I (반경 6) · 전투기 I (4) · 경폭격기 I (5). 지도에서 기지를 선택하고 “반경”을 켜면 정찰기 기준 반경을 미리 볼 수 있습니다.','muted-line'));
+}
+
+// V0.10B3 — Paid physical reconnaissance aircraft, human pilots and grounded wings.
+// Numerical combat abilities are data only; B3 intentionally performs no sorties or combat.
+const AIR_B3_STATS=Object.freeze({
+ recon_i:Object.freeze({maxCondition:100,airAttack:0,groundAttack:0,navalAttack:0,armor:0,evasion:40,reconPower:75}),
+ fighter_i:Object.freeze({maxCondition:100,airAttack:null,groundAttack:null,navalAttack:null,armor:null,evasion:null,reconPower:null}),
+ light_bomber_i:Object.freeze({maxCondition:100,airAttack:null,groundAttack:null,navalAttack:null,armor:null,evasion:null,reconPower:null})
+});
+const AIR_B3_RECON_PRICE=Object.freeze({apUnits:15,gold:1800,knowledge:0,resources:Object.freeze({wood:12,iron:6,steel:4,machine_parts:7})});
+const AIR_B3_PILOT_PRICE=Object.freeze({apUnits:5,gold:150,knowledge:0,resources:{}});
+const AIR_B3_BUILD_DAYS=90,AIR_B3_TRAIN_DAYS=60,AIR_B3_REPAIR_DAYS=30;
+function airB3Log(w,kind,aId=null,wingId=null){const a=airV010Ensure(w);a.events.push({dayIndex:w.dayIndex,kind,aircraftId:aId,wingId});if(a.events.length>5000)a.events.splice(0,a.events.length-5000);}
+function airB3Base(w,id,nid){return w.air?.bases?.find(b=>b.id===id&&b.nationId===nid)||null;}
+function airB3Aircraft(w,id,nid){return w.air?.aircraft?.find(a=>a.id===id&&a.nationId===nid)||null;}
+function airB3CountAt(w,baseId){return (w.air?.aircraft||[]).filter(a=>a.baseId===baseId).length;}
+function airB3ReadyBase(w,b){return b&&b2BaseReady(w,b);}
+function airB3Can(w,nid,action){
+ const n=w.nations[nid];if(!n?.active||!action||typeof action.type!=='string')return '활성 국가 또는 명령이 없습니다.';
+ const b=airB3Base(w,action.baseId,nid),a=airB3Aircraft(w,action.aircraftId,nid),wings=w.air.wings;
+ if(action.type==='AIR_BUILD_AIRCRAFT'){
+  if(!airB3ReadyBase(w,b))return '운용 가능한 자국 비행장이 필요합니다.';
+  if(action.aircraftType!=='recon_i')return 'B3에서는 정찰기 I만 제작할 수 있습니다.';
+  if(!hasTech(w,nid,'powered_aircraft_engineering'))return '동력 항공기 제작 기술이 필요합니다.';
+  if(airB3CountAt(w,b.id)>=b.capacity)return '비행장 수용 정원 초과';
+  if(w.air.aircraft.some(p=>p.baseId===b.id&&p.status==='BUILDING'))return '한 비행장에 동시 제작 1대만 허용';
+  if(!w.buildings.some(f=>f.typeId==='factory'&&f.settlementId===b.settlementId&&f.status==='ACTIVE'&&!f.disconnected&&w.tiles[f.tileId]?.ownerId===nid))return '같은 정착지에 가동 중인 공장이 필요합니다.';
+  if(!canAfford(n,AIR_B3_RECON_PRICE))return '제작 자재·Gold·AP 부족';
+  if(i1Active(w,n))for(const g of ['iron','steel','machine_parts'])if(i1Available(w,n,b.settlementId,g)<AIR_B3_RECON_PRICE.resources[g])return `지역 ${g} 재고 부족`;
+  return null;
+ }
+ if(action.type==='AIR_ENROLL_PILOT'){
+  if(!a||a.status!=='UNCREWED'||a.wingId!=null||!airB3ReadyBase(w,airB3Base(w,a.baseId,nid)))return '조종사를 선발할 수 있는 완성 기체가 아닙니다.';
+  const town=w.settlements.find(s=>s.id===airB3Base(w,a.baseId,nid).settlementId&&s.ownerId===nid);
+  if(!town||town.population<2||d1CultureTotal(town.culturePopulation)<1)return '정착지 민간 인구 부족';
+  return canAfford(n,AIR_B3_PILOT_PRICE)?null:'훈련 비용·AP 부족';
+ }
+ if(action.type==='AIR_FORM_WING'){
+  const ids=action.aircraftIds;if(!b||!airB3ReadyBase(w,b)||!Array.isArray(ids)||ids.length<1||ids.length>6||new Set(ids).size!==ids.length)return '동일 기지 정찰기 1~6대가 필요합니다.';
+  if(ids.some(id=>{const p=airB3Aircraft(w,id,nid);return !p||p.baseId!==b.id||p.typeId!=='recon_i'||p.status!=='READY'||p.wingId!==null;}))return '준비 완료된 미편성 정찰기만 편성 가능';
+  return null;
+ }
+ if(action.type==='AIR_DISBAND_WING'){
+  const wing=wings.find(g=>g.id===action.wingId&&g.nationId===nid);
+  return wing&&wing.missionId===null?null:'해산할 비행대가 없습니다.';
+ }
+ if(action.type==='AIR_REPAIR_AIRCRAFT'){
+  if(!a||a.condition>=AIR_B3_STATS[a.typeId]?.maxCondition||a.status==='BUILDING'||a.status==='REPAIRING'||a.status==='TRAINING'||a.wingId!=null||!airB3ReadyBase(w,airB3Base(w,a.baseId,nid)))return '수리 가능한 기체가 아닙니다.';
+  const missing=AIR_B3_STATS[a.typeId].maxCondition-a.condition,batches=Math.ceil(missing/25),p={apUnits:0,gold:batches*60,knowledge:0,resources:{machine_parts:batches}};
+  if(!canAfford(n,p))return '정비용 부품·Gold 부족';
+  if(i1Active(w,n)&&i1Available(w,n,airB3Base(w,a.baseId,nid).settlementId,'machine_parts')<batches)return '지역 정비 부품 부족';
+  return null;
+ }
+ if(action.type==='AIR_SCRAP_AIRCRAFT'){
+  if(!a||a.status==='BUILDING'||a.status==='REPAIRING'||a.status==='TRAINING'||a.wingId!=null||!airB3ReadyBase(w,airB3Base(w,a.baseId,nid)))return '현재 해체할 수 없는 기체입니다.';
+  if(a.pilotCount&&!(w.settlements.some(s=>s.id===a.pilotOriginSettlementId&&s.ownerId===nid)||w.settlements.some(s=>s.ownerId===nid)))return '조종사 복귀할 정착지가 없습니다.';
+  return null;
+ }
+ return '알 수 없는 공군 행동입니다.';
+}
+function airB3Execute(w,nid,action){
+ const error=airB3Can(w,nid,action);if(error)return {ok:false,reason:error};
+ const n=w.nations[nid],air=w.air,b=airB3Base(w,action.baseId,nid),a=airB3Aircraft(w,action.aircraftId,nid);
+ if(action.type==='AIR_BUILD_AIRCRAFT'){
+  // Regional and national entries are two views of the same physical goods.
+  if(i1Active(w,n))i1Debit(w,n,{settlementId:b.settlementId},AIR_B3_RECON_PRICE.resources);
+  if(!payCost(n,AIR_B3_RECON_PRICE,'military'))throw Error('검증 이후 제작비 지불 실패');i1Reconcile(w,n);
+  const p={id:air.nextAircraftId++,nationId:nid,typeId:'recon_i',baseId:b.id,wingId:null,status:'BUILDING',condition:100,startedDay:w.dayIndex,completeDay:w.dayIndex+AIR_B3_BUILD_DAYS,
+   pilotCount:0,pilotCulturePopulation:{},pilotOriginSettlementId:null,trainingDoneDay:null,repairDoneDay:null,repairTarget:null,paid:{gold:1800,apUnits:15,resources:{...AIR_B3_RECON_PRICE.resources}}};
+  air.aircraft.push(p);air.produced++;airB3Log(w,'AIRCRAFT_STARTED',p.id);w.changeSeq++;return {ok:true,aircraftId:p.id,completeDay:p.completeDay};
+ }
+ if(action.type==='AIR_ENROLL_PILOT'){
+  if(!payCost(n,AIR_B3_PILOT_PRICE,'military'))throw Error('조종사 선발비 부족');
+  const base=airB3Base(w,a.baseId,nid),town=w.settlements.find(s=>s.id===base.settlementId);
+  a.pilotCulturePopulation=d1CultureTake(town.culturePopulation,1);town.population--;a.pilotCount=1;a.pilotOriginSettlementId=town.id;a.status='TRAINING';a.trainingDoneDay=w.dayIndex+AIR_B3_TRAIN_DAYS;
+  d1bSyncGroups(town,w);d2aSyncGroups(w,town);refreshSettlementLevel(town);
+  airB3Log(w,'PILOT_ENROLLED',a.id);w.changeSeq++;return {ok:true,aircraftId:a.id,trainingDoneDay:a.trainingDoneDay};
+ }
+ if(action.type==='AIR_FORM_WING'){
+  const wing={id:air.nextWingId++,nationId:nid,baseId:b.id,typeId:'recon_i',aircraftIds:[...action.aircraftIds],status:'READY',missionId:null};
+  air.wings.push(wing);for(const id of wing.aircraftIds)airB3Aircraft(w,id,nid).wingId=wing.id;
+  airB3Log(w,'WING_FORMED',null,wing.id);w.changeSeq++;return {ok:true,wingId:wing.id};
+ }
+ if(action.type==='AIR_DISBAND_WING'){
+  const wing=air.wings.find(g=>g.id===action.wingId);for(const id of wing.aircraftIds)airB3Aircraft(w,id,nid).wingId=null;
+  air.wings=air.wings.filter(g=>g.id!==wing.id);airB3Log(w,'WING_DISBANDED',null,wing.id);w.changeSeq++;return {ok:true};
+ }
+ if(action.type==='AIR_REPAIR_AIRCRAFT'){
+  const batches=Math.ceil((100-a.condition)/25),price={apUnits:0,gold:batches*60,knowledge:0,resources:{machine_parts:batches}},base=airB3Base(w,a.baseId,nid);
+  if(i1Active(w,n))i1Debit(w,n,{settlementId:base.settlementId},price.resources);
+  if(!payCost(n,price,'military'))throw Error('정비비 지불 실패');i1Reconcile(w,n);
+  a.repairTarget=100;a.repairDoneDay=w.dayIndex+AIR_B3_REPAIR_DAYS;a.status='REPAIRING';airB3Log(w,'REPAIR_STARTED',a.id);w.changeSeq++;return {ok:true};
+ }
+ if(action.type==='AIR_SCRAP_AIRCRAFT'){
+  if(a.pilotCount){const town=w.settlements.find(s=>s.id===a.pilotOriginSettlementId&&s.ownerId===nid)||w.settlements.find(s=>s.ownerId===nid);
+   town.population+=a.pilotCount;d1CultureAdd(town.culturePopulation,a.pilotCulturePopulation);d1bSyncGroups(town,w);d2aSyncGroups(w,town);refreshSettlementLevel(town);}
+  air.aircraft=air.aircraft.filter(p=>p.id!==a.id);air.scrapped++;airB3Log(w,'AIRCRAFT_SCRAPPED',a.id);w.changeSeq++;return {ok:true};
+ }
+ return {ok:false,reason:'처리되지 않은 공군 행동'};
+}
+function airB3NextDay(w){let next=Infinity;for(const a of w.air?.aircraft||[]){if(a.status==='BUILDING'&&a.completeDay>w.dayIndex)next=Math.min(next,a.completeDay);
+ if(a.status==='TRAINING'&&a.trainingDoneDay>w.dayIndex)next=Math.min(next,a.trainingDoneDay);
+ if(a.status==='REPAIRING'&&a.repairDoneDay>w.dayIndex)next=Math.min(next,a.repairDoneDay);}
+ return next;}
+function airB3Advance(w){for(const a of w.air?.aircraft||[]){const b=airB3Base(w,a.baseId,a.nationId);if(!b)continue;
+  if(a.status==='BUILDING'&&a.completeDay<=w.dayIndex){a.status='UNCREWED';airB3Log(w,'AIRCRAFT_COMPLETED',a.id);w.changeSeq++;}
+  if(a.status==='TRAINING'&&a.trainingDoneDay<=w.dayIndex){a.status='READY';airB3Log(w,'PILOT_QUALIFIED',a.id);w.changeSeq++;}
+  if(a.status==='REPAIRING'&&a.repairDoneDay<=w.dayIndex){a.condition=a.repairTarget;a.repairTarget=null;a.status=a.pilotCount?'READY':'UNCREWED';airB3Log(w,'REPAIR_COMPLETED',a.id);w.changeSeq++;}
+  if(!airB3ReadyBase(w,b)&&['READY','UNCREWED'].includes(a.status)){a.status='GROUNDED';if(a.wingId!==null){const wing=w.air.wings.find(g=>g.id===a.wingId);if(wing)wing.status='GROUNDED';}w.changeSeq++;}
+  if(airB3ReadyBase(w,b)&&a.status==='GROUNDED'){a.status=a.pilotCount?'READY':'UNCREWED';if(a.wingId!==null){const wing=w.air.wings.find(g=>g.id===a.wingId);if(wing&&wing.aircraftIds.every(id=>w.air.aircraft.find(p=>p.id===id)?.status==='READY'))wing.status='READY';}w.changeSeq++;}
+ }}
+function airB3Validate(w,fail){
+ const air=w.air,valid=x=>Number.isSafeInteger(x)&&x>=0;
+ if(air.produced!==air.aircraft.length+air.lost+air.scrapped)return fail('B3 기체 제작·존속 보존식');
+ if(air.aircraft.length>w.tiles.length*6||air.wings.length>air.aircraft.length||air.missions.length>air.wings.length)return fail('B3 편제 수량·임무 제한');
+ const ids=new Set(),counts=new Map(),wingIds=new Set(),assigned=new Set();
+ for(const a of air.aircraft){
+  if(!valid(a.id)||a.id<1||a.id>=air.nextAircraftId||ids.has(a.id)||a.typeId!=='recon_i'||!w.nations[a.nationId]||!airB3Base(w,a.baseId,a.nationId)||
+   !['BUILDING','UNCREWED','TRAINING','READY','REPAIRING','GROUNDED','SORTIE'].includes(a.status)||!valid(a.condition)||a.condition>100||!valid(a.startedDay)||!valid(a.completeDay)||a.startedDay>a.completeDay||a.completeDay>w.dayIndex+AIR_B3_BUILD_DAYS||
+   !valid(a.pilotCount)||a.pilotCount>1||!a.pilotCulturePopulation||d1CultureTotal(a.pilotCulturePopulation)!==a.pilotCount||
+   (a.pilotCount===0&&a.pilotOriginSettlementId!==null)||(a.pilotCount===1&&!valid(a.pilotOriginSettlementId))||
+   (a.status==='BUILDING'&&(a.completeDay<=w.dayIndex||a.pilotCount||a.wingId!==null))||
+   (a.status==='UNCREWED'&&a.pilotCount!==0)||
+   (['TRAINING','READY'].includes(a.status)&&a.pilotCount!==1)||
+   (a.status==='TRAINING'&&(!valid(a.trainingDoneDay)||a.trainingDoneDay<=w.dayIndex))||
+   (a.status==='REPAIRING'&&(!valid(a.repairDoneDay)||a.repairDoneDay<=w.dayIndex||a.repairTarget!==100||a.wingId!==null))||
+   (a.wingId!==null&&(!valid(a.wingId)||!['READY','GROUNDED','SORTIE'].includes(a.status)))||
+   a.paid?.gold!==1800||a.paid?.apUnits!==15||Object.entries(AIR_B3_RECON_PRICE.resources).some(([g,q])=>a.paid?.resources?.[g]!==q))return fail('B3 항공기 개체 정합성');
+  if(Object.entries(a.pilotCulturePopulation).some(([c,v])=>!w.cultures.some(x=>x.id===c)||!Number.isSafeInteger(v)||v<1))return fail('B3 조종사 문화 무결성');
+  ids.add(a.id);counts.set(a.baseId,(counts.get(a.baseId)||0)+1);
+ }
+ for(const b of air.bases)if((counts.get(b.id)||0)>b.capacity||air.aircraft.filter(a=>a.baseId===b.id&&a.status==='BUILDING').length>1)return fail('B3 비행장 수용·제작 상한');
+ for(const wing of air.wings){
+  if(!valid(wing.id)||wing.id<1||wing.id>=air.nextWingId||wingIds.has(wing.id)||!w.nations[wing.nationId]||!airB3Base(w,wing.baseId,wing.nationId)||wing.typeId!=='recon_i'||!['READY','GROUNDED','SORTIE'].includes(wing.status)||!(wing.missionId===null||valid(wing.missionId))||!Array.isArray(wing.aircraftIds)||wing.aircraftIds.length<1||wing.aircraftIds.length>6)return fail('B3 비행대 구조');
+  for(const id of wing.aircraftIds){const a=air.aircraft.find(a=>a.id===id);if(!a||assigned.has(id)||a.wingId!==wing.id||a.baseId!==wing.baseId||a.nationId!==wing.nationId||a.typeId!==wing.typeId||!['READY','GROUNDED','SORTIE'].includes(a.status))return fail('B3 비행대 기체 참조');assigned.add(id);}
+  if(wing.status==='READY'&&wing.aircraftIds.some(id=>air.aircraft.find(a=>a.id===id)?.status!=='READY'))return fail('B3 준비 비행대 구성');
+  if((wing.status==='SORTIE')!==(wing.missionId!==null))return fail('B4 비행대 임무 참조');
+  wingIds.add(wing.id);
+ }
+ if(air.aircraft.some(a=>(a.wingId!==null)!==assigned.has(a.id)))return fail('B3 편대 역참조');
+ const types=new Set(['BASE_STARTED','BASE_COMPLETED','AIRCRAFT_STARTED','AIRCRAFT_COMPLETED','PILOT_ENROLLED','PILOT_QUALIFIED','WING_FORMED','WING_DISBANDED','REPAIR_STARTED','REPAIR_COMPLETED','AIRCRAFT_SCRAPPED','MISSION_STARTED','MISSION_DEPARTED','MISSION_TARGET','MISSION_RETURNING','MISSION_LANDED','MISSION_DIVERTED','MISSION_LOST']);
+ for(const e of air.events)if(!valid(e.dayIndex)||e.dayIndex>w.dayIndex||!types.has(e.kind)||(!(e.kind.startsWith('BASE_'))&&!(e.aircraftId===null||valid(e.aircraftId)))||!(e.wingId===undefined||e.wingId===null||valid(e.wingId)))return fail('B3 공군 사건 장부');
+ return true;
+}
+function airB3RenderExtra(el,w,n,makeRow){
+ const air=airV010Ensure(w),section=makeRow('div','','air-v010-list');
+ section.append(makeRow('h4','V0.10B4 · 정찰기 제작·편대·비행 운용',''));
+ section.append(makeRow('p',`보유 기체 ${air.aircraft.filter(a=>a.nationId===n.id).length}대 · 비행대 ${air.wings.filter(g=>g.nationId===n.id).length}개 · 출격 가능 / 교전은 C 이후`,'muted-line'));
+ section.append(makeRow('p','정찰기 I 전투 스펙(잠정): 내구도 100 · 공중/지상/해상 공격 0 · 장갑 0 · 회피 40 · 정찰 75. 전투 판정 미구현.','muted-line'));
+ const add=(label,action)=>{const btn=makeRow('button',label,'jump-button');btn.type='button';const error=airB3Can(w,n.id,action);btn.disabled=!!error;if(error)btn.title=error;
+  btn.addEventListener('click',()=>{const r=airB3Execute(w,n.id,action);showToast(r.ok?'공군 명령 완료':r.reason);airV010RenderPanel();map.draw();renderInspector();});section.append(btn);return btn;};
+ for(const b of air.bases.filter(b=>b.nationId===n.id)){
+  section.append(makeRow('h4',`비행장 #${b.id} · ${airB3CountAt(w,b.id)}/${b.capacity}대 · ${b.status}`));
+  add('정찰기 I 유료 제작 (1,800G / 1.5AP / 90일)',{type:'AIR_BUILD_AIRCRAFT',baseId:b.id,aircraftType:'recon_i'});
+  const local=air.aircraft.filter(a=>a.baseId===b.id&&a.nationId===n.id);
+  for(const a of local){section.append(makeRow('p',`기체 #${a.id} · ${a.status} · 내구도 ${a.condition}/100 · 조종사 ${a.pilotCount}명${a.wingId===null?'':` · 비행대 #${a.wingId}`}${a.status==='BUILDING'?` · 제작 ${Math.max(0,a.completeDay-w.dayIndex)}일`:a.status==='TRAINING'?` · 훈련 ${Math.max(0,a.trainingDoneDay-w.dayIndex)}일`:''}`,'muted-line'));
+   if(a.status==='UNCREWED')add(`기체 #${a.id} 조종사 선발·훈련`,{type:'AIR_ENROLL_PILOT',aircraftId:a.id});
+   if(a.condition<100)add(`기체 #${a.id} 유료 정비`,{type:'AIR_REPAIR_AIRCRAFT',aircraftId:a.id});
+   if(a.status!=='BUILDING')add(`기체 #${a.id} 해체`,{type:'AIR_SCRAP_AIRCRAFT',aircraftId:a.id});
+  }
+  const available=local.filter(a=>a.status==='READY'&&a.wingId===null).slice(0,6).map(a=>a.id);
+  if(available.length)add(`정찰기 ${available.length}대 비행대 편성`,{type:'AIR_FORM_WING',baseId:b.id,aircraftIds:available});
+  for(const wing of air.wings.filter(g=>g.baseId===b.id&&g.nationId===n.id)){
+   section.append(makeRow('p',`비행대 #${wing.id} · ${wing.aircraftIds.length}대 · ${wing.status}`,'muted-line'));
+   add(`비행대 #${wing.id} 해산`,{type:'AIR_DISBAND_WING',wingId:wing.id});
+  }
+ }
+ airB4RenderExtra(section,w,n,makeRow);
+ el.append(section);
+}
+
+// V0.10B4: deterministic noncombat sorties. Original state and RNG untouched without active wings.
+// nation.resources.aviation_fuel owns all fuel; base.fuelStock and nation.b2Fuel.inFlight
+// are disjoint partitions already included in that total, not additional resources.
+const AIR_B4_FUEL_PER_AIRCRAFT_DAY=1;
+const AIR_B4_RESERVE_FACTOR=1.2;
+function airB4BaseTarget(base){return Math.min(base.fuelTarget??12,b2BaseFuelCapacity(base));}
+function airB4Wing(w,id,nid){return w.air?.wings?.find(g=>g.id===id&&g.nationId===nid)||null;}
+function airB4Mission(w,id){return w.air?.missions?.find(m=>m.id===id)||null;}
+function airB4DeltaX(w,x0,x1){let dx=x1-x0;if(g3eTopology(w)===G3E_CYLINDER_X&&Math.abs(dx)>w.size/2)dx+=dx>0?-w.size:w.size;return dx;}
+function airB4Interpolate(w,p,q,t){let x=p.x+airB4DeltaX(w,p.x,q.x)*t;return {x:g3eWrapX(x,w.size,w),y:p.y+(q.y-p.y)*t};}
+function airB4Position(w,m){const a=w.air.bases.find(b=>b.id===m.fromBaseId),p=w.tiles[a.tileId],q=w.tiles[m.targetTileId];
+ if(m.status==='PREPARING')return {x:p.x+.5,y:p.y+.5,angle:0};
+ const start={x:p.x+.5,y:p.y+.5},end={x:q.x+.5,y:q.y+.5};
+ const backwards=m.status==='RETURNING',t=m.status==='OUTBOUND'?m.legProgress/m.outboundDays:m.status==='RETURNING'?m.legProgress/m.returnDays:1;
+ const pt=airB4Interpolate(w,backwards?end:start,backwards?start:end,t),dx=airB4DeltaX(w,backwards?end.x:start.x,backwards?start.x:end.x),dy=(backwards?start.y-end.y:end.y-start.y);
+ return {...pt,angle:Math.atan2(dy,dx)};
+}
+function airB4AirspaceAllowed(w,nid,origin,target){
+ const from={x:origin.x+.5,y:origin.y+.5},to={x:target.x+.5,y:target.y+.5};
+ const steps=Math.max(2,Math.ceil(g3eDistance(w,origin,target)*5));
+ for(let i=0;i<=steps;i++){
+  const p=airB4Interpolate(w,from,to,i/steps),x=Math.floor(p.x),y=Math.floor(p.y);
+  const tile=w.tiles.find(t=>t.x===x&&t.y===y);
+  if(!tile||tile.ownerId!==nid||tile.occupiedBy!=null||w.occupations.some(o=>o.tileId===tile.id))return false;
+ }
+ return true;
+}
+function airB4Spec(w,nid,wingId,kind,targetTileId){
+ const wing=airB4Wing(w,wingId,nid),origin=wing&&airB3Base(w,wing.baseId,nid),target=w.tiles[targetTileId];
+ if(!wing||wing.status!=='READY'||wing.missionId!==null||!airB3ReadyBase(w,origin))return {reason:'출격 가능한 자국 비행대가 없습니다.'};
+ if(!wing.aircraftIds.length||wing.aircraftIds.some(id=>airB3Aircraft(w,id,nid)?.status!=='READY'))return {reason:'비행대 기체·조종사 준비가 필요합니다.'};
+ if(!target||!Number.isSafeInteger(targetTileId)||target.ownerId!==nid||target.occupiedBy!=null||w.occupations.some(o=>o.tileId===targetTileId))return {reason:'자국의 안전한 목표 타일을 선택하세요.'};
+ const from=w.tiles[origin.tileId],distance=g3eDistance(w,from,target),count=wing.aircraftIds.length;
+ if(!(distance>0))return {reason:'다른 타일을 선택하세요.'};
+ let destinationBaseId=null;
+ if(kind==='TRAIN'){
+  if(distance>AIR_V010A_TYPES.recon_i.radius+1e-9)return {reason:'정찰기 작전반경 6타일을 초과했습니다.'};
+ }else if(kind==='TRANSFER'){
+  const dest=w.air.bases.find(b=>b.tileId===targetTileId&&b.nationId===nid&&airB3ReadyBase(w,b));
+  if(!dest)return {reason:'전개 목표는 가동 중인 다른 자국 비행장이어야 합니다.'};
+  const projected=airB3CountAt(w,dest.id)+w.air.missions.filter(m=>m.kind==='TRANSFER'&&m.destinationBaseId===dest.id).reduce((n,m)=>n+m.aircraftCount,0);
+  if(projected+count>dest.capacity)return {reason:'목적 비행장 주둔 정원이 부족합니다.'};
+  if(distance>12+1e-9)return {reason:'전개 최대거리 12타일 초과'};
+  destinationBaseId=dest.id;
+ }else return {reason:'알 수 없는 임무'};
+ if(!airB4AirspaceAllowed(w,nid,from,target))return {reason:'다른 국가·점령지 영공을 통과할 수 없습니다.'};
+ const outboundDays=Math.max(1,Math.ceil(distance/AIR_V010A_TYPES.recon_i.speed)),returnDays=kind==='TRAIN'?outboundDays:0,
+  activityDays=kind==='TRAIN'?1:0,required=count*(outboundDays+activityDays+returnDays),loaded=Math.ceil(required*AIR_B4_RESERVE_FACTOR);
+ if(origin.fuelStock<loaded)return {reason:`기지 연료 부족 (${loaded} 필요 / ${origin.fuelStock} 보유)`};
+ return {reason:null,origin,count,distance,outboundDays,returnDays,activityDays,required,loaded,destinationBaseId};
+}
+function airB4Start(w,nid,action){
+ const spec=airB4Spec(w,nid,action.wingId,action.kind,action.targetTileId);if(spec.reason)return {ok:false,reason:spec.reason};
+ const {origin,count,loaded,outboundDays,returnDays,activityDays,destinationBaseId,required}=spec,
+  wing=airB4Wing(w,action.wingId,nid),state=b2Ensure(w.nations[nid]);
+ origin.fuelStock-=loaded;state.reserved-=loaded;state.inFlight+=loaded;
+ const mission={id:w.air.nextMissionId++,nationId:nid,wingId:wing.id,kind:action.kind,status:'PREPARING',
+  fromBaseId:origin.id,destinationBaseId,targetTileId:action.targetTileId,aircraftCount:count,
+  startedDay:w.dayIndex,phaseDay:w.dayIndex,legProgress:0,outboundDays,returnDays,activityDays,
+  tankFuel:loaded,initialFuel:loaded,burnedFuel:0,requiredFuel:required};
+ w.air.missions.push(mission);wing.status='SORTIE';wing.missionId=mission.id;
+ for(const id of wing.aircraftIds)airB3Aircraft(w,id,nid).status='SORTIE';
+ airB3Log(w,'MISSION_STARTED',null,wing.id);w.changeSeq++;return {ok:true,missionId:mission.id,loaded,required};
+}
+function airB4Burn(w,m){const cost=m.aircraftCount*AIR_B4_FUEL_PER_AIRCRAFT_DAY,n=w.nations[m.nationId],st=b2Ensure(n);
+ if(m.tankFuel<cost)throw Error('B4 임무 연료 부족: 잘못된 이전 상태');
+ m.tankFuel-=cost;m.burnedFuel+=cost;st.inFlight-=cost;n.resources.aviation_fuel-=cost;
+ if(n.resources.aviation_fuel<0||st.inFlight<0)throw Error('B4 국가 연료 보존식 실패');
+}
+function airB4Land(w,m){
+ const air=w.air,wing=airB4Wing(w,m.wingId,m.nationId);if(!wing)return;
+ const prefer=m.kind==='TRANSFER'?m.destinationBaseId:m.fromBaseId;
+ let base=airB3Base(w,prefer,m.nationId);
+ const canLand=b=>b&&airB3ReadyBase(w,b)&&airB3CountAt(w,b.id)+(b.id===wing.baseId?0:m.aircraftCount)<=b.capacity;
+ if(!canLand(base)){
+  const options=air.bases.filter(b=>b.nationId===m.nationId&&canLand(b)&&g3eDistance(w,w.tiles[b.tileId],w.tiles[m.targetTileId])<=AIR_V010A_TYPES.recon_i.radius);
+  options.sort((a,b)=>g3eDistance(w,w.tiles[a.tileId],w.tiles[m.targetTileId])-g3eDistance(w,w.tiles[b.tileId],w.tiles[m.targetTileId])||a.id-b.id);
+  base=options[0]||null;
+ }
+ const n=w.nations[m.nationId],st=b2Ensure(n);
+ if(!base){
+  // No legal runway: officially lose the airframes, pilots, and all unburnt tank fuel.
+  n.resources.aviation_fuel-=m.tankFuel;st.inFlight-=m.tankFuel;m.tankFuel=0;
+  air.lost+=wing.aircraftIds.length;air.aircraft=air.aircraft.filter(a=>!wing.aircraftIds.includes(a.id));
+  air.wings=air.wings.filter(g=>g.id!==wing.id);airB3Log(w,'MISSION_LOST',null,wing.id);
+ }else{
+  // A destination runway can be nearly full. Return the excess to its actual
+  // regional warehouse (or unassigned national stock), never overflow the runway.
+  const accepted=Math.min(m.tankFuel,Math.max(0,b2BaseFuelCapacity(base)-base.fuelStock));
+  if(accepted<m.tankFuel&&i1Active(w,n))i1Row(i1Ensure(n,w),base.settlementId).aviation_fuel+=m.tankFuel-accepted;
+  base.fuelStock+=accepted;st.reserved+=accepted;st.inFlight-=m.tankFuel;m.tankFuel=0;
+  for(const id of wing.aircraftIds){const a=airB3Aircraft(w,id,m.nationId);a.baseId=base.id;a.status='READY';}
+  wing.baseId=base.id;wing.status='READY';wing.missionId=null;
+  airB3Log(w,base.id===prefer?'MISSION_LANDED':'MISSION_DIVERTED',null,wing.id);
+ }
+ air.missions=air.missions.filter(x=>x.id!==m.id);w.changeSeq++;
+}
+function airB4NextDay(w){return w.air?.missions?.length?w.dayIndex+1:Infinity;}
+function airB4Advance(w){if(!w.air?.missions?.length)return;
+ for(const m of [...w.air.missions]){
+  if(m.phaseDay>=w.dayIndex)continue;
+  m.phaseDay=w.dayIndex;
+  if(m.status==='PREPARING'){m.status='OUTBOUND';airB3Log(w,'MISSION_DEPARTED',null,m.wingId);w.changeSeq++;continue;}
+  if(m.status==='OUTBOUND'){
+   airB4Burn(w,m);m.legProgress++;
+   if(m.legProgress>=m.outboundDays){
+    if(m.kind==='TRANSFER'){airB4Land(w,m);continue;}
+    m.status='ON_TARGET';m.legProgress=0;airB3Log(w,'MISSION_TARGET',null,m.wingId);
+   }
+  }else if(m.status==='ON_TARGET'){
+   airB4Burn(w,m);m.activityDays--;
+   if(m.activityDays<=0){m.status='RETURNING';m.legProgress=0;airB3Log(w,'MISSION_RETURNING',null,m.wingId);}
+  }else if(m.status==='RETURNING'){
+   airB4Burn(w,m);m.legProgress++;if(m.legProgress>=m.returnDays){airB4Land(w,m);continue;}
+  }
+  w.changeSeq++;
+ }
+}
+function airB4Validate(w,fail){
+ const valid=x=>Number.isSafeInteger(x)&&x>=0,seen=new Set();
+ if(w.air.missions.length>w.air.wings.length)return fail('B4 동시 임무 수량');
+ for(const m of w.air.missions){
+  const wing=airB4Wing(w,m.wingId,m.nationId),base=airB3Base(w,m.fromBaseId,m.nationId),target=w.tiles[m.targetTileId];
+  if(!valid(m.id)||m.id<1||m.id>=w.air.nextMissionId||seen.has(m.id)||
+   !wing||wing.missionId!==m.id||wing.status!=='SORTIE'||!base||!target||
+   !['TRAIN','TRANSFER'].includes(m.kind)||!['PREPARING','OUTBOUND','ON_TARGET','RETURNING'].includes(m.status)||
+   !valid(m.aircraftCount)||m.aircraftCount!==wing.aircraftIds.length||m.aircraftCount<1||
+   !valid(m.startedDay)||m.startedDay>w.dayIndex||!valid(m.phaseDay)||m.phaseDay> w.dayIndex||m.phaseDay<m.startedDay||
+   !valid(m.outboundDays)||m.outboundDays<1||!valid(m.returnDays)||!valid(m.activityDays)||
+   !valid(m.legProgress)||!valid(m.initialFuel)||!valid(m.tankFuel)||!valid(m.burnedFuel)||!valid(m.requiredFuel)||
+   m.tankFuel+m.burnedFuel!==m.initialFuel||m.initialFuel<Math.ceil(m.requiredFuel*AIR_B4_RESERVE_FACTOR)||
+   m.initialFuel>1000000||m.legProgress>Math.max(m.outboundDays,m.returnDays)||
+   (m.kind==='TRANSFER'&&(!airB3Base(w,m.destinationBaseId,m.nationId)||m.returnDays!==0))||
+   (m.kind==='TRAIN'&&(m.destinationBaseId!==null||m.returnDays<1))||
+   wing.aircraftIds.some(id=>airB3Aircraft(w,id,m.nationId)?.status!=='SORTIE'))return fail('B4 임무 구조 또는 연료');
+  seen.add(m.id);
+ }
+ const flightByNation=new Map();for(const m of w.air.missions)flightByNation.set(m.nationId,(flightByNation.get(m.nationId)||0)+m.tankFuel);
+ for(const n of w.nations)if(n.b2Fuel?.inFlight!==(flightByNation.get(n.id)||0))return fail('B4 비행중 연료 국가 합계');
+ return true;
+}
+function airB4Draw(renderer){
+ const w=renderer.world,ctx=renderer.ctx,scale=renderer.scale,ox=renderer.originX,oy=renderer.originY;
+ // Base marker number is subordinate to the runway symbol. It uses a readable fixed baseline.
+ for(const b of w.air.bases){const t=w.tiles[b.tileId];if(!t)continue;
+  const ct=airB3CountAt(w,b.id);if(!ct)continue;
+  const x=ox+(t.x+.81)*scale,y=oy+(t.y+.52)*scale;
+  if(x<-24||x>renderer.width+24||y<-24||y>renderer.height+24)continue;
+  ctx.save();ctx.font=`bold ${Math.max(9,Math.min(12,scale*.22))}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#15212c';ctx.strokeStyle=w.nations[b.nationId]?.color||'#cde8e5';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.roundRect(x-10,y-7,20,14,5);ctx.fill();ctx.stroke();ctx.fillStyle='#ffffff';ctx.fillText(String(ct),x,y+.5);ctx.restore();
+ }
+ for(const m of w.air.missions){
+  const a=w.air.bases.find(b=>b.id===m.fromBaseId),from=w.tiles[a?.tileId],to=w.tiles[m.targetTileId];if(!from||!to)continue;
+  const fx=from.x+.5,fy=from.y+.5,tx=fx+airB4DeltaX(w,from.x,to.x),ty=to.y+.5;
+  const color=w.nations[m.nationId]?.color||'#d9f5ef';
+  if(renderer.showAirRangeV010||renderer.selectedId===m.targetTileId||renderer.selectedId===a.tileId){
+   ctx.save();ctx.strokeStyle=color;ctx.globalAlpha=.72;ctx.lineWidth=Math.max(1.4,scale*.045);ctx.setLineDash([5,4]);
+   for(const shift of [-w.size,0,w.size]){if(shift&&g3eTopology(w)!==G3E_CYLINDER_X)continue;
+    ctx.beginPath();ctx.moveTo(ox+(fx+shift)*scale,oy+fy*scale);ctx.lineTo(ox+(tx+shift)*scale,oy+ty*scale);ctx.stroke();}
+   ctx.restore();
+  }
+  const pos=airB4Position(w,m),px=ox+pos.x*scale,py=oy+pos.y*scale;
+  for(const shift of [-w.size,0,w.size]){if(shift&&g3eTopology(w)!==G3E_CYLINDER_X)continue;
+   const x=px+shift*scale;if(x<-25||x>renderer.width+25||py<-25||py>renderer.height+25)continue;
+   const r=Math.max(7,Math.min(14,scale*.23));ctx.save();ctx.translate(x,py);ctx.rotate(pos.angle);
+   ctx.shadowColor='rgba(0,0,0,.55)';ctx.shadowBlur=5;ctx.fillStyle=color;ctx.strokeStyle='#101722';ctx.lineWidth=Math.max(1.5,r*.18);
+   ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(-r*.3,-r*.3);ctx.lineTo(-r*.85,-r*.88);ctx.lineTo(-r*.95,-r*.48);ctx.lineTo(-r*.5,0);ctx.lineTo(-r*.95,r*.48);ctx.lineTo(-r*.85,r*.88);ctx.lineTo(-r*.3,r*.3);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+  }
+ }
+}
+function airB4RenderExtra(section,w,n,makeRow){
+ const marker=makeRow('p','V0.10B4 · 지도에서 목적 타일 또는 목적 비행장 타일을 선택한 뒤 출격하세요. 비행 중 기체는 국가 고유색·이동 방향으로 표시됩니다.','muted-line');section.append(marker);
+ for(const b of w.air.bases.filter(b=>b.nationId===n.id&&b.status==='ACTIVE')){
+  const line=makeRow('div',`비행장 #${b.id} 연료 목표량 `,'muted-line'),select=document.createElement('select');select.setAttribute('aria-label',`비행장 ${b.id} 연료 비축 목표량`);
+  for(const q of [12,24,48,60,120,240])if(q<=b2BaseFuelCapacity(b)){const opt=document.createElement('option');opt.value=String(q);opt.textContent=`${q}/${b2BaseFuelCapacity(b)}`;select.append(opt);}
+  select.value=String(airB4BaseTarget(b));select.addEventListener('change',()=>{b.fuelTarget=Number(select.value);w.changeSeq++;airV010RenderPanel();map.draw();});
+  line.append(select);section.append(line);
+ }
+ const chosen=w.tiles[app.selectedId];
+ for(const wing of w.air.wings.filter(g=>g.nationId===n.id)){
+  const base=w.air.bases.find(b=>b.id===wing.baseId),mission=wing.missionId===null?null:airB4Mission(w,wing.missionId);
+  if(mission){
+   const p=airB4Position(w,mission),label=mission.status==='PREPARING'?'출격 준비':mission.status==='OUTBOUND'?'이동 중':mission.status==='ON_TARGET'?'현지 활동':'귀환 중';
+   const line=makeRow('div',`✈ 편대 #${wing.id} · ${label} · (${p.x.toFixed(1)}, ${p.y.toFixed(1)}) · 연료 ${mission.tankFuel}/${mission.initialFuel} · 누적 소비 ${mission.burnedFuel}`,'muted-line');section.append(line);
+   continue;
+  }
+  if(!chosen||!base||wing.status!=='READY')continue;
+  for(const [kind,label] of [['TRAIN','훈련 비행'],['TRANSFER','기지 간 전개']]){
+   const spec=airB4Spec(w,n.id,wing.id,kind,chosen.id),btn=makeRow('button',`편대 #${wing.id} · ${label} → (${chosen.x},${chosen.y})${!spec.reason?` · 탑재 ${spec.loaded}`:''}`,'jump-button');
+   btn.type='button';btn.disabled=!!spec.reason;if(spec.reason)btn.title=spec.reason;
+   btn.addEventListener('click',()=>{const result=airB4Start(w,n.id,{wingId:wing.id,kind,targetTileId:chosen.id});
+    showToast(result.ok?`편대 #${wing.id} 출격 준비 · 연료 ${result.loaded} 탑재`:result.reason);airV010RenderPanel();map.draw();renderInspector();});
+   section.append(btn);
+  }
+ }
+ const recent=w.air.events.filter(e=>e.kind==='MISSION_LANDED'||e.kind==='MISSION_DIVERTED'||e.kind==='MISSION_LOST').slice(-3).reverse();
+ if(recent.length){const note=makeRow('div','', 'air-b4-last-events');note.style.cssText='display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:9px;';
+  for(const e of recent){const pill=makeRow('span',`${e.kind==='MISSION_LANDED'?'착륙 완료':e.kind==='MISSION_DIVERTED'?'우회 착륙':'기체 손실'} · 편대 #${e.wingId}`,'');
+   pill.style.cssText='display:inline-flex;align-items:center;justify-content:center;line-height:1.3;padding:5px 9px;min-height:24px;box-sizing:border-box;border-radius:8px;border:1px solid #668b9b;font-size:12px;white-space:nowrap;';note.append(pill);}
+  section.append(note);
+ }
 }
 
 </script>
@@ -29376,7 +29913,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v010a-world';
+const SAVE_KEY='vilob-light-v010b4-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -29388,7 +29925,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09i2a4-world','vilob-light-v09i2a3-world','vilob-light-v09i2a2-world','vilob-light-v09i2a1-world','vilob-light-v09i1a3-world','vilob-light-v09i1a2-world','vilob-light-v09i1a1-world','vilob-light-v09i1a-world','vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v010b2-world','vilob-light-v010b1-world','vilob-light-v010a-world','vilob-light-v09i2a4-world','vilob-light-v09i2a3-world','vilob-light-v09i2a2-world','vilob-light-v09i2a1-world','vilob-light-v09i1a3-world','vilob-light-v09i1a2-world','vilob-light-v09i1a1-world','vilob-light-v09i1a-world','vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
@@ -32464,7 +33001,7 @@ function g3bTryMarketSea(w,good,priceMilli,r,bo,so,needs){
  const f=g3bFindCandidate(w,seller.id,buyer.id,good,Math.min(bo.requested-bo.filled,so.requested-so.filled));if(!f){g3cBlockedOrder(w,seller.id,buyer.id);g3bRecord(w,'NO_READY_FLEET_OR_ROUTE');return false;}
  const floor=Math.max(safeStock(w,seller,good),needs.get(seller.id)?.target[good]||0),stock=seller.resources[good]||0;
  let max=Math.min(bo.requested-bo.filled,so.requested-so.filled,stock-floor,navyBItemCapacity(w,f.fleet,good));
- if(I_GOODS.includes(good))max=Math.min(max,i1Available(w,seller,f.source.settlementId,good)-(good==='coal'?f.coal:0));
+ if(I1_REAL_GOODS.includes(good))max=Math.min(max,i1Available(w,seller,f.source.settlementId,good)-(good==='coal'?f.coal:0));
  max=Math.min(max,g3cSelectRoom(w,f.source,f.dest,f.fleet,f.path,good));
  if(max<1){g3bRecord(w,'NO_SELLER_LOCAL_STOCK_OR_CAPACITY');return false;}
  const goldReserve=buyer.controller==='PLAYER'?0:Math.max(30,Math.floor(buyer.gold*.12),needs.get(buyer.id)?.intent&&good!=='food'?needs.get(buyer.id).intent.price.gold+needs.get(buyer.id).upkeep:0);
@@ -32473,7 +33010,7 @@ function g3bTryMarketSea(w,good,priceMilli,r,bo,so,needs){
  const freight=max*TRADE_GOODS[good].freight;
  const seaFare=g3bMarketFreightFee(f.path,freight),seaCost=seaFare+f.coal*TRADE_GOODS.coal.price;
  const landCost=r.route?g3bLandCost(v07cFreightUnits(w,buyer.id,good,max),r.route.distance):Infinity;
- const indirectFee=Math.ceil(e3ePriceAmount(max,priceMilli)*E3E1_INDIRECT_FEE_RATE/100);
+ const indirectFee=good==='aviation_fuel'?Infinity:Math.ceil(e3ePriceAmount(max,priceMilli)*E3E1_INDIRECT_FEE_RATE/100);
  // Transshipment has a fixed charge; bulky long-distance deliveries get the discount.
  if(seaCost>=Math.min(landCost,indirectFee)&&landCost!==Infinity){g3bRecord(w,'LAND_OR_BROKER_CHEAPER');return false;}
  if(seaCost>=indirectFee&&landCost===Infinity){g3bRecord(w,'BROKER_CHEAPER');return false;}
@@ -32799,11 +33336,11 @@ function g3dMerchantDemand(w,n,port,typeId){
    for(const good of NAVY_B_GOODS){
     const free=(n.resources[good]||0)-Math.max(safeStock(w,n,good),sellTarget[good]),need=buyerTarget[good]-(other.resources[good]||0);
     if(free<4||need<4||other.gold<TRADE_GOODS[good].price*5)continue;
-    if(I_GOODS.includes(good)&&i1Available(w,n,port.settlementId,good)<4)continue;
+    if(I1_REAL_GOODS.includes(good)&&i1Available(w,n,port.settlementId,good)<4)continue;
     const amount=Math.floor(Math.min(free,need,Math.floor(NAVY_B_CARGO[typeId]/TRADE_GOODS[good].freight)));
     if(amount<4)continue;
     const fee=g3bMarketFreightFee(path,amount*TRADE_GOODS[good].freight);
-    const broker=Math.ceil(amount*TRADE_GOODS[good].price*E3E1_INDIRECT_FEE_RATE/100);
+    const broker=good==='aviation_fuel'?Infinity:Math.ceil(amount*TRADE_GOODS[good].price*E3E1_INDIRECT_FEE_RATE/100);
     const cost=Math.min(land?g3bLandCost(amount*TRADE_GOODS[good].freight,land.distance):Infinity,broker);
     if(fee<cost)return {good,buyerId:other.id,portId:port.id,destPortId:dest.id,amount,fee};
    }
@@ -32964,7 +33501,7 @@ g3bOnFinish=function(w,job,phase){const ret=g3fOldMarketFinish(w,job,phase);if(w
 const g3fOldPortSettlement=g3cPortFeeSettlement;
 g3cPortFeeSettlement=function(w,job){const g=g3bEnsure(w),before=g.stats.portIncome||0;
  const ret=g3fOldPortSettlement(w,job),income=(g.stats.portIncome||0)-before;
- if(income&&w.g3fObservation&&job?.g3bMarket){const st=g3fEnsure(w),row=st.maritime.goods[job.good],pair=g3fPairRow(st,job.sellerNationId,job.buyerNationId,job.good);
+ if(income&&w.g3fObservation&&job?.g3bMarket&&G3F_GOODS.includes(job.good)){const st=g3fEnsure(w),row=st.maritime.goods[job.good],pair=g3fPairRow(st,job.sellerNationId,job.buyerNationId,job.good);
   row.marketFeeSink-=income;row.marketPortIncome+=income;pair.marketFeeSink-=income;pair.marketPortIncome+=income;
  }return ret;};
 const g3fOldQuarter=runQuarter;
