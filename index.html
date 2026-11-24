@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9I1A</title>
+<title>VILOB Light · V0.9I2A4</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -864,6 +864,63 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 #g3aRouteControls{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap}
 #g3aRouteControls select{max-width:135px;font-size:11px}
 @media (max-width:640px){#g3aRouteControls{max-width:100%;font-size:11px}#g3aRouteControls select{max-width:102px}}
+
+/* I1A2: read-only national history view. The game model and time loop are untouched. */
+.i1a2-switch{display:flex;gap:7px;padding:12px 17px 0;flex-wrap:wrap}
+.i1a2-switch button{padding:8px 17px;border:1px solid #36546a;border-radius:8px;background:#182a3c;color:#a9c4d0;font-size:13px;font-weight:700}
+.i1a2-switch button.selected{background:#236b65;border-color:#65b5a1;color:#effff7}
+.i1a2-country-head{display:flex;gap:13px;align-items:flex-start;flex-wrap:wrap;margin:15px 0}
+.i1a2-country-head label{font-size:12px;color:#a5c3d4;display:flex;flex-direction:column;gap:6px;min-width:165px;max-width:100%}
+.i1a2-country-head select{min-width:195px;max-width:100%;background:#152a3b;color:#eaf5f2;border:1px solid #44627a;border-radius:7px;padding:8px 10px}
+.i1a2-status{font-size:12px;color:#a9d8c1;padding-top:18px}
+.i1a2-note{font-size:12px;line-height:1.7;color:#b0c2ce;background:#142738;border:1px solid #304558;padding:10px 13px;border-radius:8px;margin:12px 0}
+.i1a2-stats{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 20px}
+.i1a2-stat{background:#172c3a;border:1px solid #324c5e;border-radius:8px;padding:10px 13px;min-width:115px;flex:1 1 112px;max-width:220px}
+.i1a2-stat small{display:block;color:#94aebc;font-size:11px;margin-bottom:5px}
+.i1a2-stat strong{font-size:15px;color:#e9f5f0;font-variant-numeric:tabular-nums}
+.i1a2-section-title{font-size:16px;font-weight:800;margin:21px 0 10px;color:#d7f4ec}
+.i1a2-prose{font-size:13px;line-height:1.85;max-width:900px;color:#d0dee6;margin:12px 0}
+.i1a2-timeline{display:grid;gap:10px;margin-top:12px}
+.i1a2-event{display:flex;gap:13px;background:#152635;border:1px solid #2e4858;border-radius:11px;padding:14px 15px}
+.i1a2-event-icon{font-size:20px;flex:none;width:28px}
+.i1a2-event-body{min-width:0;flex:1}
+.i1a2-event-meta{font-size:11px;color:#91b8c3;margin-bottom:5px}
+.i1a2-event-title{font-size:14px;color:#e3f8ef;font-weight:750;overflow-wrap:anywhere}
+.i1a2-event-text{font-size:12px;line-height:1.7;color:#baccd7;margin:7px 0;overflow-wrap:anywhere}
+.i1a2-source-btn,.i1a2-all-events{border:1px solid #426b6b;background:#1c4447;color:#c9f5e9;font-size:12px;border-radius:7px;padding:7px 10px}
+.i1a2-source-btn:hover,.i1a2-all-events:hover{background:#29575c}
+.i1a2-record-focus{outline:2px solid #70dcbf;outline-offset:2px}
+#chronicleLensPanel[hidden],#chronicleEventsWrap[hidden]{display:none!important}
+@media(max-width:480px){.i1a2-country-head{display:block}.i1a2-country-head select{width:100%}.i1a2-status{padding-top:8px}.i1a2-event{padding:11px}.i1a2-switch button{flex:1}}
+
+
+/* I1A3: Chronicle Lens V1.1 – read-only sections and evidence navigation. */
+.i1a3-views{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 17px}
+.i1a3-views button{border:1px solid #456476;background:#142d3c;color:#b9d4dd;border-radius:8px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}
+.i1a3-views button[aria-selected="true"]{border-color:#62b8a8;background:#1e665f;color:#f0fff9}
+.i1a3-view[hidden]{display:none!important}
+.i1a3-chapters{display:grid;gap:13px}
+.i1a3-chapter{background:#132936;border:1px solid #335468;border-radius:12px;padding:15px}
+.i1a3-chapter > summary{cursor:pointer;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;list-style:none}
+.i1a3-chapter > summary::-webkit-details-marker{display:none}
+.i1a3-chapter-title{font-size:15px;font-weight:800;color:#e6f8f2}
+.i1a3-chapter-meta{font-size:12px;color:#99b9c5}
+.i1a3-chapter p{font-size:13px;color:#c8dde3;line-height:1.85;margin:11px 0}
+.i1a3-evidence{border-top:1px solid #2d4a58;padding:8px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.i1a3-evidence-label{font-size:12px;color:#d1e8e7;line-height:1.6;flex:1 1 230px}
+.i1a3-evidence small{display:block;color:#96b4c0}
+.i1a3-rel-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.i1a3-rel-controls label{font-size:12px;color:#b5cfdb}
+.i1a3-rel-controls select{max-width:100%;min-width:180px;background:#162e3b;color:#e6f8f1;border:1px solid #4a6a78;border-radius:7px;padding:8px}
+.i1a3-relations{display:grid;gap:12px}
+.i1a3-rel{border:1px solid #335466;background:#122838;border-radius:11px;padding:13px}
+.i1a3-rel h3{font-size:15px;color:#d9fff0;margin:0 0 8px}
+.i1a3-rel-note{font-size:12px;color:#a8c2cf;line-height:1.75}
+.i1a3-rel-row{padding:9px 0;border-top:1px dashed #36515e;display:flex;align-items:flex-start;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.i1a3-rel-detail{color:#d8e7eb;font-size:12px;line-height:1.6;flex:1 1 230px}
+.i1a3-rel-detail small{display:block;color:#93b4bf}
+@media(max-width:480px){.i1a3-views button{flex:1 1 42%}.i1a3-chapter{padding:11px}.i1a3-rel-controls select{width:100%}}
+
 </style>
 </head>
 <body>
@@ -934,11 +991,28 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <div class="milestone"><span class="tick">✓</span><span>V0.3G · 합동 전투 편제 수 중립성 및 사기·피해 회계 개선</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3H1 · 동위치 다중 편제 합동 전투·개별 피해/후퇴·연합 회계</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G2 · 가시 타일 렌더링·정적 배경 캐시·모바일 메모리 제한</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G1 · 지도 프레임 병합·시설/군대 계산 캐시·요새 정보 캐시·방어선 HP 표시 수정</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3G · 부분 점령 영토 양도·시설 재연결·패전군 회복·요새 HP/수리/파괴</span></div>
 <div class="milestone"><span class="tick">✓</span><span>V0.3F3F · 공성 유효 시간 누적·패전군 재출동 준비도</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3E · 압도적 승리 시 패주 피해·전투 기록/회계 반영</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3D · 실질 요새 방어선·전략적 요새 AI·고비용 요새</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F3 · 교역 의존도·차단 경제 압박·국가별 위험 지표</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F2 · 도로 연결망 규모·개선율 생산 보너스·장거리 도로 AI·성능 계측</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3F1 · 정착지 노동 가동률·발전도·도로 생산성·지역 경제 통계</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E4 · 연간 전쟁 외교 통계·지원국 군사비 장부·JSON/CSV 진단</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E3 · 다자 평화협정·연합 보상·전체 참전국 전쟁사</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E2 · 공격 참전·진영별 통행·보급·공동 작전·연합 점령</span></div><div class="milestone"><span class="tick">✓</span><span>V0.3E1C1 · 황금빛 요새선·완화된 외교 국경선·UI 전용 보정</span></div>
 <div class="milestone"><span class="tick">✓</span><span>하단 5탭·지도에서 보기·국가별 비교 통계</span></div><div class="milestone"><span class="tick">✓</span><span>징집 보병·창병·궁병·무기·방어구</span></div><p class="scope-note">도로·군사 보급·정착지 연결·전쟁사 기록이 적용됩니다. 기존 정착지·시설·전투·점령 시스템과 SIM 계측은 유지합니다. 일반 주민과 병사는 수치로만 관리하며 AI와 플레이어는 동일한 행동 비용 규칙을 사용합니다.</p></section></section><section class="tab-panel" id="tab-chronicle"><div class="section-title"><div class="eyebrow">HISTORICAL CHRONICLE</div><h1>연대기</h1><p>국가가 남긴 시대 전환·기술·개척·외교·전쟁의 역사를 추적합니다.</p></div>
-<section aria-label="세계 장기 역사 기록" class="sidebar-card chronicle-panel">
+<div class="i1a2-switch" role="group" aria-label="연대기 보기 방식"><button id="chronicleLensHistoryBtn" type="button" class="selected" aria-pressed="true">국가사</button><button id="chronicleLensEventsBtn" type="button" aria-pressed="false">사건 목록</button></div>
+<section aria-label="국가별 역사" class="sidebar-card chronicle-panel" id="chronicleLensPanel">
+<div class="card-heading"><div><div class="eyebrow">CHRONICLE LENS · I1A3</div><h2 id="chronicleLensCountryTitle">국가사</h2></div><span class="small-label">기록 기반 역사 개요</span></div>
+<div class="i1a2-country-head"><label>역사를 읽을 국가<select id="chronicleLensNation" aria-label="국가사 국가 선택"></select></label><span class="i1a2-status">생존국과 멸망국 모두 지원</span></div>
+<div class="i1a2-stats" id="chronicleLensStats"></div>
+<div class="i1a3-views" role="tablist" aria-label="국가사 상세 보기">
+<button type="button" id="i1a3View-summary" role="tab" aria-selected="true">핵심 요약</button>
+<button type="button" id="i1a3View-chapters" role="tab" aria-selected="false">시대별 역사</button>
+<button type="button" id="i1a3View-relations" role="tab" aria-selected="false">국가 간 관계사</button>
+<button type="button" id="i1a3View-events" role="tab" aria-selected="false">주요 전환점</button></div>
+<div class="i1a3-view" id="i1a3Pane-summary" role="tabpanel"><div class="i1a2-section-title">국가의 발자취</div><div id="chronicleLensProse"></div></div>
+<div class="i1a3-view" id="i1a3Pane-chapters" role="tabpanel" hidden><div class="i1a2-section-title">시대별 역사</div><div class="i1a3-chapters" id="i1a3Chapters"></div></div>
+<div class="i1a3-view" id="i1a3Pane-relations" role="tabpanel" hidden><div class="i1a2-section-title">국가 간 관계의 궤적</div>
+<div class="i1a3-rel-controls"><label for="i1a3Partner">상대 국가</label><select id="i1a3Partner" aria-label="관계사 상대 국가"></select></div><div class="i1a3-relations" id="i1a3Relations"></div></div>
+<div class="i1a3-view" id="i1a3Pane-events" role="tabpanel" hidden><div class="i1a2-section-title">주요 역사적 전환점</div><div class="i1a2-timeline" id="chronicleLensTimeline"></div></div>
+<p class="i1a2-note" id="chronicleLensNote"></p><button type="button" class="i1a2-all-events" id="chronicleLensAllEvents">이 국가의 전체 연대기 보기</button>
+</section>
+<div id="chronicleEventsWrap" hidden><section aria-label="세계 장기 역사 기록" class="sidebar-card chronicle-panel">
 <div class="card-heading"><div><div class="eyebrow">WORLD HISTORY</div><h2>역사 기록</h2></div><span class="small-label" id="chronicleTotal">0건</span></div>
 <div class="chronicle-filter-grid"><label>관련 국가<select aria-label="역사 국가 필터" id="chronicleNationFilter"><option value="all">모든 국가</option></select></label><label>사건 유형<select aria-label="역사 사건 유형 필터" id="chronicleKindFilter"><option value="all">전체 사건</option><option value="era">시대 전환</option><option value="war">전쟁 개시·참전</option><option value="peace">종전·평화협정</option><option value="diplomacy">외교·동맹</option><option value="technology">기술 연구</option><option value="settlement">개척·정착지</option><option value="leader">지도자 교체</option><option value="fall">국가 멸망</option></select></label></div>
 <p class="chronicle-scope" id="chronicleScope"></p><div aria-live="polite" class="chronicle-timeline" id="chronicleTimeline"></div><nav aria-label="연대기 페이지" class="war-history-pager" id="chroniclePager"></nav>
-</section><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div class="recent-activity-list" id="recentActivityList"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD ANALYTICS · V0.4E5</div><h1>통계</h1><p>세계 전체의 규모와 문명 분포를 관찰하고, 국가별 규모·효율·발전 수준을 비교합니다.</p></div>
+</section></div><details class="sidebar-card chronicle-recent" id="recentActivityCard"><summary>최근 일반 활동 <span id="recentActivityCount">0건</span> <span aria-hidden="true">⌄</span></summary><p class="scope-note">최근 이벤트 180건 한정 · 장기 보존되지 않는 일반 행동도 포함합니다.</p><div class="recent-activity-list" id="recentActivityList"></div></details></section><section class="tab-panel" id="tab-statistics"><div class="section-title"><div class="eyebrow">WORLD ANALYTICS · V0.4E5</div><h1>통계</h1><p>세계 전체의 규모와 문명 분포를 관찰하고, 국가별 규모·효율·발전 수준을 비교합니다.</p></div>
 <section aria-label="세계 통계 요약" class="sidebar-card v04c-summary-card"><div class="card-heading"><div><div class="eyebrow">WORLD SNAPSHOT</div><h2>세계 전체 현황</h2></div><span class="small-label" id="v04cStatsDate">현재 시점</span></div><div class="v04c-world-summary" id="v04cWorldSummary"></div><p class="scope-note">생존 국가 기준 · Gold·군사력은 현재 보유량 · 시계열 통계가 아닙니다.</p></section>
 <section aria-label="E3E2 국가별 인구 변화" class="sidebar-card"><div class="card-heading"><div><div class="eyebrow">DEMOGRAPHY LEDGER · E3E2</div><h2>국가별 출생·일반 사망·기아 사망</h2></div><span class="small-label">최근 정산 연도</span></div><div class="world-era-list" id="e3e2StatsDemography"></div></section><section aria-label="시대별 통계" class="sidebar-card v04c-era-stats-card"><div class="card-heading"><div><div class="eyebrow">CIVILIZATION DISTRIBUTION</div><h2>시대별 세계 분포</h2></div><span class="small-label">현재 상태</span></div><div aria-label="문명 분포 단위" class="v04c-era-selector" id="v04cEraMetricControls" role="group"><button class="selected" data-era-metric="countries" type="button">국가 수</button><button data-era-metric="population" type="button">인구</button><button data-era-metric="territory" type="button">영토</button></div><div class="v04c-era-summary" id="v04cEraSummary"></div><p class="scope-note">멸망 국가는 제외 · 중세 I~IV·근세 I~IV·산업 근대 I~III 개별 집계 · 미래는 미개방 · 인구는 현재 정착지 인구 기준입니다.</p></section>
 <section class="sidebar-card comparison-card"><div class="card-heading"><div><div class="eyebrow">NATION COMPARISON</div><h2>국가별 상세 비교</h2></div><span class="small-label">현재 시점</span></div><div aria-label="통계 분야" class="v04c-stat-categories" id="v04cStatCategories" role="group"></div><div class="v04c-stat-toolbar"><label>비교 지표<select aria-label="통계 비교 지표" id="v04cMetricSelect"></select></label><label>정렬<select aria-label="국가 통계 정렬" id="comparisonSort"><option value="default">국가순</option><option selected="" value="desc">내림차순 ↓</option><option value="asc">오름차순 ↑</option></select></label><label>표시 국가<select aria-label="통계 국가 선택" id="v04cNationFilter"><option value="all">전체 국가</option><option value="active">생존 국가만</option></select></label><label>값 표시<select aria-label="통계 수치 표시 방식" id="v04cValueMode"><option value="absolute">실제 값</option><option value="share">전체 대비 비중</option></select></label></div><div class="v04c-metric-info" id="v04cMetricInfo"></div><div aria-live="polite" class="comparison-rows" id="comparisonRows"></div><p class="scope-note" id="v04cStatsScope">현재 세계 상태로 집계합니다.</p></section></section></main>
@@ -950,7 +1024,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.9I1A'; // I1A: isolated, opt-in repeatable performance benchmarking
+const VERSION = 'V0.9I2A4'; // I1A2: Chronicle Lens V1 read-only history view
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -7108,6 +7182,7 @@ function marchDays(t,w=null,nationId=null){
 }
 /** Weighted A* with binary heap. Uses the ACTUAL road travel time for each step. */
 function shortestRoadPath(w,start,end,allowed,mode='march',canExpand=null,nationId=null,fortNet=null){
+  if(mode==='military'&&w.wars.length>0)return i2a2WarMilitaryRoute(w,start,end,allowed,mode,canExpand,nationId,fortNet);
   if(start===end)return [start];
   if(!w.tiles[start]||!w.tiles[end])return null;
   const cost=new Float64Array(w.tiles.length).fill(Infinity),prev=new Int32Array(w.tiles.length).fill(-1);
@@ -7130,6 +7205,45 @@ function shortestRoadPath(w,start,end,allowed,mode='march',canExpand=null,nation
       // Civil road-building retains its old path metric and 4-neighbor graph.
       const step=mode==='build'?(t.terrain==='mountain'?3.3:t.terrain==='rock'?2.2:t.terrain==='forest'?1.6:1)+(roadLevel(t)>0?-0.82:0):
         mode==='military'?marchDays(t,w,nationId)*(militaryDiagonal(u,v,size)?Math.SQRT2:1):marchDays(t);
+      const next=cost[u]+step;
+      if(next<cost[v]){cost[v]=next;prev[v]=u;push(next+estimate(v),v);}
+    }
+  }
+  if(!Number.isFinite(cost[end]))return null;
+  const path=[end];let cursor=end;
+  while(cursor!==start){cursor=prev[cursor];if(cursor<0)return null;path.push(cursor);}
+  return path.reverse();
+}
+/** I2A2: war-only A* with per-route tile travel costs.
+ * The heap, neighbor ordering, ties and fort/terrain checks mirror shortestRoadPath.
+ * All non-war calls retain the existing original path function exactly.
+ * See tests for identical path arrays and full world/RNG parity.
+ */
+function i2a2WarMilitaryRoute(w,start,end,allowed,mode='march',canExpand=null,nationId=null,fortNet=null){
+  if(start===end)return [start];
+  if(!w.tiles[start]||!w.tiles[end])return null;
+  const cost=new Float64Array(w.tiles.length).fill(Infinity),prev=new Int32Array(w.tiles.length).fill(-1);
+  const heap=[];const size=w.size,ex=end%size,ey=Math.floor(end/size);
+  // A call-local memo only; never survives changes to roads, tech or military state.
+  const tileTravel=new Float64Array(w.tiles.length).fill(NaN);
+  const estimate=id=>{
+     if(mode!=='march'&&mode!=='military')return 0;
+     const dx=Math.abs(id%size-ex),dy=Math.abs(Math.floor(id/size)-ey);
+     return mode==='military'?2*(Math.max(dx,dy)-Math.min(dx,dy)+Math.SQRT2*Math.min(dx,dy)):2*(dx+dy);
+   };
+  const push=(f,id)=>{let i=heap.length;heap.push([f,id]);while(i>0){const p=(i-1)>>1;if(heap[p][0]<=f)break;heap[i]=heap[p];i=p;}heap[i]=[f,id];};
+  const pop=()=>{const top=heap[0],last=heap.pop();if(heap.length){let i=0;while(i*2+1<heap.length){let c=i*2+1;if(c+1<heap.length&&heap[c+1][0]<heap[c][0])c++;if(heap[c][0]>=last[0])break;heap[i]=heap[c];i=c;}heap[i]=last;}return top;};
+  cost[start]=0;push(estimate(start),start);
+  while(heap.length){
+    const [rank,u]=pop();if(rank>cost[u]+estimate(u)+1e-8)continue;if(u===end)break;
+    if(canExpand&&u!==start&&!canExpand(u))continue;
+    for(const v of (mode==='military'?neighborsMilitary8(u,size,w.height,w):neighbors4(u,size,w.height,w))){
+      const t=w.tiles[v];if(!TERRAINS[t.terrain].passable||!allowed(t))continue;
+      if(mode==='military'&&!militaryStepPermitted(w,u,v,nationId,fortNet))continue;
+      // G2A tactical A*: both actual road/tech speed and sqrt(2) diagonal cost.
+      // Civil road-building retains its old path metric and 4-neighbor graph.
+      const step=mode==='build'?(t.terrain==='mountain'?3.3:t.terrain==='rock'?2.2:t.terrain==='forest'?1.6:1)+(roadLevel(t)>0?-0.82:0):
+        mode==='military'?(Number.isNaN(tileTravel[v])?(tileTravel[v]=marchDays(t,w,nationId)):tileTravel[v])*(militaryDiagonal(u,v,size)?Math.SQRT2:1):marchDays(t);
       const next=cost[u]+step;
       if(next<cost[v]){cost[v]=next;prev[v]=u;push(next+estimate(v),v);}
     }
@@ -10985,15 +11099,17 @@ function settlementMergePrimary(world,a,b){
 }
 function settlementMergeAssessment(world,a,b){
   if(!a||!b||a.id===b.id||a.ownerId!==b.ownerId)return null;
-  // F2B: a merged settlement cannot inherit two separate dedicated industrial sites.
-  if(world.buildings.filter(x=>x.industrialSlot&&(x.settlementId===a.id||x.settlementId===b.id)).length>1)return null;
-  if(navyF5PortCount(world,a.id)&&navyF5PortCount(world,b.id))return null;
+  // I2A4: pure footprint / core-radius rejections precede the costly F2B scans.
+  // Nothing is cached across actions or quarters; all original gates remain.
   const cap=settlementFootprintCapacity(world,a.ownerId);
   if(a.tileIds.length+b.tileIds.length>cap.maxTiles)return null;
   if((a.formerCapitalOf?.length||0)&&(b.formerCapitalOf?.length||0))return null;
   const primary=settlementMergePrimary(world,a,b);
   const coreDistance=footprintDistance(a.coreTileId,b.coreTileId,world.size,world);
   if(coreDistance>cap.maxRadius)return null;
+  // F2B: the same industrial-slot and double-port exclusions, for viable pairs.
+  if(world.buildings.filter(x=>x.industrialSlot&&(x.settlementId===a.id||x.settlementId===b.id)).length>1)return null;
+  if(navyF5PortCount(world,a.id)&&navyF5PortCount(world,b.id))return null;
   if([...a.tileIds,...b.tileIds].some(id=>footprintDistance(id,primary.coreTileId,world.size,world)>cap.maxRadius))return null;
   const bTiles=new Set(b.tileIds);
   let sharedEdges=0;
@@ -15579,11 +15695,20 @@ function executeMilitaryAction(w,nationId,act){
 }
 function enemyAt(w,army,tid){return w.armies.find(a=>a.nationId!==army.nationId&&a.tileId===tid&&hCombatPresence(w,a)>0&&atWar(w,a.nationId,army.nationId)&&a.engagementId===null);}
 function processMilitaryDay(w,execute){
+  // I1A1: boundary-only observation. No timer or world mutation with the profiler OFF.
+  const __i1a1MilitaryMark=window.__vilobI1A1MilitaryMark;
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('occupationPre',w);
+  try{
   // Settle the preceding uncontested interval BEFORE a new battle/movement changes its status.
   processOccupationDay(w);
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('engagements',w);
   // Battles are independent persistent objects and resolve at their own scheduled dates.
   for(const e of w.engagements.slice())if(e.nextRoundDay<=w.dayIndex)resolveEngagementRound(w,e);
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('armyMainLoop',w);
   for(const a of w.armies.slice()){
+    // I2A1-B: stationary READY armies have no military-day actions in this loop.
+    // Supply and deletion are processed in their own later phases.
+    if(a.status==='READY'&&!a.order&&!a.hServiceReturn)continue;
     if(a.status==='DESTROYED'||!hCombatPresence(w,a)&&!a.hServiceReturn?.tow)continue;
     if(a.hServiceReturn&&(['RETREATING','TRAPPED','SAILING','ENGAGED'].includes(a.status)||a.engagementId!==null)){h1dCancelService(w,a);}
     if(a.status==='SAILING'){if(a.seaTransit?.arrivalDay<=w.dayIndex)finishSeaVoyage(w,a);else continue;}
@@ -15670,6 +15795,7 @@ function processMilitaryDay(w,execute){
     if(a.order&&t.id===a.order.targetTileId){a.order=null;if(a.hServiceReturn&&atSafeSettlement(w,a))h1dServiceOnArrival(w,a);else if(!isOccupying(w,a)){h1dCancelService(w,a);a.operation=null;a.needsOrders=true;}}
     w.changeSeq++;
   }
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('trappedReview',w);
   // Legacy saves and changing fronts can leave routed forces under a victorious army.
   // Such a defeated force cannot keep an occupation on hold indefinitely.
   for(const trapped of w.armies.slice()){
@@ -15679,18 +15805,28 @@ function processMilitaryDay(w,execute){
     if(victor&&!planRetreat(w,trapped,{excludeTileId:trapped.tileId,repatriation:!!trapped.repatriation?.active}))
       surrenderArmy(w,trapped,victor.nationId);
   }
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('occupationStart',w);
   // Winning a battle can place a force directly onto hostile ground without a MOVE step.
-  for(const a of w.armies){
+  // I2A1-A: without any active wars, beginOccupation cannot start a new occupation.
+  // Keep occupation progression, cleanup and supply elsewhere in this function unchanged.
+  if(w.wars.length!==0)for(const a of w.armies){
     if(a.status!=='READY'||!hCombatPresence(w,a)||isOccupying(w,a))continue;
     const tile=w.tiles[a.tileId];
     if(tile.ownerId!==null&&(tile.ownerId!==a.nationId||tile.occupiedBy!==null&&tile.occupiedBy!==a.nationId))
       beginOccupation(w,a,a.tileId);
   }
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('occupationPost',w);
   processOccupationDay(w);
   // Recompute even for STATIONARY armies after a hostile occupation cuts their corridor.
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('supply',w);
   updateArmySupply(w);
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('cleanup',w);
   // Remove destroyed forces; their losses were deducted permanently from recruited manpower.
-  for(const a of w.armies.filter(a=>(!hCombatPresence(w,a)&&!(hCount(w,a,true)>0&&(atSafeSettlement(w,a)||a.hServiceReturn?.tow||w.tiles[a.tileId]?.ownerId===a.nationId&&w.tiles[a.tileId]?.occupiedBy===null&&hasTech(w,a.nationId,'automaton_maintenance'))))||a.status==='DESTROYED')){
+  // I2A1-C: a non-DESTROYED army with living human manpower cannot match
+  // the original removal predicate (hCombatPresence is non-negative).
+  // Preserve the exact original predicate for other armies, including machine-only forces.
+  for(const a of w.armies.filter(a=>a.status!=='DESTROYED'&&manpower(a)>0?false:
+    (!hCombatPresence(w,a)&&!(hCount(w,a,true)>0&&(atSafeSettlement(w,a)||a.hServiceReturn?.tow||w.tiles[a.tileId]?.ownerId===a.nationId&&w.tiles[a.tileId]?.occupiedBy===null&&hasTech(w,a.nationId,'automaton_maintenance'))))||a.status==='DESTROYED')){
     event(w,`${w.nations[a.nationId].name}의 군대가 소멸했습니다.`,'battle');
     hOnArmyRemoved(w,a,a.status==='DESTROYED'?'BATTLE_LOSS':'FIELD_LOSS');
     e2FinaliseGuns(w,a,a.status==='DESTROYED'?'BATTLE_LOSS':'FIELD_LOSS');
@@ -15708,7 +15844,11 @@ function processMilitaryDay(w,execute){
       w.occupations=w.occupations.filter(v=>v!==o);w.changeSeq++;
     }
   }
+  if(__i1a1MilitaryMark)__i1a1MilitaryMark('reactiveOrders',w);
   if(execute){assignWarOrders(w,execute,true);d2bAssignSuppression(w,execute);}
+  }finally{
+    if(__i1a1MilitaryMark)__i1a1MilitaryMark('end',w);
+  }
 }
 function nextMilitaryDay(w){
   let next=Infinity;
@@ -16415,7 +16555,17 @@ function assignPeacetimeGarrisons(w,execute){
     const posts=peacetimeBorderPosts(w,nation.id);if(!posts.length)continue;
     const armies=w.armies.filter(a=>a.nationId===nation.id&&manpower(a)>=12&&a.status==='READY'&&a.engagementId===null&&!a.f3fRout&&!a.hServiceReturn)
       .sort((a,b)=>a.id-b.id);
-    const assigned=[];
+    const assigned=[],blockedPostTiles=new Set();
+    // I2A3-C: original Manhattan<3 blocked positions, indexed per assigned post.
+    const rememberAssigned=tileId=>{
+      assigned.push(tileId);
+      const cx=tileId%w.size,cy=Math.floor(tileId/w.size);
+      for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){
+        if(Math.abs(dx)+Math.abs(dy)>=3)continue;
+        const x=cx+dx,y=cy+dy;
+        if(x>=0&&x<w.size&&y>=0&&y<w.height)blockedPostTiles.add(y*w.size+x);
+      }
+    };
     const keepReserve=armies.length>=4?Math.max(1,Math.floor(armies.length*.17)):0;
     const deployable=armies.slice(0,Math.max(0,armies.length-keepReserve));
     for(const army of deployable){
@@ -16425,7 +16575,7 @@ function assignPeacetimeGarrisons(w,execute){
       if(army.operation?.type==='REARM'&&manpower(army)<150&&w.dayIndex-(army.operation.assignedDay||0)<120)continue;
       if(army.order&&army.operation?.type!=='BORDER_GARRISON')continue;
       if(army.order&&army.operation?.type==='BORDER_GARRISON'){
-        assigned.push(army.order.targetTileId);continue;
+        rememberAssigned(army.order.targetTileId);continue;
       }
       const distKey=nation.id+':'+army.tileId;
       let distances=distancesMemo.get(distKey);
@@ -16435,7 +16585,7 @@ function assignPeacetimeGarrisons(w,execute){
       const shortlist=[];
       for(const post of posts){
         if(distances[post.tileId]<0)continue;
-        if(assigned.some(id=>Math.abs(id%w.size-post.tileId%w.size)+Math.abs(Math.floor(id/w.size)-Math.floor(post.tileId/w.size))<3))continue;
+        if(blockedPostTiles.has(post.tileId))continue;
         shortlist.push({...post,value:post.score-.28*distances[post.tileId]});
       }
       shortlist.sort((a,b)=>b.value-a.value||a.tileId-b.tileId);
@@ -16462,14 +16612,14 @@ function assignPeacetimeGarrisons(w,execute){
       scored.sort((a,b)=>b.value-a.value||a.tileId-b.tileId);
       if(!scored.length)continue;
       const best=scored[0],current=posts.find(p=>p.tileId===army.tileId);
-      if(current&&current.score>=best.score-5){assigned.push(army.tileId);continue;}
-      if(army.tileId===best.tileId){assigned.push(army.tileId);continue;}
+      if(current&&current.score>=best.score-5){rememberAssigned(army.tileId);continue;}
+      if(army.tileId===best.tileId){rememberAssigned(army.tileId);continue;}
       if(army.operation?.type==='BORDER_GARRISON'&&w.dayIndex-(army.operation.assignedDay||0)<120){
-        assigned.push(army.tileId);continue;
+        rememberAssigned(army.tileId);continue;
       }
       if(execute(w,nation.id,{type:'MOVE_ARMY',armyId:army.id,targetTileId:best.tileId}).ok){
         army.operation={type:'BORDER_GARRISON',targetTileId:best.tileId,assignedDay:w.dayIndex};
-        assigned.push(best.tileId);
+        rememberAssigned(best.tileId);
       }
     }
   }
@@ -22311,11 +22461,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22324,7 +22474,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -29040,7 +29190,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v09i1a-world';
+const SAVE_KEY='vilob-light-v09i2a4-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -29052,14 +29202,14 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v09i2a3-world','vilob-light-v09i2a2-world','vilob-light-v09i2a1-world','vilob-light-v09i1a3-world','vilob-light-v09i1a2-world','vilob-light-v09i1a1-world','vilob-light-v09i1a-world','vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
 function persistProfiles(){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(persistentProfiles));return true;}catch{showToast('세계에는 반영됐지만 브라우저 라이브러리는 저장되지 않았습니다. JSON 내보내기를 이용하세요.');return false;}}
 try{const stored=localStorage.getItem(PROFILE_KEY);if(stored)persistentProfiles=validateCustomLibrary(JSON.parse(stored));}catch(error){console.warn('AI 프로필 라이브러리 읽기 실패:',error.message);}
 for(const id of ['gameVersionLabel','atlasVersionLabel','footerVersionLabel']){const el=document.getElementById(id);if(el)el.textContent=VERSION;}document.title=`VILOB Light · ${VERSION}`;
-const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'desc',v04cStatsGroup:'population',v04cNationFilter:'all',v04cEraMetric:'countries',v04cValueMode:'absolute',v04cStatsCache:null,activeTab:'map',h1bMilitaryPage:'regular',h1bAutoScope:'world',i0AutoTab:'overview',i0OpenBlocks:{},i0AutoArmyId:null,i0AutoArmyQuery:'',h1bAutoArmyFilter:'all',h1bAutoArmyPage:0,h1bAssembleAmount:8,h2aSelectedBlueprint:'light_infantry_support_i',h2gSelectedRevision:2,h2gDraft:null,h2gEditingId:null,h2gPartsSlot:'chassis',h2gPartsModule:'reinforced_frame_i',h2gPartsAmount:1,h2cTypeFilter:'all',nationSubtab:'overview',warHistoryPage:1,chroniclePage:1,chronicleKind:'all',chronicleNation:'all',frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),autoSpeed:createAutoSpeedState(),autoUiDirty:false,autoLastUiAt:0,lastNationPanelId:null,lastNationPanelSubtab:null};
+const app={world:null,running:false,speed:1,selectedId:null,selectedNationId:0,selectedBattleId:null,comparisonMetric:'population',comparisonSort:'desc',v04cStatsGroup:'population',v04cNationFilter:'all',v04cEraMetric:'countries',v04cValueMode:'absolute',v04cStatsCache:null,activeTab:'map',h1bMilitaryPage:'regular',h1bAutoScope:'world',i0AutoTab:'overview',i0OpenBlocks:{},i0AutoArmyId:null,i0AutoArmyQuery:'',h1bAutoArmyFilter:'all',h1bAutoArmyPage:0,h1bAssembleAmount:8,h2aSelectedBlueprint:'light_infantry_support_i',h2gSelectedRevision:2,h2gDraft:null,h2gEditingId:null,h2gPartsSlot:'chassis',h2gPartsModule:'reinforced_frame_i',h2gPartsAmount:1,h2cTypeFilter:'all',nationSubtab:'overview',warHistoryPage:1,chroniclePage:1,chronicleKind:'all',chronicleNation:'all',chronicleLensMode:'history',chronicleLensNation:null,frame:0,lastFrame:null,accumulator:0,toastTimer:0,simMeter:createSimMeter(),autoSpeed:createAutoSpeedState(),autoUiDirty:false,autoLastUiAt:0,lastNationPanelId:null,lastNationPanelSubtab:null};
 const map=new MapRenderer($('worldCanvas'),{
   onSelect:id=>selectTile(id),
   onHover:id=>{$('coordinateLabel').textContent=id===null?'X — · Y —':`X ${id%app.world.size} · Y ${Math.floor(id/app.world.size)}`;}
@@ -30360,6 +30510,494 @@ function historicalRecords(w){
   records.sort((a,b)=>b.dayIndex-a.dayIndex||String(b.key).localeCompare(String(a.key)));
   i1aChronicleCache={world:w,stamp,records};return records;
 }
+// V0.9I1A3 Chronicle Lens V1. Pure read-only derivation from existing historical records.
+// No world state, AI, RNG, save schema or simulation functions are modified here.
+let i1a2LensCache=null;
+function i1a2Particle(name,withFinal,withoutFinal){
+ const last=String(name||'').codePointAt(String(name||'').length-1);
+ return last>=0xac00&&last<=0xd7a3&&(last-0xac00)%28!==0?withFinal:withoutFinal;
+}
+
+function i1a2NationInWar(h,id){
+  const a=h.participants?.attackers||[h.attackerId],d=h.participants?.defenders||[h.defenderId];
+  if(a.includes(id))return 'attackers';
+  if(d.includes(id))return 'defenders';
+  return null;
+}
+function i1a2WarSummary(w,h,id){
+  const side=i1a2NationInWar(h,id),name=w.nations[id]?.name||'해당 국가';
+  const names=h.participantNames||{};
+  const a=h.attackerName||names[h.attackerId]||w.nations[h.attackerId]?.name||'공격측';
+  const d=h.defenderName||names[h.defenderId]||w.nations[h.defenderId]?.name||'방어측';
+  const outcome=h.winningSide?(h.winningSide===side?'해당 국가가 속한 진영 승리':'상대 진영 승리'):'백지 평화';
+  const awards=Number(h.territoryAwards?.[id]||0),gold=Number(h.reparationAwards?.[id]||0);
+  const parts=[`${a}–${d} 전쟁(${timeAt(h.startedDay).year}~${timeAt(h.endedDay).year}년)에 ${name}${i1a2Particle(name,'은','는')} ${side==='attackers'?'공격':'방어'} 진영으로 참전했다.`,`${outcome} · 교전 ${h.battles||0}회`];
+  if(awards>0)parts.push(`이 국가가 획득한 영토 ${awards}타일`);
+  if(gold>0)parts.push(`이 국가에 지급된 배상금 ${number.format(gold)}G`);
+  return parts.join(' · ');
+}
+function i1a2EventCategory(e){
+  if(e.kind==='fall')return 'fall';
+  if(e.kind==='era')return 'era';
+  if(e.kind==='war'||e.kind==='peace')return 'war';
+  return e.kind;
+}
+function i1a2EventScore(e){
+  if(e.kind==='fall')return 120;
+  if(e.kind==='era')return 94;
+  if(e.kind==='peace')return 66;
+  if(e.kind==='war')return 48;
+  if(e.kind==='diplomacy'){
+    if(/독립|종속|배신|파기|해체|보호|복속|봉기/.test(e.text))return 80;
+    if(/갱신|기간 만료|접촉/.test(e.text))return 17;
+    return 53;
+  }
+  if(e.kind==='technology')return /산업|근대|전술|정밀|전기|철도|통합/.test(e.text)?37:21;
+  if(e.kind==='settlement')return 27;
+  if(e.kind==='leader')return 18;
+  return 12;
+}
+function i1a2RelevantRecord(w,id,e){
+  if(!Array.isArray(e.nationIds)||!e.nationIds.includes(id))return false;
+  // Some legacy records attributed a *person's name* to a country with that name.
+  // Reject only a confidently identified other nation prefix; allow renamed historical names.
+  if(['leader','technology','era','settlement'].includes(e.kind)){
+    const colon=e.text.indexOf(':');
+    if(colon>0){
+      const prefix=e.text.slice(0,colon);
+      if(w.nations[id]?.name!==prefix&&w.nations.some(n=>n.id!==id&&n.name===prefix))return false;
+    }
+  }
+  return true;
+}
+function i1a2BuildCandidates(w,id,records){
+  const candidates=[],knownWars=new Set();
+  for(const h of w.warHistory||[]){
+    if(i1a2NationInWar(h,id)===null)continue;
+    knownWars.add(h.id);
+    const deaths=Object.values(h.casualties||{}).reduce((s,x)=>s+(Number(x)||0),0);
+    const award=Number(h.territoryAwards?.[id]||0);
+    const otherId=i1a2NationInWar(h,h.attackerId)===i1a2NationInWar(h,id)?h.defenderId:h.attackerId;
+    const formerAlly=records.some(e=>e.kind==='diplomacy'&&e.dayIndex<h.startedDay&&/상호 방위 동맹/.test(e.text)&&e.nationIds.includes(otherId));
+    const formerCofighter=(w.warHistory||[]).some(prev=>prev.endedDay<h.startedDay&&i1a2NationInWar(prev,id)!==null&&i1a2NationInWar(prev,id)===i1a2NationInWar(prev,otherId));
+    const score=76+(h.tier==='DECISIVE'?12:h.tier==='CLEAR'?8:0)+Math.min(26,Math.log10(1+deaths)*5)+Math.min(15,award*0.5)+Math.min(10,(h.battles||0)*.13)+(formerAlly?17:0)+(formerCofighter?25:0);
+    const names=h.participantNames||{};
+    const a=h.attackerName||names[h.attackerId]||w.nations[h.attackerId]?.name||'공격국';
+    const d=h.defenderName||names[h.defenderId]||w.nations[h.defenderId]?.name||'방어국';
+    candidates.push({key:`war:${h.id}`,dayIndex:h.endedDay,kind:'peace',category:'war',reversal:formerAlly,formerCofighter,score,title:`${a}–${d} 전쟁 종결`,text:i1a2WarSummary(w,h,id),warId:h.id,entryKey:null});
+  }
+  for(const e of records){
+    if(!i1a2RelevantRecord(w,id,e))continue;
+    if(e.warId!=null&&knownWars.has(e.warId)&&['war','peace'].includes(e.kind))continue;
+    const kind=i1a2EventCategory(e);
+    candidates.push({key:`event:${e.key}`,dayIndex:e.dayIndex,kind:e.kind,category:kind,score:i1a2EventScore(e),title:e.kind==='leader'?'지도자 교체':HISTORICAL_LABELS[e.kind]||'역사 기록',text:e.text,warId:null,entryKey:e.key});
+  }
+  return candidates;
+}
+function i1a2PickTurningPoints(candidates,limit=10){
+  const selected=[],used=new Set(),counts={};
+  const caps={war:4,diplomacy:3,era:3,technology:2,settlement:2,leader:2,fall:2};
+  const priorities=['fall','era','war','diplomacy','technology','settlement','leader'];
+  const weighted=c=>{
+    let score=c.score;
+    for(const p of selected){const years=Math.abs(c.dayIndex-p.dayIndex)/DAYS_PER_YEAR;
+      score-=years<5?42:years<25?23:years<65?10:years<120?3:0;
+    }
+    return score;
+  };
+  const pick=pool=>{
+    const eligible=pool.filter(c=>!used.has(c.key)&&(counts[c.category]||0)<(caps[c.category]??2));
+    eligible.sort((a,b)=>weighted(b)-weighted(a)||a.dayIndex-b.dayIndex||a.key.localeCompare(b.key));
+    const best=eligible[0];if(!best)return false;
+    selected.push(best);used.add(best.key);counts[best.category]=(counts[best.category]||0)+1;return true;
+  };
+  for(const category of priorities)if(selected.length<limit)pick(candidates.filter(x=>x.category===category));
+  // Ensure that the early wars of a long-lived country are not crowded out by late large battles.
+  const warEvents=candidates.filter(x=>x.category==='war');
+  if(warEvents.length>1&&selected.length<limit){
+    const firstDay=Math.min(...candidates.map(x=>x.dayIndex)),lastDay=Math.max(...candidates.map(x=>x.dayIndex));
+    const earlyCutoff=firstDay+(lastDay-firstDay)*.35;
+    const earlyWars=warEvents.filter(x=>x.dayIndex<=earlyCutoff);
+    const formerComrades=earlyWars.filter(x=>x.formerCofighter);
+    const reversals=earlyWars.filter(x=>x.reversal);
+    pick(formerComrades.length?formerComrades:reversals.length?reversals:earlyWars);
+  }
+  while(selected.length<limit&&pick(candidates)){}
+  // If fewer than six diverse candidates exist, list what is actually recorded, not invented filler.
+  return selected.sort((a,b)=>a.dayIndex-b.dayIndex||a.key.localeCompare(b.key));
+}
+function i1a2CountryBook(w,id){
+  const all=historicalRecords(w),n=w.nations[id];
+  if(!n)return null;
+  const stamp=[w.dayIndex,w.historicalChronicle?.nextId,w.historicalChronicle?.dropped,w.warHistory?.length,w.wars?.length,n.active,n.name,all.length].join(':');
+  if(i1a2LensCache?.world===w&&i1a2LensCache.id===id&&i1a2LensCache.stamp===stamp&&i1a2LensCache.records===all)return i1a2LensCache.book;
+  const records=all.filter(e=>i1a2RelevantRecord(w,id,e));
+  const candidates=i1a2BuildCandidates(w,id,records),turns=i1a2PickTurningPoints(candidates,12);
+  const wars=(w.warHistory||[]).filter(h=>i1a2NationInWar(h,id)!==null),wins=wars.filter(h=>h.winningSide&&h.winningSide===i1a2NationInWar(h,id)).length;
+  const territory=w.tiles.reduce((sum,t)=>sum+(t.ownerId===id?1:0),0);
+  const population=w.settlements.reduce((sum,s)=>sum+(s.ownerId===id?(s.population||0):0),0);
+  const first=records.length?records[records.length-1]:null;
+  const eras=records.filter(e=>e.kind==='era').sort((a,b)=>a.dayIndex-b.dayIndex);
+  const diplomacy=records.filter(e=>e.kind==='diplomacy'&&!/갱신|기간 만료/.test(e.text)).sort((a,b)=>a.dayIndex-b.dayIndex);
+  const settlements=records.filter(e=>e.kind==='settlement').sort((a,b)=>a.dayIndex-b.dayIndex);
+  const technology=records.filter(e=>e.kind==='technology').sort((a,b)=>a.dayIndex-b.dayIndex);
+  const falls=records.filter(e=>e.kind==='fall'&&(e.text.startsWith(n.name)||e.text.includes(n.name+' 멸망'))).sort((a,b)=>a.dayIndex-b.dayIndex);
+  const paragraphs=[];
+  if(first){paragraphs.push(`${n.name}의 보존된 역사에서 첫 장은 ${timeAt(first.dayIndex).year}년에 시작된다. 당시 ${HISTORICAL_LABELS[first.kind]||"역사"}에 해당하는 사건이 기록되었다.${settlements.length?` 이후 현재 남은 개척 기록만 ${settlements.length}건에 이른다.`:''} 단, 이는 기록의 시작이지 반드시 건국 연도를 뜻하지는 않는다.`);}
+  if(wars.length){
+    const largest=wars.slice().sort((a,b)=>Object.values(b.casualties||{}).reduce((s,x)=>s+(+x||0),0)-Object.values(a.casualties||{}).reduce((s,x)=>s+(+x||0),0))[0];
+    const side=i1a2NationInWar(largest,id),oppId=side==='attackers'?largest.defenderId:largest.attackerId;
+    const opponent=w.nations[oppId]?.name||'상대 국가';
+    paragraphs.push(`전쟁의 시대에 ${n.name}${i1a2Particle(n.name,'은','는')} 여러 강국과 마주했다. 현재 보존된 종전 기록에서 참전 전쟁은 ${wars.length}건이고, 이 중 ${wins}건에서 소속 진영이 승리했다. 특히 ${timeAt(largest.startedDay).year}~${timeAt(largest.endedDay).year}년 ${opponent}${i1a2Particle(opponent,'과','와')} 벌인 전쟁에는 ${largest.battles||0}차례 교전이 기록됐다. 이는 이 국가가 참전한 보존된 전쟁 중 총 사상자가 가장 많은 전쟁이다.`);
+  }
+  if(diplomacy.length){
+    const alliances=records.filter(e=>e.kind==='diplomacy'&&/상호 방위 동맹/.test(e.text)&&e.nationIds.includes(id));
+    const shifts=[];
+    for(const h of wars){
+      for(const otherId of [h.attackerId,h.defenderId]){
+        if(otherId===id||i1a2NationInWar(h,otherId)===i1a2NationInWar(h,id))continue;
+        const previous=alliances.find(e=>e.dayIndex<h.startedDay&&e.nationIds.includes(otherId));
+        if(previous)shifts.push({day:h.startedDay,other:w.nations[otherId]?.name,allied:previous.dayIndex});
+      }
+    }
+    shifts.sort((a,b)=>b.day-a.day);
+    if(shifts.length){
+      const shift=shifts[0];
+      paragraphs.push(`국가 간 관계는 한 번 정해지면 영원히 이어지지 않았다. ${timeAt(shift.allied).year}년 ${shift.other}${i1a2Particle(shift.other,'과','와')} 동맹을 맺었던 ${n.name}${i1a2Particle(n.name,'은','는')}, ${timeAt(shift.day).year}년에는 그 국가와 서로 적대하는 전쟁 진영에 서게 됐다. 옛 협력이 대립으로 바뀐 사실은 동맹 기록과 참전 진영을 통해 확인할 수 있다.`);
+    }else{
+      const e=diplomacy[0],late=diplomacy[diplomacy.length-1];
+      paragraphs.push(`전쟁 이외에도 외교의 궤적이 남아 있다. ${timeAt(e.dayIndex).year}년 외교 변화가 기록되었으며,${late!==e?` ${timeAt(late.dayIndex).year}년에도 변화가 이어졌다.`:' 그 시기의 관계를 보여준다.'} 기록에 없는 외교적 의도는 단정할 수 없다.`);
+    }
+  }
+  if(eras.length||technology.length){const allDevelopment=eras.concat(technology).sort((a,b)=>a.dayIndex-b.dayIndex);const last=allDevelopment[allDevelopment.length-1];const initial=allDevelopment[0];
+    paragraphs.push(`발전사에서는 ${timeAt(initial.dayIndex).year}년의 “${initial.text}” 기록부터 ${timeAt(last.dayIndex).year}년의 “${last.text}” 기록까지 시대와 기술의 변화가 나타난다. 과거 각 연도의 경제 규모는 별도의 기록이 없으므로 추정하지 않는다.`);
+  }
+  if(n.active){paragraphs.push(`${timeAt(w.dayIndex).year}년 현재 ${n.name}${i1a2Particle(n.name,'은','는')} 존속하고 있다. 현재 영토는 ${number.format(territory)}타일, 인구는 ${number.format(population)}명, 국고는 ${number.format(n.gold||0)}G이다. 이 값은 과거 전성기의 수치가 아니라 현재 세계의 상태다.`);}
+  else {const lastFall=falls[falls.length-1];paragraphs.push(`${n.name}${i1a2Particle(n.name,'은','는')} 현재 멸망한 국가로 기록되어 있다.${lastFall?` ${timeAt(lastFall.dayIndex).year}년에 멸망 관련 기록이 남아 있다.`:' 정확한 멸망 시점은 이 국가의 보존 기록만으로 확정하지 않는다.'} 멸망 전 영토·인구는 현재 상태만으로 복원하지 않는다.`);}
+  const book={id,name:n.name,active:n.active,territory,population,gold:n.gold||0,records:records.length,wars:wars.length,turns,paragraphs,firstDay:first?.dayIndex??null,dropped:w.historicalChronicle?.dropped||0};
+  i1a2LensCache={world:w,id,stamp,records:all,book};return book;
+}
+// I1A3 Chronicle Lens V1.1 – pure, view-time historical interpretation.
+// No AI, time-loop, world schema, RNG, or stored diplomatic relationship changes.
+let i1a3View='summary',i1a3Partner='all';
+let i1a3Cache=null;
+const i1a3Year=d=>timeAt(Math.max(0,d||0)).year;
+const i1a3OldRecord=(w,id,e)=>i1a2RelevantRecord(w,id,e);
+function i1a3LabelFor(w,id,e){
+ const y=i1a3Year(e.dayIndex),type=e.kind;
+ if(e.warId!=null){
+   const h=(w.warHistory||[]).find(x=>x.id===e.warId);
+   if(h)return `${i1a3Year(h.startedDay)}~${i1a3Year(h.endedDay)}년 · ${h.attackerName||w.nations[h.attackerId]?.name||'공격국'}–${h.defenderName||w.nations[h.defenderId]?.name||'방어국'} 전쟁`;
+ }
+ if(type==='era')return `${y}년 · 시대·문명 단계 변화`;
+ if(type==='technology'){
+   const info=String(e.text||'').split(':').slice(1).join(':').trim().replace(/ 연구 완료.*$/,'').replace(/을\(를\)/g,'').slice(0,72);
+   return `${y}년 · ${info||'기술 연구'}`;
+ }
+ if(type==='settlement')return `${y}년 · 정착지 개척 기록`;
+ if(type==='diplomacy'){
+   const desc=/독립/.test(e.text)?'독립 관련 변화':/종속|복속/.test(e.text)?'종속 관계 변화':/동맹/.test(e.text)?'동맹 관계 변화':'외교적 변화';
+   return `${y}년 · ${desc}`;
+ }
+ if(type==='leader')return `${y}년 · 지도자 교체`;
+ if(type==='fall')return `${y}년 · 국가 멸망 기록`;
+ return `${y}년 · ${HISTORICAL_LABELS[type]||'역사 사건'}`;
+}
+function i1a3EvidenceButton(e){
+ if(e.warId!=null){const b=make('button',{type:'button',class:'i1a2-source-btn',text:'전쟁사 원본'});b.addEventListener('click',()=>i1a2OpenWar(e.warId));return b;}
+ if(e.entryKey){const b=make('button',{type:'button',class:'i1a2-source-btn',text:'연대기 원본'});b.addEventListener('click',()=>i1a2OpenChronicle(e.entryKey));return b;}
+ return null;
+}
+// Avoid showing multiple treaties for a single war: war candidates are already merged in I1A2.
+function i1a3ChapterEvents(w,id,candidates,turns){
+ const core=turns.slice().sort((a,b)=>a.dayIndex-b.dayIndex||a.key.localeCompare(b.key));
+ if(core.length<=2)return core;
+ // Supplement only if it adds a missing domain; do not crowd out nationally significant turns.
+ const present=new Set(core.map(x=>x.category));
+ for(const category of ['settlement','technology','leader']){
+   if(present.has(category)||core.length>=15)continue;
+   const extra=candidates.filter(x=>x.category===category).sort((a,b)=>b.score-a.score||a.dayIndex-b.dayIndex)[0];
+   if(extra&&!core.some(x=>x.key===extra.key)){core.push(extra);present.add(category);}
+ }
+ return core.sort((a,b)=>a.dayIndex-b.dayIndex||a.key.localeCompare(b.key));
+}
+function i1a3SplitChapters(events){
+ const n=events.length;if(!n)return [];
+ const target=n<4?1:n<6?2:n<9?3:n<15?4:5;
+ let slots=[events];
+ while(slots.length<target){
+   let best=null;
+   for(let j=0;j<slots.length;j++){
+     const arr=slots[j];if(arr.length<4)continue;
+     for(let k=2;k<=arr.length-2;k++){
+       const prev=arr[k-1],next=arr[k];const yrs=Math.max(0,next.dayIndex-prev.dayIndex)/DAYS_PER_YEAR;
+       const span=Math.max(1,arr[arr.length-1].dayIndex-arr[0].dayIndex)/DAYS_PER_YEAR;
+       const imbalance=Math.abs(k-arr.length/2)/arr.length;
+       const prominence=next.category!==prev.category?0.4:0;
+       const gap=Math.min(3,yrs/Math.max(5,span/5));
+       const score=gap+prominence+Math.log2(arr.length)*.45-imbalance*2;
+       if(!best||score>best.score)best={j,k,score};
+     }
+   }
+   if(!best)break;
+   const arr=slots[best.j];slots.splice(best.j,1,arr.slice(0,best.k),arr.slice(best.k));
+ }
+ return slots;
+}
+function i1a3ChapterKind(items,i,all){
+ const cs=new Set(items.map(x=>x.category));
+ if(cs.has('fall'))return '멸망과 남겨진 기록';
+ if(cs.has('settlement')&&i===0)return '왕국의 초기 성장과 개척';
+ if(cs.has('era')&&cs.has('war'))return '전쟁 속의 시대 전환';
+ if(cs.has('war')&&cs.has('diplomacy'))return '동맹과 전쟁의 변화';
+ if(cs.has('era')||cs.has('technology'))return '기술과 발전의 시대';
+ if(cs.has('war'))return '전쟁과 세력의 재편';
+ if(cs.has('diplomacy'))return '외교 질서의 변화';
+ if(cs.has('settlement'))return '정착지의 확장';
+ if(cs.has('leader'))return '통치의 기록';
+ return '국가에 남은 기록';
+}
+function i1a3ChapterProse(w,id,items){
+ const country=w.nations[id]?.name||'이 국가';
+ const y0=i1a3Year(items[0].dayIndex),y1=i1a3Year(items[items.length-1].dayIndex);
+ const c=items.reduce((a,e)=>(a[e.category]=(a[e.category]||0)+1,a),{});
+ const lines=[];
+ if(c.war){
+   const war=items.filter(e=>e.warId!=null&&(w.warHistory||[]).some(h=>h.id===e.warId));
+   if(war.length){
+     const h=w.warHistory.find(x=>x.id===war[0].warId);
+     const side=i1a2NationInWar(h,id);
+     const result=h.winningSide?(h.winningSide===side?'소속 진영이 승리했다':'상대 진영이 승리했다'):'백지 평화로 마무리됐다';
+     lines.push(`${i1a3Year(h.startedDay)}~${i1a3Year(h.endedDay)}년 ${country}${i1a2Particle(country,'은','는')} ${side==='attackers'?'공격':'방어'} 진영에 참가했다. ${h.battles||0}차례 교전 끝에 ${result}`);
+     if(war.length>1){const last=w.warHistory.find(x=>x.id===war[war.length-1].warId);
+       if(last&&last.id!==h.id){const side2=i1a2NationInWar(last,id),outcome=last.winningSide?(last.winningSide===side2?'승리':'패배'):'백지 평화';
+         lines.push(`이후 ${i1a3Year(last.startedDay)}~${i1a3Year(last.endedDay)}년 전쟁에서도 ${country}${i1a2Particle(country,'은','는')} ${side2==='attackers'?'공격':'방어'} 진영에 참전했고, 종전 결과는 ${outcome}로 기록됐다.`);}}
+
+   }else lines.push(`${y0}~${y1}년 사이 ${country}의 참전 및 종전 기록이 남아 있다.`);
+ }
+ if(c.diplomacy){
+   const dp=items.filter(e=>e.category==='diplomacy');
+   lines.push(`${i1a3Year(dp[0].dayIndex)}년 무렵에는 ${/독립/.test(dp[0].text)?'독립 관계':/종속|복속/.test(dp[0].text)?'종속 관계':/동맹/.test(dp[0].text)?'동맹 관계':'외교 관계'}에 관한 변화가 기록됐다.`);
+ }
+ if(c.settlement)lines.push(`이 시기에는 정착지 확장도 진행됐다. 현재 보존된 주요 사건에는 개척 기록 ${c.settlement}건이 남아 있다.`);
+ if(c.era||c.technology){const first=items.find(e=>e.category==='era'||e.category==='technology');
+   lines.push(`${i1a3Year(first.dayIndex)}년에는 ${first.category==='era'?'문명 단계의 변화':'기술 연구의 진전'}가 기록되어 있다. 이러한 사건은 국가의 장기적인 발전 과정을 보여준다.`);
+ }
+ if(c.leader)lines.push(`이 시기의 지도자 교체도 보존된 연대기에서 확인된다.`);
+ if(c.fall)lines.push(`${country}의 멸망이 기록된 시기로, 그 이전의 인구·영토 규모는 현존 자료만으로 복원하지 않는다.`);
+ if(!lines.length)lines.push(`${y0}~${y1}년 사이 이 국가와 관련된 주요 사건이 보존되어 있다.`);
+ if(lines.length<2&&items.length>1)lines.push(`이 시기의 해석은 선정된 ${items.length}건의 사건을 근거로 하며, 확인되지 않은 동기를 추정하지 않는다.`);
+ return lines.slice(0,4);
+}
+function i1a3MakeChapters(w,id,turns,candidates){
+ const events=i1a3ChapterEvents(w,id,candidates,turns),splits=i1a3SplitChapters(events);
+ return splits.map((items,i)=>({index:i+1,startDay:items[0].dayIndex,endDay:items[items.length-1].dayIndex,
+   title:i1a3ChapterKind(items,i,splits),events:items.slice(0,4),count:items.length,prose:i1a3ChapterProse(w,id,items)}));
+}
+function i1a3RelationEvent(w,id,otherId,h){
+ const a=i1a2NationInWar(h,id),b=i1a2NationInWar(h,otherId);
+ if(a===null||b===null)return null;
+ const aligned=a===b;
+ return {type:aligned?'cooperation':'opposition',startDay:h.startedDay,endDay:h.endedDay,
+  title:aligned?'같은 전쟁 진영에서 참전':'서로 다른 전쟁 진영에서 참전',
+  detail:`${i1a3Year(h.startedDay)}~${i1a3Year(h.endedDay)}년 · ${h.attackerName||w.nations[h.attackerId]?.name||'공격국'}–${h.defenderName||w.nations[h.defenderId]?.name||'방어국'} 전쟁`,warId:h.id};
+}
+function i1a3RelationTimeline(w,id,records){
+ const partners=new Map();
+ const ensure=oid=>{if(oid===id||!w.nations.some(n=>n.id===oid))return null;
+   if(!partners.has(oid))partners.set(oid,{id:oid,name:w.nations.find(n=>n.id===oid)?.name||'상대국',events:[],alliances:0,oppositions:0,cooperations:0,renewals:0});
+   return partners.get(oid);
+ };
+ const all=records.filter(e=>e.kind==='diplomacy'&&e.nationIds.includes(id)&&e.nationIds.length===2).sort((a,b)=>a.dayIndex-b.dayIndex||a.key.localeCompare(b.key));
+ for(const e of all){
+   const oid=e.nationIds.find(v=>v!==id),p=ensure(oid);if(!p)continue;
+   const s=String(e.text||'');
+   let kind=/동맹 갱신/.test(s)?'renew':/동맹 기간 만료/.test(s)?'expire':/상호 방위 동맹/.test(s)?'alliance':/종속|복속|독립/.test(s)?'status':'other';
+   if(kind==='other')continue;
+   const prev=p.events[p.events.length-1];
+   // Compress adjacent renewal records into the same *observed* sequence, never assume uninterrupted treaties.
+   if(kind==='renew'&&prev&&prev.type==='renew'&&e.dayIndex-prev.endDay<=DAYS_PER_YEAR*12){
+     prev.endDay=e.dayIndex;prev.count++;prev.lastKey=e.key;p.renewals++;continue;
+   }
+   if(kind==='renew')p.renewals++;
+   if(kind==='alliance')p.alliances++;
+   p.events.push({type:kind,startDay:e.dayIndex,endDay:e.dayIndex,count:1,
+     title:kind==='renew'?'동맹 갱신 기록':kind==='expire'?'동맹 기간 만료':kind==='alliance'?'상호 방위 동맹 체결':
+       /독립/.test(s)?'독립 관련 관계 변화':'종속 관련 관계 변화',entryKey:e.key,lastKey:e.key});
+ }
+ for(const h of w.warHistory||[]){
+   if(i1a2NationInWar(h,id)===null)continue;
+   for(const otherId of [...new Set([...(h.participants?.attackers||[h.attackerId]),...(h.participants?.defenders||[h.defenderId])])]){
+     const event=i1a3RelationEvent(w,id,otherId,h);if(!event)continue;
+     const p=ensure(otherId);if(!p)continue;
+     p.events.push(event);if(event.type==='opposition')p.oppositions++;else p.cooperations++;
+   }
+ }
+ const out=[...partners.values()];
+ for(const p of out){
+  p.events.sort((a,b)=>a.startDay-b.startDay||a.endDay-b.endDay);
+  let transition=0,hadSide=null;
+  for(const e of p.events)if(e.type==='cooperation'||e.type==='opposition'){
+    if(hadSide&&hadSide!==e.type)transition++;
+    hadSide=e.type;
+  }
+  p.transitions=transition;
+  // A few wartime relationships are more historically informative than recurring renewals.
+  p.score=p.transitions*25+p.oppositions*7+p.cooperations*5+Math.min(6,p.alliances)*3+Math.min(8,p.renewals)*.2;
+ }
+ out.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+ return out;
+}
+function i1a3BuildBook(w,id,base){
+ const all=historicalRecords(w),stamp=[w.dayIndex,w.historicalChronicle?.nextId,w.historicalChronicle?.dropped,w.warHistory?.length,w.wars?.length,w.nations[id]?.name,all.length].join(':');
+ if(i1a3Cache?.world===w&&i1a3Cache.id===id&&i1a3Cache.stamp===stamp&&i1a3Cache.records===all)return i1a3Cache.book;
+ const records=all.filter(e=>i1a3OldRecord(w,id,e));
+ const candidates=i1a2BuildCandidates(w,id,records);
+ const result={chapters:i1a3MakeChapters(w,id,base.turns,candidates),relationships:i1a3RelationTimeline(w,id,records)};
+ i1a3Cache={world:w,id,stamp,records:all,book:result};return result;
+}
+function i1a3SetView(view){
+ i1a3View=view;
+ for(const key of ['summary','chapters','relations','events']){
+   const btn=$('i1a3View-'+key),pane=$('i1a3Pane-'+key);
+   if(btn){btn.setAttribute('aria-selected',String(key===view));btn.setAttribute('tabindex',key===view?'0':'-1');}
+   if(pane)pane.hidden=key!==view;
+ }
+}
+function i1a3RenderChapter(book){
+ const root=$('i1a3Chapters');root.replaceChildren();
+ for(const ch of book.chapters){
+   const card=make('details',{class:'i1a3-chapter'});if(ch.index===1)card.open=true;
+   card.append(make('summary',{},[
+     make('span',{class:'i1a3-chapter-title',text:`제${ch.index}장 · ${ch.title}`}),
+     make('span',{class:'i1a3-chapter-meta',text:`${i1a3Year(ch.startDay)}~${i1a3Year(ch.endDay)}년 · 근거 사건 ${ch.count}건`})]));
+   for(const p of ch.prose)card.append(make('p',{text:p}));
+   for(const e of ch.events){const evid=make('div',{class:'i1a3-evidence'},[
+     make('div',{class:'i1a3-evidence-label'},[
+      make('span',{text:i1a3LabelFor(app.world,app.chronicleLensNation,e)}),
+      make('small',{text:`${HISTORICAL_LABELS[e.kind]||e.kind} · ${i1a3Year(e.dayIndex)}년`})])]);
+     const b=i1a3EvidenceButton(e);if(b)evid.append(b);card.append(evid);
+   }
+   root.append(card);
+ }
+ if(!book.chapters.length)root.append(make('p',{class:'i1a2-note',text:'이 국가에 대해 보존된 주요 사건이 없어 시대별 장을 구성할 수 없습니다.'}));
+}
+function i1a3RenderRelations(book){
+ const sel=$('i1a3Partner'),root=$('i1a3Relations');sel.replaceChildren(new Option('역사적 관계 상위 국가','all'));
+ for(const p of book.relationships)sel.append(new Option(p.name+` · 기록 ${p.events.length}건`,String(p.id)));
+ if(i1a3Partner!=='all'&&!book.relationships.some(x=>String(x.id)===i1a3Partner))i1a3Partner='all';
+ sel.value=i1a3Partner;
+ const chosen=i1a3Partner==='all'?book.relationships.slice(0,5):book.relationships.filter(x=>String(x.id)===i1a3Partner);
+ root.replaceChildren();
+ for(const p of chosen){
+   const cooperation=p.events.find(e=>e.type==='cooperation');
+   const laterOpp=cooperation&&p.events.find(e=>e.type==='opposition'&&e.startDay>cooperation.startDay);
+   const historicalTurn=laterOpp?` ${i1a3Year(cooperation.startDay)}~${i1a3Year(cooperation.endDay)}년에는 같은 진영이었지만, ${i1a3Year(laterOpp.startDay)}~${i1a3Year(laterOpp.endDay)}년에는 서로 다른 진영에 섰다.`:'';
+   const card=make('div',{class:'i1a3-rel'},[make('h3',{text:p.name}),
+     make('p',{class:'i1a3-rel-note',text:`보존된 전쟁에서 같은 진영 ${p.cooperations}회, 서로 다른 진영 ${p.oppositions}회. 동맹 체결 ${p.alliances}건, 갱신 ${p.renewals}건.${historicalTurn} 동맹이 전 기간 연속 유지되었다는 뜻은 아닙니다.`})]);
+   // Show meaningful first/last milestones, not a cascade of 100+ identical renewals.
+   const milestones=p.events.filter(x=>!['renew'].includes(x.type));
+   const renew=p.events.filter(x=>x.type==='renew');
+   const warEvents=p.events.filter(x=>x.type==='cooperation'||x.type==='opposition');
+   const firstTeam=warEvents.find(x=>x.type==='cooperation');
+   const firstConflictAfter=firstTeam&&warEvents.find(x=>x.type==='opposition'&&x.startDay>firstTeam.startDay);
+   const lastWar=warEvents[warEvents.length-1];
+   const significant=[firstTeam,firstConflictAfter,lastWar].filter(Boolean);
+   const alliance=p.events.filter(x=>x.type==='alliance');
+   const expire=p.events.filter(x=>x.type==='expire');
+   const visible=[...milestones.slice(0,3),...significant,...milestones.slice(-3),
+     ...(alliance.length?[alliance[0],alliance[alliance.length-1]]:[]),
+     ...(expire.length?[expire[0],expire[expire.length-1]]:[]),
+     ...(renew.length?[renew[0],renew[renew.length-1]]:[])];
+   const unique=[...new Map(visible.map(x=>[(x.warId!=null?'war:'+x.warId:(x.entryKey||'')+':'+x.startDay),x])).values()]
+    .sort((a,b)=>a.startDay-b.startDay).slice(0,14);
+   for(const e of unique){
+     const interval=e.startDay!==e.endDay?`${i1a3Year(e.startDay)}~${i1a3Year(e.endDay)}년`:`${i1a3Year(e.startDay)}년`;
+     const row=make('div',{class:'i1a3-rel-row'},[make('div',{class:'i1a3-rel-detail'},[
+       make('span',{text:`${interval} · ${e.title}${e.count>1?' ('+e.count+'건 압축)':''}`}),
+       ...(e.detail?[make('small',{text:e.detail})]:[])])]);
+     const b=i1a3EvidenceButton(e);if(b)row.append(b);card.append(row);
+   }
+   root.append(card);
+ }
+ if(!chosen.length)root.append(make('p',{class:'i1a2-note',text:'보존된 외교·전쟁 기록에서 해당 국가의 양자 관계를 추출할 수 없습니다.'}));
+}
+function i1a3Render(w,id,base){
+ const info=i1a3BuildBook(w,id,base);i1a3RenderChapter(info);i1a3RenderRelations(info);
+ i1a3SetView(i1a3View);
+}
+for(const view of ['summary','chapters','relations','events']){
+ $('i1a3View-'+view).addEventListener('click',()=>i1a3SetView(view));
+}
+$('i1a3Partner').addEventListener('change',e=>{
+ i1a3Partner=e.target.value;
+ const w=app.world,id=Number(app.chronicleLensNation),book=i1a2CountryBook(w,id);
+ i1a3RenderRelations(i1a3BuildBook(w,id,book));
+});
+
+function i1a2OpenWar(warId){
+  const w=app.world,idx=(w.warHistory||[]).slice().reverse().findIndex(h=>h.id===warId);
+  if(idx<0)return;
+  app.warHistoryPage=Math.floor(idx/5)+1;
+  $('warHistoryList').dataset.historyKey='';navigation.activate('military');
+  requestAnimationFrame(()=>{const item=$('warHistoryList').querySelector(`[data-war-id="${warId}"]`);if(item){item.open=true;item.scrollIntoView({behavior:'smooth',block:'center'});}});
+}
+function i1a2OpenChronicle(key){
+  app.chronicleLensMode='events';app.chronicleNation=String(app.chronicleLensNation);app.chronicleKind='all';
+  const entries=historicalRecords(app.world).filter(e=>e.nationIds.includes(Number(app.chronicleNation)));
+  const idx=entries.findIndex(e=>e.key===key);
+  app.chroniclePage=idx<0?1:Math.floor(idx/20)+1;
+  renderChronicle();
+  requestAnimationFrame(()=>{const items=$('chronicleTimeline').querySelectorAll('.chronicle-entry');const e=items[idx>=0?idx%20:0];if(e){e.classList.add('i1a2-record-focus');e.scrollIntoView({behavior:'smooth',block:'center'});}});
+}
+function i1a2RenderHistory(){
+  const w=app.world,sel=$('chronicleLensNation');if(!w||!sel)return;
+  if(!w.nations.some(n=>String(n.id)===String(app.chronicleLensNation)))app.chronicleLensNation=w.nations[app.selectedNationId]?.id??w.nations[0]?.id;
+  sel.replaceChildren(...w.nations.map(n=>make('option',{value:String(n.id),text:n.name+(n.active?'':' · 멸망')})));
+  sel.value=String(app.chronicleLensNation);
+  const id=Number(sel.value),book=i1a2CountryBook(w,id);
+  if(!book)return;
+  $('chronicleLensCountryTitle').textContent=book.name+(book.active?' · 존속':' · 멸망');
+  const stats=[['관련 연대기',number.format(book.records)+'건'],['보존된 전쟁',number.format(book.wars)+'건']];
+  if(book.active)stats.push(['현재 영토',number.format(book.territory)+'타일'],['현재 인구',number.format(book.population)+'명'],['현재 국고',number.format(book.gold)+'G']);
+  $('chronicleLensStats').replaceChildren(...stats.map(([k,v])=>make('div',{class:'i1a2-stat'},[make('small',{text:k}),make('strong',{text:v})])));
+  $('chronicleLensProse').replaceChildren(...(book.paragraphs.length?book.paragraphs:[`현재 남은 ${book.name}의 사건 기록은 충분하지 않습니다.`]).map(s=>make('p',{class:'i1a2-prose',text:s})));
+  const note=[];if(book.dropped)note.push(`오래된 연대기 ${number.format(book.dropped)}건이 보존 상한 때문에 삭제되었습니다.`);
+  note.push('구버전의 비전쟁 기록은 복원되지 않을 수 있습니다. 전쟁사는 최근 최대 200건으로 제한됩니다.');
+  note.push('국가사의 문장은 기존 기록에서 자동 구성하며, 지배자의 의도나 과거 인구·국경을 추측하지 않습니다.');
+  $('chronicleLensNote').textContent=note.join(' ');
+  const cards=book.turns.map(e=>{
+    const t=timeAt(e.dayIndex),body=make('div',{class:'i1a2-event-body'},[
+      make('div',{class:'i1a2-event-meta',text:`${t.year}년 · ${t.quarter}분기 · ${t.day}일 · ${HISTORICAL_LABELS[e.kind]||e.kind}`} ),
+      make('div',{class:'i1a2-event-title',text:e.title}),
+      make('p',{class:'i1a2-event-text',text:e.text})]);
+    if(e.warId!=null&&(w.warHistory||[]).some(h=>h.id===e.warId)){
+      const btn=make('button',{class:'i1a2-source-btn',type:'button',text:'전쟁사 상세 보기'});
+      btn.addEventListener('click',()=>i1a2OpenWar(e.warId));body.append(btn);
+    }else if(e.entryKey!=null){
+      const btn=make('button',{class:'i1a2-source-btn',type:'button',text:'원본 연대기 보기'});
+      btn.addEventListener('click',()=>i1a2OpenChronicle(e.entryKey));body.append(btn);
+    }
+    return make('article',{class:'i1a2-event'},[make('div',{class:'i1a2-event-icon',text:HISTORICAL_GLYPHS[e.kind]||'•'}),body]);
+  });
+  $('chronicleLensTimeline').replaceChildren(...(cards.length?cards:[make('p',{class:'i1a2-note',text:'선택 국가에 대해 선정할 수 있는 전환점 기록이 없습니다.'})]));
+  i1a3Render(w,id,book);
+}
+function i1a2SetMode(mode){
+  app.chronicleLensMode=mode;
+  $('chronicleLensHistoryBtn').classList.toggle('selected',mode==='history');
+  $('chronicleLensEventsBtn').classList.toggle('selected',mode==='events');
+  $('chronicleLensHistoryBtn').setAttribute('aria-pressed',String(mode==='history'));
+  $('chronicleLensEventsBtn').setAttribute('aria-pressed',String(mode==='events'));
+  $('chronicleEventsWrap').hidden=mode==='history';
+  $('chronicleLensPanel').hidden=mode!=='history';
+  if(mode==='history')i1a2RenderHistory();
+}
+$('chronicleLensHistoryBtn').addEventListener('click',()=>{i1a2SetMode('history');});
+$('chronicleLensEventsBtn').addEventListener('click',()=>{i1a2SetMode('events');renderChronicle();});
+$('chronicleLensNation').addEventListener('change',e=>{app.chronicleLensNation=Number(e.target.value);i1a2RenderHistory();});
+$('chronicleLensAllEvents').addEventListener('click',()=>{app.chronicleNation=String(app.chronicleLensNation);app.chronicleKind='all';app.chroniclePage=1;i1a2SetMode('events');renderChronicle();});
+
 function resetChronicleFilterOptions(){
   const filter=$('chronicleNationFilter');filter.replaceChildren(new Option('모든 국가','all'));
   for(const n of app.world.nations)filter.append(new Option(n.name+(n.active?'':' · 멸망'),String(n.id)));
@@ -30370,6 +31008,8 @@ function renderChronicle(){
   if(!app.world)return;
   // Only draw this relatively costly document view while it is visible.
   if(app.activeTab!=='chronicle')return;
+  i1a2SetMode(app.chronicleLensMode||'history');
+  if(app.chronicleLensMode==='history')return;
   const w=app.world,h=w.historicalChronicle;
   resetChronicleFilterOptions();
   const allRecords=historicalRecords(w);
@@ -30441,7 +31081,7 @@ function setWorld(world){
   app.running=false;app.accumulator=0;app.lastFrame=null;app.world=world;e3cMigrateFormationRecords(world);app.simMeter=createSimMeter();
   app.autoSpeed.mode='MAX';app.autoSpeed.highCount=0;app.autoSpeed.lowCount=0;app.autoSpeed.lastSwitchAt=-Infinity;
   app.autoUiDirty=false;app.autoLastUiAt=0;updateAutoSpeedButton();
-  app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;app.chroniclePage=1;app.chronicleKind='all';app.chronicleNation='all';
+  app.selectedId=world.nations.find(n=>n.active)?.capitalId??0;app.selectedNationId=world.tiles[app.selectedId]?.ownerId??0;app.selectedBattleId=null;app.warHistoryPage=1;app.chroniclePage=1;app.chronicleKind='all';app.chronicleNation='all';app.chronicleLensMode='history';app.chronicleLensNation=null;i1a2LensCache=null;$('chronicleLensNation').replaceChildren();
   // Default wide worlds to whole-map framing instead of clipping the east/west coasts.
   atlasMapCover=world.size===19;
   map.setWorld(world);syncAtlasLayout();
@@ -33309,14 +33949,15 @@ navyDRenderPanel=function(w,n,host){const ret=navyH4aPriorPanel(w,n,host),a=navy
 };
 
 </script>
-<!-- V0.9I1: opt-in CPU hotpath profiler. Runtime-only; no world/RNG/storage mutations. -->
+<!-- V0.9I1A1: opt-in CPU hotpath profiler with nine military day phases. Runtime-only; no world/RNG/storage mutations. -->
 <script>
 (function(){
 'use strict';
 const SCHEMA='vilob-i1-runtime-profiler-v1', LIMIT=128, PATH_STRIDE=16;
 let enabled=false, captures=Object.create(null), hooks=[], stack=[], batch=null;
 let batches=[],quarters=[],quarter=null,phaseTotals=Object.create(null);
-let beginDay=null,startedAt=null,lastError='', markerPrior;
+let militaryDay=null,recentMilitaryDays=[],militaryPhaseTotals=Object.create(null),lastMilitaryDay=null;
+let beginDay=null,startedAt=null,lastError='', markerPrior, militaryMarkerPrior;
 const time=()=>performance.now();
 const routes=[
  ['SIM.batch','batch',()=>measureSimBatch,f=>{measureSimBatch=f;}],
@@ -33341,6 +33982,7 @@ const routes=[
  ['AI.researchQuarter','ai',()=>processResearchQuarter,f=>{processResearchQuarter=f;}]
 ].map(([key,unit,get,set])=>({key,unit,get,set,stride:key==='MIL.landPath'?PATH_STRIDE:1}));
 const phaseKeys=['preMilitary','military','automaton','post','economyDirect','civilAI','otherPre'];
+const militaryPhaseKeys=['occupationPre','engagements','armyMainLoop','trappedReview','occupationStart','occupationPost','supply','cleanup','reactiveOrders'];
 function getMetric(r){return captures[r.key]||(captures[r.key]={unit:r.unit,calls:0,measuredCalls:0,errors:0,totalMs:0,exclusiveMeasuredMs:0,minMs:null,maxMs:0,lastMs:0,recentMs:[],totalBatchDays:0,stride:r.stride});}
 function percentage(values,p){if(!values.length)return null;const sorted=[...values].sort((a,b)=>a-b);return sorted[Math.ceil(p*sorted.length)-1];}
 function num(v){return v===null?null:+v.toFixed(3);}
@@ -33349,7 +33991,7 @@ function startBatch(r,args){
  if(batch)return null;
  const w=r.key==='SIM.advanceDays'?args[0]:app.world;
  const info=worldInfo(w);
- const b={source:r.key,daysRequested:r.key==='SIM.batch'?args[1]:args[1],world:w,start:info,at:time(),functions:Object.create(null),phases:Object.create(null),quarterCount:0};
+ const b={source:r.key,daysRequested:r.key==='SIM.batch'?args[1]:args[1],world:w,start:info,at:time(),functions:Object.create(null),phases:Object.create(null),militaryPhases:Object.create(null),militaryDays:0,quarterCount:0};
  batch=b;return b;
 }
 function markBatchCall(key){
@@ -33369,10 +34011,11 @@ function finishBatch(b,elapsed,failed){
   estimatedMs:v.measuredCalls?num(v.measuredMs/v.measuredCalls*v.calls):null,
   sampling:routes.find(r=>r.key===key)?.stride>1})).sort((a,c)=>c.measuredMs-a.measuredMs);
  const phases=Object.fromEntries(Object.entries(b.phases).map(([k,v])=>[k,num(v)]));
+ const militaryPhases=Object.fromEntries(Object.entries(b.militaryPhases).map(([k,v])=>[k,num(v)]));
  batches.push({source:b.source,daysRequested:b.daysRequested,startDay:b.start?.dayIndex??null,endDay:finish?.dayIndex??null,
   daysElapsed:(finish&&b.start)?finish.dayIndex-b.start.dayIndex:null,warCountStart:b.start?.wars??null,warCountEnd:finish?.wars??null,
   armiesStart:b.start?.armies??null,armiesEnd:finish?.armies??null,tiles:finish?.tiles??null,
-  totalMs:num(elapsed),quarterCount:b.quarterCount,failed,functions,phases});
+  totalMs:num(elapsed),quarterCount:b.quarterCount,militaryDays:b.militaryDays,militaryPhases,failed,functions,phases});
  if(batches.length>LIMIT)batches.shift();if(batch===b)batch=null;
 }
 function record(r,c,ms,exclusive,error,args){
@@ -33393,6 +34036,7 @@ function wrapRoute(r,original){
    const ms=Math.max(0,time()-t);
    stack.pop();if(stack.length)stack[stack.length-1].children+=ms;
    record(r,c,ms,ms-frame.children,failed,args);
+   if(r.key==='MIL.processDay')militaryParentEnd(ms,failed);
    if(r.key==='SIM.runQuarter'&&quarter){quarter=null;}
    if(ownBatch)finishBatch(ownBatch,ms,failed);
   }
@@ -33422,25 +34066,84 @@ function quarterMark(stage,w){
  if(quarters.length>LIMIT)quarters.shift();if(batch)batch.quarterCount++;
  quarter=null;
 }
+// Nine exclusive, sequential regions of processMilitaryDay; never stored on World.
+function militaryPhaseRecord(name,ms){
+ const rec=militaryPhaseTotals[name]||(militaryPhaseTotals[name]={calls:0,totalMs:0,minMs:null,maxMs:0,recentMs:[]});
+ rec.calls++;rec.totalMs+=ms;rec.minMs=rec.minMs===null?ms:Math.min(rec.minMs,ms);rec.maxMs=Math.max(rec.maxMs,ms);
+ if(rec.recentMs.length===LIMIT)rec.recentMs.shift();rec.recentMs.push(ms);
+ if(batch)batch.militaryPhases[name]=(batch.militaryPhases[name]||0)+ms;
+}
+function militaryStatusCounts(w){
+ const states=Object.create(null);
+ for(const a of w.armies)states[a.status]=(states[a.status]||0)+1;
+ return states;
+}
+function militaryMark(stage,w){
+ const at=time();
+ if(stage==='occupationPre'){
+  // The first boundary begins a new daily military pass. Detailed metadata only when ON.
+  militaryDay={dayIndex:w.dayIndex,startAt:at,lastAt:at,active:stage,phases:Object.create(null),
+   warCountStart:w.wars?.length||0,armyCountStart:w.armies?.length||0,engagementCountStart:w.engagements?.length||0,
+   occupationCountStart:w.occupations?.length||0,armyStatusesStart:militaryStatusCounts(w)};
+  return;
+ }
+ const m=militaryDay;if(!m)return;
+ const elapsed=Math.max(0,at-m.lastAt);
+ if(militaryPhaseKeys.includes(m.active)){
+  militaryPhaseRecord(m.active,elapsed);
+  m.phases[m.active]=(m.phases[m.active]||0)+elapsed;
+ }
+ m.lastAt=at;
+ if(stage==='end'){
+  m.measuredMs=Object.values(m.phases).reduce((a,b)=>a+b,0);
+  m.warCountEnd=w.wars?.length||0;m.armyCountEnd=w.armies?.length||0;
+  m.engagementCountEnd=w.engagements?.length||0;m.occupationCountEnd=w.occupations?.length||0;
+  m.armyStatusesEnd=militaryStatusCounts(w);
+  // Wrapper reconciles the measured regions with MIL.processDay inclusive after return.
+  m.parentInclusiveMs=null;m.unattributedMs=null;m.failed=false;
+  delete m.startAt;delete m.lastAt;delete m.active;
+  if(recentMilitaryDays.length===LIMIT)recentMilitaryDays.shift();recentMilitaryDays.push(m);
+  lastMilitaryDay=m;if(batch)batch.militaryDays++;
+  militaryDay=null;
+ }else if(militaryPhaseKeys.includes(stage))m.active=stage;
+}
+function militaryParentEnd(ms,failed){
+ if(!lastMilitaryDay)return;
+ // processMilitaryDay runs synchronously; final marker occurred before this wrapper finishes.
+ lastMilitaryDay.parentInclusiveMs=ms;
+ lastMilitaryDay.unattributedMs=ms-lastMilitaryDay.measuredMs;
+ lastMilitaryDay.failed=failed;
+ lastMilitaryDay=null;
+}
+function militaryPhaseSnapshot(){return militaryPhaseKeys.map(key=>{
+ const p=militaryPhaseTotals[key];return {key,calls:p?.calls||0,totalMs:num(p?.totalMs||0),minMs:num(p?.minMs??null),maxMs:num(p?.calls?p.maxMs:null),
+  avgMs:num(p?.calls?p.totalMs/p.calls:null),recentP50Ms:num(percentage(p?.recentMs||[],.5)),recentP95Ms:num(percentage(p?.recentMs||[],.95))};
+ });}
+function militaryDaysSnapshot(){return recentMilitaryDays.map(d=>({...d,measuredMs:num(d.measuredMs),parentInclusiveMs:num(d.parentInclusiveMs),
+  unattributedMs:num(d.unattributedMs),phases:Object.fromEntries(militaryPhaseKeys.map(k=>[k,num(d.phases[k]||0)]))}));}
 function attach(){
  const inserted=[];
  try{
   if(window.__vilobI1QuarterMark!=null)throw Error('분기 계측 소유권 충돌');
+  if(window.__vilobI1A1MilitaryMark!=null)throw Error('일별 군사 계측 소유권 충돌');
   for(const r of routes){const original=r.get();if(typeof original!=='function')throw Error('함수 누락: '+r.key);
    const wrapped=wrapRoute(r,original);r.set(wrapped);inserted.push({r,original,wrapped});}
   markerPrior=window.__vilobI1QuarterMark;
+  militaryMarkerPrior=window.__vilobI1A1MilitaryMark;
   window.__vilobI1QuarterMark=quarterMark;
+  window.__vilobI1A1MilitaryMark=militaryMark;
   hooks=inserted;
  }catch(e){for(let i=inserted.length-1;i>=0;i--){const x=inserted[i];if(x.r.get()===x.wrapped)x.r.set(x.original);}throw e;}
 }
 function detach(){
  for(let i=hooks.length-1;i>=0;i--){const x=hooks[i];if(x.r.get()===x.wrapped)x.r.set(x.original);}
  hooks=[];if(window.__vilobI1QuarterMark===quarterMark)window.__vilobI1QuarterMark=markerPrior;
- stack=[];batch=null;quarter=null;
+ if(window.__vilobI1A1MilitaryMark===militaryMark)window.__vilobI1A1MilitaryMark=militaryMarkerPrior;
+ stack=[];batch=null;quarter=null;militaryDay=null;lastMilitaryDay=null;
 }
 function start(){if(enabled)return true;attach();enabled=true;startedAt=Date.now();beginDay=app.world?.dayIndex??null;lastError='';updateView();return true;}
 function stop(){if(!enabled)return false;detach();enabled=false;updateView();return true;}
-function reset(){captures=Object.create(null);batches=[];quarters=[];phaseTotals=Object.create(null);beginDay=app.world?.dayIndex??null;startedAt=enabled?Date.now():null;lastError='';updateView();}
+function reset(){captures=Object.create(null);batches=[];quarters=[];phaseTotals=Object.create(null);militaryDay=null;lastMilitaryDay=null;recentMilitaryDays=[];militaryPhaseTotals=Object.create(null);beginDay=app.world?.dayIndex??null;startedAt=enabled?Date.now():null;lastError='';updateView();}
 function metricSnapshot(){return Object.keys(captures).sort().map(key=>{
  const c=captures[key],a=c.measuredCalls,avg=a?c.totalMs/a:null;
  return {key,unit:c.unit,calls:c.calls,measuredCalls:a,sampleStride:c.stride,sampled:c.stride>1,errors:c.errors,
@@ -33451,19 +34154,22 @@ function metricSnapshot(){return Object.keys(captures).sort().map(key=>{
 function phaseSnapshot(){return phaseKeys.map(key=>{const p=phaseTotals[key];return {key,calls:p?.calls||0,totalMs:num(p?.totalMs||0),maxMs:num(p?.maxMs||0),recentP50Ms:num(percentage(p?.recentMs||[],.5)),recentP95Ms:num(percentage(p?.recentMs||[],.95))};});}
 function snapshot(){const memory=typeof performance.memory?.usedJSHeapSize==='number'?performance.memory.usedJSHeapSize:null;
  return {schema:SCHEMA,version:VERSION,source:'runtime-only',enabled,dayIndex:app.world?.dayIndex??null,beginDay,startedAt,generatedAt:new Date().toISOString(),
-  interpretation:'Function totals are inclusive; nested calls overlap. exclusiveMeasuredMs excludes only measured direct/descendant wrappers. Sampled paths use measuredMs and non-authoritative estimatedTotalMs. 4 quarter primary phases partition runQuarter only. A user PC x10 SIM/BATCH is a separate performance target.',
+  interpretation:'Function totals are inclusive and can overlap. Nine MIL.day phases partition each processMilitaryDay call, separately from its child wrapper timing. militaryPhases are mutually exclusive and militaryDays.unattributedMs reconciles parent wrapper inclusive time minus region sum. Land path uses sampling. A user PC x10 SIM/BATCH is a separate target.',
   browser:{userAgent:navigator.userAgent,hardwareConcurrency:navigator.hardwareConcurrency||null,usedJSHeapBytes:memory},
-  metricLimit:LIMIT,pathSampleStride:PATH_STRIDE,metrics:metricSnapshot(),quarterPhases:phaseSnapshot(),recentQuarters:quarters.slice(),recentBatches:batches.slice()};
+  metricLimit:LIMIT,pathSampleStride:PATH_STRIDE,metrics:metricSnapshot(),quarterPhases:phaseSnapshot(),militaryPhases:militaryPhaseSnapshot(),recentMilitaryDays:militaryDaysSnapshot(),recentQuarters:quarters.slice(),recentBatches:batches.slice()};
 }
 function esc(v){let s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
 function csvRows(columns,items){return '\ufeff'+[columns.join(','),...items.map(row=>columns.map(k=>esc(row[k])).join(','))].join('\n');}
 function csv(){const columns=['key','unit','calls','errors','totalMs','avgMs','minMs','maxMs','lastMs','recentP50Ms','recentP95Ms','recentSampleCount','totalBatchDays','measuredCalls','sampleStride','sampled','estimatedTotalMs','exclusiveMeasuredMs'];return csvRows(columns,metricSnapshot());}
-function batchCsv(){const columns=['source','daysRequested','startDay','endDay','daysElapsed','warCountStart','warCountEnd','armiesStart','armiesEnd','tiles','totalMs','quarterCount','failed','functionsJSON','phasesJSON'];
- return csvRows(columns,batches.map(b=>({...b,functionsJSON:JSON.stringify(b.functions),phasesJSON:JSON.stringify(b.phases)})));}
+function batchCsv(){const columns=['source','daysRequested','startDay','endDay','daysElapsed','warCountStart','warCountEnd','armiesStart','armiesEnd','tiles','totalMs','quarterCount','failed','functionsJSON','phasesJSON','militaryDays','militaryPhasesJSON'];
+ return csvRows(columns,batches.map(b=>({...b,functionsJSON:JSON.stringify(b.functions),phasesJSON:JSON.stringify(b.phases),militaryPhasesJSON:JSON.stringify(b.militaryPhases)})));}
 function quarterCsv(){return csvRows(['dayIndex','totalMs',...phaseKeys.map(k=>k+'Ms')],quarters);}
+function militaryCsv(){return csvRows(['key','calls','totalMs','minMs','maxMs','avgMs','recentP50Ms','recentP95Ms'],militaryPhaseSnapshot());}
+function militaryDaysCsv(){return csvRows(['dayIndex','warCountStart','warCountEnd','armyCountStart','armyCountEnd','engagementCountStart','engagementCountEnd','occupationCountStart','occupationCountEnd','armyStatusesStartJSON','armyStatusesEndJSON',...militaryPhaseKeys.map(k=>'ms_'+k),'measuredMs','parentInclusiveMs','unattributedMs','failed'],
+ militaryDaysSnapshot().map(d=>({...d,armyStatusesStartJSON:JSON.stringify(d.armyStatusesStart),armyStatusesEndJSON:JSON.stringify(d.armyStatusesEnd),...Object.fromEntries(militaryPhaseKeys.map(k=>['ms_'+k,d.phases[k]]))})) );}
 const panel=document.createElement('dialog');panel.id='h5cT3Panel';panel.setAttribute('aria-label','I1 CPU 성능 계측');
 panel.style.cssText='background:#152231;color:#f0f5f9;border:1px solid #6c8094;border-radius:12px;padding:16px;width:min(700px,94vw);max-height:82vh;overflow:auto;box-shadow:0 20px 45px #0008;font:13px/1.55 sans-serif';
-panel.innerHTML='<strong style="font-size:16px">I1 · CPU 병목 관측 T3</strong><p style="margin:6px 0 12px">기본 OFF · 세계 저장과 분리 · 원래 RNG/AI/경제 규칙 유지</p><div id="h5cT3Controls" style="display:flex;flex-wrap:wrap;gap:7px"></div><pre id="h5cT3Output" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1420;padding:12px;border-radius:8px;max-height:48vh;overflow:auto;margin:10px 0">아직 측정하지 않았습니다.</pre><p style="font-size:11px;color:#c4cfda">함수 포함시간은 중첩되므로 합산 금지. MIL.landPath는 16회 중 1회 측정하며 예상 시간은 추정값입니다. 분기 4단계 시간만 서로 배타적입니다.</p>';
+panel.innerHTML='<strong style="font-size:16px">I1A1 · CPU 병목 관측 T3</strong><p style="margin:6px 0 12px">기본 OFF · 세계 저장과 분리 · 원래 RNG/AI/경제 규칙 유지</p><div id="h5cT3Controls" style="display:flex;flex-wrap:wrap;gap:7px"></div><pre id="h5cT3Output" style="white-space:pre-wrap;overflow-wrap:anywhere;background:#0c1420;padding:12px;border-radius:8px;max-height:48vh;overflow:auto;margin:10px 0">아직 측정하지 않았습니다.</pre><p style="font-size:11px;color:#c4cfda">함수 포함시간은 중첩되므로 합산 금지. MIL.landPath 1/16 표본. 분기 4단계 및 일별 군사 9개 구간은 각자 내부에서 서로 배타적입니다.</p>';
 document.body.appendChild(panel);
 const opener=document.createElement('button');opener.id='h5cT3Open';opener.type='button';opener.textContent='I1 성능';
 opener.title='I1 CPU 계측(기본 OFF)';opener.style.cssText='position:fixed;right:12px;bottom:12px;z-index:2100;padding:7px 11px;background:#21394b;color:white;border:1px solid #9aacc1;border-radius:8px;font:12px sans-serif;cursor:pointer;box-shadow:0 3px 12px #0005';document.body.appendChild(opener);
@@ -33475,6 +34181,8 @@ makeButton('JSON',()=>download('vilob-i1-t3-day'+(app.world?.dayIndex??0)+'.json
 makeButton('함수 CSV',()=>download('vilob-i1-functions-day'+(app.world?.dayIndex??0)+'.csv',csv(),'text/csv;charset=utf-8'));
 makeButton('배치 CSV',()=>download('vilob-i1-batches-day'+(app.world?.dayIndex??0)+'.csv',batchCsv(),'text/csv;charset=utf-8'));
 makeButton('분기 CSV',()=>download('vilob-i1-quarters-day'+(app.world?.dayIndex??0)+'.csv',quarterCsv(),'text/csv;charset=utf-8'));
+makeButton('군사 구간 CSV',()=>download('vilob-i1a1-military-phases-day'+(app.world?.dayIndex??0)+'.csv',militaryCsv(),'text/csv;charset=utf-8'));
+makeButton('군사 일자 CSV',()=>download('vilob-i1a1-military-days-day'+(app.world?.dayIndex??0)+'.csv',militaryDaysCsv(),'text/csv;charset=utf-8'));
 makeButton('닫기',()=>panel.close());
 function updateView(){
  opener.textContent=enabled?'I1 측정 중':'I1 성능';opener.setAttribute('aria-pressed',String(enabled));toggle.textContent=enabled?'측정 중지':'측정 시작';
@@ -33482,39 +34190,39 @@ function updateView(){
  const top=batches.slice().sort((a,b)=>b.totalMs-a.totalMs).slice(0,4).map(b=>`${b.startDay}→${b.endDay} · ${b.totalMs.toFixed(1)}ms · 전쟁 ${b.warCountStart}→${b.warCountEnd}`);
  out.textContent=[`상태: ${enabled?'ON':'OFF'} · 날짜 ${r.dayIndex} · 계측 ${r.metrics.length}종 · 배치 ${batches.length}개 · 분기 ${quarters.length}개`,lastError,
   '--- 함수 (포괄 시간) ---',...r.metrics.map(fmt),'--- 분기 단계 (서로 배타적인 4단계) ---',...r.quarterPhases.filter(p=>p.calls).map(p=>`${p.key}: ${p.calls}회 · ${p.totalMs.toFixed(1)}ms`),
-  '--- 느린 관측 배치 TOP 4 ---',...top].filter(Boolean).join('\n')||'아직 측정하지 않았습니다.';
+  '--- 일별 군사 구간 (동일 호출 안에서 배타적) ---',...r.militaryPhases.filter(p=>p.calls).map(p=>`${p.key}: ${p.calls}일 · ${p.totalMs.toFixed(1)}ms · P95 ${(p.recentP95Ms??0).toFixed(2)}ms`),'--- 느린 관측 배치 TOP 4 ---',...top].filter(Boolean).join('\n')||'아직 측정하지 않았습니다.';
 }
 opener.addEventListener('click',()=>{updateView();if(!panel.open)panel.showModal();});
-window.vilobT3=Object.freeze({get enabled(){return enabled;},start,stop,reset,report:snapshot,toCSV:csv,toBatchCSV:batchCsv,toQuarterCSV:quarterCsv});
+window.vilobT3=Object.freeze({get enabled(){return enabled;},start,stop,reset,report:snapshot,toCSV:csv,toBatchCSV:batchCsv,toQuarterCSV:quarterCsv,toMilitaryCSV:militaryCsv,toMilitaryDaysCSV:militaryDaysCsv});
 updateView();
 })();
 </script>
-<!-- V0.9I1A — isolated checkpoint benchmark; no game policy or RNG changes. -->
+<!-- V0.9I1A1 — isolated checkpoint benchmark; no game policy or RNG changes. -->
 <script>
 (function(){
 'use strict';
-const SCHEMA='vilob-i1a-auto-benchmark-v1';
+const SCHEMA='vilob-i1a1-auto-benchmark-v1';
 let active=false,cancelRequested=false,last=null,sourceFile=null;
 const PAD='padding:7px 9px;border:1px solid #648398;border-radius:6px;background:#263e51;color:#edf5f7;font:12px sans-serif';
 const panel=document.createElement('dialog');panel.id='i1aBenchDialog';
 panel.style.cssText='background:#142434;color:#e9f3f7;border:1px solid #62849b;border-radius:13px;padding:18px;width:min(680px,96vw);max-height:88dvh;overflow:auto;box-shadow:0 16px 48px #0009;font:13px/1.55 sans-serif';
-const heading=document.createElement('h2');heading.textContent='I1A · 자동 성능 벤치마크';heading.style.cssText='font-size:18px;margin:0 0 8px';panel.append(heading);
+const heading=document.createElement('h2');heading.textContent='I1A1 · 자동 성능 벤치마크';heading.style.cssText='font-size:18px;margin:0 0 8px';panel.append(heading);
 const desc=document.createElement('p');desc.textContent='동일한 시작 체크포인트의 복사본으로 10일 배치 측정. 현재 게임 세계를 진행·덮어쓰지 않으며, 계측 결과는 별도 다운로드합니다.';desc.style.cssText='margin:0 0 12px;color:#b7cbd6;font-size:12px';panel.append(desc);
 const form=document.createElement('div');form.style.cssText='display:grid;gap:11px';panel.append(form);
 function field(label,element){const row=document.createElement('label');row.style.cssText='display:grid;gap:4px;font-size:12px;color:#cfe0e8';const s=document.createElement('strong');s.textContent=label;row.append(s,element);form.append(row);return element;}
 function select(options,defaultValue){const sel=document.createElement('select');sel.style.cssText=PAD;for(const [value,title] of options){const opt=document.createElement('option');opt.value=value;opt.textContent=title;sel.append(opt);}sel.value=defaultValue;return sel;}
 const source=field('출발 체크포인트',select([['live','현재 세계를 복사하여 측정'],['file','JSON / JSON.gz 체크포인트 파일 불러오기']],'live'));
 const upload=document.createElement('input');upload.type='file';upload.accept='.json,.gz,.json.gz,application/json,application/gzip';upload.style.cssText=PAD;upload.setAttribute('aria-label','측정용 체크포인트 파일');upload.disabled=true;form.append(upload);
-source.addEventListener('change',()=>{upload.disabled=active||source.value!=='file';});upload.addEventListener('change',()=>{sourceFile=upload.files?.[0]||null;});
+source.addEventListener('change',()=>{upload.disabled=active||source.value!=='file';status.textContent=source.value==='file'?'외부 체크포인트 파일 모드 · 파일 선택 후 시작':'현재 세계 복사본 모드 · 게임 날짜 '+(app.world?.dayIndex??'?');});upload.addEventListener('change',()=>{sourceFile=upload.files?.[0]||null;status.textContent=sourceFile?'선택 파일: '+sourceFile.name+' · 실행 시작 시 실제 게임 날짜를 검증합니다.':'파일을 선택하세요.';});
 const period=field('계측 기간',select([['90','90일 (9 × 10일)'],['360','360일 (36 × 10일)']],'90'));
-const repeat=field('반복 횟수',select([['1','1회'],['3','3회'],['5','5회']],'3'));
+const repeat=field('반복 횟수',select([['1','1회'],['3','3회'],['5','5회']],'5'));
 const variants=field('계측 구성',select([['compare','I1 OFF + I1 ON 비교 (권장)'],['off','I1 OFF만 측정'],['on','I1 ON만 측정']],'compare'));
 const warmLabel=document.createElement('label');warmLabel.style.cssText='display:flex;gap:8px;align-items:center;color:#bdd1db;font-size:12px';const warm=document.createElement('input');warm.type='checkbox';warm.checked=true;warmLabel.append(warm,document.createTextNode('별도 복제본에서 10일 예열(본 측정 제외)'));form.append(warmLabel);
 const buttons=document.createElement('div');buttons.style.cssText='display:flex;flex-wrap:wrap;gap:7px;margin:13px 0';panel.append(buttons);
 function btn(label,fn){const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText=PAD+';cursor:pointer';b.addEventListener('click',fn);buttons.append(b);return b;}
-const status=document.createElement('pre');status.id='i1aBenchStatus';status.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;background:#091824;border:1px solid #284354;border-radius:8px;padding:11px;max-height:230px;overflow:auto;margin:8px 0;color:#c7e5ed';status.textContent='준비됨 · 기존 I1 수동 측정은 중지한 상태에서 실행하세요.';panel.append(status);
+const status=document.createElement('pre');status.id='i1aBenchStatus';status.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;background:#091824;border:1px solid #284354;border-radius:8px;padding:11px;max-height:230px;overflow:auto;margin:8px 0;color:#c7e5ed';status.textContent='준비됨 · 현재 세계 복사본이 기본 선택입니다. 1002년차 파일 실측은 파일 입력을 직접 선택하세요.';panel.append(status);
 const note=document.createElement('p');note.textContent='반복은 동일 브라우저에서 독립 세계 복사본으로 실행합니다(독립 Chromium 프로세스 실험과 다름). 실행 중 게임은 일시정지하며, 브라우저 탭을 닫으면 작업이 종료됩니다. 고정 RNG 세계만 허용합니다.';note.style.cssText='color:#9eb8c7;font-size:11px;margin:9px 0 0';panel.append(note);
-const launcher=document.createElement('button');launcher.id='i1aBenchOpen';launcher.type='button';launcher.textContent='I1A 자동 벤치';launcher.style.cssText='position:fixed;right:12px;bottom:53px;z-index:2100;padding:7px 11px;border:1px solid #9eb4c8;border-radius:8px;background:#17544f;color:#f1fffa;font:12px sans-serif;cursor:pointer;box-shadow:0 3px 12px #0005';document.body.append(launcher);
+const launcher=document.createElement('button');launcher.id='i1aBenchOpen';launcher.type='button';launcher.textContent='I1A1 자동 벤치';launcher.style.cssText='position:fixed;right:12px;bottom:53px;z-index:2100;padding:7px 11px;border:1px solid #9eb4c8;border-radius:8px;background:#17544f;color:#f1fffa;font:12px sans-serif;cursor:pointer;box-shadow:0 3px 12px #0005';document.body.append(launcher);
 launcher.addEventListener('click',()=>{if(!panel.open)panel.showModal();});
 panel.addEventListener('cancel',e=>{if(active){e.preventDefault();write('측정 중입니다. 중단하려면 「중단 요청」을 사용하세요.');}});
 document.body.append(panel);
@@ -33552,10 +34260,18 @@ async function readFile(file){if(!file)throw Error('JSON 또는 JSON.gz 체크�
 function commaCsv(columns,rows){const esc=v=>{const s=String(v??'');return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};return '\ufeff'+[columns.join(','),...rows.map(row=>columns.map(k=>esc(row[k])).join(','))].join('\n');}
 function csvRuns(data){const cols=['trial','mode','startDay','endDay','elapsedDays','rngStart','rngEnd','startHash','endHash','valid','totalMs','mean10DayMs','p50_10DayMs','p95_10DayMs','max10DayMs','warCountStart','warCountEnd','armyCountStart','armyCountEnd','quarterCount'];
  return commaCsv(cols,data.runs.map(r=>Object.fromEntries(cols.map(k=>[k,r[k]??null]))));}
-function csvBatches(data){const cols=['trial','mode','batchIndex','startDay','endDay','ms','warCountStart','warCountEnd','armyCountStart','armyCountEnd','hasQuarter'];const rows=[];
- for(const r of data.runs)for(const b of r.batches)rows.push({trial:r.trial,mode:r.mode,...b});return commaCsv(cols,rows);}
+function csvBatches(data){const cols=['trial','mode','batchIndex','startDay','endDay','ms','warCountStart','warCountEnd','armyCountStart','armyCountEnd','hasQuarter','militaryDays','militaryPhasesJSON'];const rows=[];
+ for(const r of data.runs)for(const b of r.batches)rows.push({trial:r.trial,mode:r.mode,...b,militaryPhasesJSON:JSON.stringify(b.militaryPhases??{})});return commaCsv(cols,rows);}
 function csvProfiles(data){const cols=['trial','mode','key','calls','measuredCalls','measuredMs','estimatedTotalMs','exclusiveMeasuredMs','recentP95Ms','sampleStride'];const rows=[];
  for(const r of data.runs)for(const m of r.profile?.metrics||[])rows.push({trial:r.trial,mode:r.mode,...m});return commaCsv(cols,rows);}
+const MIL_CSV_KEYS=['occupationPre','engagements','armyMainLoop','trappedReview','occupationStart','occupationPost','supply','cleanup','reactiveOrders'];
+function csvMilitaryPhases(data){const cols=['trial','mode','key','calls','totalMs','minMs','maxMs','avgMs','recentP50Ms','recentP95Ms'];const rows=[];
+ for(const r of data.runs)for(const m of r.profile?.militaryPhases||[])rows.push({trial:r.trial,mode:r.mode,...m});return commaCsv(cols,rows);}
+function csvMilitaryDays(data){const cols=['trial','mode','dayIndex','warCountStart','warCountEnd','armyCountStart','armyCountEnd',
+ 'engagementCountStart','engagementCountEnd','occupationCountStart','occupationCountEnd','armyStatusesStartJSON','armyStatusesEndJSON',...MIL_CSV_KEYS.map(k=>'ms_'+k),'measuredMs','parentInclusiveMs','unattributedMs','failed'];
+ const rows=[];for(const r of data.runs)for(const d of r.militaryDays||[])rows.push({trial:r.trial,mode:r.mode,...d,
+  armyStatusesStartJSON:JSON.stringify(d.armyStatusesStart),armyStatusesEndJSON:JSON.stringify(d.armyStatusesEnd),
+  ...Object.fromEntries(MIL_CSV_KEYS.map(k=>['ms_'+k,d.phases?.[k]??0]))});return commaCsv(cols,rows);}
 function crc32(bytes){let crc=-1;for(const c of bytes){crc^=c;for(let k=0;k<8;k++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}return (crc^-1)>>>0;}
 function zip(entries){const encoder=new TextEncoder(),parts=[],central=[];let offset=0;
  function record(size){const d=new DataView(new ArrayBuffer(size));return {d,b:new Uint8Array(d.buffer)};}
@@ -33576,8 +34292,9 @@ function summarize(runs){const groups={};for(const mode of ['off','on']){
  if(off&&on)pairs.push({trial,identical:off.endHash===on.endHash&&off.rngEnd===on.rngEnd&&off.endDay===on.endDay,offMs:off.totalMs,onMs:on.totalMs,relativeOnPct:fmt(100*(on.totalMs/off.totalMs-1))});}
  return {groups,paired:pairs,allPairsIdentical:pairs.length?pairs.every(p=>p.identical):null,medianOnVsOffPct:groups.off&&groups.on?fmt(100*(groups.on.medianRunMs/groups.off.medianRunMs-1)):null};}
 function exportData(){if(!last)throw Error('내보낼 측정 데이터가 없습니다.');return last;}
-function exportZip(){const d=exportData(),entries=[['report.json',JSON.stringify(d,null,2)],['runs.csv',csvRuns(d)],['batches.csv',csvBatches(d)],['functions.csv',csvProfiles(d)],['README.txt','VILOB Light I1A benchmark: report.json/runs.csv/batches.csv/functions.csv\nElapsed time is CPU simulation loop on the same browser, excludes clone/validate/JSON/export.\nI1 ON time includes profiling cost. Runs use independent world clones, not independent browsers.\n']];
- download('vilob-i1a-benchmark-day'+d.startDay+'-'+d.status+'.zip',zip(entries),'application/zip');}
+function exportZip(){const d=exportData(),entries=[['report.json',JSON.stringify(d,null,2)],['runs.csv',csvRuns(d)],['batches.csv',csvBatches(d)],['functions.csv',csvProfiles(d)],['military-phases.csv',csvMilitaryPhases(d)],['military-days.csv',csvMilitaryDays(d)],
+ ['README.txt','VILOB Light I1A1: report.json/runs.csv/batches.csv/functions.csv/military-phases.csv/military-days.csv\nIndependent clones, OFF/ON parity. Nine daily military phases are mutually exclusive; inclusive function totals overlap.\nMeasured elapsed time excludes cloning/validation/JSON/export. Mil military day rows only for I1 ON.\n']];
+ download('vilob-i1a1-benchmark-day'+(d.source?.dayIndex??d.runs[0]?.startDay??'unknown')+'-'+d.status+'.zip',zip(entries),'application/zip');}
 async function run(options={}){
  if(active)throw Error('이미 벤치마크를 실행 중입니다.');
  const days=Number(options.days??period.value),count=Number(options.repeats??repeat.value),mode=options.mode??variants.value,origin=options.source??source.value;
@@ -33594,6 +34311,7 @@ async function run(options={}){
   const probe=deserializeWorld(raw);validateWorld(probe);
   if(probe.rngPolicy?.fixed!==true)throw Error('고정 RNG 설정이 아닌 세계입니다. 시드 재추첨에 의해 반복 결과가 달라지므로 측정을 차단했습니다.');
   const seed=probe.seed,startDay=probe.dayIndex,beginHash=await normalizedWorldHash(probe),beginRng=probe.rngState;
+  write((origin==='file'?'선택 파일':'현재 세계 복사본')+' · 시작일 '+startDay+' · 세계 SHA-256 검증 중…');
   const runs=[],total=count*(mode==='compare'?2:1),sourceHash=await sha256Text(raw);
   const result={schema:SCHEMA,version:VERSION,status:'running',generatedAt:new Date().toISOString(),source:{kind:origin,filename:origin==='file'?(options.file||sourceFile)?.name:null,seed,sourceSHA256:sourceHash,normalizedWorldHashAlgorithm:'SHA-256 / version excluded',normalizedStartHash:beginHash,dayIndex:startDay,rngState:beginRng,worldSize:[probe.size,probe.height],nations:probe.nations.length,warCount:probe.wars.length},settings:{days,repeats:count,mode,warmup:options.warmup??warm.checked,batchDays:10},interpretation:'ON/OFF relative time is an observed difference, not a causal profiler overhead estimate. JIT, GC and trial order affect values. Compare same scenario with multiple alternating trials; PC x10 natural-play SIM/BATCH remains a distinct metric.',environment:{userAgent:navigator.userAgent,hardwareConcurrency:navigator.hardwareConcurrency||null,usedJSHeapBytes:performance.memory?.usedJSHeapSize??null},runs,summary:null};last=result;
   if(result.settings.warmup){write('10일 예열 중 (별도 복사본, 측정 제외)…');await tick();const warming=deserializeWorld(raw);advanceDays(warming,10);await tick();}
@@ -33602,14 +34320,21 @@ async function run(options={}){
    const order=mode==='compare'?(trial%2?['off','on']:['on','off']):[mode];
    for(const v of order){if(cancelRequested)break;
     const w=deserializeWorld(raw);validateWorld(w);if(await normalizedWorldHash(w)!==beginHash||w.rngState!==beginRng)throw Error('출발 세계 재현 불일치');
-    const batches=[],warStart=w.wars.length,armyStart=w.armies.length;let elapsed=0;
+    const batches=[],militaryDays=[],warStart=w.wars.length,armyStart=w.armies.length;let elapsed=0,seenMilitaryCalls=0;
     try{
      if(v==='on'){window.vilobT3.reset();window.vilobT3.start();}
      for(let i=0;i<days/10;i++){
       if(cancelRequested)break;
       const d0=w.dayIndex,wars=w.wars.length,armies=w.armies.length,at=performance.now();
       advanceDays(w,10);const ms=Math.max(0,performance.now()-at);elapsed+=ms;
-      batches.push({batchIndex:i+1,startDay:d0,endDay:w.dayIndex,ms:fmt(ms),warCountStart:wars,warCountEnd:w.wars.length,armyCountStart:armies,armyCountEnd:w.armies.length,hasQuarter:Math.floor(d0/30)!==Math.floor(w.dayIndex/30)});
+      const profBatch=v==='on'?window.vilobT3.report():null;
+      const details=profBatch?.recentBatches?.at(-1);
+      if(profBatch){const processed=profBatch.metrics?.find(m=>m.key==='MIL.processDay')?.calls??0;
+       const newCount=processed-seenMilitaryCalls;
+       if(newCount>(profBatch.recentMilitaryDays?.length??0))throw Error('군사 구간 기록 한도를 초과해 일자 자료가 유실되었습니다.');
+       if(newCount>0)militaryDays.push(...profBatch.recentMilitaryDays.slice(-newCount));
+       seenMilitaryCalls=processed;}
+      batches.push({batchIndex:i+1,startDay:d0,endDay:w.dayIndex,ms:fmt(ms),warCountStart:wars,warCountEnd:w.wars.length,armyCountStart:armies,armyCountEnd:w.armies.length,hasQuarter:Math.floor(d0/30)!==Math.floor(w.dayIndex/30),militaryDays:details?.militaryDays??0,militaryPhases:details?.militaryPhases??null});
       write(`진행 ${runN+1}/${total} · 반복 ${trial}/${count} · I1 ${v.toUpperCase()} · ${i+1}/${days/10} 배치\n게임 날짜 ${startDay} → ${w.dayIndex}\n시뮬레이션 실행 ${fmt(elapsed)}ms · 중단 요청 가능`);
       await tick();
      }
@@ -33623,7 +34348,7 @@ async function run(options={}){
     const hash=await normalizedWorldHash(w);
     const runResult={trial,mode:v,startDay,endDay:w.dayIndex,elapsedDays:w.dayIndex-startDay,rngStart:beginRng,rngEnd:w.rngState,startHash:beginHash,endHash:hash,valid,
      totalMs:fmt(elapsed),mean10DayMs:fmt(mean(batches.map(b=>b.ms))),p50_10DayMs:fmt(sortedPct(batches.map(b=>b.ms),.5)),p95_10DayMs:fmt(sortedPct(batches.map(b=>b.ms),.95)),max10DayMs:fmt(Math.max(...batches.map(b=>b.ms))),
-     warCountStart:warStart,warCountEnd:w.wars.length,armyCountStart:armyStart,armyCountEnd:w.armies.length,quarterCount:batches.filter(b=>b.hasQuarter).length,batches,profile};
+     warCountStart:warStart,warCountEnd:w.wars.length,armyCountStart:armyStart,armyCountEnd:w.armies.length,quarterCount:batches.filter(b=>b.hasQuarter).length,batches,profile,militaryDays};
     runs.push(runResult);runN++;
     // Fail closed: a non-deterministic clone must be reported rather than silently averaged.
     if(runs.some(r=>r.endHash!==hash||r.rngEnd!==w.rngState||r.endDay!==w.dayIndex))throw Error('반복 종료 세계 또는 RNG 불일치: 결과를 부분 실패로 보관했습니다.');
@@ -33632,7 +34357,7 @@ async function run(options={}){
    if(cancelRequested)break;
   }
   result.status=cancelRequested?'cancelled':'completed';result.completedAt=new Date().toISOString();result.summary=summarize(runs);
-  write(`${result.status==='completed'?'완료':'중단'} · ${runs.length}/${total}회 · 시작 ${startDay}일\n`+
+  write(`${result.status==='completed'?'완료':'중단'} · ${runs.length}/${total}회 · ${origin==='file'?'외부 체크포인트':'현재 세계 복사본'} · 시작 ${startDay}일\n`+
    Object.entries(result.summary.groups).map(([k,v])=>`I1 ${k.toUpperCase()} 중앙값 ${v.medianRunMs}ms · 10일 P95 ${v.p95_10DayMs}ms · 최악 ${v.max10DayMs}ms`).join('\n')+
    `\nOFF/ON 종료 세계·RNG 일치: ${result.summary.allPairsIdentical===null?'비교 없음':result.summary.allPairsIdentical?'PASS':'FAIL'}\n결과 ZIP을 내려받아 분석에 사용하세요.`);
   downloadButton.disabled=runs.length===0;
