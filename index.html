@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#0c1420" name="theme-color"/>
 <meta content="VILOB Light — 지도 위 국가들의 이야기를 관찰하는 시뮬레이션" name="description"/>
-<title>VILOB Light · V0.9I2A5</title>
+<title>VILOB Light · V0.10C1A</title>
 <style>
 
 :root{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:#e8edf4;background:#0c1420;font-synthesis:none;line-height:1.5;--bg:#0c1420;--surface:#121e2d;--raised:#172538;--border:#29394b;--muted:#93a6b7;--accent:#85d0bb;--gold:#ebc384}
@@ -1024,7 +1024,7 @@ body.atlas-mode #tab-map .d2a-map-toolbar{width:100%;flex-basis:100%}
 <script>
 // --- src/core/config.js ---
 /** VILOB Light: 새 구현. 국가명/색/성향 명칭만 본편의 콘텐츠를 참고한다. */
-const VERSION = 'V0.10C1'; // I1A2: Chronicle Lens V1 read-only history view
+const VERSION = 'V0.10C1A'; // I1A2: Chronicle Lens V1 read-only history view
 // Current-version labels are driven by VERSION at bootstrap, not copied from older releases.
 const F3G_FORT_HP=[0,100,180,260,380,540];
 const F3G_FORT_RUIN_DAYS=3*120;
@@ -3937,6 +3937,7 @@ function i1FreightQuarter(w){for(const n of w.nations){if(!i1Active(w,n))continu
    row.coal+=I3A_TYPES.STEAM.coal*2;targets.set(plant.settlementId,row);
  }
  b2AddFuelFreightTargets(w,n,targets);
+ airC1AFreight(w,n,targets);
  const capacityUsed=new Map(),routes=new Map();
  for(const [sid,want] of [...targets.entries()].sort((a,b)=>a[0]-b[0]))for(const g of I1_REAL_GOODS){
   let need=Math.max(0,want[g]-i1Available(w,n,sid,g)-st.transit.filter(p=>p.to===sid&&p.good===g).reduce((sum,p)=>sum+p.amount,0));
@@ -8417,6 +8418,7 @@ function e3eMaxFill(w,buyer,seller,good,max,r,priceMilli,buyerReserve,sellerFloo
 function e3eTargets(w,n,projections){
  const q=projections?.get(n.id)||projectedQuarter(w,n);
  const target={food:Math.max(safeStock(w,n,'food'),2*q.foodConsumed),wood:safeStock(w,n,'wood'),stone:safeStock(w,n,'stone'),iron:safeStock(w,n,'iron'),coal:safeStock(w,n,'coal'),machine_parts:f2bMarketTarget(w,n,'machine_parts'),steel:f2bMarketTarget(w,n,'steel'),aviation_fuel:b2FuelTarget(w,n)};
+ for(const good of E3E_GOOD_INDEX){const demand=airC1ADemand(w,n,good);if(demand)target[good]=Math.max(target[good],demand);}
  const intent=v05bTradeIntent(w,n);
  if(intent)for(const g of V05B_BUILD_GOODS)target[g]=Math.max(target[g],intent.price.resources[g]||0);
  return {target,intent,upkeep:(q.upkeep||0)+(q.civil?.total||0)};
@@ -10031,7 +10033,7 @@ function f2c2cPendingNeed(w,n,good){
  if(planned?.buildingType==='steam_pump')upcoming+=good==='machine_parts'?12:good==='steel'?8:0;
  const projects=w.buildings.filter(b=>w.tiles[b.tileId]?.ownerId===n.id&&['CONSTRUCTING','UPGRADING','REDEVELOPING'].includes(b.status));
  if(good==='machine_parts')upcoming+=projects.filter(b=>b.typeId==='factory').length*10;
- return upcoming;
+ return upcoming+airC1ADemand(w,n,good);
 }
 function f2c2cPlanProductionQuarter(w){
  for(const n of w.nations){if(!n.active)continue;
@@ -11181,6 +11183,7 @@ function settlementMergeAssessment(world,a,b){
   // F2B: the same industrial-slot and double-port exclusions, for viable pairs.
   if(world.buildings.filter(x=>x.industrialSlot&&(x.settlementId===a.id||x.settlementId===b.id)).length>1)return null;
   if(navyF5PortCount(world,a.id)&&navyF5PortCount(world,b.id))return null;
+  if(world.air?.bases?.some(x=>x.settlementId===a.id)&&world.air.bases.some(x=>x.settlementId===b.id))return null;
   if([...a.tileIds,...b.tileIds].some(id=>footprintDistance(id,primary.coreTileId,world.size,world)>cap.maxRadius))return null;
   const bTiles=new Set(b.tileIds);
   let sharedEdges=0;
@@ -17724,6 +17727,7 @@ function executeNationAction(world,nationId,action){
       const secondary=primary===s?other:s;
       const housingBefore=settlementHousing(world,primary)+settlementHousing(world,secondary);
       if(navyF5PortCount(world,primary.id)&&navyF5PortCount(world,secondary.id))throw Error('F5 병합 금지: 정착지 두 곳에 전용 항구');
+      if(world.air?.bases?.some(x=>x.settlementId===primary.id)&&world.air.bases.some(x=>x.settlementId===secondary.id))throw Error('C1A 병합 금지: 두 정착지에 비행장');
       const assertI1Merge=i1OnSettlementMerge(world,nationId,primary.id,secondary.id);
       e1OnSettlementMerge(world,nationId,primary.id,secondary.id);
       d2bMergeSettlement(world,primary,secondary);
@@ -17738,6 +17742,9 @@ function executeNationAction(world,nationId,action){
       i2OnSettlementMerge(world,primary.id,secondary.id);
       for(const id of secondary.tileIds)world.tiles[id].settlementId=primary.id;
       for(const b of allStructures(world))if(b.settlementId===secondary.id)b.settlementId=primary.id;
+      for(const b of world.air?.bases||[])if(b.settlementId===secondary.id)b.settlementId=primary.id;
+      for(const a of world.air?.aircraft||[])if(a.pilotOriginSettlementId===secondary.id)a.pilotOriginSettlementId=primary.id;
+      if(n.airC1A?.plan?.settlementId===secondary.id)n.airC1A.plan.settlementId=primary.id;
       // Preserve prior housing capacity, including all transferred houses exactly once.
       primary.inheritedHousing=(primary.inheritedHousing||0)+Math.max(0,housingBefore-settlementHousing(world,primary));
       n.settlementIds=n.settlementIds.filter(id=>id!==secondary.id);
@@ -21611,6 +21618,7 @@ function runQuarter(world){
   refreshApCaps(world);
   completeBuildings(world);
   if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('economyStart',world);
+  airC1APreQuarter(world);
   runEconomyQuarter(world);
   if(window.__vilobI1QuarterMark)window.__vilobI1QuarterMark('economyEnd',world);
   iQuarter(world); // I: read-only freight demand planning; never move or charge inventory.
@@ -21632,6 +21640,7 @@ function runQuarter(world){
   // E3: reserve the real 1-AP precision-mode decision before other AI
   // development choices consume all recovered AP this quarter.
   v07e3WorkshopModeQuarter(world);
+  airC1AQuarter(world); // paid air actions before discretionary development
   f1IndustryAIQuarter(world);
   i2AIQuarter(world);
   i3aAIQuarter(world);
@@ -22559,11 +22568,11 @@ function deserializeWorld(json){
  const parsed=JSON.parse(json);
  const g3eImportedVersion=parsed?.version;
  // Legacy worlds retain original planar movement until explicit one-way conversion.
-  if(!['V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
+  if(!['V0.10C1','V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G3E','V0.9G3E1','V0.9G3F','V0.9G3F1','V0.9G3G','V0.9G4','V0.9G3H'].includes(g3eImportedVersion))parsed.worldTopology??=G3E_PLANE;
  if(parsed?.historicalChronicle?.format===CHRONICLE_COMPACT_FORMAT)parsed.historicalChronicle=i1aUnpackChronicle(parsed.historicalChronicle);
- const f1NativeSave=[VERSION,'V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const e3e2NativeSave=[VERSION,'V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
- const accepted=['V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
+ const f1NativeSave=[VERSION,'V0.10C1','V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const e3e2NativeSave=[VERSION,'V0.10C1','V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7E3E2','V0.7E3E3','V0.7F1','V0.7F1A','V0.7F1B','V0.7F1C1','V0.7F1C2'].includes(parsed?.version);
+ const accepted=['V0.10C1','V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D3','V0.9D2','V0.9D1','V0.9D','V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1B1','V0.7A1B','V0.7A1A','V0.7A1','V0.7A','V0.6F4D3','V0.6F4D2','V0.6F4D1','V0.6F4C','V0.6F4B1','V0.6F4B','V0.6F4A','V0.6F3','V0.6E7C','V0.6E1','V0.6E2','V0.6E2A','V0.6E2B','V0.6E3','V0.6E3H1','V0.6E3A','V0.6E4','V0.6E5','V0.6E6','V0.6E7A','V0.6E7A1','V0.6E7B','V0.6F1','V0.6F2',VERSION];
  if(parsed?.schema!=='vilob-light-v03d'||!accepted.includes(parsed?.version))
    throw Error('지원하지 않는 저장 버전입니다 (V0.7G5~기존 지원 버전 호환).');
  const g3c1SourceVersion=parsed.version;
@@ -22572,7 +22581,7 @@ function deserializeWorld(json){
  if(parsed.version!==VERSION){
    const was=parsed.version;parsed.version=VERSION;
    // V0.9D1: V0.9D is native; it must not run ancient-era migrations.
-   if(!['V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
+   if(!['V0.10C1','V0.10B5','V0.10B4','V0.10B3','V0.10B2','V0.10B1','V0.10A','V0.9I2A5','V0.9I2A4','V0.9I2A3','V0.9I2A2','V0.9I2A1','V0.9I1A3','V0.9I1A2','V0.9I1A1','V0.9I1A','V0.9I1','V0.9H5C','V0.9H5B','V0.9H5A','V0.9H4A','V0.9H4','V0.9H3','V0.9H2','V0.9H1','V0.9G4','V0.9G3H','V0.9G3G','V0.9G3F1','V0.9G3F','V0.9G3E1','V0.9G3E','V0.9G3D','V0.9G3C2','V0.9G3C1','V0.9G3C','V0.9G3B','V0.9G3A','V0.9G2','V0.9G1A','V0.9G1','V0.9F7','V0.9F6','V0.9F5','V0.9F4','V0.9F3','V0.9F2','V0.9F1','V0.9F0','V0.9E1','V0.9E','V0.9D','V0.9D1','V0.9D2','V0.9D3'].includes(was)){
    if(!['V0.9C','V0.9B','V0.9A','V0.8J','V0.8I','V0.8H','V0.8G','V0.8F','V0.8E','V0.8D','V0.8C','V0.8B','V0.7L','V0.7K','V0.7J','V0.7I3A2','V0.7I3A1','V0.7I3A','V0.7I2A','V0.7I2','V0.7I1A','V0.7I1','V0.7I0','V0.7I','V0.7H2L','V0.7H2K','V0.7H2J','V0.7H2I1','V0.7H2I','V0.7H2H','V0.7H2G','V0.7H2F','V0.7H2E','V0.7H2D1','V0.7H2D','V0.7H2C','V0.7H2B1','V0.7H2B','V0.7H2A','V0.7H1E1','V0.7H1E','V0.7H1D','V0.7H1C','V0.7H1B1','V0.7H1B','V0.7H1A','V0.7H1','V0.7H','V0.7G5','V0.7G4','V0.7G3','V0.7G2','V0.7G1','V0.7F2C2C2','V0.7F2C2C1','V0.7F2C2C','V0.7F2C2B','V0.7F2C2A','V0.7F2C2','V0.7F2C1','V0.7F2C','V0.7F2B3','V0.7F2B2','V0.7F2B1','V0.7F2B','V0.7F2A5','V0.7F2A4','V0.7F2A3A','V0.7F2A3','V0.7F2A2','V0.7F2A1','V0.7F2A','V0.7F1C2','V0.7F1C1','V0.7F1B','V0.7F1A','V0.7F1','V0.7E3E3','V0.7E3E2','V0.7E3E1','V0.7E3E','V0.7E3D','V0.7E3C','V0.7E3B','V0.7E3A','V0.7E3','V0.7E2','V0.7E1','V0.7D3','V0.7D2','V0.7D1','V0.7D','V0.7C3','V0.7C2','V0.7C1','V0.7C','V0.7B','V0.7A1','V0.7A1A','V0.7A1B','V0.7A1B1'].includes(was)){ 
    if(was==='V0.7A') {parsed.riverSchemaVersion=RIVER_SCHEMA_VERSION;parsed.riverSegments=[];}
    // F4D3 is the immediate baseline: do not apply historical E-era migrations.
@@ -29261,9 +29270,9 @@ const B2_BASE_FUEL_CAP=Object.freeze({1:60,2:120,3:240});
 function b2BaseFuelCapacity(base){return B2_BASE_FUEL_CAP[base.level]||0;}
 function b2Ensure(n){return n.b2Fuel||(n.b2Fuel={schema:1,reserved:0,produced:0,coalConsumed:0,goldConsumed:0,lastFactory:null,inFlight:0});}
 function b2MigrateWorld(w,sourceVersion){
- const old=sourceVersion!=='V0.10B2'&&sourceVersion!=='V0.10B3'&&sourceVersion!=='V0.10B4'&&sourceVersion!=='V0.10B5'&&sourceVersion!=='V0.10C1';
+ const old=sourceVersion!=='V0.10B2'&&sourceVersion!=='V0.10B3'&&sourceVersion!=='V0.10B4'&&sourceVersion!=='V0.10B5'&&sourceVersion!=='V0.10C1'&&sourceVersion!=='V0.10C1A';
  for(const n of w.nations){
-  if(sourceVersion!=='V0.10B4'&&sourceVersion!=='V0.10B5'&&sourceVersion!=='V0.10C1')b2Ensure(n).inFlight??=0;
+  if(sourceVersion!=='V0.10B4'&&sourceVersion!=='V0.10B5'&&sourceVersion!=='V0.10C1'&&sourceVersion!=='V0.10C1A')b2Ensure(n).inFlight??=0;
   if(old){n.resources.aviation_fuel??=0;b2Ensure(n);const st=i1Ensure(n,w);
    for(const r of Object.values(st.regional))r.aviation_fuel??=0;
   }
@@ -29515,7 +29524,7 @@ function airV010RenderPanel(){
  const el=document.getElementById('airV010Panel');if(!el||!app.world)return;
  const w=app.world,a=airV010Ensure(w),n=w.nations[app.selectedNationId]||w.nations[0],t=w.tiles[app.selectedId];
  const makeRow=(tag,label,cls)=>{const e=document.createElement(tag);if(cls)e.className=cls;e.textContent=label;return e;};
- el.replaceChildren();el.append(makeRow('h3','✈ 공군 · V0.10C1 · 정찰기·전투기 운용'),makeRow('p','항공연료는 기존 공장의 배타적 생산 모드로 제조하며 국제시장·해상운송·국내실물 배송을 거쳐 비행장에 보관합니다. 정찰기 제작·훈련·편대에 더해 유료 훈련 비행과 비행장 간 전개를 운용합니다.','muted-line'));
+ el.replaceChildren();el.append(makeRow('h3','✈ 공군 · V0.10C1A · AI 창설 및 초기 운용'),makeRow('p','항공연료는 기존 공장의 배타적 생산 모드로 제조하며 국제시장·해상운송·국내실물 배송을 거쳐 비행장에 보관합니다. 정찰기 제작·훈련·편대에 더해 유료 훈련 비행과 비행장 간 전개를 운용합니다.','muted-line'));
  const owned=a.bases.filter(b=>b.nationId===n.id),active=owned.filter(b=>b.status==='ACTIVE').length;
  el.append(makeRow('div',`${n.name} · 비행장 ${owned.length}곳 (가동 ${active}) · 항공연료 국가 총량 ${n.resources.aviation_fuel||0} · 기지 비축 ${n.b2Fuel?.reserved||0} · 비행 중 연료 ${n.b2Fuel?.inFlight||0}`,'muted-line'));
  const techBox=makeRow('div','', 'air-v010-tech');
@@ -29553,6 +29562,7 @@ function airV010RenderPanel(){
  build.addEventListener('click',()=>{try{const b=airV010Build(w,n.id,app.selectedId);showToast('비행장 착공 · #'+b.id);map.draw();renderInspector();airV010RenderPanel();}catch(e){showToast(e.message);}});el.append(build);
  if(reason)el.append(makeRow('small','건설 불가: '+reason,'muted-line'));
  if(owned.length){const list=makeRow('div','','air-v010-list');for(const b of owned){const tt=w.tiles[b.tileId];list.append(makeRow('p',`#${b.id} · (${tt?.x}, ${tt?.y}) · ${b.status==='ACTIVE'?'가동':b.status==='CONSTRUCTING'?'공사 중 '+Math.max(0,b.completeDay-w.dayIndex)+'일 남음':b.status} · ${airB3CountAt(w,b.id)}/${b.capacity}대 · 연료 ${b.fuelStock}/${b2BaseFuelCapacity(b)} (비축 목표 ${airB4BaseTarget(b)})`,'muted-line'));}el.append(list);}
+ airC1ARender(el,w,makeRow);
  airB3RenderExtra(el,w,n,makeRow);
  el.append(makeRow('p','초기 기종: 정찰기 I (반경 6) · 전투기 I (4) · 경폭격기 I (5). 지도에서 기지를 선택하고 “반경”을 켜면 주둔 기종의 반경을 표시합니다 (정찰 6, 전투 4). 빈 기지는 정찰기 기준.','muted-line'));
 }
@@ -29939,6 +29949,104 @@ function airB4Draw(renderer){
   }
  }
 }
+// V0.10C1A — deterministic AI bootstrap using the existing paid air commands.
+const AIR_C1A_CONFIG=Object.freeze({reviewDays:120,quarterDays:30,baseGoal:1,foodThreshold:1,treasuryFactor:3,warReserveFactor:2,investmentHigh:70,investmentVeryHigh:85,trainingGap:30,repairBelow:85,history:12});
+function airC1AState(n){return n.airC1A||(n.airC1A={schema:1,lastReview:null,enabled:false,goal:{recon_i:0,fighter_i:0},plan:null,history:[],counts:{},lastDay:null});}
+function airC1AEligible(w,n){return n.active&&n.controller==='AI'&&hasTech(w,n.id,'airfield_engineering');}
+function airC1AGate(w,n,cost=0){
+ if(!f2c2BuildFoodGate(w,n,{threshold:AIR_C1A_CONFIG.foodThreshold}).eligible)return 'FOOD_RISK';
+ const q=n.lastQuarter||{},upkeep=Math.max(0,(q.upkeep||0)+(q.civil?.total||0));
+ const reserve=Math.max(1000,upkeep*2*(militaryAtWar(w,n.id)?AIR_C1A_CONFIG.warReserveFactor:1));
+ if(n.gold<cost+reserve)return 'TREASURY_RESERVE';
+ return null;
+}
+function airC1AReview(w,n,st){
+ if(st.lastReview!==null&&w.dayIndex-st.lastReview<AIR_C1A_CONFIG.reviewDays)return;
+ // First review is spread over the four quarterly boundaries; never uses RNG.
+ if(st.lastReview===null&&Math.floor(w.dayIndex/30)%4!==n.id%4)return;
+ const investment=w.aiProfiles[n.aiProfileId]?.military?.militaryInvestment??50;
+ const development=w.aiProfiles[n.aiProfileId]?.weights?.development??50;
+ const gate=airC1AGate(w,n,AIR_V010A_BASE_COST.gold);
+ st.lastReview=w.dayIndex;st.enabled=!gate;
+ const rich=n.gold>=AIR_V010A_BASE_COST.gold*AIR_C1A_CONFIG.treasuryFactor;
+ const fighters=rich?(investment>=AIR_C1A_CONFIG.investmentVeryHigh?3:investment>=AIR_C1A_CONFIG.investmentHigh?2:1):0;
+ st.goal={recon_i:1,fighter_i:fighters};
+ // Low-investment nations still eventually establish a small air arm if affordable.
+ if(investment<35&&development<45&&n.gold<60000)st.goal.fighter_i=0;
+ if(!st.enabled)st.plan=null;
+}
+function airC1AFactory(w,n,sid){return w.buildings.some(b=>b.settlementId===sid&&b.typeId==='factory'&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id);}
+function airC1ASite(w,n){
+ const air=w.air,used=new Set(air.bases.map(b=>b.settlementId)),blocked=new Set([...w.defenses,...w.buildings.filter(b=>['port','barracks'].includes(b.typeId))].map(b=>b.tileId)),occupied=new Set(w.occupations.map(o=>o.tileId));
+ const towns=w.settlements.filter(s=>s.ownerId===n.id&&!used.has(s.id)&&s.population>=2);
+ const factories=new Set(w.buildings.filter(b=>b.typeId==='factory'&&b.status==='ACTIVE'&&!b.disconnected&&w.tiles[b.tileId]?.ownerId===n.id).map(b=>b.settlementId));
+ const anchor=i1Active(w,n)?i1Ensure(n,w).anchor:w.settlements.find(s=>s.coreTileId===n.capitalId&&s.ownerId===n.id)?.id;
+ let best=null;
+ for(const s of towns){
+  if(!factories.has(s.id))continue;
+  const core=w.tiles[s.coreTileId];if(!core)continue;
+  const path=s.id===anchor?[]:anchor==null?null:i1RoadPath(w,n,anchor,s.id);
+  for(const id of s.tileIds){const t=w.tiles[id];if(!t||t.ownerId!==n.id||!['plain','grass','forest'].includes(t.terrain)||t.occupiedBy!=null||occupied.has(id)||blocked.has(id)||air.bases.some(b=>b.tileId===id))continue;
+   const neighbors=neighbors4(id,w.size,w.height,w).map(i=>w.tiles[i]);
+   const safe=neighbors.filter(x=>x?.ownerId===n.id&&x.occupiedBy==null&&!occupied.has(x.id)).length;
+   if(!safe)continue;
+   const score=(s.id===anchor?1000:path?500:0)+Math.min(300,s.population/10)+safe*50+(t.roadLevel||0)*30+(t.terrain==='forest'?0:15)-g3eDistance(w,t,core);
+   if(!best||score>best.score||score===best.score&&id<best.tileId)best={tileId:id,settlementId:s.id,score};
+  }
+ }
+ return best;
+}
+function airC1ANextType(w,n,st){
+ for(const type of ['recon_i','fighter_i'])if(hasTech(w,n.id,airC1Type(type).tech)&&w.air.aircraft.filter(a=>a.nationId===n.id&&a.typeId===type).length<st.goal[type])return type;
+ return null;
+}
+function airC1APlan(w,n,st){
+ st.plan=null;if(!st.enabled||airC1AGate(w,n))return;
+ const bases=w.air.bases.filter(b=>b.nationId===n.id);
+ if(!bases.length){const site=airC1ASite(w,n);if(site)st.plan={kind:'BASE',...site,resources:{...AIR_V010A_BASE_COST.resources}};return;}
+ const type=airC1ANextType(w,n,st);if(!type)return;
+ const base=bases.filter(b=>airB3ReadyBase(w,b)&&airC1AFactory(w,n,b.settlementId)&&airC1Capacity(w,b.id)<b.capacity).sort((a,b)=>a.id-b.id)[0];
+ if(base)st.plan={kind:'AIRCRAFT',baseId:base.id,settlementId:base.settlementId,type,resources:{...airC1Type(type).price.resources}};
+}
+function airC1APreQuarter(w){for(const n of w.nations){if(!airC1AEligible(w,n))continue;const st=airC1AState(n);airC1AReview(w,n,st);airC1APlan(w,n,st);}}
+function airC1ADemand(w,n,good){if(!airC1AEligible(w,n)||!n.airC1A?.enabled)return 0;return n.airC1A.plan?.resources?.[good]||0;}
+function airC1AFreight(w,n,targets){if(!airC1AEligible(w,n))return;const plan=n.airC1A?.plan;
+ function add(sid,goods){const row=targets.get(sid)||Object.fromEntries(I1_REAL_GOODS.map(g=>[g,0]));for(const [g,q] of Object.entries(goods))if(I1_REAL_GOODS.includes(g))row[g]=(row[g]||0)+q;targets.set(sid,row);}
+ if(plan?.kind==='AIRCRAFT'&&w.air.bases.some(b=>b.id===plan.baseId&&b.nationId===n.id&&airB3ReadyBase(w,b)))add(plan.settlementId,plan.resources);
+ for(const a of w.air.aircraft)if(a.nationId===n.id&&a.condition<AIR_C1A_CONFIG.repairBelow&&a.status!=='BUILDING'){const b=airB3Base(w,a.baseId,n.id);if(b&&airB3ReadyBase(w,b))add(b.settlementId,{machine_parts:Math.ceil((100-a.condition)/25)});}
+}
+function airC1ALog(st,w,action,reason,ok,extra={}){const row={dayIndex:w.dayIndex,action,reason,ok,...extra};st.history.push(row);st.counts[action+':'+(ok?'OK':reason)]=(st.counts[action+':'+(ok?'OK':reason)]||0)+1;return row;}
+function airC1AAction(w,n,st,action){const r=airB3Execute(w,n.id,action);airC1ALog(st,w,action.type,r.ok?'OK':r.reason,r.ok,{baseId:action.baseId??null,aircraftId:action.aircraftId??r.aircraftId??null,wingId:action.wingId??r.wingId??null});return r;}
+function airC1ATarget(w,n,wing,base){const from=w.tiles[base.tileId],radius=AIR_V010A_TYPES[wing.typeId].radius;let best=null,reason='NO_SAFE_ROUTE';
+ for(const t of w.tiles){if(t.ownerId!==n.id||t.id===from.id||t.occupiedBy!=null)continue;const d=g3eDistance(w,from,t);if(d>radius||d<=0)continue;const spec=airB4Spec(w,n.id,wing.id,'TRAIN',t.id);if(spec.reason){if(spec.reason.startsWith('기지 연료 부족'))reason='FUEL_SHORTAGE';continue;}if(!best||spec.loaded<best.loaded||spec.loaded===best.loaded&&(d>best.distance||d===best.distance&&t.id<best.id))best={id:t.id,loaded:spec.loaded,distance:d};}
+ return {best,reason};}
+function airC1AQuarter(w){for(const n of w.nations){if(!airC1AEligible(w,n))continue;const st=airC1AState(n);if(st.lastDay===w.dayIndex)continue;st.lastDay=w.dayIndex;
+ const start=st.history.length;const gate=airC1AGate(w,n);const bases=w.air.bases.filter(b=>b.nationId===n.id);
+ if(!st.enabled||gate){airC1ALog(st,w,'REVIEW',gate||'REVIEW_PENDING',false);}
+ else if(!bases.length){const plan=st.plan;if(!plan||plan.kind!=='BASE')airC1ALog(st,w,'BUILD_BASE','NO_INDUSTRIAL_SITE',false);
+  else{const c=AIR_V010A_BASE_COST,reason=airC1AGate(w,n,c.gold)||airV010BuildReason(w,n.id,plan.tileId)||(!airC1AFactory(w,n,plan.settlementId)?'NO_INDUSTRIAL_SITE':null);if(reason)airC1ALog(st,w,'BUILD_BASE',reason,false,{tileId:plan.tileId});else{const b=airV010Build(w,n.id,plan.tileId);airC1ALog(st,w,'BUILD_BASE','OK',true,{baseId:b.id,tileId:b.tileId});st.plan=null;}}}
+ else{
+  const ready=bases.filter(b=>airB3ReadyBase(w,b));
+  if(!ready.length)airC1ALog(st,w,'BASE_WAIT',bases.some(b=>b.status==='CONSTRUCTING')?'CONSTRUCTING':'NO_ACTIVE_BASE',false);
+  for(const b of ready){const local=w.air.aircraft.filter(a=>a.baseId===b.id);const plannedBurn=st.goal.recon_i+2*st.goal.fighter_i;const goal=Math.max(12,Math.ceil(plannedBurn*5*1.2));b.fuelTarget=[12,24,48,60,120,240].find(x=>x>=goal&&x<=b2BaseFuelCapacity(b))||b2BaseFuelCapacity(b);
+   for(const wing of w.air.wings.filter(g=>g.baseId===b.id&&g.missionId===null))if(wing.aircraftIds.some(id=>airB3Aircraft(w,id,n.id)?.condition<AIR_C1A_CONFIG.repairBelow))airC1AAction(w,n,st,{type:'AIR_DISBAND_WING',wingId:wing.id});
+   for(const a of local){if(a.wingId===null&&a.condition<AIR_C1A_CONFIG.repairBelow&&['READY','UNCREWED'].includes(a.status))airC1AAction(w,n,st,{type:'AIR_REPAIR_AIRCRAFT',aircraftId:a.id});else if(a.status==='UNCREWED'&&!airC1AGate(w,n,airC1Type(a.typeId).pilot.gold))airC1AAction(w,n,st,{type:'AIR_ENROLL_PILOT',aircraftId:a.id});}
+   for(const type of ['recon_i','fighter_i']){const ids=local.filter(a=>a.typeId===type&&a.status==='READY'&&a.wingId===null&&a.condition>=AIR_C1A_CONFIG.repairBelow).map(a=>a.id).slice(0,6);if(ids.length)airC1AAction(w,n,st,{type:'AIR_FORM_WING',baseId:b.id,aircraftIds:ids});}
+   // A wing can fly only once per quarter. Existing manual missions are not altered.
+   for(const wing of w.air.wings.filter(g=>g.baseId===b.id&&g.status==='READY'&&g.missionId===null)){if(wing.c1aLastTraining!=null&&w.dayIndex-wing.c1aLastTraining<AIR_C1A_CONFIG.trainingGap)continue;const {best,reason}=airC1ATarget(w,n,wing,b);if(!best){airC1ALog(st,w,'TRAIN',reason,false,{wingId:wing.id});continue;}const r=airB4Start(w,n.id,{wingId:wing.id,kind:'TRAIN',targetTileId:best.id});if(r.ok)wing.c1aLastTraining=w.dayIndex;airC1ALog(st,w,'TRAIN',r.ok?'OK':r.reason,r.ok,{wingId:wing.id,missionId:r.missionId??null,loaded:r.loaded??0});}
+  }
+  const plan=st.plan;if(plan?.kind==='AIRCRAFT'&&!airC1AGate(w,n,airC1Type(plan.type).price.gold)&&airC1ANextType(w,n,st)===plan.type){const r=airC1AAction(w,n,st,{type:'AIR_BUILD_AIRCRAFT',baseId:plan.baseId,aircraftType:plan.type});if(r.ok)st.plan=null;}
+ }
+ if(st.history.length===start)airC1ALog(st,w,'REVIEW','NO_ACTION_REQUIRED',false);
+ st.history=st.history.filter(r=>r.dayIndex>w.dayIndex-AIR_C1A_CONFIG.history*30).slice(-240);
+ }
+}
+function airC1AReport(w){const a=w.air;return {version:VERSION,dayIndex:w.dayIndex,world:{bases:a.bases.length,activeBases:a.bases.filter(b=>airB3ReadyBase(w,b)).length,recon:a.aircraft.filter(a=>a.typeId==='recon_i').length,fighters:a.aircraft.filter(a=>a.typeId==='fighter_i').length,missions:a.missions.length,produced:a.produced,lost:a.lost,scrapped:a.scrapped},nations:w.nations.filter(n=>n.active).map(n=>({id:n.id,name:n.name,controller:n.controller,tech:hasTech(w,n.id,'airfield_engineering'),bases:a.bases.filter(b=>b.nationId===n.id),aircraft:a.aircraft.filter(a=>a.nationId===n.id),wings:a.wings.filter(g=>g.nationId===n.id),fuel:n.resources.aviation_fuel||0,state:n.airC1A||null})),events:a.events.slice()};}
+function airC1ARender(el,w,makeRow){const r=airC1AReport(w),details=makeRow('details','','overview-section');details.append(makeRow('summary',`C1A 세계 공군 · 비행장 ${r.world.bases} (가동 ${r.world.activeBases}) · 정찰기 ${r.world.recon} · 전투기 ${r.world.fighters} · 임무 ${r.world.missions}`));
+ for(const n of r.nations){const s=n.state,latest=s?.history?.filter(x=>x.dayIndex===s.lastDay)||[];details.append(makeRow('p',`${n.name} · ${n.controller} · 기지 ${n.bases.length} · 기체 ${n.aircraft.length} · 연료 ${n.fuel} · ${latest.map(x=>x.action+' '+x.reason).join(' / ')||(!n.tech?'기술 미보유':'평가 대기')}`,'muted-line'));}
+ const json=makeRow('button','↓ C1A 공군 통합 JSON','jump-button');json.onclick=()=>download(`vilob-c1a-air-day${w.dayIndex}.json`,JSON.stringify(airC1AReport(w),null,2),'application/json');details.append(json);
+ const csv=makeRow('button','↓ C1A AI 판단 CSV','jump-button');csv.onclick=()=>{const fields=['nationId','nation','dayIndex','action','reason','ok','baseId','aircraftId','wingId','missionId','tileId','loaded'];const rows=[fields];for(const n of airC1AReport(w).nations)for(const h of n.state?.history||[])rows.push(fields.map(k=>k==='nationId'?n.id:k==='nation'?n.name:h[k]??''));download(`vilob-c1a-air-day${w.dayIndex}.csv`,'\ufeff'+rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n'),'text/csv;charset=utf-8');};details.append(csv);el.append(details);}
+
 function airB4RenderExtra(section,w,n,makeRow){
  const marker=makeRow('p','V0.10B4 · 지도에서 목적 타일 또는 목적 비행장 타일을 선택한 뒤 출격하세요. 비행 중 기체는 국가 고유색·이동 방향으로 표시됩니다.','muted-line');section.append(marker);
  for(const b of w.air.bases.filter(b=>b.nationId===n.id&&b.status==='ACTIVE')){
@@ -30015,7 +30123,7 @@ function armySupplyLabel(a){
   const level=days<10?'휴대 보급':days<30?'보급 부족':days<60?'고립':'심각한 고립';
   return `${level} (${days}일)`;
 }
-const SAVE_KEY='vilob-light-v010c1-world';
+const SAVE_KEY='vilob-light-v010c1a-world';
 // Single-file release: embedded editor is opened from a Blob URL, without depending on editor.html.
 const embeddedEditorElement=document.getElementById('vilobEmbeddedEditor');
 const editorLink=document.querySelector('.custom-map-editor-link');
@@ -30027,7 +30135,7 @@ if(embeddedEditorElement&&editorLink){
   }catch(error){console.warn('내장 에디터 초기화 실패:',error);}
 }
 
-const LEGACY_SAVE_KEYS=['vilob-light-v010b5-world','vilob-light-v010b4-world','vilob-light-v010b3-world','vilob-light-v010b2-world','vilob-light-v010b1-world','vilob-light-v010a-world','vilob-light-v09i2a4-world','vilob-light-v09i2a3-world','vilob-light-v09i2a2-world','vilob-light-v09i2a1-world','vilob-light-v09i1a3-world','vilob-light-v09i1a2-world','vilob-light-v09i1a1-world','vilob-light-v09i1a-world','vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
+const LEGACY_SAVE_KEYS=['vilob-light-v010c1-world','vilob-light-v010b5-world','vilob-light-v010b4-world','vilob-light-v010b3-world','vilob-light-v010b2-world','vilob-light-v010b1-world','vilob-light-v010a-world','vilob-light-v09i2a4-world','vilob-light-v09i2a3-world','vilob-light-v09i2a2-world','vilob-light-v09i2a1-world','vilob-light-v09i1a3-world','vilob-light-v09i1a2-world','vilob-light-v09i1a1-world','vilob-light-v09i1a-world','vilob-light-v09i1-world','vilob-light-v09h5c-world','vilob-light-v09h5b-world','vilob-light-v09h5a-world','vilob-light-v09h4a-world','vilob-light-v09h4-world','vilob-light-v09h3-world','vilob-light-v09h2-world','vilob-light-v09h1-world','vilob-light-v09g4-world','vilob-light-v09g3h-world','vilob-light-v09g3g-world','vilob-light-v09g3f1-world','vilob-light-v09g3f-world','vilob-light-v09g3e1-world','vilob-light-v09g3e-world','vilob-light-v09b-world','vilob-light-v09a-world','vilob-light-v08j-world','vilob-light-v08i-world','vilob-light-v08h-world','vilob-light-v08g-world','vilob-light-v08f-world','vilob-light-v08e-world','vilob-light-v08d-world','vilob-light-v08c-world','vilob-light-v08b-world','vilob-light-v07l-world','vilob-light-v07k-world','vilob-light-v07j-world','vilob-light-v07i3a2-world','vilob-light-v07i3a1-world','vilob-light-v07i3a-world','vilob-light-v07i2a-world','vilob-light-v07i2-world','vilob-light-v07i1a-world','vilob-light-v07h2e-world','vilob-light-v07h2d1-world','vilob-light-v07h2d-world','vilob-light-v07h2c-world','vilob-light-v07h2b1-world','vilob-light-v07f2b3-world','vilob-light-v07f2b2-world','vilob-light-v07f2b1-world','vilob-light-v07f2b-world','vilob-light-v07f2a5-world','vilob-light-v07f2a4-world','vilob-light-v07f2a3a-world','vilob-light-v07f2a3-world','vilob-light-v07f2a2-world','vilob-light-v07f1c2-world','vilob-light-v07f1c1-world','vilob-light-v07f1b-world','vilob-light-v07f1a-world','vilob-light-v07e3e-world','vilob-light-v07e3d-world','vilob-light-v07e3c-world','vilob-light-v07e3b-world','vilob-light-v07c-world','vilob-light-v07b-world','vilob-light-v07a1b1-world','vilob-light-v07a1b-world','vilob-light-v07a1a-world','vilob-light-v07a1-world','vilob-light-v07a-world','vilob-light-v06f4d3-world','vilob-light-v06f4d2-world','vilob-light-v06f4d1-world','vilob-light-v06f4c-world','vilob-light-v06f4b1-world','vilob-light-v06f4b-world','vilob-light-v06f4a-world','vilob-light-v06f3-world','vilob-light-v06f2-world','vilob-light-v06f1-world','vilob-light-v06e7c-world','vilob-light-v06e7b-world','vilob-light-v06e7a1-world','vilob-light-v06e7a-world','vilob-light-v06e6-world','vilob-light-v06e5-world','vilob-light-v06e4-world','vilob-light-v06e3a-world','vilob-light-v06e3h1-world','vilob-light-v06e2b-world']; // read-only fallback
 const PROFILE_KEY='vilob-light-v03a-profiles';
 const editorState=createAIEditorState();
 let persistentProfiles=Object.create(null);
